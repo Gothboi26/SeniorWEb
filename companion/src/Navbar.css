@@ -1,0 +1,35 @@
+.Navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  padding: 10px 20px;
+}
+
+.Navbar-logo {
+  font-size: 1.5em;
+  color: #fff;
+}
+
+.Navbar-links {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+}
+
+.Navbar-links li {
+  display: inline;
+}
+
+.Navbar-links a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 8px;
+  transition: background-color 0.3s;
+}
+
+.Navbar-links a:hover {
+  background-color: #555;
+  border-radius: 4px;
+}
