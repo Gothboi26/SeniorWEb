@@ -1,6 +1,8 @@
 # SeniorWEb
  Web for senior care services (companiON)
+
 Developers:
+
 Araneta, Ryan Joshua
 
 Espanillo, Kristel Mae
