@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "./Navbar";
+import CalendarComponent from "./CalendarComponent";
 import "./App.css";
 
 function App() {
@@ -10,10 +11,10 @@ function App() {
         <h1>companiON</h1>
       </header>
       <main className="App-content">
-        <p>Senior care services web landing page!</p>
+        <CalendarComponent />
       </main>
       <footer className="App-footer">
-        <p>&copy; 2024</p>
+        <p>&copy; 2024 </p>
       </footer>
     </div>
   );
