@@ -1,12 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Glacial+Indifference&display=swap");
+
 .App {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  font-family: Arial, sans-serif;
+  font-family: "Glacial Indifference", sans-serif;
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #102c57; /* PICTURE BACKGROUND */
   color: white;
   padding: 20px;
   text-align: center;
@@ -19,7 +21,7 @@
 }
 
 .App-footer {
-  background-color: #282c34;
+  background-color: #800000;
   color: white;
   padding: 10px;
   text-align: center;
