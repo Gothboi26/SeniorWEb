@@ -6,37 +6,38 @@
   min-height: 100vh;
   font-family: "Glacial Indifference", sans-serif;
 }
-
-.App-header {
-  background-color: #102c57; /* PICTURE BACKGROUND */
-  color: white;
-  padding: 20px;
-  text-align: center;
-}
-
 .App-content {
   flex: 1;
   padding: 20px;
   text-align: center;
 }
+.App-header {
+  background-color: transparent;
+  padding: 0;
+  text-align: center;
+  height: 300px; /* Adjust this to control header height */
+}
 
+.App-header-image {
+  width: 100%; /* Make the image full width */
+  height: auto; /* Adjust to fit width proportionally */
+  max-height: 300px; /* Control max height if needed */
+}
+
+.App-logo {
+  width: 100%; /* Make image span full width of header */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.login-container .App-logo {
+  width: 200px; /* Smaller size for logo on login page */
+  margin-bottom: 10px;
+}
 .App-footer {
   background-color: #800000;
   color: white;
   padding: 10px;
   text-align: center;
-}
-.App-logo {
-  width: 200px; /* You can adjust this to your preferred width */
-  height: auto;
-  margin-bottom: 10px; /* Adds some space below the logo */
-}
-/* Login container styling */
-.login-container {
-  margin: 0 auto;
-  text-align: center;
-  padding: 20px;
-  background-color: #ffff;
 }
 
 /* Input styling */

@@ -6,12 +6,12 @@ import "react-calendar/dist/Calendar.css";
 
 Modal.setAppElement("#root");
 
-function CalendarComponent() {
+function CalendarComponent({ role }) {
   const [date, setDate] = useState(new Date());
   const [events, setEvents] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [eventText, setEventText] = useState("");
-  const [eventTitle, setEventTitle] = useState("");  // Event Title state
+  const [eventTitle, setEventTitle] = useState(""); // Event Title state
 
   useEffect(() => {
     fetchEvents(date);
@@ -24,7 +24,7 @@ function CalendarComponent() {
         `http://localhost/php/get_events.php?date=${formattedDate}`
       );
       const data = await response.json();
-      console.log("Fetched events:", data);  // Log fetched data
+      console.log("Fetched events:", data); // Log fetched data
       setEvents(data);
     } catch (error) {
       console.error("Error fetching events:", error);
@@ -49,7 +49,7 @@ function CalendarComponent() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           date: formattedDate,
-          title: eventTitle,   // Send title
+          title: eventTitle, // Send title
           description: eventText, // Send description
         }),
       });
@@ -77,7 +77,7 @@ function CalendarComponent() {
         <Calendar
           onChange={onDateChange}
           value={date}
-          locale="en-US"  // Ensure starting with Sunday
+          locale="en-US" // Ensure starting with Sunday
         />
         <div className="events-list">
           <h3>Events on {date.toDateString()}</h3>
@@ -85,7 +85,8 @@ function CalendarComponent() {
             {events.length > 0 ? (
               events.map((event) => (
                 <li key={event.id}>
-                  <strong>{event.event_title}</strong>: {event.event_description}
+                  <strong>{event.event_title}</strong>:{" "}
+                  {event.event_description}
                 </li>
               ))
             ) : (
@@ -94,7 +95,17 @@ function CalendarComponent() {
           </ul>
         </div>
       </div>
-      <button onClick={openModal} className="add-event-button">Add Event</button>
+      <button onClick={openModal} className="add-event-button">
+        Add Event
+      </button>
+
+      {/* Show Add Event button only if role is "admin" */}
+      {role === "admin" && (
+        <button onClick={openModal} className="add-event-button">
+          Add Event
+        </button>
+      )}
+
       <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="modal">
         <h2>Add Event for {date.toDateString()}</h2>
         <input
@@ -107,7 +118,7 @@ function CalendarComponent() {
           type="text"
           placeholder="Event description"
           value={eventText}
-          onChange={(e) => setEventText(e.target.value)}  // Event description now uses input
+          onChange={(e) => setEventText(e.target.value)} // Event description now uses input
         />
         <button onClick={addEvent}>Save Event</button>
         <button onClick={closeModal}>Cancel</button>
