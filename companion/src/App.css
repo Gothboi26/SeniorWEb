@@ -26,3 +26,52 @@
   padding: 10px;
   text-align: center;
 }
+.App-logo {
+  width: 200px; /* You can adjust this to your preferred width */
+  height: auto;
+  margin-bottom: 10px; /* Adds some space below the logo */
+}
+/* Login container styling */
+.login-container {
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px;
+  background-color: #ffff;
+}
+
+/* Input styling */
+.login-container input[type="text"],
+.login-container input[type="password"] {
+  width: 30%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  font-family: "Glacial Indifference", sans-serif;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.login-container input[type="text"]:focus,
+.login-container input[type="password"]:focus {
+  border-color: #800000; /* Adds a subtle highlight effect */
+}
+
+/* Button styling */
+.login-container button {
+  width: 45%;
+  padding: 12px;
+  background-color: #102c57;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-container button:hover {
+  background-color: #800000;
+}

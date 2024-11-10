@@ -1,10 +1,32 @@
+/* Center the entire component */
 .CalendarComponent {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the entire component */
   margin-top: 20px;
+  text-align: center;
 }
 
+/* Style for the title */
+.CalendarComponent h2 {
+  margin-bottom: 20px;
+}
+
+.calendar-events-container {
+  display: flex;
+  justify-content: flex-start; /* Aligns calendar and events list to the left */
+  gap: 20px; /* Space between calendar and events list */
+}
+
+/* Calendar styling */
+.react-calendar {
+  max-width: 300px;
+}
+
+/* Event list styling */
 .events-list {
-  margin-top: 20px;
+  max-width: 300px;
+  text-align: left;
 }
 
 .events-list h3 {
@@ -35,3 +57,57 @@
   margin: 5px;
   cursor: pointer;
 }
+
+/* Styles for the "Add Event" button */
+.add-event-button {
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.add-event-button:hover {
+  background-color: #0056b3;
+}
+
+/* Event list container styling */
+.events-list {
+  max-width: 300px;
+  text-align: left;
+  padding: 10px;
+  border-radius: 10px;
+  background: linear-gradient(to bottom, #e60000, #b30000); /* Red to dark red gradient */
+  color: white; /* White text for contrast */
+  margin: 10px 0;
+  height: 300px; /* Limit the height of the event list container */
+  overflow-y: auto; /* Enable scrolling for the event list */
+}
+
+/* Event details list */
+.events-list ul {
+  padding: 0;
+  list-style: none;
+}
+
+/* Individual event styling */
+.events-list li {
+  margin-bottom: 10px;
+  font-size: 16px;
+  word-wrap: break-word; /* Prevent overflow of long words */
+}
+
+/* Event Title */
+.events-list li strong {
+  display: block; /* Ensure title is on a new line */
+  font-weight: bold;
+  margin-bottom: 5px; /* Adds spacing between title and description */
+}
+
+/* Event Description (scrollable) */
+.events-list li span {
+  display: block; /* Ensure description is on a new line */
+  font-style: italic;
+  margin-top: 5px;
+  line-height: 1.5;
+  max-height: 50px; /* Set the max height for description */
+  overflow-y: auto; /* Enable vertical scrolling if description overflows */
+}
+
