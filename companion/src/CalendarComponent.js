@@ -24,7 +24,6 @@ function CalendarComponent({ role }) {
         `http://localhost/php/get_events.php?date=${formattedDate}`
       );
       const data = await response.json();
-      console.log("Fetched events:", data); // Log fetched data
       setEvents(data);
     } catch (error) {
       console.error("Error fetching events:", error);
@@ -66,6 +65,25 @@ function CalendarComponent({ role }) {
     }
   };
 
+  const deleteEvent = async (eventId) => {
+    try {
+      const response = await fetch(`http://localhost/php/delete_events.php`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: eventId }),
+      });
+      const result = await response.json();
+
+      if (result.status === "success") {
+        fetchEvents(date); // Refresh the event list after deletion
+      } else {
+        console.error("Error deleting event:", result.message);
+      }
+    } catch (error) {
+      console.error("Error deleting event:", error);
+    }
+  };
+
   const onDateChange = (newDate) => {
     setDate(newDate);
   };
@@ -87,6 +105,14 @@ function CalendarComponent({ role }) {
                 <li key={event.id}>
                   <strong>{event.event_title}</strong>:{" "}
                   {event.event_description}
+                  {role === "admin" && (
+                    <button
+                      onClick={() => deleteEvent(event.id)}
+                      className="delete-event-button"
+                    >
+                      Delete
+                    </button>
+                  )}
                 </li>
               ))
             ) : (
