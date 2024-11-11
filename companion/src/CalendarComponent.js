@@ -95,9 +95,6 @@ function CalendarComponent({ role }) {
           </ul>
         </div>
       </div>
-      <button onClick={openModal} className="add-event-button">
-        Add Event
-      </button>
 
       {/* Show Add Event button only if role is "admin" */}
       {role === "admin" && (
