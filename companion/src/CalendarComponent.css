@@ -1,82 +1,147 @@
-/* Center the entire component */
+/* Center the CalendarComponent horizontally, align at the top vertically */
 .CalendarComponent {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center the entire component */
+  align-items: center;
+  justify-content: flex-start;
   margin-top: 20px;
   text-align: center;
+  width: 100%;
 }
 
-/* Style for the title */
-.CalendarComponent h2 {
-  margin-bottom: 20px;
-}
-
-.calendar-events-container {
+/* Container for both calendar, event details, and slideshow (side by side) */
+.calendar-container {
   display: flex;
-  justify-content: flex-start; /* Aligns calendar and events list to the left */
-  gap: 20px; /* Space between calendar and events list */
+  gap: 20px;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  margin-top: 20px;
+  flex-wrap: wrap;
 }
 
-/* Calendar styling */
-.react-calendar {
+.calendar {
   max-width: 300px;
+  flex-shrink: 0;
+  border-radius: 10px;
 }
 
-/* Event list styling */
+/* Event list container styling */
 .events-list {
   max-width: 300px;
-  text-align: left;
+  padding: 10px;
+  border-radius: 10px;
+  background: linear-gradient(to bottom, #e60000, #b30000);
+  color: white;
+  height: 300px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.events-list h3 {
-  margin-bottom: 10px;
+/* Slideshow container styling */
+.slideshow-container {
+  max-width: 300px;  /* Same as calendar and event details width */
+  width: 100%; /* Allow container to take full width */
+  height: 300px; /* Same height as calendar and event details */
+  padding: 10px;
+  background: #f4f4f4;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  overflow: hidden; 
+}
+
+/* Slideshow image styling */
+.slideshow-image {
+  width: 100%; 
+  height: 100%; 
+  object-fit: contain; 
+  border-radius: 10px;
+}
+
+
+.slideshow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+/* Styling for Slide Buttons */
+.slide-btn {
+  background-color: rgba(209, 209, 209, 0.5); /* Semi-transparent background */
+  color: rgb(163, 161, 161);
+  border: none;
+  padding: 10px;
+  font-size: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  z-index: 10;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.slide-btn:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.left-btn {
+  left: 10px;
+}
+
+.right-btn {
+  right: 10px;
 }
 
 /* Modal container styling */
 .modal {
+  padding: 25px;
+  border-radius: 8px;
+  background-color: #fff;
+  max-width: 400px;
+  width: 100%;
+  margin: auto;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  max-width: 400px;
-  margin: auto;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  gap: 10px;
 }
 
 /* Input field styling for Event Title and Description */
 .modal input[type="text"] {
   width: 100%;
-  padding: 12px;
-  margin: 10px 0;
+  padding: 10px;
+  margin: 5px 0;
   border: 1px solid #ddd;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 14px;
   outline: none;
   box-sizing: border-box;
   transition: border-color 0.3s ease;
 }
 
 .modal input[type="text"]:focus {
-  border-color: #e60000; /* Highlight border on focus */
+  border-color: #e60000;
 }
 
 /* Save and Cancel buttons styling */
 .modal button {
-  padding: 10px 20px;
-  margin: 10px 5px;
+  padding: 8px 16px;
+  margin: 5px 3px;
   border: none;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 14px;
   cursor: pointer;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Save Event button styling */
 .modal button:nth-child(3) {
-  /* Assuming this is the Save button */
   background-color: #e60000;
   color: white;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -92,9 +157,7 @@
   box-shadow: none;
 }
 
-/* Cancel button styling */
 .modal button:nth-child(4) {
-  /* Assuming this is the Cancel button */
   background-color: #ddd;
   color: #333;
 }
@@ -109,46 +172,30 @@
 
 /* Styles for the "Add Event" button */
 .add-event-button {
-  padding: 10px 20px; /* Add padding for a larger clickable area */
-  margin-top: 20px;
-  background-color: #e60000; /* Red background for contrast */
-  color: white; /* White text for readability */
-  border: none; /* Remove default border */
-  border-radius: 5px; /* Slightly rounded corners */
-  font-size: 16px; /* Increase font size for readability */
+  padding: 10px 20px;
+  background-color: #eb3232;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  margin-top: 10px;
+  align-self: center;
 }
 
 .add-event-button:hover {
-  background-color: #b30000; /* Darker red on hover */
-  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3); /* Increase shadow on hover */
+  background-color: #b30000;
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
 }
 
 .add-event-button:active {
-  background-color: #990000; /* Even darker shade on click */
-  box-shadow: none; /* Remove shadow on click for feedback */
+  background-color: #990000;
+  box-shadow: none;
 }
 
-/* Event list container styling */
-.events-list {
-  max-width: 300px;
-  text-align: left;
-  padding: 10px;
-  border-radius: 10px;
-  background: linear-gradient(
-    to bottom,
-    #e60000,
-    #b30000
-  ); /* Red to dark red gradient */
-  color: white; /* White text for contrast */
-  margin: 10px 0;
-  height: 300px; /* Limit the height of the event list container */
-  overflow-y: auto; /* Enable scrolling for the event list */
-}
-
-/* Event details list */
+/* Event list details */
 .events-list ul {
   padding: 0;
   list-style: none;
@@ -158,25 +205,26 @@
 .events-list li {
   margin-bottom: 10px;
   font-size: 16px;
-  word-wrap: break-word; /* Prevent overflow of long words */
+  word-wrap: break-word;
 }
 
 /* Event Title */
 .events-list li strong {
-  display: block; /* Ensure title is on a new line */
+  display: block;
   font-weight: bold;
-  margin-bottom: 5px; /* Adds spacing between title and description */
+  margin-bottom: 5px;
 }
 
-/* Event Description (scrollable) */
+/* Event Description */
 .events-list li span {
-  display: block; /* Ensure description is on a new line */
+  display: block;
   font-style: italic;
   margin-top: 5px;
   line-height: 1.5;
-  max-height: 50px; /* Set the max height for description */
-  overflow-y: auto; /* Enable vertical scrolling if description overflows */
+  max-height: 50px;
+  overflow-y: auto;
 }
+
 /* Styling for Delete Event button */
 .delete-event-button {
   background-color: #ffffff;
@@ -193,3 +241,13 @@
 .delete-event-button:hover {
   background-color: #f0a5a5;
 }
+
+/* Container for both event details and slideshow (side by side) */
+.events-slideshow-container {
+  display: flex;
+  gap: 20px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
