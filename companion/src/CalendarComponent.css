@@ -1,4 +1,4 @@
-/* Center the CalendarComponent horizontally, align at the top vertically */
+
 .CalendarComponent {
   display: flex;
   flex-direction: column;
@@ -9,7 +9,7 @@
   width: 100%;
 }
 
-/* Container for both calendar, event details, and slideshow (side by side) */
+
 .calendar-container {
   display: flex;
   gap: 20px;
@@ -42,9 +42,9 @@
 
 /* Slideshow container styling */
 .slideshow-container {
-  max-width: 300px;  /* Same as calendar and event details width */
-  width: 100%; /* Allow container to take full width */
-  height: 300px; /* Same height as calendar and event details */
+  max-width: 300px; 
+  width: 100%; 
+  height: 300px; 
   padding: 10px;
   background: #f4f4f4;
   border-radius: 10px;
@@ -70,7 +70,6 @@
   position: relative;
 }
 
-/* Styling for Slide Buttons */
 .slide-btn {
   background-color: rgba(209, 209, 209, 0.5); /* Semi-transparent background */
   color: rgb(163, 161, 161);
@@ -130,7 +129,6 @@
   border-color: #e60000;
 }
 
-/* Save and Cancel buttons styling */
 .modal button {
   padding: 8px 16px;
   margin: 5px 3px;
@@ -195,27 +193,23 @@
   box-shadow: none;
 }
 
-/* Event list details */
 .events-list ul {
   padding: 0;
   list-style: none;
 }
 
-/* Individual event styling */
 .events-list li {
   margin-bottom: 10px;
   font-size: 16px;
   word-wrap: break-word;
 }
 
-/* Event Title */
 .events-list li strong {
   display: block;
   font-weight: bold;
   margin-bottom: 5px;
 }
 
-/* Event Description */
 .events-list li span {
   display: block;
   font-style: italic;
@@ -225,7 +219,6 @@
   overflow-y: auto;
 }
 
-/* Styling for Delete Event button */
 .delete-event-button {
   background-color: #ffffff;
   color: rgb(0, 0, 0);
@@ -242,7 +235,6 @@
   background-color: #f0a5a5;
 }
 
-/* Container for both event details and slideshow (side by side) */
 .events-slideshow-container {
   display: flex;
   gap: 20px;
@@ -250,4 +242,3 @@
   align-items: flex-start;
   flex-wrap: wrap;
 }
-

@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import Modal from "react-modal";
-import Slideshow from "./Slideshow"; // Import the Slideshow component
+import Slideshow from "./Slideshow";
+import { Link } from "react-router-dom";
 import "./CalendarComponent.css";
 import "react-calendar/dist/Calendar.css";
+import "./Emergency.css";
+import "./Chat.css";
+import "./SeniorCare.css";
 
 Modal.setAppElement("#root");
 
@@ -21,9 +25,7 @@ function CalendarComponent({ role }) {
   const fetchEvents = async (selectedDate) => {
     const formattedDate = selectedDate.toISOString().split("T")[0];
     try {
-      const response = await fetch(
-        `http://localhost/php/get_events.php?date=${formattedDate}`
-      );
+      const response = await fetch(`http://localhost/php/get_events.php?date=${formattedDate}`);
       const data = await response.json();
       setEvents(data);
     } catch (error) {
@@ -31,10 +33,7 @@ function CalendarComponent({ role }) {
     }
   };
 
-  const openModal = () => {
-    setModalIsOpen(true);
-  };
-
+  const openModal = () => setModalIsOpen(true);
   const closeModal = () => {
     setModalIsOpen(false);
     setEventText("");
@@ -93,27 +92,20 @@ function CalendarComponent({ role }) {
     <div className="CalendarComponent">
       <h2>Event Calendar</h2>
       <div className="calendar-container">
-        {/* Calendar container */}
         <div className="calendar">
           <Calendar onChange={onDateChange} value={date} locale="en-US" />
         </div>
 
-        {/* Container for Events List and Slideshow */}
         <div className="events-slideshow-container">
-          {/* Events list container */}
           <div className="events-list">
             <h3>Events on {date.toDateString()}</h3>
             <ul>
               {events.length > 0 ? (
                 events.map((event) => (
                   <li key={event.id}>
-                    <strong>{event.event_title}</strong>:{" "}
-                    {event.event_description}
+                    <strong>{event.event_title}</strong>: {event.event_description}
                     {role === "admin" && (
-                      <button
-                        onClick={() => deleteEvent(event.id)}
-                        className="delete-event-button"
-                      >
+                      <button onClick={() => deleteEvent(event.id)} className="delete-event-button">
                         Delete
                       </button>
                     )}
@@ -130,13 +122,27 @@ function CalendarComponent({ role }) {
             )}
           </div>
 
-          {/* Slideshow container */}
           <div className="slideshow-container">
             <Slideshow />
           </div>
         </div>
       </div>
 
+      {/* Buttons below the calendar, events, and slideshow */}
+      <div className="button-container">
+        <Link to="/senior-care">
+          <button className="senior-care-button">Senior Care</button>
+        </Link><Link to="/emergency">
+          <button className="emergency-services-button">Emergency Services</button>
+        </Link>
+        <Link to="/chat">
+          <button className="chat-assistance-button">Chat Assistance</button>
+        </Link>
+        
+      </div>
+
+
+      {/* Add Event Modal */}
       <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="modal">
         <h2>Add Event for {date.toDateString()}</h2>
         <input

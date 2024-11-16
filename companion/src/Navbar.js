@@ -1,7 +1,7 @@
 import React from "react";
 import "./Navbar.css";
 
-function Navbar() {
+function Navbar({ handleLogout }) {
   return (
     <nav className="Navbar">
       <div className="Navbar-logo">companiON</div>
@@ -17,6 +17,12 @@ function Navbar() {
         </li>
         <li>
           <a href="#contact">Contact</a>
+        </li>
+        <li>
+          {/* Logout link styled like the other links */}
+          <a onClick={handleLogout} className="Navbar-links-a" href="#logout">
+            Logout
+          </a>
         </li>
       </ul>
     </nav>

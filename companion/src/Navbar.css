@@ -1,3 +1,5 @@
+/* Navbar.css */
+
 .Navbar {
   display: flex;
   justify-content: space-between;
@@ -30,6 +32,19 @@
 }
 
 .Navbar-links a:hover {
+  background-color: #555;
+  border-radius: 4px;
+}
+
+.Navbar-links-a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 8px;
+  transition: background-color 0.3s;
+}
+
+.Navbar-links-a:hover {
   background-color: #555;
   border-radius: 4px;
 }

@@ -1,0 +1,20 @@
+.chat-assistance-button {
+  background-color: #800000; /* Same color as Emergency Services */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 15px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: "Glacial Indifference", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px; /* Square button size */
+  height: 150px;
+}
+
+.chat-assistance-button:hover {
+  background-color: #a00000; /* Darker red on hover */
+}
