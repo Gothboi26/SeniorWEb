@@ -43,7 +43,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/profile" element={<Profile />} />
-        <Route path="/senior-care" element={<SeniorCare />} />
+        <Route path="/senior-care" element={<SeniorCare role={role} />} />
         <Route path="/emergency" element={<Emergency />} />
         <Route path="/chat" element={<Chat />} />{" "}
         {/* Add route for Chat Assistance */}

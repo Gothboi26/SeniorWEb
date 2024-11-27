@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 import "./SeniorCare.css";
 
-const SeniorCare = () => {
+const SeniorCare = ({ role }) => {
   // State to control the modal visibility and modal content
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
@@ -117,26 +117,29 @@ const SeniorCare = () => {
         matagal dahil nakatakda na ang inyong oras.
       </p>
 
-      <div className="button-container">
-        <button
-          className="secondary-button"
-          onClick={() => openModal("reserveSlot")}
-        >
-          Reserve a Slot
-        </button>
-        <button
-          className="secondary-button"
-          onClick={() => openModal("editInfo")}
-        >
-          Edit Information
-        </button>
-        <button
-          className="secondary-button"
-          onClick={() => openModal("viewReservedSlot")}
-        >
-          View Reserved Slot
-        </button>
-      </div>
+      {/* Conditionally render buttons based on role */}
+      {role === "client" && (
+        <div className="button-container">
+          <button
+            className="secondary-button"
+            onClick={() => openModal("reserveSlot")}
+          >
+            Reserve a Slot
+          </button>
+          <button
+            className="secondary-button"
+            onClick={() => openModal("editInfo")}
+          >
+            Edit Information
+          </button>
+          <button
+            className="secondary-button"
+            onClick={() => openModal("viewReservedSlot")}
+          >
+            View Reserved Slot
+          </button>
+        </div>
+      )}
 
       {/* Modal */}
       <Modal

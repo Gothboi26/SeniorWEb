@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
+  const [role, setRole] = useState(null); // State to store the role
   const [profile, setProfile] = useState({
     firstName: "",
     middleName: "",
@@ -11,6 +12,12 @@ const Profile = () => {
     idFile: null,
     profilePicture: null,
   });
+
+  useEffect(() => {
+    // Retrieve role from localStorage
+    const storedRole = localStorage.getItem("role");
+    setRole(storedRole);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -130,9 +137,12 @@ const Profile = () => {
               ? profile.profilePicture.name
               : "No profile picture uploaded"}
           </p>
-          <button onClick={toggleEdit} className="profile-edit-button">
-            Edit Profile
-          </button>
+          {/* Show Edit button only if the role is 'client' */}
+          {role === "client" && (
+            <button onClick={toggleEdit} className="profile-edit-button">
+              Edit Profile
+            </button>
+          )}
           <a href="/">Back to Home</a>
         </div>
       )}
