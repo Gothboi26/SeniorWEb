@@ -9,6 +9,7 @@ import appheader from "./bgval.jpg"; // For header after login
 import Emergency from "./Emergency";
 import Chat from "./Chat";
 import SeniorCare from "./SeniorCare";
+import Profile from "./Profile";
 import "./App.css";
 
 function App() {
@@ -41,19 +42,22 @@ function App() {
   return (
     <div className="App">
       <Routes>
+        <Route path="/profile" element={<Profile />} />
         <Route path="/senior-care" element={<SeniorCare />} />
         <Route path="/emergency" element={<Emergency />} />
-        <Route path="/chat" element={<Chat />} /> {/* Add route for Chat Assistance */}
+        <Route path="/chat" element={<Chat />} />{" "}
+        {/* Add route for Chat Assistance */}
         {/* Add other routes here */}
       </Routes>
 
       {/* Render Navbar and other content when not on /emergency or /chat routes */}
-      {!location.pathname.includes("/senior-care") && 
+      {!location.pathname.includes("/profile") &&
+        !location.pathname.includes("/senior-care") &&
         !location.pathname.includes("/emergency") &&
         !location.pathname.includes("/chat") && (
           <>
-            {role && <Navbar handleLogout={handleLogout} />} {/* Pass handleLogout to Navbar */}
-
+            {role && <Navbar handleLogout={handleLogout} />}{" "}
+            {/* Pass handleLogout to Navbar */}
             {/* Only show this header when the user is logged in */}
             {role && (
               <header className="App-header">
@@ -70,7 +74,6 @@ function App() {
                 </a>
               </header>
             )}
-
             <main className="App-content">
               {!role ? (
                 <div className="login-container">
@@ -91,7 +94,6 @@ function App() {
                 </>
               )}
             </main>
-
             {role && (
               <footer className="App-footer">
                 <p>&copy; 2024</p>

@@ -1,0 +1,143 @@
+/* Profile Container */
+.profile-container {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header {
+  text-align: center;
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Profile Photo Section */
+.profile-photo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profile-photo input {
+  margin-top: 10px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.profile-img {
+  margin-top: 15px;
+  max-width: 150px;
+  border-radius: 8px;
+}
+
+/* Profile Details Section */
+.profile-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-details label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.profile-details input {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.profile-details input[type="file"] {
+  padding: 5px;
+}
+
+/* Profile Button on Homepage (unchanged) */
+.profile-button {
+  background-color: #800000; /* Same color as Emergency Services */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 15px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: "Glacial Indifference", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px; /* Square button size */
+  height: 150px;
+}
+
+.profile-button:hover {
+  background-color: #a00000; /* Darker red on hover */
+}
+
+/* Edit Profile Button (new design) */
+.profile-edit-button {
+  background-color: #4caf50; /* Green background for Edit */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 18px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: "Glacial Indifference", sans-serif;
+  display: block;
+  margin: 20px auto;
+  width: 180px;
+  text-align: center;
+}
+
+.profile-edit-button:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+.profile-container {
+  padding: 50px;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  font-family: "Glacial Indifference", sans-serif;
+}
+
+h2 {
+  text-align: center;
+  color: #800000;
+}
+
+.profile-image {
+  display: block;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.profile-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+.profile-form input {
+  display: block;
+  margin-bottom: 15px;
+  padding: 10px;
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}

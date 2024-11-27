@@ -8,6 +8,7 @@ import "react-calendar/dist/Calendar.css";
 import "./Emergency.css";
 import "./Chat.css";
 import "./SeniorCare.css";
+import "./Profile.css";
 
 Modal.setAppElement("#root");
 
@@ -25,7 +26,9 @@ function CalendarComponent({ role }) {
   const fetchEvents = async (selectedDate) => {
     const formattedDate = selectedDate.toISOString().split("T")[0];
     try {
-      const response = await fetch(`http://localhost/php/get_events.php?date=${formattedDate}`);
+      const response = await fetch(
+        `http://localhost/php/get_events.php?date=${formattedDate}`
+      );
       const data = await response.json();
       setEvents(data);
     } catch (error) {
@@ -103,9 +106,13 @@ function CalendarComponent({ role }) {
               {events.length > 0 ? (
                 events.map((event) => (
                   <li key={event.id}>
-                    <strong>{event.event_title}</strong>: {event.event_description}
+                    <strong>{event.event_title}</strong>:{" "}
+                    {event.event_description}
                     {role === "admin" && (
-                      <button onClick={() => deleteEvent(event.id)} className="delete-event-button">
+                      <button
+                        onClick={() => deleteEvent(event.id)}
+                        className="delete-event-button"
+                      >
                         Delete
                       </button>
                     )}
@@ -130,17 +137,21 @@ function CalendarComponent({ role }) {
 
       {/* Buttons below the calendar, events, and slideshow */}
       <div className="button-container">
+        <Link to="/profile">
+          <button className="profile-button">Profile</button>
+        </Link>
         <Link to="/senior-care">
           <button className="senior-care-button">Senior Care</button>
-        </Link><Link to="/emergency">
-          <button className="emergency-services-button">Emergency Services</button>
+        </Link>
+        <Link to="/emergency">
+          <button className="emergency-services-button">
+            Emergency Services
+          </button>
         </Link>
         <Link to="/chat">
           <button className="chat-assistance-button">Chat Assistance</button>
         </Link>
-        
       </div>
-
 
       {/* Add Event Modal */}
       <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="modal">
