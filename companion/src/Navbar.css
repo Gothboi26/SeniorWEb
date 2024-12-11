@@ -48,3 +48,89 @@
   background-color: #555;
   border-radius: 4px;
 }
+
+/* Sidebar Styling */
+.Sidebar {
+  position: fixed;
+  right: -250px; 
+  top: 0;
+  height: 100%;
+  width: 250px;
+  background-color: #800000;
+  padding-top: 60px;
+  transition: right 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.Sidebar.open {
+  right: 0; 
+}
+
+.Sidebar-links {
+  list-style: none;
+  padding: 0;
+}
+
+.Sidebar-links li {
+  padding: 10px;
+  text-align: center;
+}
+
+.Sidebar-links a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 8px;
+  transition: background-color 0.3s;
+}
+
+.Sidebar-links a:hover {
+  background-color: #555;
+  border-radius: 4px;
+}
+
+/* Hamburger Menu */
+.Navbar-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.Navbar-hamburger-icon {
+  background-color: white;
+  height: 3px;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+
+  .Navbar-links {
+    display: none;
+  }
+
+
+  .Navbar-hamburger {
+    display: flex;
+    z-index: 2000; 
+  }
+
+  .Navbar {
+    padding: 20px 20px;
+  }
+
+  .Sidebar-links a {
+    width: 100%;
+    text-align: left;
+  }
+ 
+  .Sidebar {
+    right: -250px;
+  }
+
+  .Sidebar.open {
+    right: 0;
+  }
+}

@@ -1,3 +1,33 @@
+@media (max-width: 768px) {
+  .calendar-container {
+    flex-direction: column; /* Stack items vertically */
+    align-items: center;    /* Center align items */
+    justify-content: center; /* Center items vertically */
+    gap: 10px;              /* Reduce spacing */
+  }
+
+  .calendar, .events-list, .slideshow-container {
+    max-width: 90%;         /* Make items adapt to the screen width */
+    width: 100%;            /* Ensure full-width usage */
+    margin: auto;           /* Center items horizontally */
+    height: auto;           /* Allow dynamic height adjustment */
+  }
+
+  .slideshow-container {
+    height: auto;           /* Ensure slideshow adapts to screen height */
+    display: flex;          /* Maintain center alignment for content */
+    justify-content: center;
+    align-items: center;
+  }
+
+  .events-list {
+    height: auto;           /* Adjust height for smaller screens */
+    display: flex;          /* Flex layout for centering */
+    flex-direction: column;
+    align-items: center;    /* Center align items */
+  }
+}
+
 
 .CalendarComponent {
   display: flex;
@@ -9,20 +39,21 @@
   width: 100%;
 }
 
-
 .calendar-container {
   display: flex;
   gap: 20px;
-  justify-content: center;
-  align-items: flex-start;
+  justify-content: center;  /* Center all items horizontally */
+  align-items: center;
   width: 100%;
   margin-top: 20px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;  /* Prevent wrapping */
 }
 
+/* Calendar styling */
 .calendar {
   max-width: 300px;
   flex-shrink: 0;
+  flex-grow: 1; /* Allow it to adjust width if needed */
   border-radius: 10px;
 }
 
@@ -38,13 +69,14 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  flex-grow: 1; /* Allow it to adjust width if needed */
 }
 
 /* Slideshow container styling */
 .slideshow-container {
   max-width: 300px; 
-  width: 100%; 
-  height: 300px; 
+  width: 300px; /* Fix the width to be consistent */
+  height: 300px;
   padding: 10px;
   background: #f4f4f4;
   border-radius: 10px;
@@ -52,6 +84,7 @@
   justify-content: center; 
   align-items: center; 
   overflow: hidden; 
+  flex-grow: 1; /* Allow it to adjust width if needed */
 }
 
 /* Slideshow image styling */
@@ -62,7 +95,7 @@
   border-radius: 10px;
 }
 
-
+/* Slideshow button styling */
 .slideshow {
   display: flex;
   justify-content: center;

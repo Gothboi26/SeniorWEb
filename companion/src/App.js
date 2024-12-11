@@ -11,6 +11,7 @@ import Chat from "./Chat";
 import SeniorCare from "./SeniorCare";
 import Profile from "./Profile";
 import "./App.css";
+import SeniorList from "./SeniorList";
 
 function App() {
   const [role, setRole] = useState(null);
@@ -43,15 +44,15 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/profile" element={<Profile />} />
-        <Route path="/senior-care" element={<SeniorCare role={role} />} />
+        <Route path="/senior-list" element={<SeniorList />} />
+        <Route path="/senior-care" element={<SeniorCare />} />
         <Route path="/emergency" element={<Emergency />} />
-        <Route path="/chat" element={<Chat />} />{" "}
-        {/* Add route for Chat Assistance */}
-        {/* Add other routes here */}
+        <Route path="/chat" element={<Chat />} />
       </Routes>
 
       {/* Render Navbar and other content when not on /emergency or /chat routes */}
       {!location.pathname.includes("/profile") &&
+        !location.pathname.includes("/senior-list") &&
         !location.pathname.includes("/senior-care") &&
         !location.pathname.includes("/emergency") &&
         !location.pathname.includes("/chat") && (

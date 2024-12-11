@@ -9,6 +9,7 @@ import "./Emergency.css";
 import "./Chat.css";
 import "./SeniorCare.css";
 import "./Profile.css";
+import "./SeniorList.css";
 
 Modal.setAppElement("#root");
 
@@ -99,54 +100,60 @@ function CalendarComponent({ role }) {
           <Calendar onChange={onDateChange} value={date} locale="en-US" />
         </div>
 
-        <div className="events-slideshow-container">
-          <div className="events-list">
-            <h3>Events on {date.toDateString()}</h3>
-            <ul>
-              {events.length > 0 ? (
-                events.map((event) => (
-                  <li key={event.id}>
-                    <strong>{event.event_title}</strong>:{" "}
-                    {event.event_description}
-                    {role === "admin" && (
-                      <button
-                        onClick={() => deleteEvent(event.id)}
-                        className="delete-event-button"
-                      >
-                        Delete
-                      </button>
-                    )}
-                  </li>
-                ))
-              ) : (
-                <p>No events for this date.</p>
+          <div className="events-slideshow-container">
+            <div className="events-list">
+              <h3>Events on {date.toDateString()}</h3>
+              <ul>
+                {events.length > 0 ? (
+                  events.map((event) => (
+                    <li key={event.id}>
+                      <strong>{event.event_title}</strong>:{" "}
+                      {event.event_description}
+                      {role === "admin" && (
+                        <button
+                          onClick={() => deleteEvent(event.id)}
+                          className="delete-event-button"
+                        >
+                          Delete
+                        </button>
+                      )}
+                    </li>
+                  ))
+                ) : (
+                  <p>No events for this date.</p>
+                )}
+              </ul>
+              {role === "admin" && (
+                <button onClick={openModal} className="add-event-button">
+                  Add Event
+                </button>
               )}
-            </ul>
-            {role === "admin" && (
-              <button onClick={openModal} className="add-event-button">
-                Add Event
-              </button>
+            </div>
+
+            {role === "client" && (
+              <div className="slideshow-container">
+                <Slideshow />
+              </div>
             )}
           </div>
-
-          <div className="slideshow-container">
-            <Slideshow />
-          </div>
-        </div>
       </div>
 
       {/* Buttons below the calendar, events, and slideshow */}
       <div className="button-container">
-        <Link to="/profile">
-          <button className="profile-button">Profile</button>
-        </Link>
-        <Link to="/senior-care">
+        {role === "client" && (
+          <Link to="/profile">
+            <button className="profile-button">Profile</button>
+          </Link>
+        )}
+        {role === "admin" && (
+          <Link to="/senior-list">
+            <button className="senior-list-button">Senior List</button>
+          </Link>
+        )}<Link to="/senior-care">
           <button className="senior-care-button">Senior Care</button>
         </Link>
         <Link to="/emergency">
-          <button className="emergency-services-button">
-            Emergency Services
-          </button>
+          <button className="emergency-services-button">Emergency Services</button>
         </Link>
         <Link to="/chat">
           <button className="chat-assistance-button">Chat Assistance</button>

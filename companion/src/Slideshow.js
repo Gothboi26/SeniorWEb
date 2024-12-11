@@ -1,23 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 const Slideshow = () => {
   const images = [
-    "https://scontent.fmnl31-1.fna.fbcdn.net/v/t39.30808-6/467735363_122215636064031688_4093773670877885223_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=833d8c&_nc_ohc=h2HorWGzqbUQ7kNvgGszqcc&_nc_zt=23&_nc_ht=scontent.fmnl31-1.fna&_nc_gid=ATJB-teJmHenE8qvjd3A_V1&oh=00_AYAbCoMLSnm_FenOCoNFZsILihPcbtvyekWP2T7xhYnALg&oe=674C4DA1", // Placeholder images for slideshow
-    "https://scontent.fmnl31-1.fna.fbcdn.net/v/t39.30808-6/467348871_122215486064031688_1535150998386324181_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=833d8c&_nc_ohc=mt62AOfvRikQ7kNvgH44p1A&_nc_zt=23&_nc_ht=scontent.fmnl31-1.fna&_nc_gid=AEykomUtINWr1V8z9esG3yW&oh=00_AYArW32NbiPa94Gyz2BCeSVry8oN2pDtGbwaudzabkoyoQ&oe=674C482A",
-    "https://scontent.fmnl31-1.fna.fbcdn.net/v/t39.30808-6/466625802_122214664760031688_3825222108077920134_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=110&ccb=1-7&_nc_sid=833d8c&_nc_ohc=WGQGvDDkl7UQ7kNvgGz59rv&_nc_zt=23&_nc_ht=scontent.fmnl31-1.fna&_nc_gid=A-z2qjgogUFbPYuVA4bgGAq&oh=00_AYAkrVz9614wGAI5eiVJQBXsFu1kwQwLTEFw-bj4ykSBMA&oe=674C5F22",
+    "https://scontent.fmnl9-1.fna.fbcdn.net/v/t39.30808-6/467735363_122215636064031688_4093773670877885223_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeEiQCZ_21OAUZWg8UjrgA-m2QMDhr89TTPZAwOGvz1NM-Kl7p3ySaKTYO_5P0IlsEhi2PVSSjetqBFcjKdpYaMU&_nc_ohc=B-qHFszS_UYQ7kNvgHCibiQ&_nc_zt=23&_nc_ht=scontent.fmnl9-1.fna&_nc_gid=Agjj8HPSAQ8hCu3wMcwtLFA&oh=00_AYCoYpQ8YuuWPafJO6ZDUbnMwP7IZcwsBrUPwhUObVcajg&oe=675FA3A1",
+    "https://scontent.fmnl9-7.fna.fbcdn.net/v/t39.30808-6/463895454_122210731580031688_4559676307604075176_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeFUdk97qkkOWFlTmJn3V3x6ucsGaV1Swr25ywZpXVLCvX7R1U8xi0njtTrAgjYLAkgXFz8_3Wz7zuvIuDPeQsmd&_nc_ohc=18nOygewb5oQ7kNvgG_0d9H&_nc_zt=23&_nc_ht=scontent.fmnl9-7.fna&_nc_gid=ASuIFTrBCSlsGsb2IUkvlFV&oh=00_AYCtNBq5HCbs0RzdJkW8pGV5PyougO3BbOZa7V-Ij4wP0w&oe=675F978E",
+    "https://scontent.fmnl9-1.fna.fbcdn.net/v/t39.30808-6/466122430_122213764550031688_3542983988034282598_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeGns42Z8XVZkgW71vdbV_MwotMEMySiW7Ci0wQzJKJbsOWvzraIQLEOUtP4_31p3IEL4sLg0KGw2hrm9hogWcbN&_nc_ohc=CSDB5qyPa0cQ7kNvgGeWfq5&_nc_zt=23&_nc_ht=scontent.fmnl9-1.fna&_nc_gid=AFfYs4kaslfAhN-W2O23Kq_&oh=00_AYDv2P1iOcRHnxKtzVBWw3kDlMsjbVA8W5njQKX43PRGlg&oe=675F7E41",
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const nextSlide = () => {
+  const nextSlide = useCallback(() => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-  };
+  }, [images.length]);
 
   const prevSlide = () => {
     setCurrentIndex(
       (prevIndex) => (prevIndex - 1 + images.length) % images.length
     );
   };
+
+  useEffect(() => {
+    const interval = setInterval(nextSlide, 5000); 
+    return () => clearInterval(interval);
+  }, [nextSlide]);
 
   return (
     <div className="slideshow">
