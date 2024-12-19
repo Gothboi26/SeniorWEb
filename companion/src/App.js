@@ -42,9 +42,9 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={<Profile  role={role} />} />
         <Route path="/senior-list" element={<SeniorList />} />
-        <Route path="/senior-care" element={<SeniorCare />} />
+        <Route path="/senior-care" element={<SeniorCare  role={role} />} />
         <Route path="/emergency" element={<Emergency />} />
         <Route path="/chat" element={<Chat />} />
       </Routes>

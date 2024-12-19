@@ -36,6 +36,21 @@ const RectangleSection = ({ role }) => {
           </Link>
         </div>
       )}
+      
+      {role === "admin" && (
+        <div className="rectangle23 seniorlist">
+          <Link to="/seniorlist" className="link-container">
+            <div className="senior-list-content">
+              <h2>Senior List</h2>
+              <p>Manage and review the senior care list efficiently.</p>
+              <button className="senior-list-button">
+                <span className="senior-list-button-icon">📋</span>
+                <span className="senior-list-button-text">Seniors</span>
+              </button>
+            </div>
+          </Link>
+        </div>
+      )}
 
       <div className="rectangle23 emergencyservices">
         <Link to="/emergency" className="link-container">
@@ -63,20 +78,6 @@ const RectangleSection = ({ role }) => {
         </Link>
       </div>
 
-      {role === "admin" && (
-        <div className="rectangle23 seniorlist">
-          <Link to="/seniorlist" className="link-container">
-            <div className="senior-list-content">
-              <h2>Senior List</h2>
-              <p>Manage and review the senior care list efficiently.</p>
-              <button className="senior-list-button">
-                <span className="senior-list-button-icon">📋</span>
-                <span className="senior-list-button-text">Seniors</span>
-              </button>
-            </div>
-          </Link>
-        </div>
-      )}
     </div>
   );
 };
