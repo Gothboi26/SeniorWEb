@@ -5,7 +5,6 @@ import { Login, Register } from "./AuthComponents";
 import AdminDashboard from "./AdminDashboard";
 import ClientDashboard from "./ClientDashboard";
 import logo from "./logo.png"; // For login page
-import appheader from "./bgval.jpg"; // For header after login
 import Emergency from "./Emergency";
 import Chat from "./Chat";
 import SeniorCare from "./SeniorCare";
@@ -58,23 +57,7 @@ function App() {
         !location.pathname.includes("/chat") && (
           <>
             {role && <Navbar handleLogout={handleLogout} />}{" "}
-            {/* Pass handleLogout to Navbar */}
-            {/* Only show this header when the user is logged in */}
-            {role && (
-              <header className="App-header">
-                <a
-                  href="https://www.facebook.com/profile.php?id=61550950657692"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img
-                    src={appheader}
-                    alt="companiON Header"
-                    className="App-header-image"
-                  />
-                </a>
-              </header>
-            )}
+            {role && <header className="App-header"></header>}
             <main className="App-content">
               {!role ? (
                 <div className="login-container">

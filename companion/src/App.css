@@ -11,12 +11,6 @@
   padding: 20px;
   text-align: center;
 }
-.App-header {
-  background-color: transparent;
-  padding: 0;
-  text-align: center;
-  height: 300px; /* Adjust this to control header height */
-}
 
 .App-header-image {
   width: 100%; /* Make the image full width */

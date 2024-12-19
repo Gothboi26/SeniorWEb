@@ -5,7 +5,6 @@ import CalendarComponent from "./CalendarComponent";
 function AdminDashboard() {
   return (
     <div>
-      <h2>Welcome, Admin! You have full access.</h2>
       <CalendarComponent role="admin" />
     </div>
   );
