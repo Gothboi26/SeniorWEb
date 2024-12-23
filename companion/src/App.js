@@ -56,7 +56,7 @@ function App() {
         !location.pathname.includes("/emergency") &&
         !location.pathname.includes("/chat") && (
           <>
-            {role && <Navbar handleLogout={handleLogout} />}{" "}
+            {role === "client" && <Navbar handleLogout={handleLogout} role={role} />}
             {role && <header className="App-header"></header>}
             <main className="App-content">
               {!role ? (
