@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
 import Modal from "react-modal";
 import Slideshow from "./Slideshow";
@@ -9,7 +10,9 @@ import "./Emergency.css";
 import "./Chat.css";
 import "./SeniorCare.css";
 import "./Profile.css";
-import "./SeniorList.css";
+import SeniorList from "./SeniorList";
+import "./Sidebar.css";
+import logo from './logo.png';
 
 Modal.setAppElement("#root");
 
@@ -31,21 +34,6 @@ const RectangleSection = ({ role }) => {
               <button className="homepage-senior-care-button">
                 <span className="homepage-senior-care-button-icon">📅</span>
                 <span className="homepage-senior-care-button-text">Book</span>
-              </button>
-            </div>
-          </Link>
-        </div>
-      )}
-      
-      {role === "admin" && (
-        <div className="rectangle23 seniorlist">
-          <Link to="/seniorlist" className="link-container">
-            <div className="senior-list-content">
-              <h2>Senior List</h2>
-              <p>Manage and review the senior care list efficiently.</p>
-              <button className="senior-list-button">
-                <span className="senior-list-button-icon">📋</span>
-                <span className="senior-list-button-text">Seniors</span>
               </button>
             </div>
           </Link>
@@ -82,12 +70,17 @@ const RectangleSection = ({ role }) => {
   );
 };
 
-function CalendarComponent({ role }) {
+function CalendarComponent() {
+  const [role, setRole] = useState(null); // Declare state for role
+  const location = useLocation(); // Hook to get the current path
+  const navigate = useNavigate(); // To navigate programmatically
   const [date, setDate] = useState(new Date());
   const [events, setEvents] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [eventText, setEventText] = useState("");
   const [eventTitle, setEventTitle] = useState("");
+  const [selectedOption, setSelectedOption] = useState("overview");
+
 
   useEffect(() => {
     fetchEvents(date);
@@ -161,6 +154,122 @@ function CalendarComponent({ role }) {
     setDate(newDate);
   };
 
+  useEffect(() => {
+    const storedRole = localStorage.getItem("role");
+    if (storedRole) {
+      setRole(storedRole); // Set role if it exists in localStorage
+    } else if (location.pathname === "/") {
+      setRole(null); // Reset role if on login page
+    }
+  }, [location]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("role"); // Remove role from localStorage
+    setRole(null); // Reset role in the app state
+    navigate("/"); // Redirect to login page after logout
+  };
+
+    if (role === "admin") {
+      return (
+        <div className="admin-layout">
+          <div className="sidebar">
+              {/* Logo and Text */}
+              <div className="sidebar-logo">
+                <img src={logo} alt="Logo" className="sidebar-logo-img" />
+                <span className="sidebar-logo-text">Brgy. Gen. T. De Leon</span>
+              </div>
+
+              <ul>
+                <li onClick={() => setSelectedOption("overview")} className="sidebar1-item">
+                  <img src="/icons/overview.png" alt="Logo" className="sidebar1-logo-img" />
+                  Overview
+              </li>
+              <li onClick={() => setSelectedOption("seniors")} className="sidebar1-item">
+                  <img src="/icons/seniors.png" alt="Logo" className="sidebar1-logo-img" />
+                  Seniors
+              </li>
+              <li onClick={() => setSelectedOption("events")} className="sidebar1-item">
+                  <img src="/icons/events.png" alt="Logo" className="sidebar1-logo-img" />
+                  Events
+              </li>
+              <li onClick={() => setSelectedOption("appointments")} className="sidebar1-item">
+                  <img src="/icons/app.png" alt="Logo" className="sidebar1-logo-img" />
+                  Appointments
+              </li>
+              <li onClick={() => setSelectedOption("chat")} className="sidebar1-item">
+                  <img src="/icons/chat.png" alt="Logo" className="sidebar1-logo-img" />
+                  Chat Inquiries
+              </li>
+              </ul>
+
+              {/* Horizontal Line */}
+              <hr className="sidebar-divider" />
+
+              {/* Additional Settings and Help & Support */}
+              <ul>
+              <li onClick={() => setSelectedOption("settings")} className="sidebar1-item">
+                  <img src="/icons/settings.png" alt="Logo" className="sidebar1-logo-img" />
+                  Settings
+              </li>
+              <li onClick={() => setSelectedOption("help")} className="sidebar1-item">
+                  <img src="/icons/help.png" alt="Logo" className="sidebar1-logo-img" />
+                  Help & Support
+              </li>
+            </ul>
+
+            {/* Logout Button */}
+            <div className="sidebar-logout" onClick={handleLogout}>
+              Log Out
+                <img src="/icons/logout.png" alt="Logout" className="sidebar-logout-icon" />
+              </div>
+          </div>
+          
+          <div className="main-content">
+          <div className="greeting">
+            <h1>Hello, ADMIN NAME</h1>
+            <p>Good morning!</p>
+          </div>
+
+          <div className="content">
+            {selectedOption === "overview" && <h2>Admin Overview</h2>}
+              {selectedOption === "seniors" && <SeniorList />}
+              {selectedOption === "events" && (
+              <div>
+                <h2>Events</h2>
+                {/* Include content for Appointments */}
+              </div>
+            )}
+            {selectedOption === "appointments" && (
+              <div>
+                <h2>Appointments</h2>
+                {/* Include content for Appointments */}
+              </div>
+            )}
+            {selectedOption === "chat" && (
+              <div>
+                <h2>Chat Inquiries</h2>
+                {/* Include content or components for Chat */}
+              </div>
+            )}
+            {selectedOption === "settings" && (
+              <div>
+                <h2>Settings</h2>
+                {/* Include content or components for Chat */}
+              </div>
+            )}
+            {selectedOption === "help" && (
+              <div>
+                <h2>HEEELPPP AAAAAA</h2>
+                {/* Include content or components for Chat */}
+              </div>
+              )}
+          </div>
+          </div>
+        </div>
+      );
+    }
+
+
   return (
     <div className="CalendarComponent">
       <div className="CalendarLetter">
@@ -210,7 +319,7 @@ function CalendarComponent({ role }) {
         </div>
       </div>
 
-      <RectangleSection role={role} />
+    {role === "client" && <RectangleSection role={role} />}
 
       {/* Add Event Modal */}
       <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="modal">
@@ -232,6 +341,6 @@ function CalendarComponent({ role }) {
       </Modal>
     </div>
   );
-}
+};
 
 export default CalendarComponent;

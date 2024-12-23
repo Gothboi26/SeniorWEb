@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import "./Navbar.css";
 
-function Navbar({ handleLogout }) {
+function Navbar({ handleLogout, role }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // Toggle the sidebar
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+
+  // Render Navbar only if the role is "client"
+  if (role !== "client") {
+    return null;
+  }
 
   return (
     <nav className="Navbar">

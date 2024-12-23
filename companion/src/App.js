@@ -78,7 +78,7 @@ function App() {
                 </>
               )}
             </main>
-            {role && (
+            {role === "client" && (
               <footer className="App-footer">
                 <p>&copy; 2024</p>
               </footer>

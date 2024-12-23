@@ -1,0 +1,159 @@
+.admin-layout {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar styles */
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-top: 10px;
+}
+
+.sidebar-logo-img {
+  width: 50px; /* Adjust width to make the logo smaller */
+  height: auto; /* Maintain aspect ratio */
+  margin-right: 10px; /* Space between logo and text */
+}
+
+.sidebar-logo-text {
+  font-size: 18px;
+  font-weight: bold;
+  color: #d60000;
+  text-align: left;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  text-align: left;
+  height: auto;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  margin: 15px 0;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 5px;
+}
+
+.sidebar li:hover {
+  background-color: #b4cafa;
+  border-radius: 5px;
+}
+
+/* Sidebar divider line */
+.sidebar-divider {
+  margin: 2px;
+  border-top: 1px solid #ccc;
+}
+
+/* Styles for the new Settings and Help & Support options */
+.sidebar ul li {
+  margin: 5px;
+  cursor: pointer;
+  font-size: 15px;
+  padding: 3px;
+  margin-left: 20px;
+}
+
+.sidebar ul li:hover {
+  background-color: #b4cafa;
+  border-radius: 5px;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: aliceblue;
+  border-radius: 20px;
+  height: 88vh;
+}
+
+.admin-dashboard {
+  display: flex;
+}
+
+.main-content {
+  width: calc(100% - 250px);
+  padding: 20px;
+}
+
+.greeting {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  padding: 0;
+}
+
+.greeting h1 {
+  font-size: 1.8em;
+  margin: 0;
+  color: #333;
+}
+
+.greeting p {
+  font-size: 1.2em;
+  color: #666;
+  margin: 5px 0 0;
+}
+
+.content-area {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar1-item {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 5px;
+}
+
+.sidebar1-item:hover {
+  background-color: #b4cafa;
+  border-radius: 5px;
+}
+
+.sidebar1-logo-img {
+  width: 25px; 
+  height: auto; 
+  margin-right: 10px; 
+}
+
+.sidebar-logout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto;
+  padding: 7px;
+  cursor: pointer;
+  margin-left: 20px;
+  border-radius: 10px;
+  font-size: 15px;
+  background-color: #b4cafa;
+}
+
+.sidebar-logout-icon {
+  width: 23px;
+  height: auto;
+  margin-left: 70px;
+}
