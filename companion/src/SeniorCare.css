@@ -1,5 +1,5 @@
 /* Main Senior Care Button */
-.senior-care-button {
+.homepage-senior-care-button {
   background-color: #800000; /* Maroon background */
   color: white; /* White text */
   border: none;
@@ -20,28 +20,48 @@
   background-color: #a00000; /* Darker maroon on hover */
 }
 
-/* Container Styling */
-.senior-care-container {
+h4 {
+  font-size: 20px;
+  color: #800000;
   text-align: center;
-  padding: 20px;
-  font-family: "Glacial Indifference", sans-serif;
 }
-
 h2 {
   color: #800000;
   margin-bottom: 10px;
 }
-
 p {
-  margin-bottom: 20px;
-  font-size: 18px;
+  font-size: 18px; /* Adjust the size as needed */
+  color: #1e1e1e; /* Set your desired font color */
+}
+
+strong {
+  font-size: 18px; /* Adjust the size as needed */
+  color: #1e1e1e; /* Set your desired font color */
+}
+.note {
+  background-color: #fff8e1; /* Light yellow background for visibility */
+  border: 2px solid #800000; /* Maroon border to match the theme */
+  border-radius: 8px; /* Rounded corners */
+  padding: 15px 20px; /* Add padding for a comfortable layout */
+  font-size: 16px; /* Adjust font size for readability */
+  color: #333; /* Dark text for good contrast */
+  margin: 20px auto; /* Center the note and add vertical spacing */
+  max-width: 800px; /* Set a max width for better text wrapping */
+  text-align: justify; /* Ensure the text is justified for a clean look */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.note strong {
+  color: #800000; /* Highlight the "Paalala" in maroon */
+  font-weight: bold; /* Emphasize the title */
 }
 
 /* Button layout inside Senior Care page */
 .button-container {
   display: flex;
-  justify-content: center;
-  gap: 20px;
+  flex-direction: column; /* Stack buttons vertically */
+  align-items: center; /* Center align the buttons */
+  gap: 20px; /* Add space between buttons */
   margin-block: 20px;
 }
 
@@ -50,11 +70,15 @@ p {
   text-decoration: none;
   color: #800000;
   font-size: 14px;
+  display: block; /* Ensure it behaves like a block element */
+  text-align: center; /* Center the text */
+  margin: 20px auto; /* Add vertical spacing and center horizontally */
 }
 
 .back-link:hover {
   text-decoration: underline;
 }
+
 /* Instruction List */
 .instruction-list {
   text-align: justify; /* Justifies the text */
@@ -82,27 +106,31 @@ p {
 
 /* Buttons inside the Senior Care page */
 .secondary-button {
-  background-color: #f5f5f5; /* Light gray */
-  color: #333; /* Dark text */
-  border: 2px solid #800000; /* Maroon border */
-  border-radius: 8px;
-  padding: 10px 15px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  background-color: #800000; /* Button background */
+  color: #f8f8f8; /* Button text color */
+  border: 2px solid #800000; /* Border color */
+  border-radius: 10px; /* Slightly larger border radius for a softer look */
+  padding: 20px 10px; /* Increased padding for vertical size */
+  width: 250px; /* Fixed width for all buttons */
+  font-size: 16px; /* Font size */
+  font-weight: bold; /* Makes the text stand out */
+  cursor: pointer; /* Pointer cursor on hover */
+  text-align: center; /* Centers the text inside the button */
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
   font-family: "Glacial Indifference", sans-serif;
 }
 
 .secondary-button:hover {
-  background-color: #800000; /* Maroon background */
-  color: white; /* White text on hover */
+  background-color: #ebebeb; /* Light gray on hover */
+  color: #800000; /* Maroon text on hover */
+  transform: scale(1.05); /* Slight zoom effect on hover */
 }
 
 /* Modal container styling */
 .modal {
   padding: 25px;
   border-radius: 8px;
-  background-color: #fff;
+  background-color: #ffffff;
   max-width: 400px;
   width: 100%;
   margin: auto;

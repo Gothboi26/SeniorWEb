@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "./Emergency.css"; // Link to the updated CSS file
+import Navbar from "./Navbar"; // Import the Navbar component
 
-const Emergency = () => {
+const Emergency = ({ role, handleLogout }) => {
   const [modal, setModal] = useState(null);
   const [ambulanceData, setAmbulanceData] = useState({
     location: "",
@@ -73,43 +74,60 @@ const Emergency = () => {
 
   return (
     <div className="emergency-container">
-      <h1 className="big-header">Emergency Services</h1>
-      <div className="button-container">
+      <Navbar role={role} handleLogout={handleLogout} />
+      <h4 className="section-title">EMERGENCY SERVICES</h4>
+      <h2 className="section-call">Need Help? Call someone </h2>
+      <p className="emergency-instructions">
+        Paalaala: Sa oras ng emergency, pindutin ang tamang button para sa nais
+        tawagan: <br />- Barangay Hotline <br />- Health Center <br />- Pulis o
+        Bumbero <br />
+        Siguraduhing ibigay ang tamang detalye tulad ng lokasyon, uri ng
+        emergency, at contact number.
+        <br />
+        Laging unahin ang kaligtasan!
+      </p>
+
+      {/* Emergency Buttons */}
+      <div className="button-container-column">
         <button
-          className="emergency-services-button"
+          className="emergency-button"
           onClick={() => openModal("ambulance")}
         >
-          CALL AN AMBULANCE
+          <span className="icon">🚑</span>
+          Ambulance
         </button>
         <button
-          className="emergency-services-button"
+          className="emergency-button"
           onClick={() => openModal("police")}
         >
-          CALL A POLICE
+          <span className="icon">🚓</span>
+          Police Department
         </button>
-        <button
-          className="rectangular-button"
-          onClick={() => openModal("fire")}
-        >
-          FIRE DEPARTMENT
+        <button className="emergency-button" onClick={() => openModal("fire")}>
+          <span className="icon">🚒</span>
+          Fire Department
         </button>
+      </div>
+
+      {/* Rectangular Buttons */}
+      <div className="button-container-row">
         <button
           className="rectangular-button"
           onClick={() => openModal("contacts")}
         >
-          EMERGENCY CONTACTS
+          📞 Emergency Contacts
         </button>
         <button
           className="rectangular-button"
           onClick={() => openModal("hotlines")}
         >
-          EMERGENCY HOTLINES
+          ☎️ Emergency Hotlines
         </button>
-        {/* Button to view all submitted data */}
         <button className="rectangular-button" onClick={showSubmittedData}>
-          VIEW SUBMITTED DATA
+          📋 View Submitted Data
         </button>
       </div>
+
       <a className="back-link" href="/">
         Back to Home
       </a>

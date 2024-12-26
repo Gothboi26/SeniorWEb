@@ -42,11 +42,11 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/profile" element={<Profile  role={role} />} />
+        <Route path="/profile" element={<Profile role={role} />} />
         <Route path="/senior-list" element={<SeniorList />} />
-        <Route path="/senior-care" element={<SeniorCare  role={role} />} />
-        <Route path="/emergency" element={<Emergency />} />
-        <Route path="/chat" element={<Chat />} />
+        <Route path="/senior-care" element={<SeniorCare role={role} />} />
+        <Route path="/emergency" element={<Emergency role={role} />} />
+        <Route path="/chat" element={<Chat role={role} />} />
       </Routes>
 
       {/* Render Navbar and other content when not on /emergency or /chat routes */}
@@ -56,7 +56,9 @@ function App() {
         !location.pathname.includes("/emergency") &&
         !location.pathname.includes("/chat") && (
           <>
-            {role === "client" && <Navbar handleLogout={handleLogout} role={role} />}
+            {role === "client" && (
+              <Navbar handleLogout={handleLogout} role={role} />
+            )}
             {role && <header className="App-header"></header>}
             <main className="App-content">
               {!role ? (

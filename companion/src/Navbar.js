@@ -1,10 +1,11 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "./Navbar.css";
+import logo from "./logo.png";
 
 function Navbar({ handleLogout, role }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  // Toggle the sidebar
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -16,58 +17,69 @@ function Navbar({ handleLogout, role }) {
 
   return (
     <nav className="Navbar">
-      <div className="Navbar-logo">Brgy. Gen. T. De Leon</div>
+      <div className="Navbar-logo-container">
+        <img src={logo} alt="Logo" />
+        <div className="Navbar-logo">Brgy. Gen. T. De Leon</div>
+      </div>
 
-      {/* Hamburger icon for small screens */}
       <div className="Navbar-hamburger" onClick={toggleSidebar}>
         <div className="Navbar-hamburger-icon"></div>
         <div className="Navbar-hamburger-icon"></div>
         <div className="Navbar-hamburger-icon"></div>
       </div>
 
-      {/* Sidebar */}
       <div className={`Sidebar ${isSidebarOpen ? "open" : ""}`}>
         <ul className="Sidebar-links">
           <li>
-            <a href="#home">Home</a>
+            <Link to="#home">Home</Link>
           </li>
           <li>
-            <a href="#seniorcare">Senior Care</a>
+            <Link to="./senior-care">Senior Care</Link>
           </li>
           <li>
-            <a href="#events">Events</a>
+            <Link to="#events">Events</Link>
           </li>
           <li>
-            <a href="#contact">Contact</a>
+            <Link to="#contact">Contact</Link>
           </li>
           <li>
-            <a onClick={handleLogout} className="Navbar-links-a" href="#logout">
+            <Link
+              onClick={handleLogout}
+              className="Navbar-links-a"
+              to="#logout"
+            >
               Logout
-            </a>
+            </Link>
+          </li>
+          <li>
+            <Link to="/profile">Edit Profile</Link>
           </li>
         </ul>
       </div>
 
-      {/* Main content area that adjusts to show Sidebar */}
       <ul className="Navbar-links">
         <li>
-          <a href="#home">Home</a>
+          <Link to="#home">Home</Link>
         </li>
         <li>
-          <a href="#seniorcare">Senior Care</a>
+          <Link to="./senior-care">Senior Care</Link>
         </li>
         <li>
-          <a href="#events">Events</a>
+          <Link to="#events">Events</Link>
         </li>
         <li>
-          <a href="#contact">Contact</a>
+          <Link to="#contact">Contact</Link>
         </li>
         <li>
-          <a onClick={handleLogout} className="Navbar-links-a" href="#logout">
+          <Link onClick={handleLogout} className="Navbar-links-a" to="#logout">
             Logout
-          </a>
+          </Link>
         </li>
       </ul>
+
+      <div className="Navbar-edit-profile">
+        <Link to="/profile">Edit Profile</Link>
+      </div>
     </nav>
   );
 }

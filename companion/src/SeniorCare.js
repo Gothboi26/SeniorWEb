@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
 import "./SeniorCare.css";
+import Navbar from "./Navbar";
 
-const SeniorCare = ({ role }) => {
+const SeniorCare = ({ role, handleLogout }) => {
   // State to control the modal visibility and modal content
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
@@ -68,10 +69,16 @@ const SeniorCare = ({ role }) => {
 
   return (
     <div className="senior-care-container">
-      <h2 className="section-title">Mga Hakbang sa Pag-book ng Appointment</h2>
+      <Navbar role={role} handleLogout={handleLogout} />
+      <h4 className="section-title">SENIOR CARE</h4>
+      <h2 className="section-appointment">Book an Appointment</h2>
       <ol className="instruction-list">
         <li>
           <strong>Piliin ang Serbisyong Kailangan:</strong>
+          <strong>
+            Mga Hakbang sa Pag-book ng Appointment Gamit ang Aplikasyon para sa
+            Serbisyong Pangkalusugan at Iba Pa para sa mga Nakatatanda
+          </strong>
           <p>
             Hanapin ang mga serbisyong pangkalusugan tulad ng health check-up,
             masahe, libreng gamot, dental check-up, o eye check-up.
@@ -112,11 +119,10 @@ const SeniorCare = ({ role }) => {
       </ol>
       <p className="note">
         <strong>Paalala:</strong>
-        Sa pamamagitan ng pag-book ng appointment sa app, kayo ay bibigyan ng
+        Sa pamamagitan ng pag-book ng appointment, kayo ay bibigyan ng
         prayoridad sa clinic o health center. Hindi na kailangang maghintay ng
         matagal dahil nakatakda na ang inyong oras.
       </p>
-
       {/* Conditionally render buttons based on role */}
       {role === "client" && (
         <div className="button-container">
@@ -140,7 +146,6 @@ const SeniorCare = ({ role }) => {
           </button>
         </div>
       )}
-
       {/* Modal */}
       <Modal
         isOpen={modalIsOpen}
@@ -246,7 +251,6 @@ const SeniorCare = ({ role }) => {
 
         <button onClick={closeModal}>Close</button>
       </Modal>
-
       <a href="/" className="back-link">
         Back to Home
       </a>

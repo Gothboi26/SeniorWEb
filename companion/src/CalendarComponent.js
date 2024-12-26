@@ -12,7 +12,7 @@ import "./SeniorCare.css";
 import "./Profile.css";
 import SeniorList from "./SeniorList";
 import "./Sidebar.css";
-import logo from './logo.png';
+import logo from "./logo.png";
 
 Modal.setAppElement("#root");
 
@@ -20,7 +20,17 @@ Modal.setAppElement("#root");
 const RectangleSection = ({ role }) => {
   return (
     <div className="rectangle21">
-      {role === "client" && <div className="rectangle23 paalala1">PAALALA</div>}
+      {role === "client" && (
+        <div className="rectangle23 paalala1">
+          <h2>PAALALA:</h2>
+          <p>
+            Ang doktor ay available lamang sa Barangay Tiburcio De Leon Health
+            Center tuwing LUNES (Monday) at MIYERKULES (Wednesday) simula
+            8AM-6PM lamang.
+          </p>
+          <p>Para sa detalye, makipag-ugnayan sa health center.</p>
+        </div>
+      )}
 
       {role === "client" && (
         <div className="rectangle23 seniorcare">
@@ -32,8 +42,23 @@ const RectangleSection = ({ role }) => {
                 compassion and expertise.
               </p>
               <button className="homepage-senior-care-button">
-                <span className="homepage-senior-care-button-icon">📅</span>
-                <span className="homepage-senior-care-button-text">Book</span>
+                <span className="senior-care-button-icon">📅</span>
+                <span className="senior-care-button-text">Book</span>
+              </button>
+            </div>
+          </Link>
+        </div>
+      )}
+
+      {role === "admin" && (
+        <div className="rectangle23 seniorlist">
+          <Link to="/senior-list" className="link-container">
+            <div className="homepage-senior-list-content">
+              <h2>Senior List</h2>
+              <p>Manage and review the senior care list efficiently.</p>
+              <button className="senior-list-button">
+                <span className="senior-list-button-icon">📋</span>
+                <span className="senior-list-button-text">Seniors</span>
               </button>
             </div>
           </Link>
@@ -45,7 +70,7 @@ const RectangleSection = ({ role }) => {
           <div className="emergency-services-content">
             <h2>Emergency Services</h2>
             <p>Ensure quick and reliable assistance during emergencies.</p>
-            <button className="emergency-services-button">
+            <button className="homepage-emergency-services-button">
               <span className="emergency-services-button-icon">📞</span>
               <span className="emergency-services-button-text">Call</span>
             </button>
@@ -58,14 +83,13 @@ const RectangleSection = ({ role }) => {
           <div className="chat-assistance-content">
             <h2>Chat Assistance</h2>
             <p>Get prompt responses to your inquiries and support needs.</p>
-            <button className="chat-assistance-button">
+            <button className="homepage-chat-assistance-button">
               <span className="chat-assistance-button-icon">💬</span>
               <span className="chat-assistance-button-text">Chat</span>
             </button>
           </div>
         </Link>
       </div>
-
     </div>
   );
 };
@@ -80,7 +104,6 @@ function CalendarComponent() {
   const [eventText, setEventText] = useState("");
   const [eventTitle, setEventTitle] = useState("");
   const [selectedOption, setSelectedOption] = useState("overview");
-
 
   useEffect(() => {
     fetchEvents(date);
@@ -169,62 +192,115 @@ function CalendarComponent() {
     navigate("/"); // Redirect to login page after logout
   };
 
-    if (role === "admin") {
-      return (
-        <div className="admin-layout">
-          <div className="sidebar">
-              {/* Logo and Text */}
-              <div className="sidebar-logo">
-                <img src={logo} alt="Logo" className="sidebar-logo-img" />
-                <span className="sidebar-logo-text">Brgy. Gen. T. De Leon</span>
-              </div>
-
-              <ul>
-                <li onClick={() => setSelectedOption("overview")} className="sidebar1-item">
-                  <img src="/icons/overview.png" alt="Logo" className="sidebar1-logo-img" />
-                  Overview
-              </li>
-              <li onClick={() => setSelectedOption("seniors")} className="sidebar1-item">
-                  <img src="/icons/seniors.png" alt="Logo" className="sidebar1-logo-img" />
-                  Seniors
-              </li>
-              <li onClick={() => setSelectedOption("events")} className="sidebar1-item">
-                  <img src="/icons/events.png" alt="Logo" className="sidebar1-logo-img" />
-                  Events
-              </li>
-              <li onClick={() => setSelectedOption("appointments")} className="sidebar1-item">
-                  <img src="/icons/app.png" alt="Logo" className="sidebar1-logo-img" />
-                  Appointments
-              </li>
-              <li onClick={() => setSelectedOption("chat")} className="sidebar1-item">
-                  <img src="/icons/chat.png" alt="Logo" className="sidebar1-logo-img" />
-                  Chat Inquiries
-              </li>
-              </ul>
-
-              {/* Horizontal Line */}
-              <hr className="sidebar-divider" />
-
-              {/* Additional Settings and Help & Support */}
-              <ul>
-              <li onClick={() => setSelectedOption("settings")} className="sidebar1-item">
-                  <img src="/icons/settings.png" alt="Logo" className="sidebar1-logo-img" />
-                  Settings
-              </li>
-              <li onClick={() => setSelectedOption("help")} className="sidebar1-item">
-                  <img src="/icons/help.png" alt="Logo" className="sidebar1-logo-img" />
-                  Help & Support
-              </li>
-            </ul>
-
-            {/* Logout Button */}
-            <div className="sidebar-logout" onClick={handleLogout}>
-              Log Out
-                <img src="/icons/logout.png" alt="Logout" className="sidebar-logout-icon" />
-              </div>
+  if (role === "admin") {
+    return (
+      <div className="admin-layout">
+        <div className="sidebar">
+          {/* Logo and Text */}
+          <div className="sidebar-logo">
+            <img src={logo} alt="Logo" className="sidebar-logo-img" />
+            <span className="sidebar-logo-text">Brgy. Gen. T. De Leon</span>
           </div>
-          
-          <div className="main-content">
+
+          <ul>
+            <li
+              onClick={() => setSelectedOption("overview")}
+              className="sidebar1-item"
+            >
+              <img
+                src="/icons/overview.png"
+                alt="Logo"
+                className="sidebar1-logo-img"
+              />
+              Overview
+            </li>
+            <li
+              onClick={() => setSelectedOption("seniors")}
+              className="sidebar1-item"
+            >
+              <img
+                src="/icons/seniors.png"
+                alt="Logo"
+                className="sidebar1-logo-img"
+              />
+              Seniors
+            </li>
+            <li
+              onClick={() => setSelectedOption("events")}
+              className="sidebar1-item"
+            >
+              <img
+                src="/icons/events.png"
+                alt="Logo"
+                className="sidebar1-logo-img"
+              />
+              Events
+            </li>
+            <li
+              onClick={() => setSelectedOption("appointments")}
+              className="sidebar1-item"
+            >
+              <img
+                src="/icons/app.png"
+                alt="Logo"
+                className="sidebar1-logo-img"
+              />
+              Appointments
+            </li>
+            <li
+              onClick={() => setSelectedOption("chat")}
+              className="sidebar1-item"
+            >
+              <img
+                src="/icons/chat.png"
+                alt="Logo"
+                className="sidebar1-logo-img"
+              />
+              Chat Inquiries
+            </li>
+          </ul>
+
+          {/* Horizontal Line */}
+          <hr className="sidebar-divider" />
+
+          {/* Additional Settings and Help & Support */}
+          <ul>
+            <li
+              onClick={() => setSelectedOption("settings")}
+              className="sidebar1-item"
+            >
+              <img
+                src="/icons/settings.png"
+                alt="Logo"
+                className="sidebar1-logo-img"
+              />
+              Settings
+            </li>
+            <li
+              onClick={() => setSelectedOption("help")}
+              className="sidebar1-item"
+            >
+              <img
+                src="/icons/help.png"
+                alt="Logo"
+                className="sidebar1-logo-img"
+              />
+              Help & Support
+            </li>
+          </ul>
+
+          {/* Logout Button */}
+          <div className="sidebar-logout" onClick={handleLogout}>
+            Log Out
+            <img
+              src="/icons/logout.png"
+              alt="Logout"
+              className="sidebar-logout-icon"
+            />
+          </div>
+        </div>
+
+        <div className="main-content">
           <div className="greeting">
             <h1>Hello, ADMIN NAME</h1>
             <p>Good morning!</p>
@@ -232,8 +308,8 @@ function CalendarComponent() {
 
           <div className="content">
             {selectedOption === "overview" && <h2>Admin Overview</h2>}
-              {selectedOption === "seniors" && <SeniorList />}
-              {selectedOption === "events" && (
+            {selectedOption === "seniors" && <SeniorList />}
+            {selectedOption === "events" && (
               <div>
                 <h2>Events</h2>
                 {/* Include content for Appointments */}
@@ -262,13 +338,12 @@ function CalendarComponent() {
                 <h2>HEEELPPP AAAAAA</h2>
                 {/* Include content or components for Chat */}
               </div>
-              )}
-          </div>
+            )}
           </div>
         </div>
-      );
-    }
-
+      </div>
+    );
+  }
 
   return (
     <div className="CalendarComponent">
@@ -319,7 +394,7 @@ function CalendarComponent() {
         </div>
       </div>
 
-    {role === "client" && <RectangleSection role={role} />}
+      {role === "client" && <RectangleSection role={role} />}
 
       {/* Add Event Modal */}
       <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="modal">
@@ -341,6 +416,6 @@ function CalendarComponent() {
       </Modal>
     </div>
   );
-};
+}
 
 export default CalendarComponent;

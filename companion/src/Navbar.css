@@ -9,12 +9,23 @@
   padding: 10px 20px;
 }
 
-.Navbar-logo {
-  font-size: 1.2em;
-  font-weight: bold;
-  color: #d60000;
+.Navbar-logo-container {
+  display: flex;
+  align-items: center;
   position: absolute;
   left: 20px;
+}
+
+.Navbar-logo-container img {
+  width: 40px; /* Adjust as needed */
+  height: auto;
+  margin-right: 10px;
+}
+
+.Navbar-logo {
+  font-size: 1em;
+  font-weight: bold;
+  color: #d60000;
 }
 
 .Navbar-links {
@@ -36,7 +47,7 @@
 }
 
 .Navbar-links a:hover {
-  background-color: #555;
+  background-color: #bbbbbb;
   border-radius: 4px;
 }
 
@@ -51,6 +62,26 @@
 .Navbar-links-a:hover {
   background-color: #800000;
   border-radius: 4px;
+}
+.Navbar-edit-profile {
+  position: absolute;
+  right: 20px; /* Position it to the right edge */
+}
+
+.Navbar-edit-profile a {
+  color: #fff; /* Set the font color to red */
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.9em;
+  padding: 8px;
+  transition: background-color 0.3s;
+  background-color: #c31c1c;
+  border-radius: 15px;
+}
+
+.Navbar-edit-profile a:hover {
+  background-color: #800000; /* Optional: Add a hover effect */
+  border-radius: 15px;
 }
 
 /* Sidebar Styling */
@@ -89,7 +120,7 @@
 }
 
 .Sidebar-links a:hover {
-  background-color: #555;
+  background-color: #aaa9a9;
   border-radius: 4px;
 }
 
@@ -113,6 +144,9 @@
 
 @media (max-width: 768px) {
   .Navbar-links {
+    display: none;
+  }
+  .Navbar-edit-profile {
     display: none;
   }
 

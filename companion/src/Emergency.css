@@ -6,31 +6,41 @@ body {
   background-color: #f9f9f9; /* Light background */
 }
 
-/* Big Header Styling */
-.big-header {
-  font-size: 48px; /* Large font size for the header */
-  color: #800000; /* Maroon color */
-  text-align: center; /* Center align the header */
-  margin-bottom: 20px; /* Add space below the header */
+.emergency-instructions {
+  font-size: 18px;
+  line-height: 2;
+  color: #333;
+  text-align: justify;
+  padding: 0 30%; /* Add horizontal padding to center the content visually */
 }
 
-/* Container Styling */
-.emergency-container {
-  text-align: center;
-  padding: 20px;
-}
-
-/* Button Container */
 .button-container {
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  justify-content: center; /* Center buttons horizontally */
   gap: 20px; /* Space between buttons */
-  margin-bottom: 20px;
+  margin-top: 20px;
+  flex-wrap: nowrap; /* Prevent buttons from wrapping to the next line */
 }
 
-/* Square Buttons (Main Buttons) */
-.emergency-services-button {
+.button-container-column {
+  display: flex;
+  flex-direction: row; /* Keep the buttons in a row */
+  justify-content: center; /* Center the buttons horizontally within the container */
+  align-items: center; /* Optionally center the buttons vertically if needed */
+  gap: 50px; /* Space between buttons */
+  margin-top: 20px;
+  width: 100%; /* Ensures the container takes full width of its parent */
+}
+.button-container-row {
+  display: flex;
+  flex-direction: column; /* Keep the buttons in a row */
+  justify-content: center; /* Center the buttons horizontally within the container */
+  align-items: center; /* Optionally center the buttons vertically if needed */
+  gap: 20px; /* Space between buttons */
+  margin-top: 20px;
+  width: 100%; /* Ensures the container takes full width of its parent */
+}
+.homepage-emergency-services-button {
   background-color: #800000; /* Maroon background */
   color: white; /* White text */
   border: none;
@@ -46,30 +56,74 @@ body {
   gap: 8px; /* Space between icon and text */
   position: relative; /* Make button the reference point for absolute positioning */
 }
+/* Emergency Button Styling */
+.emergency-button {
+  background-color: #c31c1c;
+  color: #f8f8f8;
+  border: none;
+  border-radius: 25px;
+  padding: 15px 30px;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column; /* Stack icon on top of text */
+  align-items: center; /* Center the icon and text */
+  justify-content: center; /* Center buttons horizontally */
+  gap: 10px; /* Space between icon and text */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+  width: 150px; /* Optional: Set a fixed width for buttons */
+  height: 150px; /* Optional: Set a fixed height for buttons */
+}
 
-.emergency-services-button:hover {
-  background-color: #a00000; /* Darker maroon on hover */
+.emergency-button:hover {
+  background-color: #800000;
+  color: #e7e7e7;
+}
+
+.emergency-button .icon {
+  font-size: 50px;
+}
+
+/* Rectangular Buttons Container */
+.rectangular-buttons-container {
+  display: flex;
+  justify-content: center; /* Center buttons horizontally */
+  gap: 20px; /* Space between buttons */
+  margin-top: 20px;
 }
 
 /* Rectangular Buttons */
 .rectangular-button {
-  background-color: #800000; /* Maroon */
-  color: white;
+  background-color: #c31c1c;
+  color: #f8f8f8;
   border: none;
-  border-radius: 8px;
-  padding: 10px 15px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  border-radius: 30px;
+  padding: 15px 30px;
+  font-size: 25px;
   display: flex;
-  align-items: center;
+  flex-direction: column; /* Stack icon on top of text */
+  align-items: center; /* Center the icon and text */
   justify-content: center;
-  width: 300px; /* Rectangle width */
-  height: 80px; /* Rectangle height */
+  gap: 10px; /* Space between icon and text */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+  width: 550px; /* Fixed width for buttons */
+  height: 100px; /* Fixed height for buttons */
 }
 
 .rectangular-button:hover {
-  background-color: #a00000; /* Darker maroon on hover */
+  background-color: #800000; /* Darker maroon on hover */
+}
+
+/* Rectangular Buttons Container */
+.rectangular-buttons-container {
+  display: flex;
+  flex-direction: column; /* Stack buttons vertically */
+  justify-content: center; /* Center buttons vertically within the container */
+  align-items: center; /* Center buttons horizontally */
+  gap: 20px; /* Space between buttons */
+  margin-top: 20px;
+  width: 100%; /* Ensure the container takes up full width */
 }
 
 /* Back to Home Link */
