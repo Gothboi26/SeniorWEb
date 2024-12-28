@@ -18,3 +18,57 @@
 .chat-assistance-button:hover {
   background-color: #a00000; /* Darker red on hover */
 }
+.chat-assistance {
+  background-color: white;
+  width: 100%;
+  max-width: 12000px;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.chat-assistance h2 {
+  color:#a00000;
+  font-size: 28px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.chat-assistance h1 {
+  margin: 10px 0 20px;
+  font-size: 40px;
+  font-weight: normal;
+  text-align: center;
+}
+
+
+
+/* Chat  Section */
+.chat-window {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+  background-color: #f9f9f9;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chat-bubble {
+  max-width: 70%;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.chat-bubble.user {
+  background-color: #a00000;
+  color: white;
+  align-self: flex-end;
+}
+
+.chat-bubble.bot {
+  background-color: #f1f1f1;
+  color: black;
+}
