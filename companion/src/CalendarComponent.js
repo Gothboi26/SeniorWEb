@@ -11,6 +11,7 @@ import "./Chat.css";
 import "./SeniorCare.css";
 import "./Profile.css";
 import SeniorList from "./SeniorList";
+import Appointments from "./Appointments";
 import "./Sidebar.css";
 import logo from "./logo.png";
 
@@ -315,12 +316,7 @@ function CalendarComponent() {
                 {/* Include content for Appointments */}
               </div>
             )}
-            {selectedOption === "appointments" && (
-              <div>
-                <h2>Appointments</h2>
-                {/* Include content for Appointments */}
-              </div>
-            )}
+            {selectedOption === "appointments" && <Appointments />}
             {selectedOption === "chat" && (
               <div>
                 <h2>Chat Inquiries</h2>

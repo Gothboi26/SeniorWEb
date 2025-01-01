@@ -1,0 +1,90 @@
+/* Table container */
+.table-container {
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  max-width: 800px;
+}
+
+/* Left-align the heading */
+.left-aligned {
+  text-align: left;
+  margin-bottom: 20px;
+  font-family: "Glacial Indifference", sans-serif;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+/* Table styles */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.table th,
+.table td {
+  padding: 12px;
+  text-align: left;
+  font-family: "Glacial Indifference", sans-serif;
+}
+
+.table thead th {
+  background-color: #d6e4ff;
+  color: #333;
+  font-size: 14px;
+}
+
+.table tbody tr {
+  border-bottom: 1px solid #ccc;
+}
+
+.table tbody tr:last-child {
+  border-bottom: none;
+}
+
+/* Time text */
+.time-text {
+  color: #008000; /* Green for time */
+  font-weight: bold;
+}
+
+/* Action buttons */
+.action-icons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.approve-button,
+.reject-button {
+  border: none;
+  border-radius: 5px;
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: "Glacial Indifference", sans-serif;
+}
+
+.approve-button {
+  background-color: #008000; /* Green for approve */
+  color: white;
+}
+
+.approve-button:hover {
+  background-color: #006400; /* Dark green on hover */
+}
+
+.reject-button {
+  background-color: #d00000; /* Red for reject */
+  color: white;
+}
+
+.reject-button:hover {
+  background-color: #a00000; /* Dark red on hover */
+}
