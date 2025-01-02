@@ -31,10 +31,10 @@ function Navbar({ handleLogout, role }) {
       <div className={`Sidebar ${isSidebarOpen ? "open" : ""}`}>
         <ul className="Sidebar-links">
           <li>
-            <Link to="#home">Home</Link>
+            <Link to="/">Home</Link> {/* Navigate to the main page */}
           </li>
           <li>
-            <Link to="./senior-care">Senior Care</Link>
+            <Link to="/senior-care">Senior Care</Link>
           </li>
           <li>
             <Link to="#events">Events</Link>
@@ -59,10 +59,10 @@ function Navbar({ handleLogout, role }) {
 
       <ul className="Navbar-links">
         <li>
-          <Link to="#home">Home</Link>
+          <Link to="/">Home</Link> {/* Navigate to the main page */}
         </li>
         <li>
-          <Link to="./senior-care">Senior Care</Link>
+          <Link to="/senior-care">Senior Care</Link>
         </li>
         <li>
           <Link to="#events">Events</Link>
