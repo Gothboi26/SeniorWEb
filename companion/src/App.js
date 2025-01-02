@@ -40,24 +40,18 @@ function App() {
 
   useEffect(() => {
     const storedRole = localStorage.getItem("role");
-    if (storedRole) {
-      setRole(storedRole);
-    } else if (location.pathname === "/") {
-      setRole(null);
-    }
-  }, [location]);
-
-  const handleLogin = (role) => {
-    localStorage.setItem("role", role);
-    setRole(role);
-    navigate("/calendar");
+    if (storedRole) setRole(storedRole);
+  }, []);
+  
+  const handleLogin = (userRole) => {
+    localStorage.setItem("role", userRole);
+    setRole(userRole);
   };
-
+  
   const handleLogout = () => {
     localStorage.removeItem("role");
     setRole(null);
-    navigate("/");
-  };
+  };  
 
   return (
     <div className="App">
