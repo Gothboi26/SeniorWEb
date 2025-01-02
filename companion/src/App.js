@@ -84,7 +84,7 @@ function App() {
                 <div className="login-page">
                   <div className="header"></div>
                   <div className="logo-container">
-                    <h1>Barangay Tiburcio De Leon</h1>
+                    <h1>Barangay General Tiburcio De Leon</h1>
                     <div className="app-logo-container">
                       <img src={logo} alt="Logo" className="app-logo" />
                     </div>
@@ -92,7 +92,7 @@ function App() {
                   </div>
 
                   <div className="login-container">
-                    <h1>Welcome to Barangay Tiburcio De Leon Health Portal!</h1>
+                    <h1>Welcome to Barangay General Tiburcio De Leon Health Portal</h1>
                     <p className="description">
                       This platform is designed to make health services more
                       accessible and convenient for everyone. Here, you can
