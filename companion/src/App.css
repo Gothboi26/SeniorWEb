@@ -26,27 +26,84 @@
 
 /* ----- Footer Section ----- */
 .App-footer {
-  background-color: #1F1785;
-  color: #D9D8D8;
-  padding: 10px;
+  background-color: #1f1785;
+  color: #d9d8d8;
+  padding: 20px;
   font-size: 14px;
   text-align: left;
 }
+
 .App-footer h1 {
   font-size: 18px;
   margin-top: 30px;
   margin-left: 40px;
-  margin-bottom: 0;
-
+  margin-bottom: 10px;
 }
+
+.footer-content {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  margin-left: 40px;
+}
+
+.footer-text1 {
+  flex: 1;
+}
+
 .footer-text1 p {
-  color: #D9D8D8;
   font-size: 13px;
   margin-top: 10px;
-  margin-left: 40px;
   margin-bottom: 20px;
+  line-height: 1.5;
 }
-/* Footer Icons */
+
+.footer-icons-and-links {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 20px; /* Space between icons and links */
+}
+
+.footer-icons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.footer-icons a {
+  display: block;
+}
+
+.footer-icons img {
+  width: 24px; /* Adjust size as needed */
+  height: auto;
+  transition: transform 0.3s;
+}
+
+.footer-icons img:hover {
+  transform: scale(1.1);
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.footer-link {
+  color: #d9d8d8;
+  font-size: 13px;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-link:hover {
+  color: #ffd700;
+}
+
 
 
 

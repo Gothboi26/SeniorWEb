@@ -5,6 +5,8 @@ import { Login } from "./AuthComponents";
 import AdminDashboard from "./AdminDashboard";
 import ClientDashboard from "./ClientDashboard";
 import logo from "./logo.png"; // For login page
+import fb from "./fb.png"; // For fb logo
+import email from "./email.png"; // For email logo
 import Emergency from "./Emergency";
 import Chat from "./Chat";
 import SeniorCare from "./SeniorCare";
@@ -128,24 +130,36 @@ function App() {
             </main>
             <footer className="App-footer">
               <h1>Barangay General Tiburcio De Leon</h1>
-              <div className="footer-text1">
-                <p>
-                  For any inquiries, please contact us. <br></br>
-                  Email:             gentdeleonbarangay@gmail.com <br></br>
-                  Contact Number:    091234567890 
-                </p>
-              </div>
-              <div className="footer-icons">
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-                  <img src={fb} alt="Facebook-Logo" className="fb-logo" />
-                  
-                </a>
-                <a href="mailto:gentdeleonbarangay@gmail.com">
-                  <img src={email} alt="Email-Logo" className="email-logo" />
-                  
-                </a>
+              <div className="footer-content">
+                <div className="footer-text1">
+                  <p>
+                    For any inquiries, please contact us. <br />
+                    Email: gentdeleonbarangay@gmail.com <br />
+                    Contact Number: 091234567890
+                  </p>
+                </div>
+                <div className="footer-icons-and-links">
+                  <div className="footer-icons">
+                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                      <img src={fb} alt="Facebook-Logo" className="icon fb-logo" />
+                    </a>
+                    <a href="mailto:gentdeleonbarangay@gmail.com">
+                      <img src={email} alt="Email-Logo" className="icon email-logo" />
+                    </a>
+                  </div>
+                  <div className="footer-links">
+                    <a href="/terms" className="footer-link">
+                      TERMS OF SERVICE
+                    </a>
+                    <a href="/privacy" className="footer-link">
+                      PRIVACY POLICY
+                    </a>
+                  </div>
+                </div>
               </div>
             </footer>
+
+
           </>
         )}
     </div>
