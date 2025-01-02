@@ -36,12 +36,7 @@ function Navbar({ handleLogout, role }) {
           <li>
             <Link to="/senior-care">Senior Care</Link>
           </li>
-          <li>
-            <Link to="#events">Events</Link>
-          </li>
-          <li>
-            <Link to="#contact">Contact</Link>
-          </li>
+
           <li>
             <Link
               onClick={handleLogout}
@@ -63,12 +58,6 @@ function Navbar({ handleLogout, role }) {
         </li>
         <li>
           <Link to="/senior-care">Senior Care</Link>
-        </li>
-        <li>
-          <Link to="#events">Events</Link>
-        </li>
-        <li>
-          <Link to="#contact">Contact</Link>
         </li>
         <li>
           <Link onClick={handleLogout} className="Navbar-links-a" to="#logout">
