@@ -13,6 +13,7 @@ import "./Profile.css";
 import SeniorList from "./SeniorList";
 import Appointments from "./Appointments";
 import ChatInquiries from "./ChatInquiries";
+import Events from "./Events";
 import "./Sidebar.css";
 import logo from "./logo.png";
 
@@ -311,20 +312,15 @@ function CalendarComponent() {
           <div className="content">
             {selectedOption === "overview" && <h2>Admin Overview</h2>}
             {selectedOption === "seniors" && <SeniorList />}
-            {selectedOption === "events" && (
-              <div>
-                <h2>Events</h2>
-                {/* Include content for Appointments */}
-              </div>
-            )}
+            {selectedOption === "events" && <Events />}
             {selectedOption === "appointments" && <Appointments />}
             {selectedOption === "chat" && (
-  <div>
-    <h2>Chat Inquiries</h2>
-    <ChatInquiries />
-    {/* Include content or components for Chat */}
-  </div>
-)}
+              <div>
+                <h2>Chat Inquiries</h2>
+                <ChatInquiries />
+                {/* Include content or components for Chat */}
+              </div>
+            )}
             {selectedOption === "settings" && (
               <div>
                 <h2>Settings</h2>

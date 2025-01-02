@@ -5,7 +5,9 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin: 20px auto;
-  max-width: 800px;
+  max-width: 100%;
+  width: 90%; /* Ensure the container width is flexible */
+  overflow-x: auto; /* Allow horizontal scroll on smaller screens */
 }
 
 /* Left-align the heading */
@@ -87,4 +89,65 @@
 
 .reject-button:hover {
   background-color: #a00000; /* Dark red on hover */
+}
+
+/* Media Queries for Responsiveness */
+
+/* Medium screens (tablets) */
+@media (max-width: 768px) {
+  .table-container {
+    width: 100%; /* Ensure the table container spans full width */
+    padding: 10px;
+  }
+
+  .table {
+    font-size: 12px;
+  }
+
+  .table th,
+  .table td {
+    padding: 10px;
+  }
+
+  .action-icons {
+    flex-direction: column; /* Stack action buttons vertically */
+    align-items: center;
+  }
+
+  .approve-button,
+  .reject-button {
+    padding: 8px 12px; /* Adjust button padding for smaller screens */
+  }
+}
+
+/* Small screens (mobile devices) */
+@media (max-width: 480px) {
+  .table-container {
+    padding: 5px;
+  }
+
+  .table {
+    font-size: 10px; /* Adjust font size for smaller screens */
+  }
+
+  .table th,
+  .table td {
+    padding: 8px;
+  }
+
+  .action-icons {
+    flex-direction: column; /* Stack action buttons vertically */
+    gap: 5px;
+  }
+
+  .approve-button,
+  .reject-button {
+    padding: 6px 10px;
+    font-size: 12px; /* Adjust button size */
+  }
+
+  /* Ensure the table is scrollable horizontally */
+  .table-container {
+    overflow-x: auto;
+  }
 }
