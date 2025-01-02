@@ -24,6 +24,166 @@
   height: auto; /* Maintain aspect ratio */
 }
 
+
+
+/* ----- Header ----- */
+.header {
+  height: 3rem;
+  background-color: #1F1785;
+}
+
+/* ----- Date and Time Container ----- */
+.date-time-container {
+  font-size: 20px;
+  color: #1E1E1E;
+  margin-right: 40px; /* Aligns it to the right with padding */
+  font-family: "Righteous", sans-serif;
+}
+
+/* Logo Container */
+.logo-container {
+  height: 10rem;
+  display: flex;
+  align-items: center; /* Vertically aligns items */
+  justify-content: space-between; /* Creates space between h1 and logo */
+  padding: 0 20px; /* Adds padding to the container for spacing */
+  box-shadow: 0px 5px 5px #cccccb;
+  position: relative; /* Ensures precise centering of the logo */
+}
+
+.app-logo-container {
+  position: absolute; /* Allows precise placement of the logo */
+  left: 50%;
+  transform: translateX(-50%); /* Centers the logo horizontally */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-logo {
+  width: 130px; /* Adjust the size of the logo */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.logo-container h1 {
+  font-size: 30px;
+  font-family: "Righteous", sans-serif;
+  color: #D60000;
+  margin: 0; /* Removes default margin */
+  margin-left: 40px;
+}
+
+/* Text styling */
+.login-container h1 {
+  font-family: "Righteous", sans-serif;
+}
+
+/* ----- Login-Container ----- */
+.login-container {
+  margin: 45px 20px 40px 20px;
+  padding: 20px;
+}
+
+/* Login-Container h1 */
+.login-container h1 {
+  margin: 0px;
+  margin-bottom: 20px;
+  font-size: 2.3rem;
+  color: #1E1E1E;
+}
+
+/* Login-Container p */
+.login-container p {
+  margin: 0 80px 10px 80px;
+  font-family: "Overpass", sans-serif;
+  font-size: 18px;
+  justify-content: left;
+
+}
+
+.login-container input[type="text"],
+.login-container input[type="password"] {
+  width: 50%;
+  padding: 12px;
+  margin: 5px 0 15px ;
+  border: 1px solid #D9D9D9;
+  border-radius: 15px;
+  font-size: 18px;
+  font-family: "Overpass", sans-serif;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.login-container input[type="text"]:focus,
+.login-container input[type="password"]:focus {
+  border-color: #D60000; /* Adds a subtle highlight effect */
+}
+
+/* Button styling */
+.login-container button {
+  width: 40%;
+  padding: 12px;
+  background-color: #D60000;
+  font-family: "Overpass", sans-serif;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-container button:hover {
+  background-color: #D60000;
+}
+
+/* Form Container */
+.form-container {
+  margin: 40px 10px 40px 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-container label {
+  font-size: 16px;
+  font-family: "Overpass", sans-serif;
+  font-weight: 600;
+  color: #000;
+  margin: 5px 0;
+  text-align: left;
+  width: 50%;
+}
+
+.form-container input {
+  width: 50%;
+  padding: 12px;
+  margin: 5px 0 20px;
+  border: 1px solid #D9D9D9;
+  border-radius: 4px;
+  font-size: 16px;
+  font-family: "Overpass", sans-serif;
+  font-style: italic;
+}
+
+/* Forgot your Password? */
+.forgot-password {
+  margin-top: 10px;
+  margin-right: 0;
+  width: 50%; /* Matches the width of the input fields */
+  font-style: italic;
+  font-size: 14px;
+  text-align: right; 
+  color: #000;
+  cursor: pointer;
+}
+
+.forgot-password:hover {
+  color: #1F1785;
+}
+
 /* ----- Footer Section ----- */
 .App-footer {
   background-color: #1f1785;
@@ -32,7 +192,7 @@
 
 .footer-section {
   color: #d9d8d8;
-  margin: 25px 20px 10px 20px; /* Matches the .login-container margin */
+  margin: 5px 20px 5px 20px; /* Matches the .login-container margin */
   padding: 20px; /* Matches the .login-container padding */
   font-size: 14px;
   text-align: left;
@@ -98,7 +258,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start; /* Align text to the left */
-  gap: 10px;
+  gap: 20px;
 }
 
 .footer-link {
@@ -110,166 +270,4 @@
 
 .footer-link:hover {
   color: #ffd700;
-}
-
-
-
-
-
-/* Header */
-.header {
-  height: 3rem;
-  background-color: #1F1785;
-}
-
-/* Date and Time Container */
-.date-time-container {
-  font-size: 20px;
-  color: #1E1E1E;
-  margin-right: 40px; /* Aligns it to the right with padding */
-  font-family: "Righteous", sans-serif;
-}
-
-/* Logo Container */
-.logo-container {
-  height: 10rem;
-  display: flex;
-  align-items: center; /* Vertically aligns items */
-  justify-content: space-between; /* Creates space between h1 and logo */
-  padding: 0 20px; /* Adds padding to the container for spacing */
-  box-shadow: 0px 5px 5px #cccccb;
-  position: relative; /* Ensures precise centering of the logo */
-}
-
-.app-logo-container {
-  position: absolute; /* Allows precise placement of the logo */
-  left: 50%;
-  transform: translateX(-50%); /* Centers the logo horizontally */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.app-logo {
-  width: 130px; /* Adjust the size of the logo */
-  height: auto; /* Maintain aspect ratio */
-}
-
-.logo-container h1 {
-  font-size: 30px;
-  font-family: "Righteous", sans-serif;
-  color: #D60000;
-  margin: 0; /* Removes default margin */
-  margin-left: 40px;
-}
-
-/* Text styling */
-.login-container h1 {
-  font-family: "Righteous", sans-serif;
-}
-
-/* ----- Login-Container ----- */
-.login-container {
-  margin: 25px 20px 10px 20px;
-  padding: 20px;
-}
-
-/* Login-Container h1 */
-.login-container h1 {
-  margin: 0px;
-  margin-bottom: 20px;
-  font-size: 2.3rem;
-  color: #1E1E1E;
-}
-
-/* Login-Container p */
-.login-container p {
-  margin: 0 80px 10px 80px;
-  font-family: "Overpass", sans-serif;
-  font-size: 18px;
-  justify-content: left;
-
-}
-
-.login-container input[type="text"],
-.login-container input[type="password"] {
-  width: 50%;
-  padding: 12px;
-  margin: 5px 0 15px ;
-  border: 1px solid #D9D9D9;
-  border-radius: 15px;
-  font-size: 18px;
-  font-family: "Overpass", sans-serif;
-  outline: none;
-  box-sizing: border-box;
-  transition: border-color 0.3s ease;
-}
-
-.login-container input[type="text"]:focus,
-.login-container input[type="password"]:focus {
-  border-color: #D60000; /* Adds a subtle highlight effect */
-}
-
-/* Button styling */
-.login-container button {
-  width: 40%;
-  padding: 12px;
-  background-color: #D60000;
-  font-family: "Overpass", sans-serif;
-  color: white;
-  border: none;
-  border-radius: 15px;
-  font-size: 18px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.login-container button:hover {
-  background-color: #D60000;
-}
-
-/* Form Container */
-.form-container {
-  margin: 20px;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.form-container label {
-  font-size: 16px;
-  font-family: "Overpass", sans-serif;
-  font-weight: 600;
-  color: #000;
-  margin: 5px 0;
-  text-align: left;
-  width: 50%;
-}
-
-.form-container input {
-  width: 50%;
-  padding: 12px;
-  margin: 5px 0 20px;
-  border: 1px solid #D9D9D9;
-  border-radius: 4px;
-  font-size: 16px;
-  font-family: "Overpass", sans-serif;
-  font-style: italic;
-}
-
-/* ----- Forgot your Password? ----- */
-.forgot-password {
-  margin-top: 10px;
-  margin-right: 0;
-  width: 50%; /* Matches the width of the input fields */
-  font-style: italic;
-  font-size: 14px;
-  text-align: right; 
-  color: #000;
-  cursor: pointer;
-}
-
-.forgot-password:hover {
-  color: #1F1785;
 }
