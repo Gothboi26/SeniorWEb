@@ -1,16 +1,43 @@
+/* General button styles for consistency */
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+/* Add Event Button */
 .add-event-button {
   background-color: #28a745;
   color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  cursor: pointer;
 }
 
 .add-event-button:hover {
   background-color: #218838;
 }
 
+/* Modal Buttons */
+.save-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.cancel-button {
+  background-color: #dc3545;
+  color: white;
+}
+
+.cancel-button:hover {
+  background-color: #c82333;
+}
+
+/* Events Table */
 .events-table {
   width: 100%;
   border-collapse: collapse;
@@ -33,6 +60,7 @@
   color: #888;
 }
 
+/* Buttons inside the Table */
 .edit-button,
 .delete-button {
   border: none;
@@ -42,35 +70,12 @@
   margin: 0 5px;
 }
 
-.modal {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  width: 300px;
-  margin: auto;
+.edit-button:hover,
+.delete-button:hover {
+  opacity: 0.7;
 }
 
-.save-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.cancel-button {
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.cancel-button:hover {
-  background-color: #c82333;
-}
+/* Header */
 .events-header {
   display: flex;
   justify-content: space-between;
@@ -84,17 +89,162 @@
   color: #333;
 }
 
-.add-event-button {
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+/* Sort Options */
+.sort-options {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
-.add-event-button:hover {
-  background-color: #218838;
+.sort-options select,
+.sort-options button {
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 5px;
 }
+
+.sort-options select {
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.sort-options select:focus {
+  outline: none;
+  border-color: #4d90fe;
+}
+
+.sort-options button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+}
+
+.sort-options button:hover {
+  background-color: #45a049;
+}
+
+.sort-options button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Toggle Events Button */
+.toggle-events-button {
+  background-color: #2196F3;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.toggle-events-button:hover {
+  background-color: #1976D2;
+}
+
+/* Filters */
+.filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filter-date input {
+  padding: 5px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.filter-date {
+  display: inline-block;
+}
+
+/* Modal */
+.modal {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+}
+
+.modal input,
+.modal textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.modal textarea {
+  resize: vertical;
+}
+
+/* Events Table No Events Message */
+.no-events {
+  text-align: center;
+  color: #888;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+  .events-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .sort-options {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .events-table {
+    font-size: 14px;
+  }
+
+  .events-header h2 {
+    font-size: 1.5rem;
+  }
+
+  /* Make buttons and inputs responsive */
+  button,
+  input,
+  select,
+  .save-button,
+  .cancel-button,
+  .toggle-events-button {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* Make modal content more responsive */
+  .modal {
+    max-width: 100%;
+    padding: 15px;
+  }
+
+  /* Adjust table for mobile view */
+  .events-table th,
+  .events-table td {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  /* Input fields in the modal */
+  .modal input,
+  .modal textarea {
+    font-size: 14px;
+  }
+
+  .modal textarea {
+    font-size: 14px;
+  }
+}
+

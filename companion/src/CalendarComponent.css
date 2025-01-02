@@ -67,6 +67,10 @@ h2 {
   flex-grow: 1; /* Allow it to adjust width if needed */
   border-radius: 10px;
 }
+.react-calendar__tile.highlight-event {
+  background-color:blueviolet;
+  border-radius: 50%;
+}
 
 /* Event list container styling */
 .events-list {

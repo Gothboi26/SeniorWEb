@@ -19,7 +19,6 @@ import logo from "./logo.png";
 
 Modal.setAppElement("#root");
 
-// Role-based section component
 const RectangleSection = ({ role }) => {
   return (
     <div className="rectangle21">
@@ -102,11 +101,9 @@ function CalendarComponent() {
   const location = useLocation(); // Hook to get the current path
   const navigate = useNavigate(); // To navigate programmatically
   const [date, setDate] = useState(new Date());
-  const [events, setEvents] = useState([]);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [eventText, setEventText] = useState("");
-  const [eventTitle, setEventTitle] = useState("");
+  const [events, setEvents] = useState([]); // Initialize events as an empty array
   const [selectedOption, setSelectedOption] = useState("overview");
+  const [eventDates, setEventDates] = useState(new Set()); // To store dates with events
 
   useEffect(() => {
     fetchEvents(date);
@@ -119,60 +116,16 @@ function CalendarComponent() {
         `http://localhost/php/get_events.php?date=${formattedDate}`
       );
       const data = await response.json();
-      setEvents(data);
+      setEvents(data.events || []); // Ensure events is always an array
+
+      // Set event dates based on fetched events
+      const datesWithEvents = new Set(
+        data.events.map((event) => event.event_date)
+      );
+      setEventDates(datesWithEvents); // Update event dates
     } catch (error) {
       console.error("Error fetching events:", error);
-    }
-  };
-
-  const openModal = () => setModalIsOpen(true);
-  const closeModal = () => {
-    setModalIsOpen(false);
-    setEventText("");
-    setEventTitle("");
-  };
-
-  const addEvent = async () => {
-    const formattedDate = date.toISOString().split("T")[0];
-    try {
-      const response = await fetch("http://localhost/php/add_events.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          date: formattedDate,
-          title: eventTitle,
-          description: eventText,
-        }),
-      });
-      const result = await response.json();
-
-      if (result.status === "success") {
-        fetchEvents(date);
-        closeModal();
-      } else {
-        console.error("Error adding event:", result.message);
-      }
-    } catch (error) {
-      console.error("Fetch error:", error);
-    }
-  };
-
-  const deleteEvent = async (eventId) => {
-    try {
-      const response = await fetch(`http://localhost/php/delete_events.php`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: eventId }),
-      });
-      const result = await response.json();
-
-      if (result.status === "success") {
-        fetchEvents(date);
-      } else {
-        console.error("Error deleting event:", result.message);
-      }
-    } catch (error) {
-      console.error("Error deleting event:", error);
+      setEvents([]); // Ensure events is an empty array if error occurs
     }
   };
 
@@ -195,21 +148,23 @@ function CalendarComponent() {
     navigate("/"); // Redirect to login page after logout
   };
 
+  // Function to highlight dates with events
+  const tileClassName = ({ date }) => {
+    const formattedDate = date.toISOString().split("T")[0]; // Format the date
+    return eventDates.has(formattedDate) ? "highlight-event" : null; // Add class if the date has events
+  };
+
   if (role === "admin") {
     return (
       <div className="admin-layout">
         <div className="sidebar">
-          {/* Logo and Text */}
           <div className="sidebar-logo">
             <img src={logo} alt="Logo" className="sidebar-logo-img" />
             <span className="sidebar-logo-text">Brgy. Gen. T. De Leon</span>
           </div>
 
           <ul>
-            <li
-              onClick={() => setSelectedOption("overview")}
-              className="sidebar1-item"
-            >
+            <li onClick={() => setSelectedOption("overview")} className="sidebar1-item">
               <img
                 src="/icons/overview.png"
                 alt="Logo"
@@ -217,10 +172,7 @@ function CalendarComponent() {
               />
               Overview
             </li>
-            <li
-              onClick={() => setSelectedOption("seniors")}
-              className="sidebar1-item"
-            >
+            <li onClick={() => setSelectedOption("seniors")} className="sidebar1-item">
               <img
                 src="/icons/seniors.png"
                 alt="Logo"
@@ -228,10 +180,7 @@ function CalendarComponent() {
               />
               Seniors
             </li>
-            <li
-              onClick={() => setSelectedOption("events")}
-              className="sidebar1-item"
-            >
+            <li onClick={() => setSelectedOption("events")} className="sidebar1-item">
               <img
                 src="/icons/events.png"
                 alt="Logo"
@@ -239,10 +188,7 @@ function CalendarComponent() {
               />
               Events
             </li>
-            <li
-              onClick={() => setSelectedOption("appointments")}
-              className="sidebar1-item"
-            >
+            <li onClick={() => setSelectedOption("appointments")} className="sidebar1-item">
               <img
                 src="/icons/app.png"
                 alt="Logo"
@@ -250,10 +196,7 @@ function CalendarComponent() {
               />
               Appointments
             </li>
-            <li
-              onClick={() => setSelectedOption("chat")}
-              className="sidebar1-item"
-            >
+            <li onClick={() => setSelectedOption("chat")} className="sidebar1-item">
               <img
                 src="/icons/chat.png"
                 alt="Logo"
@@ -263,15 +206,10 @@ function CalendarComponent() {
             </li>
           </ul>
 
-          {/* Horizontal Line */}
           <hr className="sidebar-divider" />
 
-          {/* Additional Settings and Help & Support */}
           <ul>
-            <li
-              onClick={() => setSelectedOption("settings")}
-              className="sidebar1-item"
-            >
+            <li onClick={() => setSelectedOption("settings")} className="sidebar1-item">
               <img
                 src="/icons/settings.png"
                 alt="Logo"
@@ -279,10 +217,7 @@ function CalendarComponent() {
               />
               Settings
             </li>
-            <li
-              onClick={() => setSelectedOption("help")}
-              className="sidebar1-item"
-            >
+            <li onClick={() => setSelectedOption("help")} className="sidebar1-item">
               <img
                 src="/icons/help.png"
                 alt="Logo"
@@ -292,7 +227,6 @@ function CalendarComponent() {
             </li>
           </ul>
 
-          {/* Logout Button */}
           <div className="sidebar-logout" onClick={handleLogout}>
             Log Out
             <img
@@ -318,19 +252,16 @@ function CalendarComponent() {
               <div>
                 <h2>Chat Inquiries</h2>
                 <ChatInquiries />
-                {/* Include content or components for Chat */}
               </div>
             )}
             {selectedOption === "settings" && (
               <div>
                 <h2>Settings</h2>
-                {/* Include content or components for Chat */}
               </div>
             )}
             {selectedOption === "help" && (
               <div>
-                <h2>HEEELPPP AAAAAA</h2>
-                {/* Include content or components for Chat */}
+                <h2>Help & Support</h2>
               </div>
             )}
           </div>
@@ -347,37 +278,23 @@ function CalendarComponent() {
       </div>
       <div className="calendar-container">
         <div className="calendar">
-          <Calendar onChange={onDateChange} value={date} locale="en-US" />
+          <Calendar onChange={onDateChange} value={date} locale="en-US" tileClassName={tileClassName} />
         </div>
 
         <div className="events-slideshow-container">
           <div className="events-list">
             <h3>Events on {date.toDateString()}</h3>
             <ul>
-              {events.length > 0 ? (
+              {events && events.length > 0 ? (
                 events.map((event) => (
                   <li key={event.id}>
-                    <strong>{event.event_title}</strong>:{" "}
-                    {event.event_description}
-                    {role === "admin" && (
-                      <button
-                        onClick={() => deleteEvent(event.id)}
-                        className="delete-event-button"
-                      >
-                        Delete
-                      </button>
-                    )}
+                    <strong>{event.event_title}</strong>Event Name: {event.event_description}
                   </li>
                 ))
               ) : (
-                <p>No events for this date.</p>
+                <p>No events for this date. You can still click on other dates.</p>
               )}
             </ul>
-            {role === "admin" && (
-              <button onClick={openModal} className="add-event-button">
-                Add Event
-              </button>
-            )}
           </div>
 
           {role === "client" && (
@@ -389,25 +306,6 @@ function CalendarComponent() {
       </div>
 
       {role === "client" && <RectangleSection role={role} />}
-
-      {/* Add Event Modal */}
-      <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="modal">
-        <h2>Add Event for {date.toDateString()}</h2>
-        <input
-          type="text"
-          placeholder="Event title"
-          value={eventTitle}
-          onChange={(e) => setEventTitle(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Event description"
-          value={eventText}
-          onChange={(e) => setEventText(e.target.value)}
-        />
-        <button onClick={addEvent}>Save Event</button>
-        <button onClick={closeModal}>Cancel</button>
-      </Modal>
     </div>
   );
 }
