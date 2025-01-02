@@ -112,6 +112,43 @@
   margin: 5px 0 0;
 }
 
+.search-input-wrapper {
+  display: flex;
+  align-items: center;
+  background-color: #f3f7fd;
+  border-radius: 8px;
+  padding: 3px;
+  width: 360px;
+}
+
+.search-icon {
+  font-size: 16px;
+  color: #a0a4ab;
+  margin-right: 8px;
+  margin-left: 3px;
+}
+
+.search-bar {
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 14px;
+  color: #555;
+  width: 100%;
+}
+
+.search-bar::placeholder {
+  color: #a0a4ab;
+}
+
+.header1  {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+
 .content-area {
   background-color: #fff;
   padding: 20px;

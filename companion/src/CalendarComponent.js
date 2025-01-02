@@ -10,6 +10,7 @@ import "./Emergency.css";
 import "./Chat.css";
 import "./SeniorCare.css";
 import "./Profile.css";
+import Overview from "./Overview";
 import SeniorList from "./SeniorList";
 import Appointments from "./Appointments";
 import ChatInquiries from "./ChatInquiries";
@@ -228,7 +229,7 @@ function CalendarComponent() {
           </ul>
 
           <div className="sidebar-logout" onClick={handleLogout}>
-            Log Out
+            Admin Profile
             <img
               src="/icons/logout.png"
               alt="Logout"
@@ -238,13 +239,23 @@ function CalendarComponent() {
         </div>
 
         <div className="main-content">
+          <div className="header1">
           <div className="greeting">
             <h1>Hello, ADMIN NAME</h1>
             <p>Good morning!</p>
+            </div>
+              <div className="search-input-wrapper">
+                <span className="search-icon">🔍</span>
+                <input
+                  type="text"
+                  placeholder="Search for anything"
+                  className="search-bar"
+                />
+              </div>
           </div>
 
           <div className="content">
-            {selectedOption === "overview" && <h2>Admin Overview</h2>}
+            {selectedOption === "overview" && <Overview />}
             {selectedOption === "seniors" && <SeniorList />}
             {selectedOption === "events" && <Events />}
             {selectedOption === "appointments" && <Appointments />}

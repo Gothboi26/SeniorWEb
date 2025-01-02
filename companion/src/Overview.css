@@ -1,0 +1,203 @@
+/* Overview.css */
+
+.overview-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  background-color: #f5f7fc;
+}
+
+.summary-cards {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.card {
+  flex: 1;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.card-light {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #ddd;
+}
+
+.card .count {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 10px 0;
+  color: rgb(0, 0, 0);
+}
+
+.total-patients {
+  border: 1px solid #ddd;  
+  background-color: black; 
+  color: white; 
+}
+
+.total-patients .count {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 10px 0;
+  color: rgb(255, 255, 255);
+}
+
+.total-patients .change {
+  font-size: 0.9rem;
+  color: #d3d1d1;
+}
+
+.card .change {
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.statistics-section {
+  display: flex;
+  gap: 20px;
+}
+
+.statistics {
+  flex: 2;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.stats-chart {
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
+  margin: 20px 0;
+  border-radius: 10px;
+}
+
+.stats-toggle button {
+  margin-right: 10px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+.appointments {
+  flex: 1;
+  background-color: #000;
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.appointment-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.appointment-date {
+  color: rgb(255, 255, 255);
+}
+
+.appointment-content {
+  background-color: #222;
+  padding: 10px;
+  border-radius: 5px;
+  color: #fff;
+  text-align: center;
+}
+
+/* General content styles */
+.content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: aliceblue;
+  border-radius: 20px;
+  height: 88vh;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Table container styles */
+.patients-table-container {
+  background-color: white;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.patients-table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.patients-table-header h2 {
+  font-size: 1.6em;
+  color: #333;
+}
+
+.see-all-button {
+  background-color: #ffffff; /* Green button */
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 6px;
+  padding: 8px 15px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Table styles */
+.patients-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.patients-table th,
+.patients-table td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.patients-table th {
+  background-color: #d6e4ff;
+  color: #333;
+}
+
+.patients-table tr:hover {
+  background-color: #f9f9f9;
+}
+
+.status-confirmed {
+  color: green;
+  font-weight: bold;
+}
+
+.status-pending {
+  color: red;
+  font-weight: bold;
+}
+
+.action-icons {
+  display: flex;
+  gap: 8px;
+}
+
+.action-icons img {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}

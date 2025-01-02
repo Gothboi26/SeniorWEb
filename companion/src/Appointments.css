@@ -6,7 +6,6 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin: 20px auto;
   max-width: 100%;
-  width: 90%; /* Ensure the container width is flexible */
   overflow-x: auto; /* Allow horizontal scroll on smaller screens */
 }
 
