@@ -27,24 +27,30 @@
 /* ----- Footer Section ----- */
 .App-footer {
   background-color: #1f1785;
+  
+}
+
+.footer-section {
   color: #d9d8d8;
-  padding: 20px;
+  margin: 25px 20px 10px 20px; /* Matches the .login-container margin */
+  padding: 20px; /* Matches the .login-container padding */
   font-size: 14px;
   text-align: left;
+  display: flex; /* For horizontal alignment */
+  flex-direction: column;
 }
 
 .App-footer h1 {
   font-size: 18px;
-  margin-top: 30px;
-  margin-left: 40px;
-  margin-bottom: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 .footer-content {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
-  margin-left: 40px;
+  justify-content: space-between; /* Align items horizontally */
+  align-items: center;
 }
 
 .footer-text1 {
@@ -52,32 +58,27 @@
 }
 
 .footer-text1 p {
+  color: #d9d9d9;
   font-size: 13px;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  margin: 0;
   line-height: 1.5;
 }
 
 .footer-icons-and-links {
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 20px; /* Space between icons and links */
+  align-items: center;
+  gap: 20px;
 }
 
 .footer-icons {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 10px;
 }
 
-.footer-icons a {
-  display: block;
-}
-
 .footer-icons img {
-  width: 24px; /* Adjust size as needed */
+  width: 25px; /* Icon size */
   height: auto;
   transition: transform 0.3s;
 }
@@ -86,10 +87,17 @@
   transform: scale(1.1);
 }
 
+.vertical-line {
+  width: 2px;
+  height: 50px;
+  background-color: #d9d8d8;
+}
+
 .footer-links {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: flex-start; /* Align text to the left */
   gap: 10px;
 }
 
@@ -103,6 +111,7 @@
 .footer-link:hover {
   color: #ffd700;
 }
+
 
 
 
