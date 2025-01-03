@@ -47,7 +47,7 @@ function Navbar({ handleLogout, role }) {
             </Link>
           </li>
           <li>
-            <Link to="/profile">Edit Profile</Link>
+            <Link to="/profile">Profile</Link>
           </li>
         </ul>
       </div>
@@ -67,7 +67,7 @@ function Navbar({ handleLogout, role }) {
       </ul>
 
       <div className="Navbar-edit-profile">
-        <Link to="/profile">Edit Profile</Link>
+        <Link to="/profile">Profile</Link>
       </div>
     </nav>
   );
