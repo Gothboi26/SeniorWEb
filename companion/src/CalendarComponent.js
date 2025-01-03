@@ -30,9 +30,11 @@ const RectangleSection = ({ role }) => {
           <p>
             Ang doktor ay available lamang sa Barangay Tiburcio De Leon Health
             Center tuwing LUNES (Monday) at MIYERKULES (Wednesday) simula
-            8AM-6PM lamang.
+            8AM-6PM lamang. <br></br><br></br>
+            Para sa detalye, makipag-ugnayan sa health center.
+          
           </p>
-          <p>Para sa detalye, makipag-ugnayan sa health center.</p>
+          
         </div>
       )}
 

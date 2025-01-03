@@ -335,7 +335,6 @@ h2 {
 .rectangle23.paalala1 {
   display: flex;
   flex-direction: column; /* Stack content vertically */
-  justify-content: space-between; /* Distribute content evenly */
   align-items: center;
   text-align: center;
   border-radius: 40px;
