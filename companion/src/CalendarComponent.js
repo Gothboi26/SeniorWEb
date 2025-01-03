@@ -17,6 +17,7 @@ import ChatInquiries from "./ChatInquiries";
 import Events from "./Events";
 import "./Sidebar.css";
 import logo from "./logo.png";
+import appoint from "./appoint.png"; // For Senior Care logo
 
 Modal.setAppElement("#root");
 
@@ -28,7 +29,7 @@ const RectangleSection = ({ role }) => {
         <div className="rectangle23 paalala1">
           <h2>PAALALA:</h2>
           <p>
-            Ang doktor ay available lamang sa Barangay Tiburcio De Leon Health
+            Ang doktor ay available lamang sa Barangay General Tiburcio De Leon Health
             Center tuwing LUNES (Monday) at MIYERKULES (Wednesday) simula
             8AM-6PM lamang. <br></br><br></br>
             Para sa detalye, makipag-ugnayan sa health center.
@@ -42,7 +43,12 @@ const RectangleSection = ({ role }) => {
         <div className="rectangle23 seniorcare">
           <Link to="/senior-care" className="link-container">
             <div className="senior-care-content">
-              <h2>Senior Care</h2>
+              <div className="SeniorCare-Title">
+                <h2>Senior Care</h2>
+                <img src={appoint} alt="Senior Care-Logo" className="appoint-logo" />
+                
+              </div>
+              
               <p>
               Seniors can book appointments for priority check-ups and health services, reducing wait times and ensuring timely care.
               </p>

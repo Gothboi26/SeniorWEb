@@ -331,7 +331,7 @@ h2 {
 
 
 }
-/* Paalala */
+/* --- Paalala --- */
 .rectangle23.paalala1 {
   display: flex;
   flex-direction: column; /* Stack content vertically */
@@ -348,6 +348,51 @@ h2 {
   
 }
 
+/* --- Senior Care --- */
+
+.rectangle23.seniorcare .SeniorCare-Title {
+  display: flex;
+  flex-direction: row; /* Align h2 and image horizontally */
+  align-items: center; /* Vertically align items */
+  justify-content: space-between; /* Add spacing between elements */
+  margin: 20px 30px 10px; /* Add spacing around the title section */
+}
+
+.rectangle23.seniorcare .appoint-logo {
+  width: 60px; /* Set a fixed width for the logo */
+  height: auto; /* Maintain aspect ratio */
+  margin-left: 10px; /* Add space between the image and h2 */
+  justify-content: right;
+}
+
+.rectangle23.seniorcare h2 {
+  font-family: "Righteous", sans-serif;
+  font-weight: lighter;
+  font-size: 24px;
+  text-align: left;
+  color: #1e1e1e; /* Text color */
+  margin: 0; /* Remove default margins */
+}
+
+.homepage-senior-care-button {
+  margin-top: 15px;
+  padding: 8px 16px;
+  width: 70%;
+  background-color: #D60000;
+  color: #fff;
+  border-radius: 200px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+
+}
+
+.homepage-senior-care-button:hover {
+  background-color: #b30000;
+  transform: scale(1.05); /* Slight zoom on hover */
+}
+
+
 /* Senior Care, Emergency Services, and Chat Assistance */
 .rectangle23.seniorcare, 
 .rectangle23.emergencyservices,
@@ -356,7 +401,6 @@ h2 {
   flex-direction: column; /* Stack content vertically */
   justify-content: space-between; /* Distribute content evenly */
   align-items: center;
-  text-align: center;
   border-radius: 40px;
   height: 350px;
   width: 280px;
@@ -469,22 +513,19 @@ h2 {
   font-size: 18px; /* Adjust icon size */
 }
 
-
-.homepage-senior-care-button,
 .homepage-emergency-services-button,
 .homepage-chat-assistance-button {
   margin-top: 10px;
   padding: 8px 16px;
-  background-color: #800000;
+  background-color: #D60000;
   color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 20px;
   cursor: pointer;
   font-size: 14px;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.homepage-senior-care-button:hover,
 .homepage-emergency-services-button:hover,
 .homepage-chat-assistance-button:hover {
   background-color: #b30000;
