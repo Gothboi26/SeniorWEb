@@ -21,20 +21,24 @@ function Login({ setRole }) {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
+    <div className="form-container">
+      <label htmlFor="username">Email</label>
       <input
         type="text"
+        id="username"
+        placeholder="Juan"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
-        placeholder="Username"
       />
+      <label htmlFor="password">Password</label>
       <input
         type="password"
+        id="password"
+        placeholder="Juan123"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
       />
+      <p className="forgot-password">Forgot Password?</p>
       <button onClick={handleLogin}>Login</button>
     </div>
   );

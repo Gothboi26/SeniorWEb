@@ -42,16 +42,16 @@ function App() {
     const storedRole = localStorage.getItem("role");
     if (storedRole) setRole(storedRole);
   }, []);
-  
+
   const handleLogin = (userRole) => {
     localStorage.setItem("role", userRole);
     setRole(userRole);
   };
-  
+
   const handleLogout = () => {
     localStorage.removeItem("role");
     setRole(null);
-  };  
+  };
 
   return (
     <div className="App">
@@ -86,7 +86,9 @@ function App() {
                   </div>
 
                   <div className="login-container">
-                    <h1>Welcome to Barangay General Tiburcio De Leon Health Portal</h1>
+                    <h1>
+                      Welcome to Barangay General Tiburcio De Leon Health Portal
+                    </h1>
                     <p className="description">
                       This platform is designed to make health services more
                       accessible and convenient for everyone. Here, you can
@@ -94,25 +96,7 @@ function App() {
                       inquiries directly to our health center. Your health and
                       well-being are our priority!
                     </p>
-                    <div className="form-container">
-                      <label htmlFor="username">Email</label>
-                      <input
-                        type="text"
-                        id="username"
-                        placeholder="Juan"
-                      />
-                      <label htmlFor="password">Password</label>
-                      <input
-                        type="password"
-                        id="password"
-                        placeholder="Juan123"
-                      />
-                      <p className="forgot-password">Forgot Password?</p>
-                      <button onClick={() => handleLogin("client")}>
-                        Login
-                      </button>
-                      
-                    </div>
+                    <Login setRole={handleLogin} />
                   </div>
                 </div>
               ) : (
@@ -122,37 +106,53 @@ function App() {
                 </>
               )}
             </main>
-              {role === "client" && (
-                <footer className="App-footer">
-                  <div className="footer-section">
-                    <h1>Barangay General Tiburcio De Leon</h1>
-                    <div className="footer-content">
-                      <div className="footer-text1">
-                        <p>
-                          For any inquiries, please contact us. <br />
-                          Email: gentdeleonbarangay@gmail.com <br />
-                          Contact Number: 091234567890
-                        </p>
+            {role === "client" && (
+              <footer className="App-footer">
+                <div className="footer-section">
+                  <h1>Barangay General Tiburcio De Leon</h1>
+                  <div className="footer-content">
+                    <div className="footer-text1">
+                      <p>
+                        For any inquiries, please contact us. <br />
+                        Email: gentdeleonbarangay@gmail.com <br />
+                        Contact Number: 091234567890
+                      </p>
+                    </div>
+                    <div className="footer-icons-and-links">
+                      <div className="footer-icons">
+                        <a
+                          href="https://facebook.com"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <img
+                            src={fb}
+                            alt="Facebook-Logo"
+                            className="icon fb-logo"
+                          />
+                        </a>
+                        <a href="mailto:gentdeleonbarangay@gmail.com">
+                          <img
+                            src={email}
+                            alt="Email-Logo"
+                            className="icon email-logo"
+                          />
+                        </a>
                       </div>
-                      <div className="footer-icons-and-links">
-                        <div className="footer-icons">
-                          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-                            <img src={fb} alt="Facebook-Logo" className="icon fb-logo" />
-                          </a>
-                          <a href="mailto:gentdeleonbarangay@gmail.com">
-                            <img src={email} alt="Email-Logo" className="icon email-logo" />
-                          </a>
-                        </div>
-                        <div className="vertical-line"></div>
-                        <div className="footer-links">
-                          <a href="/terms" className="footer-link">TERMS OF SERVICE</a>
-                          <a href="/privacy" className="footer-link">PRIVACY POLICY</a>
-                        </div>
+                      <div className="vertical-line"></div>
+                      <div className="footer-links">
+                        <a href="/terms" className="footer-link">
+                          TERMS OF SERVICE
+                        </a>
+                        <a href="/privacy" className="footer-link">
+                          PRIVACY POLICY
+                        </a>
                       </div>
                     </div>
                   </div>
-                </footer>
-              )}
+                </div>
+              </footer>
+            )}
           </>
         )}
     </div>
