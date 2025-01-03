@@ -21,18 +21,18 @@ if ($conn->connect_error) {
 // Handle incoming data
 $data = json_decode(file_get_contents("php://input"), true);
 
-if (isset($data["username"], $data["password"], $data["age"], $data["sex"], $data["address"], $data["healthIssue"], $data["role"])) {
+if (isset($data["username"], $data["password"], $data["age"], $data["sex"], $data["address"], $data["health_issue"], $data["role"])) {
     $username = $data["username"];
     $password = password_hash($data["password"], PASSWORD_BCRYPT);
     $age = $data["age"];
     $sex = $data["sex"];
     $address = $data["address"];
-    $healthIssue = $data["healthIssue"];
+    $health_issue = $data["health_issue"];
     $role = $data["role"];
 
     // Prepare and execute SQL statement
     $stmt = $conn->prepare("INSERT INTO users (username, password, age, sex, address, health_issue, role) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssissss", $username, $password, $age, $sex, $address, $healthIssue, $role);
+    $stmt->bind_param("ssissss", $username, $password, $age, $sex, $address, $health_issue, $role);
 
     if ($stmt->execute()) {
         echo json_encode(["status" => "success", "message" => "Senior added successfully"]);
