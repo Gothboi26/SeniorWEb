@@ -1,4 +1,5 @@
 /* Overview.css */
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 
 .overview-container {
   display: flex;
@@ -6,6 +7,7 @@
   gap: 20px;
   padding: 20px;
   background-color: #f5f7fc;
+  font-family: "Righteous", sans-serif; /* Apply the font family here */
 }
 
 .summary-cards {
@@ -19,7 +21,6 @@
   padding: 20px;
   border-radius: 10px;
   text-align: center;
-  font-family: Arial, sans-serif;
 }
 
 .card-light {

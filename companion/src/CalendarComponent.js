@@ -232,7 +232,7 @@ function CalendarComponent() {
           </ul>
 
           <div className="sidebar-logout" onClick={handleLogout}>
-            Admin Profile
+            Admin Name
             <img
               src="/icons/logout.png"
               alt="Logout"
