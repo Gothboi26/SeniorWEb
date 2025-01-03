@@ -1,36 +1,60 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./SeniorList.css";
 import editIcon from "./edit.png";
 import deleteIcon from "./delete.png";
 
 const SeniorList = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [role] = useState("client"); // Default role for seniors
+  const [patients, setPatients] = useState([]); // State to hold the list of registered users
 
-  const handleRegister = async () => {
-    const newUsername = prompt("Enter username for the new senior:", "");
-    const newPassword = prompt("Enter password for the new senior:", "");
+  // Fetch all registered users
+  useEffect(() => {
+    const fetchPatients = async () => {
+      try {
+        const response = await fetch("http://localhost/php/get_users.php"); // Update with the correct URL
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const result = await response.json();
+        if (result.status === "success") {
+          setPatients(result.data); // Update state with fetched users
+        } else {
+          alert(result.message);
+        }
+      } catch (error) {
+        console.error("Error fetching patients:", error.message);
+      }
+    };
 
-    if (!newUsername || !newPassword) {
+    fetchPatients();
+  }, []);
+
+  // Handle Add Senior
+  const handleAddSenior = async () => {
+    const username = prompt("Enter username for the new senior:", "");
+    const password = prompt("Enter password for the new senior:", "");
+
+    if (!username || !password) {
       alert("Username and password are required!");
       return;
     }
 
-    setUsername(newUsername);
-    setPassword(newPassword);
+    try {
+      const response = await fetch("http://localhost/php/register.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password, role: "client" }),
+      });
 
-    const response = await fetch("http://localhost/php/register.php", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username: newUsername, password: newPassword, role }),
-    });
-    const result = await response.json();
+      const result = await response.json();
 
-    if (result.status === "success") {
-      alert("Senior added successfully");
-    } else {
-      alert(result.message);
+      if (result.status === "success") {
+        alert("Senior added successfully");
+        setPatients((prev) => [...prev, { username, role: "client" }]); // Update state with new senior
+      } else {
+        alert(result.message);
+      }
+    } catch (error) {
+      console.error("Error adding senior:", error.message);
     }
   };
 
@@ -38,46 +62,31 @@ const SeniorList = () => {
     <div className="table-container">
       <div className="table-header">
         <h2>All Patients</h2>
-        <button className="add-senior-button" onClick={handleRegister}>Add Senior</button>
+        <button className="add-senior-button" onClick={handleAddSenior}>Add Senior</button>
       </div>
       <table className="table">
         <thead>
           <tr>
             <th></th>
-            <th>Patient Name</th>
-            <th>Gender</th>
-            <th>Type</th>
-            <th>Status</th>
+            <th>Username</th>
+            <th>Role</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>
-              <input type="checkbox" />
-            </td>
-            <td>Jan Ashley Tinao</td>
-            <td>Male</td>
-            <td>Brain rot</td>
-            <td className="status-confirmed">Confirmed</td>
-            <td className="action-icons">
-              <img src={editIcon} alt="Edit" />
-              <img src={deleteIcon} alt="Delete" />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <input type="checkbox" />
-            </td>
-            <td>Christine Galicia</td>
-            <td>Female</td>
-            <td>Brain rot</td>
-            <td className="status-pending">Pending</td>
-            <td className="action-icons">
-              <img src={editIcon} alt="Edit" />
-              <img src={deleteIcon} alt="Delete" />
-            </td>
-          </tr>
+          {patients.map((patient, index) => (
+            <tr key={index}>
+              <td>
+                <input type="checkbox" />
+              </td>
+              <td>{patient.username}</td>
+              <td>{patient.role}</td>
+              <td className="action-icons">
+                <img src={editIcon} alt="Edit" />
+                <img src={deleteIcon} alt="Delete" />
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
