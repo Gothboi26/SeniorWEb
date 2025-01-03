@@ -374,20 +374,21 @@ h2 {
   margin: 0; /* Remove default margins */
 }
 
-.homepage-senior-care-button {
+.senior-care-button {
   margin-top: 15px;
   padding: 8px 16px;
   width: 70%;
   background-color: #D60000;
   color: #fff;
-  border-radius: 200px;
+  border-radius: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
   cursor: pointer;
   font-size: 14px;
   transition: background-color 0.3s ease, transform 0.3s ease;
 
 }
 
-.homepage-senior-care-button:hover {
+.senior-care-button:hover {
   background-color: #b30000;
   transform: scale(1.05); /* Slight zoom on hover */
 }
@@ -415,6 +416,78 @@ h2 {
   text-align: left;
   color: #1e1e1e; /* Text color */
   margin: 0; /* Remove default margins */
+}
+
+.emergency-services-button {
+  margin-top: 15px;
+  padding: 8px 16px;
+  width: 70%;
+  background-color: #D60000;
+  color: #fff;
+  border-radius: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+
+}
+
+.emergency-services-button:hover {
+  background-color: #b30000;
+  transform: scale(1.05); /* Slight zoom on hover */
+}
+
+/* --- Chat Assistance --- */
+.rectangle23.chatassistance .Chat-Title {
+  display: flex;
+  flex-direction: row; /* Align h2 and image horizontally */
+  align-items: center; /* Vertically align items */
+  justify-content: space-between; /* Add spacing between elements */
+  margin: 20px 30px 10px; /* Add spacing around the title section */
+}
+
+.rectangle23.chatassistance .chat-logo {
+  width: 60px; /* Set a fixed width for the logo */
+  height: auto; /* Maintain aspect ratio */
+  margin-left: 10px; /* Add space between the image and h2 */
+  justify-content: right;
+}
+
+.rectangle23.chatassistance h2 {
+  font-family: "Righteous", sans-serif;
+  font-weight: lighter;
+  font-size: 24px;
+  text-align: left;
+  color: #1e1e1e; /* Text color */
+  margin: 0; /* Remove default margins */
+}
+
+.chat-assistance-button {
+  margin-top: 15px;
+  padding: 8px 16px;
+  width: 70%;
+  background-color: #D60000;
+  color: #fff;
+  border-radius: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+
+}
+
+.chat-assistance-button:hover {
+  background-color: #b30000;
+  transform: scale(1.05); /* Slight zoom on hover */
+}
+
+.senior-care-button-text,
+.emergency-services-button-text,
+.chat-assistance-button-text {
+  font-family: "Righteous", sans-serif;
+  font-weight: lighter;
+  font-size: 18px;
+  
 }
 
 
@@ -521,40 +594,6 @@ h2 {
 .link-container {
   text-decoration: none; /* Removes underline */
   color: inherit; /* Inherits text color */
-}
-
-
-/* Emergency services and Chat Assistance buttons */
-.homepage-emergency-services-button,
-.homepage-chat-assistance-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px; /* Spacing for icon and text */
-}
-
-.homepage-emergency-services-button .emergency-services-button-icon,
-.homepage-chat-assistance-button .chat-assistance-button-icon {
-  font-size: 18px; /* Adjust icon size */
-}
-
-.homepage-emergency-services-button,
-.homepage-chat-assistance-button {
-  margin-top: 10px;
-  padding: 8px 16px;
-  background-color: #D60000;
-  color: #fff;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.homepage-emergency-services-button:hover,
-.homepage-chat-assistance-button:hover {
-  background-color: #b30000;
-  transform: scale(1.05); /* Slight zoom on hover */
 }
 
 @media (max-width: 768px) {

@@ -19,6 +19,7 @@ import "./Sidebar.css";
 import logo from "./logo.png";
 import appoint from "./appoint.png"; // For Senior Care logo
 import emergency from "./emergency.png"; // For Emergency Services logo
+import chat from "./chat.png"; // For Chat Assistance logo
 
 Modal.setAppElement("#root");
 
@@ -51,8 +52,8 @@ const RectangleSection = ({ role }) => {
               <p>
               Seniors can book appointments for priority check-ups and health services, reducing wait times and ensuring timely care.
               </p>
-              <button className="homepage-senior-care-button">
-                <span className="senior-care-button-icon">📅</span>
+              <button className="senior-care-button">
+                
                 <span className="senior-care-button-text">Book</span>
               </button>
             </div>
@@ -67,7 +68,7 @@ const RectangleSection = ({ role }) => {
               <h2>Senior List</h2>
               <p>Manage and review the senior care list efficiently.</p>
               <button className="senior-list-button">
-                <span className="senior-list-button-icon">📋</span>
+               
                 <span className="senior-list-button-text">Seniors</span>
               </button>
             </div>
@@ -82,11 +83,11 @@ const RectangleSection = ({ role }) => {
             <div className="Emergency-Title">
                 <h2>Emergency Services</h2>
                 <img src={emergency} alt="Emergency-Logo" className="emergency-logo" />
-              </div>
+            </div>
             
             <p>Easily call an ambulance, police, or notify family during emergencies with a single tap.</p>
-            <button className="homepage-emergency-services-button">
-              <span className="emergency-services-button-icon">📞</span>
+            <button className="emergency-services-button">
+              
               <span className="emergency-services-button-text">Call</span>
             </button>
           </div>
@@ -96,10 +97,14 @@ const RectangleSection = ({ role }) => {
       <div className="rectangle23 chatassistance">
         <Link to="/chat" className="link-container">
           <div className="chat-assistance-content">
-            <h2>Chat Assistance</h2>
+            <div className="Chat-Title">
+                <h2>Chat Assistance</h2>
+                <img src={chat} alt="Chat-Logo" className="chat-logo" />
+            </div>
+            
             <p>Communicate with barangay officials for support and inquiries through in-app chat.</p>
-            <button className="homepage-chat-assistance-button">
-              <span className="chat-assistance-button-icon">💬</span>
+            <button className="chat-assistance-button">
+             
               <span className="chat-assistance-button-text">Chat</span>
             </button>
           </div>
