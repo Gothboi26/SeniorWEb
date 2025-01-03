@@ -13,6 +13,7 @@ import "./Profile.css";
 import Overview from "./Overview";
 import SeniorList from "./SeniorList";
 import Appointments from "./Appointments";
+import EmergenciesAdmin from "./EmergenciesAdmin";
 import ChatInquiries from "./ChatInquiries";
 import Events from "./Events";
 import "./Sidebar.css";
@@ -27,92 +28,100 @@ const RectangleSection = ({ role }) => {
   return (
     <div className="choices">
       <div className="rectangle21">
-      {role === "client" && (
-        <div className="rectangle23 paalala1">
-          <h2>PAALALA:</h2>
-          <p>
-            Ang doktor ay available lamang sa Barangay General Tiburcio De Leon Health
-            Center tuwing LUNES (Monday) at MIYERKULES (Wednesday) simula
-            8AM-6PM lamang. <br></br><br></br>
-            Para sa detalye, makipag-ugnayan sa health center.
-          
-          </p>
-          
-        </div>
-      )}
-
-      {role === "client" && (
-        <div className="rectangle23 seniorcare">
-          <Link to="/senior-care" className="link-container">
-            <div className="senior-care-content">
-              <div className="SeniorCare-Title">
-                <h2>Senior Care</h2>
-                <img src={appoint} alt="Senior Care-Logo" className="appoint-logo" />
-              </div>
-              <p>
-              Seniors can book appointments for priority check-ups and health services, reducing wait times and ensuring timely care.
-              </p>
-              <button className="senior-care-button">
-                
-                <span className="senior-care-button-text">Book</span>
-              </button>
-            </div>
-          </Link>
-        </div>
-      )}
-      
-      {role === "admin" && (
-        <div className="rectangle23 seniorlist">
-          <Link to="/senior-list" className="link-container">
-            <div className="homepage-senior-list-content">
-              <h2>Senior List</h2>
-              <p>Manage and review the senior care list efficiently.</p>
-              <button className="senior-list-button">
-               
-                <span className="senior-list-button-text">Seniors</span>
-              </button>
-            </div>
-          </Link>
-        </div>
-      )}
-      
-
-      <div className="rectangle23 emergencyservices">
-        <Link to="/emergency" className="link-container">
-          <div className="emergency-services-content">
-            <div className="Emergency-Title">
-                <h2>Emergency Services</h2>
-                <img src={emergency} alt="Emergency-Logo" className="emergency-logo" />
-            </div>
-            
-            <p>Easily call an ambulance, police, or notify family during emergencies with a single tap.</p>
-            <button className="emergency-services-button">
-              
-              <span className="emergency-services-button-text">Call</span>
-            </button>
+        {role === "client" && (
+          <div className="rectangle23 paalala1">
+            <h2>PAALALA:</h2>
+            <p>
+              Ang doktor ay available lamang sa Barangay General Tiburcio De
+              Leon Health Center tuwing LUNES (Monday) at MIYERKULES (Wednesday)
+              simula 8AM-6PM lamang. <br></br>
+              <br></br>
+              Para sa detalye, makipag-ugnayan sa health center.
+            </p>
           </div>
-        </Link>
-      </div>
+        )}
 
-      <div className="rectangle23 chatassistance">
-        <Link to="/chat" className="link-container">
-          <div className="chat-assistance-content">
-            <div className="Chat-Title">
+        {role === "client" && (
+          <div className="rectangle23 seniorcare">
+            <Link to="/senior-care" className="link-container">
+              <div className="senior-care-content">
+                <div className="SeniorCare-Title">
+                  <h2>Senior Care</h2>
+                  <img
+                    src={appoint}
+                    alt="Senior Care-Logo"
+                    className="appoint-logo"
+                  />
+                </div>
+                <p>
+                  Seniors can book appointments for priority check-ups and
+                  health services, reducing wait times and ensuring timely care.
+                </p>
+                <button className="senior-care-button">
+                  <span className="senior-care-button-text">Book</span>
+                </button>
+              </div>
+            </Link>
+          </div>
+        )}
+
+        {role === "admin" && (
+          <div className="rectangle23 seniorlist">
+            <Link to="/senior-list" className="link-container">
+              <div className="homepage-senior-list-content">
+                <h2>Senior List</h2>
+                <p>Manage and review the senior care list efficiently.</p>
+                <button className="senior-list-button">
+                  <span className="senior-list-button-text">Seniors</span>
+                </button>
+              </div>
+            </Link>
+          </div>
+        )}
+
+        <div className="rectangle23 emergencyservices">
+          <Link to="/emergency" className="link-container">
+            <div className="emergency-services-content">
+              <div className="Emergency-Title">
+                <h2>Emergency Services</h2>
+                <img
+                  src={emergency}
+                  alt="Emergency-Logo"
+                  className="emergency-logo"
+                />
+              </div>
+
+              <p>
+                Easily call an ambulance, police, or notify family during
+                emergencies with a single tap.
+              </p>
+              <button className="emergency-services-button">
+                <span className="emergency-services-button-text">Call</span>
+              </button>
+            </div>
+          </Link>
+        </div>
+
+        <div className="rectangle23 chatassistance">
+          <Link to="/chat" className="link-container">
+            <div className="chat-assistance-content">
+              <div className="Chat-Title">
                 <h2>Chat Assistance</h2>
                 <img src={chat} alt="Chat-Logo" className="chat-logo" />
+              </div>
+
+              <p>
+                Communicate with barangay officials for support and inquiries
+                through in-app chat.
+              </p>
+              <button className="chat-assistance-button">
+                <span className="chat-assistance-button-text">Chat</span>
+              </button>
             </div>
-            
-            <p>Communicate with barangay officials for support and inquiries through in-app chat.</p>
-            <button className="chat-assistance-button">
-             
-              <span className="chat-assistance-button-text">Chat</span>
-            </button>
-          </div>
-        </Link>
+          </Link>
         </div>
       </div>
     </div>
-    
   );
 };
 
@@ -187,7 +196,10 @@ function CalendarComponent() {
           </div>
 
           <ul>
-            <li onClick={() => setSelectedOption("overview")} className="sidebar1-item">
+            <li
+              onClick={() => setSelectedOption("overview")}
+              className="sidebar1-item"
+            >
               <img
                 src="/icons/overview.png"
                 alt="Logo"
@@ -195,7 +207,10 @@ function CalendarComponent() {
               />
               Overview
             </li>
-            <li onClick={() => setSelectedOption("seniors")} className="sidebar1-item">
+            <li
+              onClick={() => setSelectedOption("seniors")}
+              className="sidebar1-item"
+            >
               <img
                 src="/icons/seniors.png"
                 alt="Logo"
@@ -203,7 +218,10 @@ function CalendarComponent() {
               />
               Seniors
             </li>
-            <li onClick={() => setSelectedOption("events")} className="sidebar1-item">
+            <li
+              onClick={() => setSelectedOption("events")}
+              className="sidebar1-item"
+            >
               <img
                 src="/icons/events.png"
                 alt="Logo"
@@ -211,7 +229,10 @@ function CalendarComponent() {
               />
               Events
             </li>
-            <li onClick={() => setSelectedOption("appointments")} className="sidebar1-item">
+            <li
+              onClick={() => setSelectedOption("appointments")}
+              className="sidebar1-item"
+            >
               <img
                 src="/icons/app.png"
                 alt="Logo"
@@ -219,7 +240,21 @@ function CalendarComponent() {
               />
               Appointments
             </li>
-            <li onClick={() => setSelectedOption("chat")} className="sidebar1-item">
+            <li
+              onClick={() => setSelectedOption("emergenciesadmin")}
+              className="sidebar1-item"
+            >
+              <img
+                src="/icons/emergency.png"
+                alt="Logo"
+                className="sidebar1-logo-img"
+              />
+              Emergencies
+            </li>
+            <li
+              onClick={() => setSelectedOption("chat")}
+              className="sidebar1-item"
+            >
               <img
                 src="/icons/chat.png"
                 alt="Logo"
@@ -232,7 +267,10 @@ function CalendarComponent() {
           <hr className="sidebar-divider" />
 
           <ul>
-            <li onClick={() => setSelectedOption("settings")} className="sidebar1-item">
+            <li
+              onClick={() => setSelectedOption("settings")}
+              className="sidebar1-item"
+            >
               <img
                 src="/icons/settings.png"
                 alt="Logo"
@@ -240,7 +278,10 @@ function CalendarComponent() {
               />
               Settings
             </li>
-            <li onClick={() => setSelectedOption("help")} className="sidebar1-item">
+            <li
+              onClick={() => setSelectedOption("help")}
+              className="sidebar1-item"
+            >
               <img
                 src="/icons/help.png"
                 alt="Logo"
@@ -262,18 +303,18 @@ function CalendarComponent() {
 
         <div className="main-content">
           <div className="header1">
-          <div className="greeting">
-            <h1>Hello, ADMIN NAME</h1>
-            <p>Good morning!</p>
+            <div className="greeting">
+              <h1>Hello, ADMIN NAME</h1>
+              <p>Good morning!</p>
             </div>
-              <div className="search-input-wrapper">
-                <span className="search-icon">🔍</span>
-                <input
-                  type="text"
-                  placeholder="Search for anything"
-                  className="search-bar"
-                />
-              </div>
+            <div className="search-input-wrapper">
+              <span className="search-icon">🔍</span>
+              <input
+                type="text"
+                placeholder="Search for anything"
+                className="search-bar"
+              />
+            </div>
           </div>
 
           <div className="content">
@@ -281,6 +322,7 @@ function CalendarComponent() {
             {selectedOption === "seniors" && <SeniorList />}
             {selectedOption === "events" && <Events />}
             {selectedOption === "appointments" && <Appointments />}
+            {selectedOption === "emergenciesadmin" && <EmergenciesAdmin />}
             {selectedOption === "chat" && (
               <div>
                 <h2>Chat Inquiries</h2>
@@ -311,7 +353,12 @@ function CalendarComponent() {
       </div>
       <div className="calendar-container">
         <div className="calendar">
-          <Calendar onChange={onDateChange} value={date} locale="en-US" tileClassName={tileClassName} />
+          <Calendar
+            onChange={onDateChange}
+            value={date}
+            locale="en-US"
+            tileClassName={tileClassName}
+          />
         </div>
 
         <div className="events-slideshow-container">
@@ -321,11 +368,14 @@ function CalendarComponent() {
               {events && events.length > 0 ? (
                 events.map((event) => (
                   <li key={event.id}>
-                    <strong>{event.event_title}</strong>Event Name: {event.event_description}
+                    <strong>{event.event_title}</strong>Event Name:{" "}
+                    {event.event_description}
                   </li>
                 ))
               ) : (
-                <p>No events for this date. You can still click on other dates.</p>
+                <p>
+                  No events for this date. You can still click on other dates.
+                </p>
               )}
             </ul>
           </div>
