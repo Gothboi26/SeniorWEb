@@ -138,12 +138,17 @@ const Events = () => {
   // Function to format date into a more readable format (e.g., "Monday, January 1, 2025")
   const formatDate = (date) => {
     return new Intl.DateTimeFormat("en-US", {
-      weekday: "long",  // "Monday"
-      year: "numeric",  // "2025"
-      month: "long",    // "January"
-      day: "numeric",   // "1"
+      weekday: "long",   // "Monday"
+      year: "numeric",   // "2025"
+      month: "long",     // "January"
+      day: "numeric",    // "1"
+      hour: "2-digit",   // "2"
+      minute: "2-digit", // "30"
+      second: "2-digit", // "45"
+      hour12: true       // Use 12-hour clock (AM/PM)
     }).format(new Date(date));
   };
+  
 
   return (
     <div className="events-container">
