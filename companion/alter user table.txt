@@ -1,0 +1,10 @@
+-- Switch to the accounts database
+USE accounts;
+
+-- Alter the users table to add the new fields
+ALTER TABLE users
+ADD COLUMN age INT NOT NULL,
+ADD COLUMN sex ENUM('Male', 'Female') NOT NULL,
+ADD COLUMN address VARCHAR(255) NOT NULL,
+ADD COLUMN health_issue TEXT NOT NULL,
+ADD COLUMN role ENUM('client', 'admin', 'staff') NOT NULL DEFAULT 'client';

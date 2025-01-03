@@ -32,9 +32,13 @@ const SeniorList = () => {
   const handleAddSenior = async () => {
     const username = prompt("Enter username for the new senior:", "");
     const password = prompt("Enter password for the new senior:", "");
+    const age = prompt("Enter age:", "");
+    const sex = prompt("Enter sex (Male/Female):", "");
+    const address = prompt("Enter address:", "");
+    const health_issue = prompt("Enter health issue:", "");
 
-    if (!username || !password) {
-      alert("Username and password are required!");
+    if (!username || !password || !age || !sex || !address || !health_issue) {
+      alert("All fields are required!");
       return;
     }
 
@@ -42,14 +46,25 @@ const SeniorList = () => {
       const response = await fetch("http://localhost/php/register.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password, role: "client" }),
+        body: JSON.stringify({
+          username,
+          password,
+          age,
+          sex,
+          address,
+          health_issue,
+          role: "client",
+        }),
       });
 
       const result = await response.json();
 
       if (result.status === "success") {
         alert("Senior added successfully");
-        setPatients((prev) => [...prev, { username, role: "client" }]); // Update state with new senior
+        setPatients((prev) => [
+          ...prev,
+          { username, age, sex, address, health_issue, role: "client" },
+        ]); // Update state with new senior
       } else {
         alert(result.message);
       }
@@ -62,13 +77,19 @@ const SeniorList = () => {
     <div className="table-container">
       <div className="table-header">
         <h2>All Patients</h2>
-        <button className="add-senior-button" onClick={handleAddSenior}>Add Senior</button>
+        <button className="add-senior-button" onClick={handleAddSenior}>
+          Add Senior
+        </button>
       </div>
       <table className="table">
         <thead>
           <tr>
             <th></th>
             <th>Username</th>
+            <th>Age</th>
+            <th>Sex</th>
+            <th>Address</th>
+            <th>Health Issue</th>
             <th>Role</th>
             <th>Action</th>
           </tr>
@@ -80,6 +101,10 @@ const SeniorList = () => {
                 <input type="checkbox" />
               </td>
               <td>{patient.username}</td>
+              <td>{patient.age}</td>
+              <td>{patient.sex}</td>
+              <td>{patient.address}</td>
+              <td>{patient.health_issue}</td>
               <td>{patient.role}</td>
               <td className="action-icons">
                 <img src={editIcon} alt="Edit" />

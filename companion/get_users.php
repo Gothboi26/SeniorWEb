@@ -20,19 +20,21 @@ if ($conn->connect_error) {
     exit;
 }
 
-// Query to fetch users
-$sql = "SELECT username, role FROM users";
+// Query to fetch all data from users table
+$sql = "SELECT id, username, password, age, sex, address, health_issue, role FROM users";
 $result = $conn->query($sql);
 
 if ($result && $result->num_rows > 0) {
+    $data = $result->fetch_all(MYSQLI_ASSOC);
     echo json_encode([
         "status" => "success",
-        "data" => $result->fetch_all(MYSQLI_ASSOC)
+        "data" => $data
     ]);
 } else {
     echo json_encode([
         "status" => "error",
-        "message" => "No users found or query failed."
+        "message" => "No users found or query failed.",
+        "debug_sql" => $sql // Debugging purpose, remove in production
     ]);
 }
 
