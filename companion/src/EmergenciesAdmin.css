@@ -9,10 +9,29 @@
   overflow-x: auto; /* Allow horizontal scroll on smaller screens */
 }
 
+/* Header container */
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+/* Sort button */
+.sort-dropdown {
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #28a745;
+  cursor: pointer;
+  margin-left: 10px;
+  background-color: #28a745;
+  color: white;
+}
+
 /* Left-align the heading */
 .left-aligned {
   text-align: left;
-  margin-bottom: 20px;
   font-family: "Glacial Indifference", sans-serif;
   font-size: 1.5rem;
   color: #333;
