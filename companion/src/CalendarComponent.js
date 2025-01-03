@@ -18,6 +18,7 @@ import Events from "./Events";
 import "./Sidebar.css";
 import logo from "./logo.png";
 import appoint from "./appoint.png"; // For Senior Care logo
+import emergency from "./emergency.png"; // For Emergency Services logo
 
 Modal.setAppElement("#root");
 
@@ -46,9 +47,7 @@ const RectangleSection = ({ role }) => {
               <div className="SeniorCare-Title">
                 <h2>Senior Care</h2>
                 <img src={appoint} alt="Senior Care-Logo" className="appoint-logo" />
-                
               </div>
-              
               <p>
               Seniors can book appointments for priority check-ups and health services, reducing wait times and ensuring timely care.
               </p>
@@ -80,7 +79,11 @@ const RectangleSection = ({ role }) => {
       <div className="rectangle23 emergencyservices">
         <Link to="/emergency" className="link-container">
           <div className="emergency-services-content">
-            <h2>Emergency Services</h2>
+            <div className="Emergency-Title">
+                <h2>Emergency Services</h2>
+                <img src={emergency} alt="Emergency-Logo" className="emergency-logo" />
+              </div>
+            
             <p>Easily call an ambulance, police, or notify family during emergencies with a single tap.</p>
             <button className="homepage-emergency-services-button">
               <span className="emergency-services-button-icon">📞</span>

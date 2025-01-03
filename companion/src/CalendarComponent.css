@@ -392,6 +392,31 @@ h2 {
   transform: scale(1.05); /* Slight zoom on hover */
 }
 
+/* --- Emergency Services --- */
+.rectangle23.emergencyservices .Emergency-Title {
+  display: flex;
+  flex-direction: row; /* Align h2 and image horizontally */
+  align-items: center; /* Vertically align items */
+  justify-content: space-between; /* Add spacing between elements */
+  margin: 20px 30px 10px; /* Add spacing around the title section */
+}
+
+.rectangle23.emergencyservices .emergency-logo {
+  width: 60px; /* Set a fixed width for the logo */
+  height: auto; /* Maintain aspect ratio */
+  margin-left: 10px; /* Add space between the image and h2 */
+  justify-content: right;
+}
+
+.rectangle23.emergencyservices h2 {
+  font-family: "Righteous", sans-serif;
+  font-weight: lighter;
+  font-size: 24px;
+  text-align: left;
+  color: #1e1e1e; /* Text color */
+  margin: 0; /* Remove default margins */
+}
+
 
 /* Senior Care, Emergency Services, and Chat Assistance */
 .rectangle23.seniorcare, 
