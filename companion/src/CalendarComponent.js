@@ -21,6 +21,9 @@ import logo from "./logo.png";
 import appoint from "./appoint.png"; // For Senior Care logo
 import emergency from "./emergency.png"; // For Emergency Services logo
 import chat from "./chat.png"; // For Chat Assistance logo
+import doctor from "./doctor.png";
+import arrow from "./arrow.png";
+
 
 Modal.setAppElement("#root");
 
@@ -133,29 +136,30 @@ const RectangleSection = ({ role }) => {
         </div>
         <div className="Service-Content">
           <div className="Service-Image">
-            <img
-              src="https://via.placeholder.com/200x300" // Replace with your image link
-              alt="Doctor"
-            />
+            <img src={doctor} alt="Doctor"/>
           </div>
           <div className="Service-Details">
-            <h2 className="Service-Name">Health Checkup</h2>
+            <h2 className="Service-Name">Health Check Up
+              <div className="Service-Icon">
+                <img src={arrow} alt="Arrow Icon"/>
+              </div>
+            </h2>
+              
             <p className="Service-Description">
-              Health check-ups are routine medical examinations aimed at evaluating
-              overall well-being, identifying potential health issues early, and
-              managing any existing conditions effectively. These assessments
-              often include physical evaluations, diagnostic tests, and
-              consultations to ensure proper preventive care and treatment
-              planning.
+            Health check-ups are routine medical examinations aimed at 
+            evaluating overall well-being, identifying potential health 
+            issues early, and managing any existing conditions effectively. 
+            These assessments often include physical evaluations, diagnostic 
+            tests, and consultations to ensure proper preventive care and 
+            treatment planning.
             </p>
             <div className="Service-Actions">
-              <button className="Service-Book-Button">Book</button>
-              <div className="Service-Icon">
-                <img
-                  src="https://via.placeholder.com/24x24" // Replace with arrow icon link
-                  alt="Arrow Icon"
-                />
-              </div>
+              
+              <button className="Service-Book-Button">
+                <Link to="/senior-care"></Link>  
+              
+              Book</button>
+              
             </div>
           </div>
         </div>

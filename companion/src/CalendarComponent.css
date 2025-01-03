@@ -620,6 +620,7 @@ h2 {
 .Service-Section {
   text-align: center;
   padding: 2rem;
+  margin-bottom: 3%;
 }
 
 .Service-Header {
@@ -627,68 +628,85 @@ h2 {
 }
 
 .Service-Subheader {
-  color: red;
-  font-size: 1rem;
-  font-weight: bold;
+  color: #D60000;
+  font-family: "Righteous", sans-serif;
+  font-size: 1.5rem;
+  font-weight: normal;
+  margin-top: 2%;
 }
 
 .Service-Title {
-  font-size: 2rem;
-  font-weight: bold;
+  font-family: "Righteous", sans-serif;
+  font-size: 2.5rem;
+  font-weight: normal;
 }
 
 .Service-Content {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
+  gap: 4rem;
+  margin-top: 3%;
 }
 
-.Service-Image img {
-  border-radius: 2rem;
-  background: linear-gradient(to bottom, #6dd5ed, #2193b0); /* Blue gradient */
-  width: 200px;
-  height: auto;
-}
 
-.Service-Details {
-  text-align: left;
-  max-width: 400px;
-}
-
-.Service-Name {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.Service-Description {
-  font-size: 1rem;
-  color: #555;
-  margin: 1rem 0;
-}
-
-.Service-Actions {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.Service-Book-Button {
-  background-color: red;
-  color: white;
-  border: none;
-  border-radius: 0.5rem;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-.Service-Book-Button:hover {
-  background-color: #d10000;
+.Service-Icon {
+  margin: 0; /* Removes extra spacing if any */
+  
 }
 
 .Service-Icon img {
   width: 24px;
   height: 24px;
 }
+
+.Service-Details {
+  text-align: left;
+  max-width: 400px;
+  position: relative;
+  
+}
+
+.Service-Name {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #D60000;
+  display: flex; /* Use flexbox for horizontal alignment */
+  align-items: center; /* Vertically aligns text and icon */
+  gap: 7.5rem; /* Adds space between the text and the arrow */
+}
+
+.Service-Description {
+   font-family: "Overpass", sans-serif;
+  font-size: 1.2rem;
+  color: #555;
+  margin: 1rem 0;
+  display: inline-block; /* Ensures alignment with the arrow */
+}
+
+.Service-Actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 10%;
+}
+
+.Service-Book-Button {
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 50%;
+  font-family: "Righteous", sans-serif;
+  font-weight: 100;
+}
+
+.Service-Book-Button:hover {
+  background-color: #d10000;
+}
+
 
