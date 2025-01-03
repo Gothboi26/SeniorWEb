@@ -111,7 +111,10 @@ function CalendarComponent() {
   }, [date]);
 
   const fetchEvents = async (selectedDate) => {
-    const formattedDate = selectedDate.toISOString().split("T")[0];
+    // Adjust the date to your local timezone
+    const localDate = new Date(selectedDate);
+    const formattedDate = localDate.toLocaleDateString("en-CA"); // Use "en-CA" to get the YYYY-MM-DD format
+
     try {
       const response = await fetch(
         `http://localhost/php/get_events.php?date=${formattedDate}`
