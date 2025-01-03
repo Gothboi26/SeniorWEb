@@ -28,6 +28,17 @@
     flex-direction: column;
     align-items: center; /* Center align items */
   }
+
+  .rectangle23 {
+    width: 90%;
+    height: auto; /* Allow dynamic height */
+    padding: 15px;
+  }
+
+  .choices {
+    flex-direction: column; /* Stack cards vertically */
+    gap: 15px;
+  }
 }
 
 .CalendarComponent {
@@ -41,11 +52,11 @@
 }
 h2 {
   text-align: left;
-  color: #800000;
+  color: #D60000;
 }
 .big-header {
   font-size: 48px; /* Large font size for the header */
-  color: #800000; /* Maroon color */
+  color: #D60000; /* Maroon color */
   text-align: left; /* Center align the header */
   margin-bottom: 20px; /* Add space below the header */
 }
@@ -291,39 +302,82 @@ h2 {
   align-items: flex-start;
   flex-wrap: wrap;
 }
-.rectangle21 {
+
+/* ----- 2nd Tab Styling ----- */
+.choices {
+  margin: 0;
   display: flex;
-  flex-wrap: wrap; /* Allows wrapping on smaller screens */
-  justify-content: space-around; /* Space between items */
-  align-items: center;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  justify-content: center; /* Align items in the center horizontally */
+  gap: 10px; /* Space between items */
   background-color: #ecf7fb;
-  padding: 20px;
-  border-radius: 20px;
-  margin-top: 20px;
-  gap: 20px; /* Adds spacing between items */
+  padding: 0;
+  width: 100%;
+  height: 100%;
 }
 
-.rectangle23 {
+.rectangle21 {
+  margin:30px;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap; /* Allows wrapping on smaller screens */
+  align-items: center;
+  padding: 20px;
+  /* border-radius: 20px; */
+  gap: 30px; /* Adds spacing between items */
+  width: 100%;
+  height: 100%;
+  justify-content: center; /* Center items in the row */
+
+
+}
+/* Paalala */
+.rectangle23.paalala1 {
   display: flex;
   flex-direction: column; /* Stack content vertically */
-  justify-content: space-around; /* Distribute content evenly */
+  justify-content: space-between; /* Distribute content evenly */
   align-items: center;
   text-align: center;
   border-radius: 40px;
-  height: 305px;
-  width: 246px;
-  background-color: #fbfbfb;
+  height: 350px;
+  width: 300px;
+  background-color: #ffffff;
   color: #1e1e1e;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  margin: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15); /* Updated shadow for better look */
   padding: 20px; /* Inner spacing for content */
-  transition: transform 0.3s ease; /* Adds hover effect */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+  
 }
 
-.rectangle23:hover {
-  transform: translateY(-5px); /* Slight lift on hover */
+/* Senior Care, Emergency Services, and Chat Assistance */
+.rectangle23.seniorcare, 
+.rectangle23.emergencyservices,
+.rectangle23.chatassistance {
+  display: flex;
+  flex-direction: column; /* Stack content vertically */
+  justify-content: space-between; /* Distribute content evenly */
+  align-items: center;
+  text-align: center;
+  border-radius: 40px;
+  height: 350px;
+  width: 280px;
+  background-color: #ffffff;
+  color: #1e1e1e;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15); /* Updated shadow for better look */
+  padding: 20px; /* Inner spacing for content */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+  
 }
-.rectangle32 {
+
+
+
+/* Hover effect for cards */
+.rectangle23:hover {
+  transform: translateY(-5px); /* Lift the card on hover */
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.25); /* Enhanced shadow on hover */
+}
+
+/* .rectangle32 {
   background-color: #ecf7fb;
   height: 627px;
   width: 1440px;
@@ -335,33 +389,87 @@ h2 {
   justify-content: space-around;
   align-items: flex-start;
   padding: 20px;
-}
+} */
 
+/* Specific card styling: Paalala section */
 .rectangle23.paalala1 {
   background-color: #c31c1c;
   padding: 15px;
   margin: 10px 0;
-  border-radius: 8px;
+  border-radius: 40px; /* Rounded corners for uniformity */
+  color: #ffffff;
+
+
 }
 
 .rectangle23.paalala1 h2 {
   color: #f3f3f3;
+  font-size: 20px;
   margin-bottom: 10px;
-  font-size: 20px; /* Reduced font size to fit */
-  text-align: center; /* Center the title for better layout */
+  text-align: center;
+  font-family: "Righteous", sans-serif;
+  font-weight: lighter;
 }
 
 .rectangle23.paalala1 p {
   color: #ececec;
-  line-height: 1.4; /* Slightly tighter spacing */
-  font-size: 16px; /* Reduced font size for better fit */
-  text-align: justify; /* Align text neatly within the rectangle */
+  font-size: 15px;
+  /* line-height: 1.5;   Better readability */
+  text-align: justify;
+  margin: 15px 30px 10px;
+  text-align: left;
+}
+ /* ----- Text Styles ----- */
+.rectangle23.seniorcare h2, 
+.rectangle23.emergencyservices h2,
+.rectangle23.chatassistance h2 {
+  font-family: "Righteous", sans-serif;
+  font-weight: lighter;
+}
+
+
+
+/* Icon styling */
+.rectangle23 h2 {
+  font-size: 18px;
+  color: #1e1e1e;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* Space between text and icon */
+}
+
+.rectangle23.seniorcare p, 
+.rectangle23.emergencyservices p,
+.rectangle23.chatassistance p {
+  font-size: 15px;
+  color: #606060;
+  margin: 20px 30px 10px;
+  text-align: left;
+
 }
 
 .link-container {
   text-decoration: none; /* Removes underline */
   color: inherit; /* Inherits text color */
 }
+
+
+/* Emergency services and Chat Assistance buttons */
+.homepage-emergency-services-button,
+.homepage-chat-assistance-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px; /* Spacing for icon and text */
+}
+
+.homepage-emergency-services-button .emergency-services-button-icon,
+.homepage-chat-assistance-button .chat-assistance-button-icon {
+  font-size: 18px; /* Adjust icon size */
+}
+
 
 .homepage-senior-care-button,
 .homepage-emergency-services-button,

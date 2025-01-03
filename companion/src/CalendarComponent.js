@@ -22,7 +22,8 @@ Modal.setAppElement("#root");
 
 const RectangleSection = ({ role }) => {
   return (
-    <div className="rectangle21">
+    <div className="choices">
+      <div className="rectangle21">
       {role === "client" && (
         <div className="rectangle23 paalala1">
           <h2>PAALALA:</h2>
@@ -41,8 +42,7 @@ const RectangleSection = ({ role }) => {
             <div className="senior-care-content">
               <h2>Senior Care</h2>
               <p>
-                Provide specialized care and services for seniors with
-                compassion and expertise.
+              Seniors can book appointments for priority check-ups and health services, reducing wait times and ensuring timely care.
               </p>
               <button className="homepage-senior-care-button">
                 <span className="senior-care-button-icon">📅</span>
@@ -52,7 +52,7 @@ const RectangleSection = ({ role }) => {
           </Link>
         </div>
       )}
-
+      
       {role === "admin" && (
         <div className="rectangle23 seniorlist">
           <Link to="/senior-list" className="link-container">
@@ -67,12 +67,13 @@ const RectangleSection = ({ role }) => {
           </Link>
         </div>
       )}
+      
 
       <div className="rectangle23 emergencyservices">
         <Link to="/emergency" className="link-container">
           <div className="emergency-services-content">
             <h2>Emergency Services</h2>
-            <p>Ensure quick and reliable assistance during emergencies.</p>
+            <p>Easily call an ambulance, police, or notify family during emergencies with a single tap.</p>
             <button className="homepage-emergency-services-button">
               <span className="emergency-services-button-icon">📞</span>
               <span className="emergency-services-button-text">Call</span>
@@ -85,15 +86,17 @@ const RectangleSection = ({ role }) => {
         <Link to="/chat" className="link-container">
           <div className="chat-assistance-content">
             <h2>Chat Assistance</h2>
-            <p>Get prompt responses to your inquiries and support needs.</p>
+            <p>Communicate with barangay officials for support and inquiries through in-app chat.</p>
             <button className="homepage-chat-assistance-button">
               <span className="chat-assistance-button-icon">💬</span>
               <span className="chat-assistance-button-text">Chat</span>
             </button>
           </div>
         </Link>
+        </div>
       </div>
     </div>
+    
   );
 };
 
