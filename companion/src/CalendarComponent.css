@@ -303,17 +303,26 @@ h2 {
   flex-wrap: wrap;
 }
 
-/* ----- 2nd Tab Styling ----- */
+/* ----- Dashboard Styling ----- */
+.Dashboard {
+  width: 100%; /* Match parent width */
+  max-width: 100%; /* Prevent unwanted constraints */
+}
+
+
+/* ----- Choices Styling ----- */
 .choices {
-  margin: 0;
-  display: flex;
-  flex-wrap: wrap; /* Allow wrapping on smaller screens */
   justify-content: center; /* Align items in the center horizontally */
   gap: 10px; /* Space between items */
   background-color: #ecf7fb;
+
+  display: flex;
+  flex-wrap: wrap; /* Keep wrapping items on smaller screens */
+
+  width: 100vw; /* Occupy the full width of the viewport */
+  margin: 0;
   padding: 0;
-  width: 100%;
-  height: 100%;
+  box-sizing: border-box; /* Include padding and border in width/height */
 }
 
 .rectangle21 {
@@ -490,7 +499,6 @@ h2 {
   
 }
 
-
 /* Senior Care, Emergency Services, and Chat Assistance */
 .rectangle23.seniorcare, 
 .rectangle23.emergencyservices,
@@ -509,8 +517,6 @@ h2 {
   transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
   
 }
-
-
 
 /* Hover effect for cards */
 .rectangle23:hover {
@@ -609,3 +615,80 @@ h2 {
     padding: 15px;
   }
 }
+
+/* ----- Services Section ----- */
+.Service-Section {
+  text-align: center;
+  padding: 2rem;
+}
+
+.Service-Header {
+  margin-bottom: 2rem;
+}
+
+.Service-Subheader {
+  color: red;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.Service-Title {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.Service-Content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.Service-Image img {
+  border-radius: 2rem;
+  background: linear-gradient(to bottom, #6dd5ed, #2193b0); /* Blue gradient */
+  width: 200px;
+  height: auto;
+}
+
+.Service-Details {
+  text-align: left;
+  max-width: 400px;
+}
+
+.Service-Name {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.Service-Description {
+  font-size: 1rem;
+  color: #555;
+  margin: 1rem 0;
+}
+
+.Service-Actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.Service-Book-Button {
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.Service-Book-Button:hover {
+  background-color: #d10000;
+}
+
+.Service-Icon img {
+  width: 24px;
+  height: 24px;
+}
+

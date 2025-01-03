@@ -24,104 +24,146 @@ import chat from "./chat.png"; // For Chat Assistance logo
 
 Modal.setAppElement("#root");
 
+
+
 const RectangleSection = ({ role }) => {
   return (
-    <div className="choices">
-      <div className="rectangle21">
-        {role === "client" && (
-          <div className="rectangle23 paalala1">
-            <h2>PAALALA:</h2>
-            <p>
-              Ang doktor ay available lamang sa Barangay General Tiburcio De
-              Leon Health Center tuwing LUNES (Monday) at MIYERKULES (Wednesday)
-              simula 8AM-6PM lamang. <br></br>
-              <br></br>
-              Para sa detalye, makipag-ugnayan sa health center.
-            </p>
-          </div>
-        )}
+    <div className="Dashboard">
+      <div className="choices">
+        <div className="rectangle21">
+          {role === "client" && (
+            <div className="rectangle23 paalala1">
+              <h2>PAALALA:</h2>
+              <p>
+                Ang doktor ay available lamang sa Barangay General Tiburcio De
+                Leon Health Center tuwing LUNES (Monday) at MIYERKULES (Wednesday)
+                simula 8AM-6PM lamang. <br></br>
+                <br></br>
+                Para sa detalye, makipag-ugnayan sa health center.
+              </p>
+            </div>
+          )}
 
-        {role === "client" && (
-          <div className="rectangle23 seniorcare">
-            <Link to="/senior-care" className="link-container">
-              <div className="senior-care-content">
-                <div className="SeniorCare-Title">
-                  <h2>Senior Care</h2>
+          {role === "client" && (
+            <div className="rectangle23 seniorcare">
+              <Link to="/senior-care" className="link-container">
+                <div className="senior-care-content">
+                  <div className="SeniorCare-Title">
+                    <h2>Senior Care</h2>
+                    <img
+                      src={appoint}
+                      alt="Senior Care-Logo"
+                      className="appoint-logo"
+                    />
+                  </div>
+                  <p>
+                    Seniors can book appointments for priority check-ups and
+                    health services, reducing wait times and ensuring timely care.
+                  </p>
+                  <button className="senior-care-button">
+                    <span className="senior-care-button-text">Book</span>
+                  </button>
+                </div>
+              </Link>
+            </div>
+          )}
+
+          {role === "admin" && (
+            <div className="rectangle23 seniorlist">
+              <Link to="/senior-list" className="link-container">
+                <div className="homepage-senior-list-content">
+                  <h2>Senior List</h2>
+                  <p>Manage and review the senior care list efficiently.</p>
+                  <button className="senior-list-button">
+                    <span className="senior-list-button-text">Seniors</span>
+                  </button>
+                </div>
+              </Link>
+            </div>
+          )}
+
+          <div className="rectangle23 emergencyservices">
+            <Link to="/emergency" className="link-container">
+              <div className="emergency-services-content">
+                <div className="Emergency-Title">
+                  <h2>Emergency Services</h2>
                   <img
-                    src={appoint}
-                    alt="Senior Care-Logo"
-                    className="appoint-logo"
+                    src={emergency}
+                    alt="Emergency-Logo"
+                    className="emergency-logo"
                   />
                 </div>
+
                 <p>
-                  Seniors can book appointments for priority check-ups and
-                  health services, reducing wait times and ensuring timely care.
+                  Easily call an ambulance, police, or notify family during
+                  emergencies with a single tap.
                 </p>
-                <button className="senior-care-button">
-                  <span className="senior-care-button-text">Book</span>
+                <button className="emergency-services-button">
+                  <span className="emergency-services-button-text">Call</span>
                 </button>
               </div>
             </Link>
           </div>
-        )}
 
-        {role === "admin" && (
-          <div className="rectangle23 seniorlist">
-            <Link to="/senior-list" className="link-container">
-              <div className="homepage-senior-list-content">
-                <h2>Senior List</h2>
-                <p>Manage and review the senior care list efficiently.</p>
-                <button className="senior-list-button">
-                  <span className="senior-list-button-text">Seniors</span>
+          <div className="rectangle23 chatassistance">
+            <Link to="/chat" className="link-container">
+              <div className="chat-assistance-content">
+                <div className="Chat-Title">
+                  <h2>Chat Assistance</h2>
+                  <img src={chat} alt="Chat-Logo" className="chat-logo" />
+                </div>
+
+                <p>
+                  Communicate with barangay officials for support and inquiries
+                  through in-app chat.
+                </p>
+                <button className="chat-assistance-button">
+                  <span className="chat-assistance-button-text">Chat</span>
                 </button>
               </div>
             </Link>
           </div>
-        )}
-
-        <div className="rectangle23 emergencyservices">
-          <Link to="/emergency" className="link-container">
-            <div className="emergency-services-content">
-              <div className="Emergency-Title">
-                <h2>Emergency Services</h2>
-                <img
-                  src={emergency}
-                  alt="Emergency-Logo"
-                  className="emergency-logo"
-                />
-              </div>
-
-              <p>
-                Easily call an ambulance, police, or notify family during
-                emergencies with a single tap.
-              </p>
-              <button className="emergency-services-button">
-                <span className="emergency-services-button-text">Call</span>
-              </button>
-            </div>
-          </Link>
-        </div>
-
-        <div className="rectangle23 chatassistance">
-          <Link to="/chat" className="link-container">
-            <div className="chat-assistance-content">
-              <div className="Chat-Title">
-                <h2>Chat Assistance</h2>
-                <img src={chat} alt="Chat-Logo" className="chat-logo" />
-              </div>
-
-              <p>
-                Communicate with barangay officials for support and inquiries
-                through in-app chat.
-              </p>
-              <button className="chat-assistance-button">
-                <span className="chat-assistance-button-text">Chat</span>
-              </button>
-            </div>
-          </Link>
         </div>
       </div>
-    </div>
+
+      <div className="Service-Section">
+        <div className="Service-Header">
+          <p className="Service-Subheader">SERVICE</p>
+          <h1 className="Service-Title">Our Medical Services</h1>
+        </div>
+        <div className="Service-Content">
+          <div className="Service-Image">
+            <img
+              src="https://via.placeholder.com/200x300" // Replace with your image link
+              alt="Doctor"
+            />
+          </div>
+          <div className="Service-Details">
+            <h2 className="Service-Name">Health Checkup</h2>
+            <p className="Service-Description">
+              Health check-ups are routine medical examinations aimed at evaluating
+              overall well-being, identifying potential health issues early, and
+              managing any existing conditions effectively. These assessments
+              often include physical evaluations, diagnostic tests, and
+              consultations to ensure proper preventive care and treatment
+              planning.
+            </p>
+            <div className="Service-Actions">
+              <button className="Service-Book-Button">Book</button>
+              <div className="Service-Icon">
+                <img
+                  src="https://via.placeholder.com/24x24" // Replace with arrow icon link
+                  alt="Arrow Icon"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div> 
+    </div> //Dashboard
+  
   );
 };
 
