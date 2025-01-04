@@ -32,7 +32,7 @@
 .Navbar-links {
   list-style: none;
   display: flex;
-  gap: 15px;
+  gap: 30px;
 }
 
 .Navbar-links li {
@@ -40,20 +40,16 @@
 }
 
 .Navbar-links a {
-  color: #666666;
+  color: #1F1785;
   text-decoration: none;
   font-weight: bold;
   padding: 8px;
+  position: relative;
   transition: background-color 0.3s;
 }
 
-.Navbar-links a:hover {
-  background-color: #bbbbbb;
-  border-radius: 4px;
-}
-
 .Navbar-links-a {
-  color: #fff;
+  color: #000;
   text-decoration: none;
   font-weight: bold;
   padding: 8px;
@@ -61,9 +57,30 @@
 }
 
 .Navbar-links-a:hover {
-  background-color: #800000;
-  border-radius: 4px;
+  color: #d60000;
 }
+
+.Navbar-links-b:hover {
+  color: #d60000;
+}
+
+.Navbar-links a:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: #d60000;
+  transition: width 0.3s ease, left 0.3s ease;
+}
+
+.Navbar-links a:hover:after {
+  width: 100%;
+  left: 0;
+  color: #d60000;
+}
+
 .Navbar-edit-profile {
   position: absolute;
   right: 50px; /* Position it to the right edge */

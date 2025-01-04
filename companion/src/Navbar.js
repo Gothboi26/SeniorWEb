@@ -54,10 +54,16 @@ function Navbar({ handleLogout, role }) {
 
       <ul className="Navbar-links">
         <li>
-          <Link to="/">Home</Link> {/* Navigate to the main page */}
+          <Link to="/" className="Navbar-links-b">Home</Link> {/* Navigate to the main page */}
         </li>
         <li>
-          <Link to="/senior-care">Senior Care</Link>
+          <Link to="/senior-care" className="Navbar-links-b">Book</Link>
+        </li>
+        <li>
+          <Link to="/emergency" className="Navbar-links-b">Call</Link>
+        </li>
+        <li>
+          <Link to="/chat" className="Navbar-links-b">Chat</Link>
         </li>
         <li>
           <Link onClick={handleLogout} className="Navbar-links-a" to="#logout">
