@@ -25,7 +25,6 @@ import doctor from "./doctor.png";
 import arrow from "./arrow.png";
 import person from "./person.jpg";
 
-
 Modal.setAppElement("#root");
 
 // Array of Health Services
@@ -74,6 +73,46 @@ const RectangleSection = ({ role }) => {
   const handleNextService = () => {
     setCurrentServiceIndex((prevIndex) => (prevIndex + 1) % services.length);
   };
+  const [date, setDate] = useState(new Date());
+  const [events, setEvents] = useState([]); // Initialize events as an empty array
+  const [eventDates, setEventDates] = useState(new Set()); // To store dates with events
+
+  useEffect(() => {
+    fetchEvents(date);
+  }, [date]);
+
+  const fetchEvents = async (selectedDate) => {
+    // Adjust the date to your local timezone
+    const localDate = new Date(selectedDate);
+    const formattedDate = localDate.toLocaleDateString("en-CA"); // Use "en-CA" to get the YYYY-MM-DD format
+
+    try {
+      const response = await fetch(
+        `http://localhost/php/get_events.php?date=${formattedDate}`
+      );
+      const data = await response.json();
+      setEvents(data.events || []); // Ensure events is always an array
+
+      // Set event dates based on fetched events
+      const datesWithEvents = new Set(
+        data.events.map((event) => event.event_date)
+      );
+      setEventDates(datesWithEvents); // Update event dates
+    } catch (error) {
+      console.error("Error fetching events:", error);
+      setEvents([]); // Ensure events is an empty array if error occurs
+    }
+  };
+
+  const onDateChange = (newDate) => {
+    setDate(newDate);
+  };
+
+  // Function to highlight dates with events
+  const tileClassName = ({ date }) => {
+    const formattedDate = date.toISOString().split("T")[0]; // Format the date
+    return eventDates.has(formattedDate) ? "highlight-event" : null; // Add class if the date has events
+  };
 
   return (
     <div className="Dashboard">
@@ -84,8 +123,8 @@ const RectangleSection = ({ role }) => {
               <h2>PAALALA:</h2>
               <p>
                 Ang doktor ay available lamang sa Barangay General Tiburcio De
-                Leon Health Center tuwing LUNES (Monday) at MIYERKULES (Wednesday)
-                simula 8AM-6PM lamang. <br></br>
+                Leon Health Center tuwing LUNES (Monday) at MIYERKULES
+                (Wednesday) simula 8AM-6PM lamang. <br></br>
                 <br></br>
                 Para sa detalye, makipag-ugnayan sa health center.
               </p>
@@ -106,7 +145,8 @@ const RectangleSection = ({ role }) => {
                   </div>
                   <p>
                     Seniors can book appointments for priority check-ups and
-                    health services, reducing wait times and ensuring timely care.
+                    health services, reducing wait times and ensuring timely
+                    care.
                   </p>
                   <button className="senior-care-button">
                     <span className="senior-care-button-text">Book</span>
@@ -181,15 +221,14 @@ const RectangleSection = ({ role }) => {
         </div>
         <div className="Service-Content" key={currentServiceIndex}>
           <div className="Service-Image">
-            <img
-              src={doctor}
-              alt="Doctor"
-            />
+            <img src={doctor} alt="Doctor" />
           </div>
           <div className="Service-Details">
             <div className="Service-Texts">
               <div className="Service-Name-Wrapper">
-                <h2 className="Service-Name">{services[currentServiceIndex].name}</h2>
+                <h2 className="Service-Name">
+                  {services[currentServiceIndex].name}
+                </h2>
                 <button className="Service-Icon" onClick={handleNextService}>
                   <img src={arrow} alt="Arrow Icon" />
                 </button>
@@ -198,7 +237,7 @@ const RectangleSection = ({ role }) => {
                 {services[currentServiceIndex].description}
               </p>
             </div>
-            
+
             <div className="Service-Actions">
               <button className="Service-Book-Button">
                 <Link to="/senior-care" className="book-link">
@@ -209,11 +248,41 @@ const RectangleSection = ({ role }) => {
           </div>
         </div>
       </div>
-      
+
       <div className="Events">
         <div className="Events-Header">
-            <p className="Events-Subheader">EVENTS</p>
-            <h1 className="Events-Title">Our Important Events</h1>
+          <p className="Events-Subheader">EVENTS</p>
+          <h1 className="Events-Title">Our Important Events</h1>
+        </div>
+        <div className="events-container">
+          <div className="calendar-container">
+            <Calendar
+              onChange={onDateChange}
+              value={date}
+              locale="en-US"
+              tileClassName={tileClassName}
+            />
+          </div>
+          <div className="events-list">
+            <h3>Events on {date.toDateString()}</h3>
+            <ul>
+              {events && events.length > 0 ? (
+                events.map((event) => (
+                  <li key={event.id}>
+                    <strong>{event.event_title}</strong> Event Name:{" "}
+                    {event.event_description}
+                  </li>
+                ))
+              ) : (
+                <p>
+                  No events for this date. You can still click on other dates.
+                </p>
+              )}
+            </ul>
+          </div>
+          <div className="slideshow-container">
+            <Slideshow />
+          </div>
         </div>
       </div>
 
@@ -224,126 +293,56 @@ const RectangleSection = ({ role }) => {
         </div>
         <div class="officials-grid">
           <div class="official-card">
-            <img
-              src={person}
-              alt="brgy-official"
-              class="official-image"
-            />
+            <img src={person} alt="brgy-official" class="official-image" />
             <p class="official-name">Ferrer, Rizalino </p>
             <p class="official-position">Punong Barangay</p>
           </div>
           <div class="official-card">
-            <img
-              src={person}
-              alt="brgy-official"
-              class="official-image"
-            />
+            <img src={person} alt="brgy-official" class="official-image" />
             <p class="official-name">Matos, Rica</p>
             <p class="official-position">Kagawad</p>
           </div>
           <div class="official-card">
-            <img
-              src={person}
-              alt="brgy-official"
-              class="official-image"
-            />
+            <img src={person} alt="brgy-official" class="official-image" />
             <p class="official-name">De Gula, Susan</p>
             <p class="official-position">Kagawad</p>
           </div>
           <div class="official-card">
-            <img
-              src={person}
-              alt="brgy-official"
-              class="official-image"
-            />
+            <img src={person} alt="brgy-official" class="official-image" />
             <p class="official-name">Dela Cruz, Zella</p>
             <p class="official-position">Kagawad</p>
           </div>
           <div class="official-card">
-            <img
-              src={person}
-              alt="brgy-official"
-              class="official-image"
-            />
+            <img src={person} alt="brgy-official" class="official-image" />
             <p class="official-name">Moises Beltran</p>
             <p class="official-position">Kagawad</p>
           </div>
           <div class="official-card">
-            <img
-              src={person}
-              alt="brgy-official"
-              class="official-image"
-            />
+            <img src={person} alt="brgy-official" class="official-image" />
             <p class="official-name">Bernardino, Bogie</p>
             <p class="official-position">Kagawad</p>
           </div>
           <div class="official-card">
-            <img
-              src={person}
-              alt="brgy-official"
-              class="official-image"
-            />
+            <img src={person} alt="brgy-official" class="official-image" />
             <p class="official-name">Edgardo, Dizon</p>
             <p class="official-position">Kagawad</p>
           </div>
           <div class="official-card">
-            <img
-              src={person}
-              alt="brgy-official"
-              class="official-image"
-            />
+            <img src={person} alt="brgy-official" class="official-image" />
             <p class="official-name">Colibao, Shennel</p>
             <p class="official-position">Kagawad</p>
           </div>
-
         </div>
-
       </div>
-
     </div>
   );
 };
-
 
 function CalendarComponent() {
   const [role, setRole] = useState(null); // Declare state for role
   const location = useLocation(); // Hook to get the current path
   const navigate = useNavigate(); // To navigate programmatically
-  const [date, setDate] = useState(new Date());
-  const [events, setEvents] = useState([]); // Initialize events as an empty array
   const [selectedOption, setSelectedOption] = useState("overview");
-  const [eventDates, setEventDates] = useState(new Set()); // To store dates with events
-
-  useEffect(() => {
-    fetchEvents(date);
-  }, [date]);
-
-  const fetchEvents = async (selectedDate) => {
-    // Adjust the date to your local timezone
-    const localDate = new Date(selectedDate);
-    const formattedDate = localDate.toLocaleDateString("en-CA"); // Use "en-CA" to get the YYYY-MM-DD format
-
-    try {
-      const response = await fetch(
-        `http://localhost/php/get_events.php?date=${formattedDate}`
-      );
-      const data = await response.json();
-      setEvents(data.events || []); // Ensure events is always an array
-
-      // Set event dates based on fetched events
-      const datesWithEvents = new Set(
-        data.events.map((event) => event.event_date)
-      );
-      setEventDates(datesWithEvents); // Update event dates
-    } catch (error) {
-      console.error("Error fetching events:", error);
-      setEvents([]); // Ensure events is an empty array if error occurs
-    }
-  };
-
-  const onDateChange = (newDate) => {
-    setDate(newDate);
-  };
 
   useEffect(() => {
     const storedRole = localStorage.getItem("role");
@@ -358,12 +357,6 @@ function CalendarComponent() {
     localStorage.removeItem("role"); // Remove role from localStorage
     setRole(null); // Reset role in the app state
     navigate("/"); // Redirect to login page after logout
-  };
-
-  // Function to highlight dates with events
-  const tileClassName = ({ date }) => {
-    const formattedDate = date.toISOString().split("T")[0]; // Format the date
-    return eventDates.has(formattedDate) ? "highlight-event" : null; // Add class if the date has events
   };
 
   if (role === "admin") {
@@ -530,45 +523,8 @@ function CalendarComponent() {
       <div className="CalendarLetter">
         <h2>companiON</h2>
         <h1 className="big-header1">Senior Care Services</h1>
+        {role === "client" && <RectangleSection role={role} />}
       </div>
-      <div className="calendar-container">
-        <div className="calendar">
-          <Calendar
-            onChange={onDateChange}
-            value={date}
-            locale="en-US"
-            tileClassName={tileClassName}
-          />
-        </div>
-
-        <div className="events-slideshow-container">
-          <div className="events-list">
-            <h3>Events on {date.toDateString()}</h3>
-            <ul>
-              {events && events.length > 0 ? (
-                events.map((event) => (
-                  <li key={event.id}>
-                    <strong>{event.event_title}</strong>Event Name:{" "}
-                    {event.event_description}
-                  </li>
-                ))
-              ) : (
-                <p>
-                  No events for this date. You can still click on other dates.
-                </p>
-              )}
-            </ul>
-          </div>
-
-          {role === "client" && (
-            <div className="slideshow-container">
-              <Slideshow />
-            </div>
-          )}
-        </div>
-      </div>
-
-      {role === "client" && <RectangleSection role={role} />}
     </div>
   );
 }

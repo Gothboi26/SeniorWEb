@@ -52,34 +52,36 @@
 }
 h2 {
   text-align: left;
-  color: #D60000;
+  color: #d60000;
 }
 .big-header {
   font-size: 48px; /* Large font size for the header */
-  color: #D60000; /* Maroon color */
+  color: #d60000; /* Maroon color */
   text-align: left; /* Center align the header */
   margin-bottom: 20px; /* Add space below the header */
 }
 
-.calendar-container {
+/* Container for aligning calendar, events list, and slideshow */
+.events-container {
   display: flex;
   gap: 20px;
-  justify-content: center; /* Center all items horizontally */
-  align-items: center;
-  width: 100%;
-  margin-top: 20px;
+  justify-content: center;
+  align-items: flex-start; /* Align items to the top */
   flex-wrap: nowrap; /* Prevent wrapping */
+  margin-top: 20px;
+  width: 100%;
 }
 
 /* Calendar styling */
-.calendar {
+.calendar-container {
   max-width: 300px;
   flex-shrink: 0;
-  flex-grow: 1; /* Allow it to adjust width if needed */
   border-radius: 10px;
 }
+
+/* Calendar highlight event styling */
 .react-calendar__tile.highlight-event {
-  background-color:blueviolet;
+  background-color: blueviolet;
   border-radius: 50%;
 }
 
@@ -93,16 +95,16 @@ h2 {
   color: rgb(49, 49, 49);
   height: 300px;
   overflow-y: auto;
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  flex-grow: 1; /* Allow it to adjust width if needed */
 }
 
 /* Slideshow container styling */
 .slideshow-container {
   max-width: 300px;
-  width: 300px; /* Fix the width to be consistent */
+  width: 300px;
   height: 300px;
   padding: 10px;
   background: #f4f4f4;
@@ -111,7 +113,7 @@ h2 {
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  flex-grow: 1; /* Allow it to adjust width if needed */
+  flex-shrink: 0;
 }
 
 /* Slideshow image styling */
@@ -309,7 +311,6 @@ h2 {
   max-width: 100%; /* Prevent unwanted constraints */
 }
 
-
 /* ----- Choices Styling ----- */
 .choices {
   justify-content: center; /* Align items in the center horizontally */
@@ -326,7 +327,7 @@ h2 {
 }
 
 .rectangle21 {
-  margin:30px;
+  margin: 30px;
   padding: 10px;
   display: flex;
   flex-wrap: wrap; /* Allows wrapping on smaller screens */
@@ -337,8 +338,6 @@ h2 {
   width: 100%;
   height: 100%;
   justify-content: center; /* Center items in the row */
-
-
 }
 /* --- Paalala --- */
 .rectangle23.paalala1 {
@@ -354,7 +353,6 @@ h2 {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15); /* Updated shadow for better look */
   padding: 20px; /* Inner spacing for content */
   transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
-  
 }
 
 /* --- Senior Care --- */
@@ -387,14 +385,13 @@ h2 {
   margin-top: 15px;
   padding: 8px 16px;
   width: 70%;
-  background-color: #D60000;
+  background-color: #d60000;
   color: #fff;
   border-radius: 20px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
   cursor: pointer;
   font-size: 14px;
   transition: background-color 0.3s ease, transform 0.3s ease;
-
 }
 
 .senior-care-button:hover {
@@ -431,14 +428,13 @@ h2 {
   margin-top: 50px;
   padding: 8px 16px;
   width: 70%;
-  background-color: #D60000;
+  background-color: #d60000;
   color: #fff;
   border-radius: 20px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
   cursor: pointer;
   font-size: 14px;
   transition: background-color 0.3s ease, transform 0.3s ease;
-
 }
 
 .emergency-services-button:hover {
@@ -475,14 +471,13 @@ h2 {
   margin-top: 50px;
   padding: 8px 16px;
   width: 70%;
-  background-color: #D60000;
+  background-color: #d60000;
   color: #fff;
   border-radius: 20px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
   cursor: pointer;
   font-size: 14px;
   transition: background-color 0.3s ease, transform 0.3s ease;
-
 }
 
 .chat-assistance-button:hover {
@@ -496,11 +491,10 @@ h2 {
   font-family: "Righteous", sans-serif;
   font-weight: lighter;
   font-size: 18px;
-  
 }
 
 /* Senior Care, Emergency Services, and Chat Assistance */
-.rectangle23.seniorcare, 
+.rectangle23.seniorcare,
 .rectangle23.emergencyservices,
 .rectangle23.chatassistance {
   display: flex;
@@ -515,7 +509,6 @@ h2 {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15); /* Updated shadow for better look */
   padding: 20px; /* Inner spacing for content */
   transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
-  
 }
 
 /* Hover effect for cards */
@@ -545,8 +538,6 @@ h2 {
   margin: 10px 0;
   border-radius: 40px; /* Rounded corners for uniformity */
   color: #ffffff;
-
-
 }
 
 .rectangle23.paalala1 h2 {
@@ -566,15 +557,13 @@ h2 {
   margin: 15px 30px 10px;
   text-align: left;
 }
- /* ----- Text Styles ----- */
-.rectangle23.seniorcare h2, 
+/* ----- Text Styles ----- */
+.rectangle23.seniorcare h2,
 .rectangle23.emergencyservices h2,
 .rectangle23.chatassistance h2 {
   font-family: "Righteous", sans-serif;
   font-weight: lighter;
 }
-
-
 
 /* Icon styling */
 .rectangle23 h2 {
@@ -587,14 +576,13 @@ h2 {
   gap: 8px; /* Space between text and icon */
 }
 
-.rectangle23.seniorcare p, 
+.rectangle23.seniorcare p,
 .rectangle23.emergencyservices p,
 .rectangle23.chatassistance p {
   font-size: 15px;
   color: #606060;
   margin: 20px 30px 10px;
   text-align: left;
-
 }
 
 .link-container {
@@ -640,7 +628,7 @@ h2 {
 }
 
 .Service-Subheader {
-  color: #D60000;
+  color: #d60000;
   font-family: "Righteous", sans-serif;
   font-size: 1.5rem;
   font-weight: normal;
@@ -659,9 +647,7 @@ h2 {
   align-items: center; /* Aligns content consistently */
   gap: 4rem;
   margin-top: 3%;
-  
 }
-
 
 .Service-Icon {
   background: none;
@@ -689,7 +675,8 @@ h2 {
 }
 
 .Service-Texts {
-  animation: slideIn 0.5s ease-in-out; /* Apply animation */}
+  animation: slideIn 0.5s ease-in-out; /* Apply animation */
+}
 
 .Service-Name-Wrapper {
   display: flex;
@@ -701,7 +688,7 @@ h2 {
 .Service-Name {
   font-size: 2rem;
   font-weight: bold;
-  color: #D60000;
+  color: #d60000;
   display: flex; /* Use flexbox for horizontal alignment */
   align-items: center; /* Vertically aligns text and icon */
   gap: 7.5rem; /* Adds space between the text and the arrow */
@@ -709,11 +696,10 @@ h2 {
 }
 
 .Service-Description {
-   font-family: "Overpass", sans-serif;
+  font-family: "Overpass", sans-serif;
   font-size: 1.2rem;
   color: #555;
   margin: 1rem 0;
-
 }
 
 .Service-Actions {
@@ -757,7 +743,7 @@ h2 {
 }
 
 .officials-subheader {
-  color: #D60000;
+  color: #d60000;
   font-family: "Righteous", sans-serif;
   font-size: 1.5rem;
   font-weight: normal;
@@ -814,7 +800,6 @@ h2 {
   object-fit: cover;
   border-radius: 15%; /* Rounded corners */
   margin-bottom: 1rem;
-
 }
 
 /* Text Details */
@@ -832,7 +817,7 @@ h2 {
   color: white;
   opacity: 0.9;
   margin-top: 0;
-  margin-bottom:0;
+  margin-bottom: 0;
 }
 
 @media (max-width: 768px) {
