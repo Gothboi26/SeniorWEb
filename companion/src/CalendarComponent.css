@@ -41,6 +41,97 @@
   }
 }
 
+/* ----- Home ----- */
+
+.CalendarComponent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.homepage {
+  padding: 50px 70px 10px 70px;
+  margin-bottom: 30px;
+}
+
+.home-contents {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.home-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px; /* Space between the elements */
+  flex: 1;
+  margin-right: 20%;
+}
+
+.home-subheader {
+  color: #d60000;
+  font-size: 1.5rem;
+  margin-top: 2%;
+  font-family: 'Righteous', sans-serif;
+  font-weight: normal;
+  margin: 0;
+}
+
+.home-title {
+  font-size: 2.5rem;
+  font-family: 'Righteous', sans-serif;
+  font-weight: normal;
+}
+
+.home-description {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  margin-top: 0;
+  text-align: left;
+}
+
+.explore-button {
+  margin-top: 20px; /* Space between text and button */
+  padding: 10px 20px;
+  background-color: #d60000;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.explore-button:hover {
+  background-color: #800000; /* Darker color on hover */
+}
+
+/* Facebook Box Styling */
+.facebook-box {
+  background-color: #f1f1f1;
+  padding: 20px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 520px; /* Set a max width for the box */
+}
+
+.facebook-page {
+  display: flex;
+  justify-content: center;
+  border-radius: 20px;
+}
+
+h3 {
+  font-size: 1.5em;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
 
 /* Slideshow container styling */
 .slideshow-container {
@@ -681,25 +772,7 @@
 }
 
 
-.CalendarComponent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  margin-top: 20px;
-  text-align: center;
-  width: 100%;
-}
-h2 {
-  text-align: left;
-  color: #d60000;
-}
-.big-header {
-  font-size: 48px; /* Large font size for the header */
-  color: #d60000; /* Maroon color */
-  text-align: left; /* Center align the header */
-  margin-bottom: 20px; /* Add space below the header */
-}
+
 
 /* Container for aligning calendar, events list, and slideshow */
 .events-container {
