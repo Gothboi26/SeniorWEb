@@ -16,6 +16,7 @@ import Appointments from "./Appointments";
 import EmergenciesAdmin from "./EmergenciesAdmin";
 import ChatInquiries from "./ChatInquiries";
 import Events from "./Events";
+import Settings from "./Setting";
 import "./Sidebar.css";
 import logo from "./logo.png";
 import appoint from "./appoint.png"; // For Senior Care logo
@@ -502,11 +503,7 @@ function CalendarComponent() {
                 <ChatInquiries />
               </div>
             )}
-            {selectedOption === "settings" && (
-              <div>
-                <h2>Settings</h2>
-              </div>
-            )}
+            {selectedOption === "settings" && <Settings />}
             {selectedOption === "help" && (
               <div>
                 <h2>Help & Support</h2>
