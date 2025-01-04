@@ -41,65 +41,6 @@
   }
 }
 
-.CalendarComponent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  margin-top: 20px;
-  text-align: center;
-  width: 100%;
-}
-h2 {
-  text-align: left;
-  color: #d60000;
-}
-.big-header {
-  font-size: 48px; /* Large font size for the header */
-  color: #d60000; /* Maroon color */
-  text-align: left; /* Center align the header */
-  margin-bottom: 20px; /* Add space below the header */
-}
-
-/* Container for aligning calendar, events list, and slideshow */
-.events-container {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  align-items: flex-start; /* Align items to the top */
-  flex-wrap: nowrap; /* Prevent wrapping */
-  margin-top: 20px;
-  width: 100%;
-}
-
-/* Calendar styling */
-.calendar-container {
-  max-width: 300px;
-  flex-shrink: 0;
-  border-radius: 10px;
-}
-
-/* Calendar highlight event styling */
-.react-calendar__tile.highlight-event {
-  background-color: blueviolet;
-  border-radius: 50%;
-}
-
-/* Event list container styling */
-.events-list {
-  max-width: 300px;
-  padding: 10px;
-  border-radius: 10px;
-  background: linear-gradient(to bottom, #ecf7fb, #ecf7fb);
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  color: rgb(49, 49, 49);
-  height: 300px;
-  overflow-y: auto;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
 
 /* Slideshow container styling */
 .slideshow-container {
@@ -517,20 +458,6 @@ h2 {
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.25); /* Enhanced shadow on hover */
 }
 
-/* .rectangle32 {
-  background-color: #ecf7fb;
-  height: 627px;
-  width: 1440px;
-  top: 1997px;
-  left: -3px;
-  position: absolute;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: flex-start;
-  padding: 20px;
-} */
-
 /* Specific card styling: Paalala section */
 .rectangle23.paalala1 {
   background-color: #c31c1c;
@@ -728,6 +655,91 @@ h2 {
 .book-link {
   color: #f3f3f3;
   text-decoration: none;
+}
+/* ----- Events ----- */
+.Events {
+  background-color: #ecf7fb;
+  padding: 20px;
+}
+
+.Events-Header {
+  font-family: "Righteous", sans-serif;
+}
+
+.Events-Subheader {
+  color: #d60000;
+  font-family: "Righteous", sans-serif;
+  font-size: 1.5rem;
+  font-weight: normal;
+  margin-top: 2%;
+}
+
+.Events-Title {
+  font-family: "Righteous", sans-serif;
+  font-size: 2.5rem;
+  font-weight: normal;
+}
+
+
+.CalendarComponent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 20px;
+  text-align: center;
+  width: 100%;
+}
+h2 {
+  text-align: left;
+  color: #d60000;
+}
+.big-header {
+  font-size: 48px; /* Large font size for the header */
+  color: #d60000; /* Maroon color */
+  text-align: left; /* Center align the header */
+  margin-bottom: 20px; /* Add space below the header */
+}
+
+/* Container for aligning calendar, events list, and slideshow */
+.events-container {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: flex-start; /* Align items to the top */
+  flex-wrap: nowrap; /* Prevent wrapping */
+  margin-top: 70px;
+  width: 100%;
+  margin-bottom: 70px;
+}
+
+/* Calendar styling */
+.calendar-container {
+  max-width: 300px;
+  flex-shrink: 0;
+  border-radius: 10px;
+}
+
+/* Calendar highlight event styling */
+.react-calendar__tile.highlight-event {
+  background-color: blueviolet;
+  border-radius: 50%;
+}
+
+/* Event list container styling */
+.events-list {
+  max-width: 300px;
+  padding: 10px;
+  border-radius: 10px;
+  background: linear-gradient(to bottom, #ecf7fb, #ecf7fb);
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  color: rgb(49, 49, 49);
+  height: 300px;
+  overflow-y: auto;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 /* ----- Barangay Officials ----- */
