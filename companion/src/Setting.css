@@ -37,6 +37,7 @@
 .setting-content {
   flex: 1;
   padding: 20px;
+  background-color: aliceblue;
 }
 
 /* Account Tab Styles */
@@ -99,7 +100,6 @@
   flex-wrap: wrap;
 }
 
-
 .input-box {
   flex-grow: 1;
   padding: 8px;
@@ -111,15 +111,14 @@
   max-width: 300px;
 }
 
-
 .address-input {
-  flex-grow: 1; 
+  flex-grow: 1;
   padding: 8px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 0.9rem;
-  width: 100%; 
+  width: 100%;
   max-width: 100%;
 }
 
