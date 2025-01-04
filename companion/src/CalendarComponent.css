@@ -616,6 +616,18 @@ h2 {
   }
 }
 
+/* Add animation for Service Content */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px); /* Slight slide-in from below */
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 /* ----- Services Section ----- */
 .Service-Section {
   text-align: center;
@@ -644,27 +656,46 @@ h2 {
 .Service-Content {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; /* Aligns content consistently */
   gap: 4rem;
   margin-top: 3%;
+  
 }
 
 
 .Service-Icon {
-  margin: 0; /* Removes extra spacing if any */
-  
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
 }
 
 .Service-Icon img {
   width: 24px;
   height: 24px;
+  transition: transform 0.2s;
+}
+
+.Service-Icon:hover img {
+  transform: scale(1.1);
 }
 
 .Service-Details {
   text-align: left;
   max-width: 400px;
   position: relative;
-  
+}
+
+.Service-Texts {
+  animation: slideIn 0.5s ease-in-out; /* Apply animation */}
+
+.Service-Name-Wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Keeps the name and icon aligned */
+  margin-bottom: 1rem;
 }
 
 .Service-Name {
@@ -674,6 +705,7 @@ h2 {
   display: flex; /* Use flexbox for horizontal alignment */
   align-items: center; /* Vertically aligns text and icon */
   gap: 7.5rem; /* Adds space between the text and the arrow */
+  text-align: left;
 }
 
 .Service-Description {
@@ -681,15 +713,13 @@ h2 {
   font-size: 1.2rem;
   color: #555;
   margin: 1rem 0;
-  display: inline-block; /* Ensures alignment with the arrow */
+
 }
 
 .Service-Actions {
+  margin-top: 2rem;
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 10%;
 }
 
 .Service-Book-Button {
@@ -709,4 +739,110 @@ h2 {
   background-color: #d10000;
 }
 
+.book-link {
+  color: #f3f3f3;
+  text-decoration: none;
+}
 
+/* ----- Barangay Officials ----- */
+/* Main Container */
+.barangay-health-officials {
+  text-align: center;
+  padding: 2rem;
+}
+
+/* Header Section */
+.officials-header {
+  margin-bottom: 2rem;
+}
+
+.officials-subheader {
+  color: #D60000;
+  font-family: "Righteous", sans-serif;
+  font-size: 1.5rem;
+  font-weight: normal;
+  margin-top: 2%;
+}
+
+.officials-title {
+  color: #000;
+  font-family: "Righteous", sans-serif;
+  font-size: 1.5rem;
+  font-weight: normal;
+}
+
+.officials-title {
+  font-family: "Righteous", sans-serif;
+  font-size: 2.5rem;
+  font-weight: normal;
+}
+
+/* Officials Grid */
+.officials-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Still 3 columns */
+  gap: 1.5rem; /* Reduced gap */
+  justify-content: center;
+  align-items: start;
+  margin: 70px 170px 50px; /* Reduced margins */
+  padding: 20px; /* Reduced padding */
+}
+
+/* Official Card */
+.official-card {
+  background: linear-gradient(135deg, #59c2ff, #007aff);
+  padding: 2rem; /* Reduced padding */
+  border-radius: 30px; /* Slightly smaller border radius */
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.official-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Official Image */
+.official-image {
+  width: 190px; /* Adjust image size */
+  height: 160px;
+  object-fit: cover;
+  border-radius: 15%; /* Rounded corners */
+  margin-bottom: 1rem;
+
+}
+
+/* Text Details */
+.official-name {
+  font-family: "Righteous", sans-serif;
+  font-size: 1.2rem;
+  color: white;
+  margin-bottom: 0.5rem;
+  margin-top: 5px;
+}
+
+.official-position {
+  font-family: "Overpass", sans-serif;
+  font-size: 1rem;
+  color: white;
+  opacity: 0.9;
+  margin-top: 0;
+  margin-bottom:0;
+}
+
+@media (max-width: 768px) {
+  .officials-grid {
+    grid-template-columns: repeat(4, 1fr); /* 2 columns for medium screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .officials-grid {
+    grid-template-columns: 1fr; /* 1 column for small screens */
+  }
+}

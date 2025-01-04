@@ -23,13 +23,58 @@ import emergency from "./emergency.png"; // For Emergency Services logo
 import chat from "./chat.png"; // For Chat Assistance logo
 import doctor from "./doctor.png";
 import arrow from "./arrow.png";
+import person from "./person.jpg";
 
 
 Modal.setAppElement("#root");
 
-
+// Array of Health Services
+const services = [
+  {
+    name: "Health Check Up",
+    description:
+      "Health check-ups are routine medical examinations aimed at evaluating overall well-being, identifying potential health issues early, and managing any existing conditions effectively. These assessments often include physical evaluations, diagnostic tests, and consultations to ensure proper preventive care and treatment planning.",
+    image: doctor,
+  },
+  {
+    name: "Medicine",
+    description:
+      "Medicine encompasses the diagnosis, treatment, and prevention of diseases through prescribed medications tailored to manage specific health conditions. This involves careful assessment, appropriate drug selection, and patient education to ensure effective outcomes and minimize side effects, promoting overall health and recovery.",
+    image: emergency,
+  },
+  {
+    name: "Eye Check Up",
+    description:
+      "Eye checkups are specialized evaluations focused on assessing vision and detecting eyerelated issues, such as refractive errors or diseases like glaucoma. These examinations include vision tests, eye pressure checks, and consultations to ensure optimal eye health and corrective solutions if necessary.",
+    image: chat,
+  },
+  {
+    name: "Dental Check Up",
+    description:
+      "Dental checkups are comprehensive oral health assessments designed to maintain healthy teeth and gums, prevent cavities, and identify dental problems early. These visits typically include cleaning, examinations, and advice on oral hygiene practices to ensure long-term dental care.",
+    image: chat,
+  },
+  {
+    name: "Xray Examination",
+    description:
+      "Xray checkups are diagnostic imaging procedures that provide detailed views of bones and internal organs to detect injuries, fractures, or underlying health conditions. This noninvasive process aids in accurate diagnosis and treatment planning for a wide range of medical concerns.",
+    image: chat,
+  },
+  {
+    name: "Massage Therapy",
+    description:
+      "Massage therapy is a therapeutic practice aimed at relieving muscle tension, reducing stress, and improving circulation through targeted manipulation of soft tissues. This treatment fosters relaxation, alleviates discomfort, and supports physical and mental wellbeing in a holistic manner.",
+    image: chat,
+  },
+];
 
 const RectangleSection = ({ role }) => {
+  const [currentServiceIndex, setCurrentServiceIndex] = useState(0);
+
+  const handleNextService = () => {
+    setCurrentServiceIndex((prevIndex) => (prevIndex + 1) % services.length);
+  };
+
   return (
     <div className="Dashboard">
       <div className="choices">
@@ -134,42 +179,131 @@ const RectangleSection = ({ role }) => {
           <p className="Service-Subheader">SERVICE</p>
           <h1 className="Service-Title">Our Medical Services</h1>
         </div>
-        <div className="Service-Content">
+        <div className="Service-Content" key={currentServiceIndex}>
           <div className="Service-Image">
-            <img src={doctor} alt="Doctor"/>
+            <img
+              src={doctor}
+              alt="Doctor"
+            />
           </div>
           <div className="Service-Details">
-            <h2 className="Service-Name">Health Check Up
-              <div className="Service-Icon">
-                <img src={arrow} alt="Arrow Icon"/>
+            <div className="Service-Texts">
+              <div className="Service-Name-Wrapper">
+                <h2 className="Service-Name">{services[currentServiceIndex].name}</h2>
+                <button className="Service-Icon" onClick={handleNextService}>
+                  <img src={arrow} alt="Arrow Icon" />
+                </button>
               </div>
-            </h2>
-              
-            <p className="Service-Description">
-            Health check-ups are routine medical examinations aimed at 
-            evaluating overall well-being, identifying potential health 
-            issues early, and managing any existing conditions effectively. 
-            These assessments often include physical evaluations, diagnostic 
-            tests, and consultations to ensure proper preventive care and 
-            treatment planning.
-            </p>
+              <p className="Service-Description">
+                {services[currentServiceIndex].description}
+              </p>
+            </div>
+            
             <div className="Service-Actions">
-              
               <button className="Service-Book-Button">
-                <Link to="/senior-care"></Link>  
-              
-              Book</button>
-              
+                <Link to="/senior-care" className="book-link">
+                  Book
+                </Link>
+              </button>
             </div>
           </div>
         </div>
+      </div>
+      
+      <div className="Events">
+        <div className="Events-Header">
+            <p className="Events-Subheader">EVENTS</p>
+            <h1 className="Events-Title">Our Important Events</h1>
+        </div>
+      </div>
 
+      <div className="barangay-health-officials">
+        <div className="officials-header">
+          <p className="officials-subheader">OFFICIALS</p>
+          <h1 className="officials-title">Our Barangay Officials</h1>
+        </div>
+        <div class="officials-grid">
+          <div class="official-card">
+            <img
+              src={person}
+              alt="brgy-official"
+              class="official-image"
+            />
+            <p class="official-name">Ferrer, Rizalino </p>
+            <p class="official-position">Punong Barangay</p>
+          </div>
+          <div class="official-card">
+            <img
+              src={person}
+              alt="brgy-official"
+              class="official-image"
+            />
+            <p class="official-name">Matos, Rica</p>
+            <p class="official-position">Kagawad</p>
+          </div>
+          <div class="official-card">
+            <img
+              src={person}
+              alt="brgy-official"
+              class="official-image"
+            />
+            <p class="official-name">De Gula, Susan</p>
+            <p class="official-position">Kagawad</p>
+          </div>
+          <div class="official-card">
+            <img
+              src={person}
+              alt="brgy-official"
+              class="official-image"
+            />
+            <p class="official-name">Dela Cruz, Zella</p>
+            <p class="official-position">Kagawad</p>
+          </div>
+          <div class="official-card">
+            <img
+              src={person}
+              alt="brgy-official"
+              class="official-image"
+            />
+            <p class="official-name">Moises Beltran</p>
+            <p class="official-position">Kagawad</p>
+          </div>
+          <div class="official-card">
+            <img
+              src={person}
+              alt="brgy-official"
+              class="official-image"
+            />
+            <p class="official-name">Bernardino, Bogie</p>
+            <p class="official-position">Kagawad</p>
+          </div>
+          <div class="official-card">
+            <img
+              src={person}
+              alt="brgy-official"
+              class="official-image"
+            />
+            <p class="official-name">Edgardo, Dizon</p>
+            <p class="official-position">Kagawad</p>
+          </div>
+          <div class="official-card">
+            <img
+              src={person}
+              alt="brgy-official"
+              class="official-image"
+            />
+            <p class="official-name">Colibao, Shennel</p>
+            <p class="official-position">Kagawad</p>
+          </div>
 
-      </div> 
-    </div> //Dashboard
-  
+        </div>
+
+      </div>
+
+    </div>
   );
 };
+
 
 function CalendarComponent() {
   const [role, setRole] = useState(null); // Declare state for role
