@@ -67,7 +67,9 @@ function Navbar({ handleLogout, role }) {
       </ul>
 
       <div className="Navbar-edit-profile">
-        <Link to="/profile">Profile</Link>
+        <button className="Navbar-profile-button">
+          <Link to="/profile" className="profile-link">Profile</Link>
+        </button>
       </div>
     </nav>
   );
