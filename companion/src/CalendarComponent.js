@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
 import Modal from "react-modal";
-import Slideshow from "./Slideshow";
+// import Slideshow from "./Slideshow";
 import { Link } from "react-router-dom";
 import "./CalendarComponent.css";
 import "react-calendar/dist/Calendar.css";
@@ -285,11 +285,9 @@ const RectangleSection = ({ role }) => {
               )}
             </ul>
           </div>
-          <div className="slideshow-container">
-            <Slideshow />
-          </div>
+          
         </div>
-      </div>
+      </div> 
 
       <div className="barangay-health-officials">
         <div className="officials-header">
