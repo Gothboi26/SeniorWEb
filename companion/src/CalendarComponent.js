@@ -534,7 +534,7 @@ function CalendarComponent() {
           
           <div className="facebook-page">
             <iframe
-              src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FYourPageName&tabs=timeline&width=500&height=500&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+              src="https://www.facebook.com/p/Barangay-Gen-T-De-Leon-61550950657692/"
               width="500"
               height="500"
               style={{ border: 'none', overflow: 'hidden' }}

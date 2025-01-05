@@ -54,7 +54,7 @@
 
 .homepage {
   padding: 50px 70px 10px 70px;
-  margin-bottom: 30px;
+  margin-bottom: 70px;
 }
 
 .home-contents {
@@ -68,24 +68,28 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 10px; /* Space between the elements */
+  gap: 5px; /* Space between the elements */
   flex: 1;
   margin-right: 20%;
 }
 
 .home-subheader {
   color: #d60000;
-  font-size: 1.5rem;
+  font-size: 2rem;
   margin-top: 2%;
   font-family: 'Righteous', sans-serif;
   font-weight: normal;
   margin: 0;
+  margin-bottom: 0;
 }
 
 .home-title {
-  font-size: 2.5rem;
+  font-size: 3.7rem;
   font-family: 'Righteous', sans-serif;
   font-weight: normal;
+  line-height: 1.2;
+  margin-top: 0;
+  margin-bottom: 5px;
 }
 
 .home-description {
@@ -93,6 +97,9 @@
   margin-bottom: 20px;
   margin-top: 0;
   text-align: left;
+  color: #555;
+  margin-right: 60px;
+  
 }
 
 .explore-button {
@@ -101,9 +108,11 @@
   background-color: #d60000;
   color: white;
   border: none;
-  border-radius: 5px;
-  font-size: 1em;
+  border-radius: 20px;
+  font-size: 1rem;
   cursor: pointer;
+  font-family: "Righteous", sans-serif;
+  width: 200px;
 }
 
 .explore-button:hover {
