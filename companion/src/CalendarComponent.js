@@ -523,31 +523,28 @@ function CalendarComponent() {
             <p className="home-subheader">companiON</p>
             <h1 className="home-title">Senior Care Services</h1>
             <p className="home-description">
-            Maalaga, makatao, at angkop na serbisyo upang matulungan ang nakatatanda na mamuhay nang komportable, ligtas, at may dignidad.
+              Maalaga, makatao, at angkop na serbisyo upang matulungan ang
+              nakatatanda na mamuhay nang komportable, ligtas, at may dignidad.
             </p>
             <button className="explore-button">
-              
-                <span className="explore-button-text">Explore</span>
+              <span className="explore-button-text">Explore</span>
             </button>
           </div>
-        
-        <div className="facebook-box">
-          
-          <div className="facebook-page">
-            <iframe
-              src="https://www.facebook.com/p/Barangay-Gen-T-De-Leon-61550950657692/"
-              width="500"
-              height="500"
-              style={{ border: 'none', overflow: 'hidden' }}
-              scrolling="no"
-              frameBorder="0"
-              allowTransparency="true"
-            ></iframe>
+
+          <div className="facebook-box">
+            <div className="facebook-page">
+              <iframe
+                src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FBarangay-Gen-T-De-Leon-61550950657692&tabs=timeline&width=500&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+                width="500"
+                height="500"
+                style={{ border: "none", overflow: "hidden" }}
+                scrolling="no"
+                frameBorder="0"
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+              ></iframe>
+            </div>
           </div>
         </div>
-      </div>
-        
-        
       </div>
       {role === "client" && <RectangleSection role={role} />}
     </div>
