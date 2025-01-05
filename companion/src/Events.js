@@ -187,7 +187,7 @@ const Events = () => {
         <button onClick={() => setShowAllEvents(!showAllEvents)}>
           {showAllEvents ? "Show Events for Today" : "Show All Events"}
         </button>
-        <button onClick={() => openModal()}>Add Event</button>
+        <button className="event-modal" onClick={() => openModal()}>Add Event</button>
       </div>
 
       <table className="table">
@@ -220,7 +220,9 @@ const Events = () => {
         </tbody>
       </table>
 
-      <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
+      <Modal isOpen={modalIsOpen} onRequestClose={closeModal}
+      className="ReactModal__Content"
+      overlayclassName="ReactModal__Overlay">
         <h2>{editingEventId ? "Edit Event" : "Add Event"}</h2>
         <input
           type="text"
@@ -238,10 +240,10 @@ const Events = () => {
           value={eventDescription}
           onChange={(e) => setEventDescription(e.target.value)}
         ></textarea>
-        <button onClick={saveEvent} disabled={loading}>
+        <button className="save-event" onClick={saveEvent} disabled={loading}>
           {loading ? "Saving..." : "Save Event"}
         </button>
-        <button onClick={closeModal}>Cancel</button>
+        <button className="cancel-event" onClick={closeModal}>Cancel</button>
       </Modal>
     </div>
   );
