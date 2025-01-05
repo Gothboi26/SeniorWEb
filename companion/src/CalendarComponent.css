@@ -29,6 +29,10 @@
     align-items: center; /* Center align items */
   }
 
+  .events-list p {
+    color: #fcfcfc;
+  }
+
   .rectangle23 {
     width: 90%;
     height: auto; /* Allow dynamic height */
@@ -99,6 +103,7 @@
   text-align: left;
   color: #555;
   margin-right: 60px;
+  font-weight: 300;
   
 }
 
@@ -135,10 +140,11 @@
 }
 
 h3 {
-  font-size: 1.5em;
-  color: #333;
+  font-size: 1.3em;
+  color: #fcfcfc;
   text-align: center;
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 0px;
 }
 
 
@@ -440,6 +446,8 @@ h3 {
   transform: scale(1.05); /* Slight zoom on hover */
 }
 
+
+
 /* --- Emergency Services --- */
 .rectangle23.emergencyservices .Emergency-Title {
   display: flex;
@@ -583,6 +591,7 @@ h3 {
   text-align: justify;
   margin: 15px 30px 10px;
   text-align: left;
+  font-weight: 300;
 }
 /* ----- Text Styles ----- */
 .rectangle23.seniorcare h2,
@@ -610,6 +619,7 @@ h3 {
   color: #606060;
   margin: 20px 30px 10px;
   text-align: left;
+  font-weight: 300;
 }
 
 .link-container {
@@ -660,6 +670,7 @@ h3 {
   font-size: 1.5rem;
   font-weight: normal;
   margin-top: 2%;
+  text-align: center;
 }
 
 .Service-Title {
@@ -714,7 +725,7 @@ h3 {
 
 .Service-Name {
   font-size: 2rem;
-  font-weight: bold;
+  font-weight: normal;
   color: #d60000;
   display: flex; /* Use flexbox for horizontal alignment */
   align-items: center; /* Vertically aligns text and icon */
@@ -724,6 +735,8 @@ h3 {
 
 .Service-Description {
   font-family: "Overpass", sans-serif;
+  font-weight: 300;
+  font-weight: 200;
   font-size: 1.2rem;
   color: #555;
   margin: 1rem 0;
@@ -772,6 +785,7 @@ h3 {
   font-size: 1.5rem;
   font-weight: normal;
   margin-top: 2%;
+  text-align: center;
 }
 
 .Events-Title {
@@ -811,12 +825,12 @@ h3 {
 /* Event list container styling */
 .events-list {
   max-width: 300px;
-  padding: 10px;
+  padding: 20px 30px 20px;
   border-radius: 10px;
-  background: linear-gradient(to bottom, #ecf7fb, #ecf7fb);
+  background: linear-gradient(to bottom, #ef473a, #dc281e);
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   color: rgb(49, 49, 49);
-  height: 300px;
+  height: 280px;
   overflow-y: auto;
   flex-shrink: 0;
   display: flex;
@@ -842,6 +856,7 @@ h3 {
   font-size: 1.5rem;
   font-weight: normal;
   margin-top: 2%;
+  text-align: center;
 }
 
 .officials-title {
@@ -907,6 +922,7 @@ h3 {
 
 .official-position {
   font-family: "Overpass", sans-serif;
+  font-weight: 300;
   font-size: 1rem;
   color: white;
   opacity: 0.9;

@@ -19,8 +19,11 @@ h4 {
 
 p {
   margin-bottom: 20px;
-  font-size: 0.9rem;
-  color: #666;
+  font-size: 1rem;
+  font-weight: 100;
+  text-align: left;
+  color: #fcfcfc;
+  margin-top: 0;
 }
 
 /* Notifications List */
