@@ -174,12 +174,7 @@ const SeniorCare = ({ role, handleLogout }) => {
           >
             Reserve a Slot
           </button>
-          <button
-            className="secondary-button"
-            onClick={() => openModal("editInfo")}
-          >
-            Edit Information
-          </button>
+          
           <button
             className="secondary-button"
             onClick={() => openModal("viewReservedSlot")}
