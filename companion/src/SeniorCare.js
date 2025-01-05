@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import "./SeniorCare.css";
 import Navbar from "./Navbar";
@@ -31,6 +31,23 @@ const SeniorCare = ({ role, handleLogout }) => {
     "Eye Check-up": ["10:30 AM", "1:30 PM", "4:30 PM"],
   };
 
+  // Fetch reserved slots for the user (client) when component mounts
+  useEffect(() => {
+    const fetchReservedSlots = async () => {
+      try {
+        const response = await fetch("http://localhost/php/appointments.php"); // Backend endpoint to fetch reserved slots
+        const data = await response.json();
+        setReservedSlots(data); // Store the reserved slots with their current status
+      } catch (error) {
+        console.error("Error fetching reserved slots:", error);
+      }
+    };
+
+    if (role === "client") {
+      fetchReservedSlots();
+    }
+  }, [role]);
+
   // Function to handle service change
   const handleServiceChange = (e) => {
     const service = e.target.value;
@@ -53,17 +70,40 @@ const SeniorCare = ({ role, handleLogout }) => {
     setSelectedTime("");
   };
 
-  // Handle reservation confirmation
-  const handleReservation = () => {
-    // Add the new reservation to the list of reserved slots
-    setReservedSlots([
-      ...reservedSlots,
-      {
-        service: selectedService,
-        date: selectedDate,
-        time: selectedTime,
-      },
-    ]);
+  // Handle reservation confirmation (send to backend)
+  const handleReservation = async () => {
+    const newReservation = {
+      service: selectedService,
+      date: selectedDate,
+      time: selectedTime,
+      user_id: 1, // Assuming a user_id is set, replace it with actual user ID if needed
+      status: "Pending Approval", // Add the "Pending Approval" status
+    };
+
+    // Send reservation data to backend (add new reservation to the database)
+    try {
+      const response = await fetch("http://localhost/php/appointments.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newReservation),
+      });
+      const data = await response.json();
+
+      if (response.ok) {
+        // Update local state with the reservation and its "Pending Approval" status
+        setReservedSlots([...reservedSlots, newReservation]);
+
+        // Show confirmation message
+        alert("Your reservation is confirmed. It is pending approval.");
+      } else {
+        console.error("Error in reservation:", data.error);
+      }
+    } catch (error) {
+      console.error("Error making reservation:", error);
+    }
+
     closeModal();
   };
 
@@ -231,6 +271,9 @@ const SeniorCare = ({ role, handleLogout }) => {
                     </p>
                     <p>
                       <strong>Time:</strong> {slot.time}
+                    </p>
+                    <p>
+                      <strong>Status:</strong> {slot.status || "Pending Approval"} {/* Show status */}
                     </p>
                     <hr />
                   </li>
