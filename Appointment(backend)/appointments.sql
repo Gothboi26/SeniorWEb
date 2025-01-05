@@ -3,7 +3,7 @@ CREATE TABLE appointments (
     service VARCHAR(255) NOT NULL,
     date DATE NOT NULL,
     time TIME NOT NULL,
-    status VARCHAR(50) DEFAULT 'Pending Approval',
-    user_id INT,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    status ENUM('Pending', 'Approved', 'Rejected') NOT NULL DEFAULT 'Pending',
+    user_id INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
