@@ -296,9 +296,11 @@ const SeniorCare = ({ role, handleLogout }) => {
 
         <button onClick={closeModal}>Close</button>
       </Modal>
-      <a href="/" className="back-link">
-        Back to Home
-      </a>
+      <div className="bhome-b">
+          <button className="bhome-button">
+            <a href="/" className="bhome-link">Back to Home</a>
+          </button>
+      </div>
       <footer className="App-footer">
                 <div className="footer-section">
                   <h1>Barangay General Tiburcio De Leon</h1>
