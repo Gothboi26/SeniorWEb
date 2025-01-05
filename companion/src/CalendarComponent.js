@@ -25,6 +25,8 @@ import chat from "./chat.png"; // For Chat Assistance logo
 import doctor from "./doctor.png";
 import arrow from "./arrow.png";
 import person from "./person.jpg";
+import boy from "./boy.png";
+import girl from "./girl.png";
 
 Modal.setAppElement("#root");
 
@@ -296,42 +298,42 @@ const RectangleSection = ({ role }) => {
         </div>
         <div class="officials-grid">
           <div class="official-card">
-            <img src={person} alt="brgy-official" class="official-image" />
+            <img src={boy} alt="brgy-official" class="official-image" />
             <p class="official-name">Ferrer, Rizalino </p>
             <p class="official-position">Punong Barangay</p>
           </div>
           <div class="official-card">
-            <img src={person} alt="brgy-official" class="official-image" />
+            <img src={girl} alt="brgy-official" class="official-image" />
             <p class="official-name">Matos, Rica</p>
             <p class="official-position">Kagawad</p>
           </div>
           <div class="official-card">
-            <img src={person} alt="brgy-official" class="official-image" />
+            <img src={girl} alt="brgy-official" class="official-image" />
             <p class="official-name">De Gula, Susan</p>
             <p class="official-position">Kagawad</p>
           </div>
           <div class="official-card">
-            <img src={person} alt="brgy-official" class="official-image" />
+            <img src={girl} alt="brgy-official" class="official-image" />
             <p class="official-name">Dela Cruz, Zella</p>
             <p class="official-position">Kagawad</p>
           </div>
           <div class="official-card">
-            <img src={person} alt="brgy-official" class="official-image" />
-            <p class="official-name">Moises Beltran</p>
+            <img src={boy} alt="brgy-official" class="official-image" />
+            <p class="official-name">Moises, Beltran</p>
             <p class="official-position">Kagawad</p>
           </div>
           <div class="official-card">
-            <img src={person} alt="brgy-official" class="official-image" />
+            <img src={boy} alt="brgy-official" class="official-image" />
             <p class="official-name">Bernardino, Bogie</p>
             <p class="official-position">Kagawad</p>
           </div>
           <div class="official-card">
-            <img src={person} alt="brgy-official" class="official-image" />
+            <img src={boy} alt="brgy-official" class="official-image" />
             <p class="official-name">Edgardo, Dizon</p>
             <p class="official-position">Kagawad</p>
           </div>
           <div class="official-card">
-            <img src={person} alt="brgy-official" class="official-image" />
+            <img src={girl} alt="brgy-official" class="official-image" />
             <p class="official-name">Colibao, Shennel</p>
             <p class="official-position">Kagawad</p>
           </div>
