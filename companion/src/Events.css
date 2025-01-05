@@ -1,11 +1,30 @@
+.modal {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: auto;
+  margin: auto;
+}
+
+.events-tab {
+  font-family: "Arial", sans-serif;
+  max-width: 100%;
+  margin: 20px auto;
+  padding: 20px;
+  color: #333;
+}
+
 /* General button styles for consistency */
 button {
-  padding: 10px 20px;
+  padding: 10px 15px;
   font-size: 16px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease, opacity 0.3s ease;
+  transition: 0.3s ease, opacity 0.3s ease;
+  background-color: #45a049;
+  color: #ffffff;
 }
 
 button:hover {
@@ -44,35 +63,40 @@ button:hover {
   margin-top: 20px;
 }
 
-.events-table th,
-.events-table td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: center;
-}
-
-.events-table th {
-  background-color: #f2f2f2;
-}
-
-.events-table .no-events {
+.no-events {
   text-align: center;
   color: #888;
 }
-
-/* Buttons inside the Table */
-.edit-button,
-.delete-button {
-  border: none;
-  background: none;
-  cursor: pointer;
-  font-size: 1rem;
-  margin: 0 5px;
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
 }
 
-.edit-button:hover,
-.delete-button:hover {
-  opacity: 0.7;
+.table th,
+.table td {
+  padding: 15px 20px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.table th {
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+.table tr:hover {
+  background-color: #f9f9f9;
+}
+.action-icons {
+  display: flex;
+  gap: 8px;
+}
+
+.action-icons img {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
 }
 
 /* Header */
@@ -117,7 +141,7 @@ button:hover {
 }
 
 .sort-options button {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   border: none;
 }
@@ -133,7 +157,7 @@ button:hover {
 
 /* Toggle Events Button */
 .toggle-events-button {
-  background-color: #2196F3;
+  background-color: #2196f3;
   color: white;
   padding: 8px 12px;
   border-radius: 5px;
@@ -142,7 +166,7 @@ button:hover {
 }
 
 .toggle-events-button:hover {
-  background-color: #1976D2;
+  background-color: #1976d2;
 }
 
 /* Filters */
@@ -161,30 +185,6 @@ button:hover {
 
 .filter-date {
   display: inline-block;
-}
-
-/* Modal */
-.modal {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  width: 100%;
-  max-width: 400px;
-  margin: auto;
-}
-
-.modal input,
-.modal textarea {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.modal textarea {
-  resize: vertical;
 }
 
 /* Events Table No Events Message */
@@ -223,7 +223,7 @@ button:hover {
     width: 100%;
     box-sizing: border-box;
   }
-  
+
   /* Make modal content more responsive */
   .modal {
     max-width: 100%;
@@ -247,4 +247,3 @@ button:hover {
     font-size: 14px;
   }
 }
-
