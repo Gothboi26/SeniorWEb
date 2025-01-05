@@ -18,100 +18,116 @@ try {
     exit;
 }
 
-// Fetch all appointments with username (filtered by user_id)
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+// Function to fetch appointments for a specific user or all users (admin)
+function fetchAppointments($pdo, $user_id = null) {
     try {
-        // Check if the user is authenticated (for example, you could get user_id from the session or a GET parameter)
-        $user_id = isset($_GET['user_id']) ? $_GET['user_id'] : null;
+        $query = "SELECT appointments.id, appointments.service, appointments.date, appointments.time, appointments.status, users.username, users.sex 
+                  FROM appointments
+                  JOIN users ON appointments.user_id = users.id";
 
         if ($user_id) {
-            // Fetch appointments for a specific client (based on user_id)
-            $stmt = $pdo->prepare("SELECT 
-                                        appointments.id, 
-                                        appointments.service, 
-                                        appointments.date, 
-                                        appointments.time, 
-                                        appointments.status, 
-                                        users.username 
-                                   FROM 
-                                        appointments 
-                                   JOIN 
-                                        users 
-                                   ON 
-                                        appointments.user_id = users.id
-                                   WHERE appointments.user_id = :user_id");
-            $stmt->bindParam(':user_id', $user_id);
-            $stmt->execute();
-            $appointments = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } else {
-            // If not a specific user, admin can view all appointments
-            $stmt = $pdo->prepare("SELECT 
-                                        appointments.id, 
-                                        appointments.service, 
-                                        appointments.date, 
-                                        appointments.time, 
-                                        appointments.status, 
-                                        users.username 
-                                   FROM 
-                                        appointments 
-                                   JOIN 
-                                        users 
-                                   ON 
-                                        appointments.user_id = users.id");
-            $stmt->execute();
-            $appointments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $query .= " WHERE appointments.user_id = :user_id";
         }
 
-        echo json_encode($appointments);
+        $stmt = $pdo->prepare($query);
+
+        if ($user_id) {
+            $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        }
+
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         file_put_contents('error_log.txt', "[" . date('Y-m-d H:i:s') . "] " . $e->getMessage() . PHP_EOL, FILE_APPEND);
+        return null;
+    }
+}
+
+// Function to insert, update, or delete an appointment
+function handleAppointment($pdo, $data) {
+    try {
+        if (isset($data['appointment_id'])) {
+            // Update an existing appointment
+            $appointment_id = $data['appointment_id'];
+            $status = $data['status'];
+
+            if ($status == 'Approved') {
+                $stmt = $pdo->prepare("UPDATE appointments SET status = :status WHERE id = :appointment_id");
+                $stmt->bindParam(':status', $status);
+                $stmt->bindParam(':appointment_id', $appointment_id, PDO::PARAM_INT);
+            } elseif ($status == 'Rejected') {
+                // Delete the appointment if rejected
+                $stmt = $pdo->prepare("DELETE FROM appointments WHERE id = :appointment_id");
+                $stmt->bindParam(':appointment_id', $appointment_id, PDO::PARAM_INT);
+            }
+        } else {
+            // Insert a new appointment
+            $stmt = $pdo->prepare("INSERT INTO appointments (service, date, time, status, user_id) 
+                                   VALUES (:service, :date, :time, :status, :user_id)");
+            $stmt->bindParam(':service', $data['service']);
+            $stmt->bindParam(':date', $data['date']);
+            $stmt->bindParam(':time', $data['time']);
+            $stmt->bindParam(':status', $data['status']);
+            $stmt->bindParam(':user_id', $data['user_id'], PDO::PARAM_INT);
+        }
+
+        $stmt->execute();
+        return ['success' => true];
+    } catch (PDOException $e) {
+        return ['error' => 'Error inserting/updating appointment: ' . $e->getMessage()];
+    }
+}
+
+// Function to fetch user details by username (login)
+function fetchUserDetails($pdo, $username) {
+    try {
+        $stmt = $pdo->prepare("SELECT id, username, password, role, age, sex, address, health_issue 
+                               FROM users WHERE username = :username");
+        $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        file_put_contents('error_log.txt', "[" . date('Y-m-d H:i:s') . "] " . $e->getMessage() . PHP_EOL, FILE_APPEND);
+        return null;
+    }
+}
+
+// Handle requests
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    // Check for a user_id parameter to fetch appointments for a specific user
+    $user_id = isset($_GET['user_id']) ? intval($_GET['user_id']) : null;
+
+    // Fetch appointments for a specific user or all users
+    $appointments = fetchAppointments($pdo, $user_id);
+
+    if ($appointments !== null) {
+        echo json_encode($appointments);
+    } else {
         echo json_encode(['error' => 'Failed to fetch appointments.']);
     }
 }
 
-// Handle new appointment reservation or status update
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode(file_get_contents('php://input'), true);
 
-    if (isset($data['service'], $data['date'], $data['time'], $data['user_id'])) {
-        $service = $data['service'];
-        $date = $data['date'];
-        $time = $data['time'];
-        $status = isset($data['status']) ? $data['status'] : 'Pending Approval';  // Default status
-        $user_id = $data['user_id'];
-
-        if (isset($data['appointment_id'])) {
-            // Update the appointment status (approve/reject)
-            $appointment_id = $data['appointment_id'];
-            $status = $data['status'];
-
-            // Check if the status is "Approved", then update the appointment
-            if ($status == 'Approved') {
-                // Automatically update the appointment status to "Approved"
-                $stmt = $pdo->prepare("UPDATE appointments SET status = :status WHERE id = :appointment_id");
-                $stmt->bindParam(':status', $status);
-                $stmt->bindParam(':appointment_id', $appointment_id);
-            } elseif ($status == 'Rejected') {
-                // Delete the appointment if rejected
-                $stmt = $pdo->prepare("DELETE FROM appointments WHERE id = :appointment_id");
-                $stmt->bindParam(':appointment_id', $appointment_id);
-            }
+    // Handle login/authentication
+    if (isset($data['username'], $data['password'])) {
+        $user = fetchUserDetails($pdo, $data['username']);
+        
+        // If user is found and password is correct
+        if ($user && password_verify($data['password'], $user['password'])) {
+            echo json_encode(['success' => true, 'user' => $user]);
         } else {
-            // Insert new appointment for a client
-            $stmt = $pdo->prepare("INSERT INTO appointments (service, date, time, status, user_id) VALUES (:service, :date, :time, :status, :user_id)");
-            $stmt->bindParam(':service', $service);
-            $stmt->bindParam(':date', $date);
-            $stmt->bindParam(':time', $time);
-            $stmt->bindParam(':status', $status);
-            $stmt->bindParam(':user_id', $user_id);
+            echo json_encode(['error' => 'Invalid username or password']);
         }
+    }
+    // Handle appointment creation, update, or deletion
+    elseif (isset($data['service'], $data['date'], $data['time'], $data['user_id'])) {
+        $status = isset($data['status']) ? $data['status'] : 'Pending Approval';  // Default status
+        $data['status'] = $status;
 
-        try {
-            $stmt->execute();
-            echo json_encode(['success' => true]);
-        } catch (PDOException $e) {
-            echo json_encode(['error' => 'Error inserting/updating appointment: ' . $e->getMessage()]);
-        }
+        $result = handleAppointment($pdo, $data);
+        echo json_encode($result);
     } else {
         echo json_encode(['error' => 'Missing required fields']);
     }
