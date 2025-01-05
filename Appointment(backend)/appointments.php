@@ -19,19 +19,22 @@ try {
 }
 
 // Function to fetch appointments for a specific user or all users (admin)
-function fetchAppointments($pdo, $user_id = null) {
+function fetchAppointments($pdo, $user_id = null, $role = 'client') {
     try {
+        // Default query to get all appointments
         $query = "SELECT appointments.id, appointments.service, appointments.date, appointments.time, appointments.status, users.username, users.sex 
                   FROM appointments
                   JOIN users ON appointments.user_id = users.id";
 
-        if ($user_id) {
+        // If user is a client, filter appointments by their user_id
+        if ($role === 'client' && $user_id) {
             $query .= " WHERE appointments.user_id = :user_id";
         }
 
         $stmt = $pdo->prepare($query);
 
-        if ($user_id) {
+        // Bind the user_id if the user is a client
+        if ($role === 'client' && $user_id) {
             $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
         }
 
@@ -96,9 +99,10 @@ function fetchUserDetails($pdo, $username) {
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     // Check for a user_id parameter to fetch appointments for a specific user
     $user_id = isset($_GET['user_id']) ? intval($_GET['user_id']) : null;
+    $role = isset($_GET['role']) ? $_GET['role'] : 'client'; // Default role is 'client'
 
-    // Fetch appointments for a specific user or all users
-    $appointments = fetchAppointments($pdo, $user_id);
+    // Fetch appointments for a specific user or all users if admin
+    $appointments = fetchAppointments($pdo, $user_id, $role);
 
     if ($appointments !== null) {
         echo json_encode($appointments);
@@ -116,7 +120,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         // If user is found and password is correct
         if ($user && password_verify($data['password'], $user['password'])) {
-            echo json_encode(['success' => true, 'user' => $user]);
+            // Assume 'role' is one of 'client', 'staff', or 'admin'
+            $role = $user['role'];
+            
+            // Fetch appointments based on role
+            if ($role === 'admin') {
+                $appointments = fetchAppointments($pdo, null, 'admin'); // Admin can access all appointments
+            } else {
+                $appointments = fetchAppointments($pdo, $user['id'], 'client'); // Client can access only their own
+            }
+
+            echo json_encode(['success' => true, 'user' => $user, 'appointments' => $appointments]);
         } else {
             echo json_encode(['error' => 'Invalid username or password']);
         }
