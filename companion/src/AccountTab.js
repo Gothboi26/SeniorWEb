@@ -8,9 +8,15 @@ const AccountTab = () => {
     return savedData ? JSON.parse(savedData) : defaultValue;
   };
 
-  const [fullname, setFullname] = useState(getLocalStorage("fullname", "Aliah Masdasdasdhae F. Blvd"));
-  const [email, setEmail] = useState(getLocalStorage("email", "aliah@gmail.com"));
-  const [address, setAddress] = useState(getLocalStorage("address", "karuhatan cutie"));
+  const [fullname, setFullname] = useState(
+    getLocalStorage("fullname", "Aliah Mhae F. Blvd")
+  );
+  const [email, setEmail] = useState(
+    getLocalStorage("email", "aliah@gmail.com")
+  );
+  const [address, setAddress] = useState(
+    getLocalStorage("address", "karuhatan cutie")
+  );
   const [phone, setPhone] = useState(getLocalStorage("phone", "092312323"));
   const [city, setCity] = useState(getLocalStorage("city", "Valenzuela City"));
   const [state, setState] = useState(getLocalStorage("state", "Quezon City"));
@@ -35,10 +41,10 @@ const AccountTab = () => {
     <div className="tab-content">
       <div className="account-header">
         <div className="account-info">
-          <img src="profile-pic.jpg" alt="Profile" className="profile-img" />
+          <img src="/icons/admin.png" alt="Profile" className="profile-img" />
           <h3>{fullname}</h3>
         </div>
-        <button className="update-profile-btn">Update</button>
+        <button className="update-profile-btn">Update Photo</button>
       </div>
       <h4>Change Admin Information here:</h4>
       <form className="account-form" onSubmit={handleUpdateAccount}>
@@ -48,7 +54,7 @@ const AccountTab = () => {
             <input
               type="text"
               value={fullname}
-              onChange={(e) => setFullname(e.target.value)} 
+              onChange={(e) => setFullname(e.target.value)}
               className="input-box"
             />
           </label>
@@ -57,7 +63,7 @@ const AccountTab = () => {
             <input
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)} 
+              onChange={(e) => setEmail(e.target.value)}
               className="input-box"
             />
           </label>
@@ -68,19 +74,8 @@ const AccountTab = () => {
             <input
               type="text"
               value={address}
-              onChange={(e) => setAddress(e.target.value)} 
+              onChange={(e) => setAddress(e.target.value)}
               className="address-input"
-            />
-          </label>
-        </div>
-        <div className="form-row">
-          <label>
-            Phone Number*
-            <input
-              type="text"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)} 
-              className="input-box"
             />
           </label>
         </div>
@@ -90,7 +85,7 @@ const AccountTab = () => {
             <input
               type="text"
               value={city}
-              onChange={(e) => setCity(e.target.value)} 
+              onChange={(e) => setCity(e.target.value)}
               className="input-box"
             />
           </label>
@@ -99,7 +94,18 @@ const AccountTab = () => {
             <input
               type="text"
               value={state}
-              onChange={(e) => setState(e.target.value)} 
+              onChange={(e) => setState(e.target.value)}
+              className="input-box"
+            />
+          </label>
+        </div>
+        <div className="form-row">
+          <label>
+            Phone Number*
+            <input
+              type="text"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
               className="input-box"
             />
           </label>
