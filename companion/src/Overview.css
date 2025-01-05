@@ -202,3 +202,90 @@
   height: 18px;
   cursor: pointer;
 }
+
+.appointments-for-date {
+  padding: 20px;
+  margin-top: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.appointments-for-date h3 {
+  font-size: 1.6rem;
+  margin-bottom: 15px;
+  font-weight: 600;
+  color: #333;
+}
+
+.appointments-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.appointments-table th,
+.appointments-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+}
+
+.appointments-table th {
+  background-color: #f0f0f0;
+  font-weight: bold;
+  color: #444;
+}
+
+.appointments-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.appointments-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.appointments-table td {
+  color: #555;
+}
+
+.status-inquiry {
+  color: #f39c12;
+  font-weight: bold;
+}
+
+.status-confirmed {
+  color: #2ecc71;
+  font-weight: bold;
+}
+
+.status-canceled {
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+.action-icons {
+  display: flex;
+  gap: 10px;
+}
+
+.action-icons img {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.action-icons img:hover {
+  transform: scale(1.2);
+}
+
+.action-icons img:first-child {
+  margin-right: 5px;
+}
+
+.appointments-for-date p {
+  color: #888;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
