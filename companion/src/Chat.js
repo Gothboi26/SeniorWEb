@@ -42,7 +42,7 @@ function Chat({ role, handleLogout }) {
       <Navbar role={role} handleLogout={handleLogout} />
       <div className="chat-assistance">
         <div className="chat-header">
-          <h2>Chat Assistance</h2>
+          <h2>CHAT ASSISTANCE</h2>
           <h1>Need Help? Chat Us!</h1>
         </div>
         <div className="chat-description">

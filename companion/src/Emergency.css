@@ -1,3 +1,28 @@
+/* Back to Home */
+
+.bhome-b {
+  display: flex; /* Add flexbox layout */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  height: 100%; /* Ensure the container has enough height */
+  width: 100%; /* Ensure the container takes full width */
+}
+.bhome-button {
+  background-color: #d60000;
+  border-radius: 20px;
+  width: 250px;
+  height: auto;
+  text-align: center; 
+}
+
+.bhome-link {
+  color: #fcfcfc;
+  text-decoration: none;
+  font-weight: normal;
+  font-family: "Righteous", sans-serif;
+  font-size: 0.9rem;
+}
+
 /* General Styles */
 body {
   font-family: "Glacial Indifference", sans-serif;
