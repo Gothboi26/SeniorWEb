@@ -54,16 +54,25 @@ function Navbar({ handleLogout, role }) {
 
       <ul className="Navbar-links">
         <li>
-          <Link to="/" className="Navbar-links-b">Home</Link> {/* Navigate to the main page */}
+          <Link to="/" className="Navbar-links-b">
+            Home
+          </Link>{" "}
+          {/* Navigate to the main page */}
         </li>
         <li>
-          <Link to="/senior-care" className="Navbar-links-b">Book</Link>
+          <Link to="/senior-care" className="Navbar-links-b">
+            Appointment
+          </Link>
         </li>
         <li>
-          <Link to="/emergency" className="Navbar-links-b">Call</Link>
+          <Link to="/emergency" className="Navbar-links-b">
+            Contact List
+          </Link>
         </li>
         <li>
-          <Link to="/chat" className="Navbar-links-b">Chat</Link>
+          <Link to="/chat" className="Navbar-links-b">
+            Chat
+          </Link>
         </li>
         <li>
           <Link onClick={handleLogout} className="Navbar-links-a" to="#logout">
@@ -74,7 +83,9 @@ function Navbar({ handleLogout, role }) {
 
       <div className="Navbar-edit-profile">
         <button className="Navbar-profile-button">
-          <Link to="/profile" className="profile-link">Profile</Link>
+          <Link to="/profile" className="profile-link">
+            Profile
+          </Link>
         </button>
       </div>
     </nav>

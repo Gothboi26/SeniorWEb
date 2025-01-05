@@ -150,7 +150,7 @@ const RectangleSection = ({ role }) => {
                     care.
                   </p>
                   <button className="senior-care-button">
-                    <span className="senior-care-button-text">Book</span>
+                    <span className="senior-care-button-text">Appointment</span>
                   </button>
                 </div>
               </Link>
@@ -188,7 +188,9 @@ const RectangleSection = ({ role }) => {
                   emergencies with a single tap.
                 </p>
                 <button className="emergency-services-button">
-                  <span className="emergency-services-button-text">Call</span>
+                  <span className="emergency-services-button-text">
+                    Contact List
+                  </span>
                 </button>
               </div>
             </Link>
@@ -526,9 +528,6 @@ function CalendarComponent() {
               Maalaga, makatao, at angkop na serbisyo upang matulungan ang
               nakatatanda na mamuhay nang komportable, ligtas, at may dignidad.
             </p>
-            <button className="explore-button">
-              <span className="explore-button-text">Explore</span>
-            </button>
           </div>
 
           <div className="facebook-box">
