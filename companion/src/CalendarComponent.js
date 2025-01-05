@@ -526,6 +526,7 @@ function CalendarComponent() {
             Maalaga, makatao, at angkop na serbisyo upang matulungan ang nakatatanda na mamuhay nang komportable, ligtas, at may dignidad.
             </p>
             <button className="explore-button">
+              
                 <span className="explore-button-text">Explore</span>
             </button>
           </div>

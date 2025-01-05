@@ -1,9 +1,32 @@
 /* Chat.js Specific Styles */
 .chat-assistance {
+  background: #fff;
   padding: 20px;
-  max-width: 600px;
-  margin: auto;
-  background-color: white;
+  border-radius: 8px;
+  font-family: "Arial", sans-serif;
+  max-width: 100%;
+  margin: 20px 50px;
+  color: #333;
+}
+
+h1 {
+  text-align: center;
+  font-family: "Righteous", sans-serif;
+  font-weight: 100;
+  margin-top: 0;
+}
+
+h2 {
+  font-family: "Righteous", sans-serif;
+  font-weight: 100;
+}
+
+.chat-description p {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: #333;
+  font-family: "Overpass", sans-serif;
+  margin-top: 10px;
 }
 
 .chat-window {
@@ -19,13 +42,15 @@
   justify-content: space-between;
   align-items: center;
   margin-top: 10px;
+  gap: 10px;
+
 }
 
 .chat-input {
   width: 80%;
   padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 15px;
 }
 
 .chat-send-button {
@@ -33,7 +58,7 @@
   border: none;
   background-color: #007BFF;
   color: white;
-  border-radius: 5px;
+  border-radius: 15px;
   cursor: pointer;
 }
 

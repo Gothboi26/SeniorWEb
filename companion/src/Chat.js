@@ -39,16 +39,21 @@ function Chat({ role, handleLogout }) {
     <div>
       <Navbar role={role} handleLogout={handleLogout} />
       <div className="chat-assistance">
-        <h2>Chat Assistance</h2>
-        <h1>Need Help? Chat Us!</h1>
-        <p>Paalala sa Paggamit ng Chat Assistance:</p>
-        <ul>
-          <li>Magpakilala - Ibigay ang iyong buong pangalan at dahilan ng pag-chat.</li>
-          <li>Maging malinaw - Ipaliwanag nang maayos ang iyong tanong o concern.</li>
-          <li>Hintayin ang tugon - Maghintay nang ilang saglit habang sinusuri ng admin ang iyong mensahe.</li>
-          <li>Iwasan ang spam - Huwag magpadala ng paulit-ulit na mensahe.</li>
-        </ul>
-        <p>Ang Chat Assistance ay para sa mabilis at maayos na komunikasyon. Salamat sa iyong pakikiisa!</p>
+        <div className="chat-header">
+          <h2>Chat Assistance</h2>
+          <h1>Need Help? Chat Us!</h1>
+        </div>
+        <div className="chat-description">
+          <p>Paalala sa Paggamit ng Chat Assistance:</p>
+          <ul>
+            <li>Magpakilala - Ibigay ang iyong buong pangalan at dahilan ng pag-chat.</li>
+            <li>Maging malinaw - Ipaliwanag nang maayos ang iyong tanong o concern.</li>
+            <li>Hintayin ang tugon - Maghintay nang ilang saglit habang sinusuri ng admin ang iyong mensahe.</li>
+            <li>Iwasan ang spam - Huwag magpadala ng paulit-ulit na mensahe.</li>
+          </ul>
+          <p>Ang Chat Assistance ay para sa mabilis at maayos na komunikasyon. Salamat sa iyong pakikiisa!</p>
+        </div>
+        
         <div className="chat-window">
           {messages.map((message, index) => (
             <div key={index} className={`chat-bubble ${message.from === username ? 'user' : 'bot'}`}>
