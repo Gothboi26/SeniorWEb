@@ -1,62 +1,61 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./ChatInquiries.css";
-import womanIcon from "./woman.png"; // Importing the avatar image
-import manIcon from "./man.png"; // Importing the send button icon
 import sendIcon from "./send.png"; // Importing the send button icon
 
 const ChatInquiries = () => {
-  return (
-    <div className="chat-inquiries-container">
-      <section className="chat-inquiries">
-        <div className="recent-chats">
-          <h2>Recent Chat</h2>
-          <div className="chat-list">
-            <div className="chat-item active">
-              <img src={womanIcon} alt="Avatar" /> {/* Icon for the user */}
-              <p>Carlos Sainz Jr.</p>
-            </div>
-            <div className="chat-item">
-              <img src={womanIcon} alt="Avatar" /> {/* Icon for the user */}
-              <p>Another User</p>
-            </div>
-            <div className="chat-item">
-              <img src={manIcon} alt="Avatar" /> {/* Icon for the user */}
-              <p>Another User</p>
-            </div>
-            <div className="chat-item">
-              <img src={manIcon} alt="Avatar" /> {/* Icon for the user */}
-              <p>Another User</p>
-            </div>  
-            {/* Add more chat items as needed */}
-          </div>
-        </div>
+  const [ws, setWs] = useState(null);
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
 
-        <div className="chat-window">
-          <header className="chat-header">
-            <h3>Carlos Sainz Jr.</h3>
-            <p>09123456789 | 666 Batumbakal St.</p>
-            <p>Emergency Contact: Carlos Sainz</p>
-          </header>
-          <div className="chat-messages">
-            <div className="message incoming">
-            <img src={manIcon} alt="Avatar" /> {/* Icon for the user */}
-              <p>I need help. Blah, blah, blah, blah...</p>
-            </div>
-            <div className="message outgoing">
-            <img src={womanIcon} alt="Avatar" /> {/* Icon for the user */}
-              <p>Hello! How can I help you?</p>
-              
-            </div>
-            
+  useEffect(() => {
+    const socket = new WebSocket("ws://localhost:8080");
+    socket.onopen = () => {
+      socket.send(JSON.stringify({ type: 'register', content: { role: 'admin' } }));
+    };
+
+    socket.onmessage = (event) => {
+      const messageData = JSON.parse(event.data);
+      setMessages((prevMessages) => [...prevMessages, messageData]);
+    };
+
+    setWs(socket);
+
+    return () => socket.close();
+  }, []);
+
+  const handleSendMessage = () => {
+    if (ws.readyState === WebSocket.OPEN) {
+      const message = { from: 'admin', to: 'client', content: newMessage };
+      ws.send(JSON.stringify({ type: 'message', ...message }));
+      setNewMessage("");
+      setMessages(prevMessages => [...prevMessages, message]);
+    } else {
+      console.warn("WebSocket is not open yet. Please try again.");
+    }
+  };
+
+  return (
+    <div className="chat-container">
+      <header className="chat-header">Chat Inquiries</header>
+      <div className="chat-window">
+        {messages.map((message, index) => (
+          <div key={index} className={`message ${message.from === 'admin' ? 'outgoing' : 'incoming'}`}>
+            {message.content}
           </div>
-          <footer className="chat-footer">
-            <input type="text" placeholder="Type a message..." />
-            <button className="send-button">
-              <img src={sendIcon} alt="Send Icon" /> {/* Icon for the send button */}
-            </button>
-          </footer>
-        </div>
-      </section>
+        ))}
+      </div>
+      <div className="chat-footer">
+        <input
+          type="text"
+          placeholder="Type a message..."
+          value={newMessage}
+          onChange={(e) => setNewMessage(e.target.value)}
+          className="chat-input"
+        />
+        <button onClick={handleSendMessage} className="send-button">
+          <img src={sendIcon} alt="Send Icon" />
+        </button>
+      </div>
     </div>
   );
 };

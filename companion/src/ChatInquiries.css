@@ -94,7 +94,7 @@
   
   
     .message.outgoing {
-        background-color: white;
+        background-color: blue;
         color: white;
         align-self: flex-end; /* Aligns the message to the right */
         margin-left: auto; /* Ensures the message pushes away from the left */

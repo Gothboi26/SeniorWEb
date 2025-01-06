@@ -1,0 +1,81 @@
+.services-tab {
+  font-family: "Arial", sans-serif;
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+h4,
+h5 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.service-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.service-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+.service-form select,
+.service-form input {
+  padding: 8px;
+  font-size: 14px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.service-form select:disabled {
+  background-color: #f9f9f9;
+  color: #aaa;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.add-btn,
+.remove-btn {
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+}
+
+.add-btn {
+  background-color: #4caf50;
+  color: white;
+}
+
+.remove-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.services-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.services-table th,
+.services-table td {
+  border: 1px solid #ddd;
+  text-align: left;
+  padding: 8px;
+}
+
+.services-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}

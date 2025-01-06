@@ -29,6 +29,10 @@
     align-items: center; /* Center align items */
   }
 
+  .events-list p {
+    color: #fcfcfc;
+  }
+
   .rectangle23 {
     width: 90%;
     height: auto; /* Allow dynamic height */
@@ -41,68 +45,132 @@
   }
 }
 
+/* ----- Home ----- */
+
 .CalendarComponent {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   margin-top: 20px;
-  text-align: center;
   width: 100%;
 }
-h2 {
-  text-align: left;
-  color: #D60000;
-}
-.big-header {
-  font-size: 48px; /* Large font size for the header */
-  color: #D60000; /* Maroon color */
-  text-align: left; /* Center align the header */
-  margin-bottom: 20px; /* Add space below the header */
+
+.homepage {
+  padding: 50px 70px 10px 70px;
+  margin-bottom: 70px;
 }
 
-.calendar-container {
+.home-contents {
   display: flex;
-  gap: 20px;
-  justify-content: center; /* Center all items horizontally */
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  width: 100%;
-  margin-top: 20px;
-  flex-wrap: nowrap; /* Prevent wrapping */
 }
 
-/* Calendar styling */
-.calendar {
-  max-width: 300px;
-  flex-shrink: 0;
-  flex-grow: 1; /* Allow it to adjust width if needed */
-  border-radius: 10px;
-}
-.react-calendar__tile.highlight-event {
-  background-color:blueviolet;
-  border-radius: 50%;
-}
-
-/* Event list container styling */
-.events-list {
-  max-width: 300px;
-  padding: 10px;
-  border-radius: 10px;
-  background: linear-gradient(to bottom, #ecf7fb, #ecf7fb);
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  color: rgb(49, 49, 49);
-  height: 300px;
-  overflow-y: auto;
+.home-header {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  flex-grow: 1; /* Allow it to adjust width if needed */
+  align-items: flex-start;
+  gap: 5px; /* Space between the elements */
+  flex: 1;
+  margin-right: 20%;
 }
+
+.home-subheader {
+  color: #d60000;
+  font-size: 2rem;
+  margin-top: 2%;
+  font-family: 'Righteous', sans-serif;
+  font-weight: normal;
+  margin: 0;
+  margin-bottom: 0;
+}
+
+.home-title {
+  font-size: 3.7rem;
+  font-family: 'Righteous', sans-serif;
+  font-weight: normal;
+  line-height: 1.2;
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+.home-description {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  margin-top: 0;
+  text-align: left;
+  color: #555;
+  margin-right: 60px;
+  font-weight: 300;
+  
+}
+
+.explore-button {
+  margin-top: 20px; /* Space between text and button */
+  padding: 10px 20px;
+  background-color: #d60000;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-family: "Righteous", sans-serif;
+  width: 200px;
+}
+
+.explore-button:hover {
+  background-color: #800000; /* Darker color on hover */
+}
+
+/* Facebook Box Styling */
+.facebook-box {
+  background-color: #f1f1f1;
+  padding: 20px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 520px; /* Set a max width for the box */
+}
+
+.facebook-page {
+  display: flex;
+  justify-content: center;
+  border-radius: 20px;
+}
+
+.events-list {
+  font-size: 1.3em;
+  color: #fcfcfc;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+<<<<<<< HEAD
+.events-list h3 {
+  color: #fcfcfc;
+  margin-bottom: 0;
+}
+.events-list h3 {
+  color: #fcfcfc;
+  margin-bottom: 0;
+}
+.events-list h3 {
+  color: #fcfcfc;
+  margin-bottom: 0;
+}
+.events-list h3 {
+  color: #fcfcfc;
+  margin-bottom: 0;
+}
+=======
+>>>>>>> parent of e09adf0 (I updated the files.)
+
 
 /* Slideshow container styling */
 .slideshow-container {
   max-width: 300px;
-  width: 300px; /* Fix the width to be consistent */
+  width: 300px;
   height: 300px;
   padding: 10px;
   background: #f4f4f4;
@@ -111,7 +179,7 @@ h2 {
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  flex-grow: 1; /* Allow it to adjust width if needed */
+  flex-shrink: 0;
 }
 
 /* Slideshow image styling */
@@ -309,7 +377,6 @@ h2 {
   max-width: 100%; /* Prevent unwanted constraints */
 }
 
-
 /* ----- Choices Styling ----- */
 .choices {
   justify-content: center; /* Align items in the center horizontally */
@@ -326,7 +393,7 @@ h2 {
 }
 
 .rectangle21 {
-  margin:30px;
+  margin: 30px;
   padding: 10px;
   display: flex;
   flex-wrap: wrap; /* Allows wrapping on smaller screens */
@@ -337,8 +404,6 @@ h2 {
   width: 100%;
   height: 100%;
   justify-content: center; /* Center items in the row */
-
-
 }
 /* --- Paalala --- */
 .rectangle23.paalala1 {
@@ -354,7 +419,6 @@ h2 {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15); /* Updated shadow for better look */
   padding: 20px; /* Inner spacing for content */
   transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
-  
 }
 
 /* --- Senior Care --- */
@@ -387,20 +451,21 @@ h2 {
   margin-top: 15px;
   padding: 8px 16px;
   width: 70%;
-  background-color: #D60000;
+  background-color: #d60000;
   color: #fff;
   border-radius: 20px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
   cursor: pointer;
   font-size: 14px;
   transition: background-color 0.3s ease, transform 0.3s ease;
-
 }
 
 .senior-care-button:hover {
   background-color: #b30000;
   transform: scale(1.05); /* Slight zoom on hover */
 }
+
+
 
 /* --- Emergency Services --- */
 .rectangle23.emergencyservices .Emergency-Title {
@@ -431,14 +496,13 @@ h2 {
   margin-top: 50px;
   padding: 8px 16px;
   width: 70%;
-  background-color: #D60000;
+  background-color: #d60000;
   color: #fff;
   border-radius: 20px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
   cursor: pointer;
   font-size: 14px;
   transition: background-color 0.3s ease, transform 0.3s ease;
-
 }
 
 .emergency-services-button:hover {
@@ -475,14 +539,13 @@ h2 {
   margin-top: 50px;
   padding: 8px 16px;
   width: 70%;
-  background-color: #D60000;
+  background-color: #d60000;
   color: #fff;
   border-radius: 20px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
   cursor: pointer;
   font-size: 14px;
   transition: background-color 0.3s ease, transform 0.3s ease;
-
 }
 
 .chat-assistance-button:hover {
@@ -496,11 +559,10 @@ h2 {
   font-family: "Righteous", sans-serif;
   font-weight: lighter;
   font-size: 18px;
-  
 }
 
 /* Senior Care, Emergency Services, and Chat Assistance */
-.rectangle23.seniorcare, 
+.rectangle23.seniorcare,
 .rectangle23.emergencyservices,
 .rectangle23.chatassistance {
   display: flex;
@@ -515,7 +577,6 @@ h2 {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15); /* Updated shadow for better look */
   padding: 20px; /* Inner spacing for content */
   transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
-  
 }
 
 /* Hover effect for cards */
@@ -524,20 +585,6 @@ h2 {
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.25); /* Enhanced shadow on hover */
 }
 
-/* .rectangle32 {
-  background-color: #ecf7fb;
-  height: 627px;
-  width: 1440px;
-  top: 1997px;
-  left: -3px;
-  position: absolute;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: flex-start;
-  padding: 20px;
-} */
-
 /* Specific card styling: Paalala section */
 .rectangle23.paalala1 {
   background-color: #c31c1c;
@@ -545,8 +592,6 @@ h2 {
   margin: 10px 0;
   border-radius: 40px; /* Rounded corners for uniformity */
   color: #ffffff;
-
-
 }
 
 .rectangle23.paalala1 h2 {
@@ -565,16 +610,15 @@ h2 {
   text-align: justify;
   margin: 15px 30px 10px;
   text-align: left;
+  font-weight: 300;
 }
- /* ----- Text Styles ----- */
-.rectangle23.seniorcare h2, 
+/* ----- Text Styles ----- */
+.rectangle23.seniorcare h2,
 .rectangle23.emergencyservices h2,
 .rectangle23.chatassistance h2 {
   font-family: "Righteous", sans-serif;
   font-weight: lighter;
 }
-
-
 
 /* Icon styling */
 .rectangle23 h2 {
@@ -587,14 +631,14 @@ h2 {
   gap: 8px; /* Space between text and icon */
 }
 
-.rectangle23.seniorcare p, 
+.rectangle23.seniorcare p,
 .rectangle23.emergencyservices p,
 .rectangle23.chatassistance p {
   font-size: 15px;
   color: #606060;
   margin: 20px 30px 10px;
   text-align: left;
-
+  font-weight: 300;
 }
 
 .link-container {
@@ -616,6 +660,18 @@ h2 {
   }
 }
 
+/* Add animation for Service Content */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px); /* Slight slide-in from below */
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 /* ----- Services Section ----- */
 .Service-Section {
   text-align: center;
@@ -628,11 +684,12 @@ h2 {
 }
 
 .Service-Subheader {
-  color: #D60000;
+  color: #d60000;
   font-family: "Righteous", sans-serif;
   font-size: 1.5rem;
   font-weight: normal;
   margin-top: 2%;
+  text-align: center;
 }
 
 .Service-Title {
@@ -644,52 +701,70 @@ h2 {
 .Service-Content {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; /* Aligns content consistently */
   gap: 4rem;
   margin-top: 3%;
 }
 
-
 .Service-Icon {
-  margin: 0; /* Removes extra spacing if any */
-  
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
 }
 
 .Service-Icon img {
   width: 24px;
   height: 24px;
+  transition: transform 0.2s;
+}
+
+.Service-Icon:hover img {
+  transform: scale(1.1);
 }
 
 .Service-Details {
   text-align: left;
   max-width: 400px;
   position: relative;
-  
+}
+
+.Service-Texts {
+  animation: slideIn 0.5s ease-in-out; /* Apply animation */
+}
+
+.Service-Name-Wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Keeps the name and icon aligned */
+  margin-bottom: 1rem;
 }
 
 .Service-Name {
   font-size: 2rem;
-  font-weight: bold;
-  color: #D60000;
+  font-weight: normal;
+  color: #d60000;
   display: flex; /* Use flexbox for horizontal alignment */
   align-items: center; /* Vertically aligns text and icon */
   gap: 7.5rem; /* Adds space between the text and the arrow */
+  text-align: left;
 }
 
 .Service-Description {
-   font-family: "Overpass", sans-serif;
+  font-family: "Overpass", sans-serif;
+  font-weight: 300;
+  font-weight: 200;
   font-size: 1.2rem;
   color: #555;
   margin: 1rem 0;
-  display: inline-block; /* Ensures alignment with the arrow */
 }
 
 .Service-Actions {
+  margin-top: 2rem;
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 10%;
 }
 
 .Service-Book-Button {
@@ -709,4 +784,217 @@ h2 {
   background-color: #d10000;
 }
 
+.book-link {
+  color: #f3f3f3;
+  text-decoration: none;
+}
+/* ----- Events ----- */
+.Events {
+  background-color: #ecf7fb;
+  padding: 20px;
+}
 
+.Events-Header {
+  font-family: "Righteous", sans-serif;
+}
+
+.Events-Subheader {
+  color: #d60000;
+  font-family: "Righteous", sans-serif;
+  font-size: 1.5rem;
+  font-weight: normal;
+  margin-top: 2%;
+  text-align: center;
+}
+
+.Events-Title {
+  font-family: "Righteous", sans-serif;
+  font-size: 2.5rem;
+  font-weight: normal;
+}
+
+
+
+
+/* Container for aligning calendar, events list, and slideshow */
+.events-container {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: flex-start; /* Align items to the top */
+  flex-wrap: nowrap; /* Prevent wrapping */
+  margin-top: 70px;
+  width: 100%;
+  margin-bottom: 70px;
+}
+
+/* Calendar styling */
+.calendar-container {
+  max-width: 300px;
+  flex-shrink: 0;
+  border-radius: 10px;
+}
+
+/* Calendar highlight event styling */
+.react-calendar__tile.highlight-event {
+  background-color: blueviolet;
+  border-radius: 50%;
+}
+
+/* Event list container styling */
+.events-list {
+  max-width: 300px;
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+>>>>>>> parent of e09adf0 (I updated the files.)
+  padding: 20px 30px 20px;
+  border-radius: 10px;
+  background: linear-gradient(to bottom, #ef473a, #dc281e);
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  color: rgb(49, 49, 49);
+<<<<<<< HEAD
+=======
+  padding: 20px 40PX 10PX;
+  border-radius: 10px;
+  background: linear-gradient(to bottom, #EF473A, #DC281E);
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  color: #fcfcfc;
+>>>>>>> Stashed changes
+=======
+  padding: 20px 40PX 10PX;
+  border-radius: 10px;
+  background: linear-gradient(to bottom, #EF473A, #DC281E);
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  color: #fcfcfc;
+>>>>>>> Stashed changes
+=======
+  padding: 20px 40PX 10PX;
+  border-radius: 10px;
+  background: linear-gradient(to bottom, #EF473A, #DC281E);
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  color: #fcfcfc;
+>>>>>>> Stashed changes
+=======
+  padding: 20px 40PX 10PX;
+  border-radius: 10px;
+  background: linear-gradient(to bottom, #EF473A, #DC281E);
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  color: #fcfcfc;
+>>>>>>> Stashed changes
+=======
+>>>>>>> parent of e09adf0 (I updated the files.)
+  height: 280px;
+  overflow-y: auto;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ----- Barangay Officials ----- */
+/* Main Container */
+.barangay-health-officials {
+  text-align: center;
+  padding: 2rem;
+}
+
+/* Header Section */
+.officials-header {
+  margin-bottom: 2rem;
+}
+
+.officials-subheader {
+  color: #d60000;
+  font-family: "Righteous", sans-serif;
+  font-size: 1.5rem;
+  font-weight: normal;
+  margin-top: 2%;
+  text-align: center;
+}
+
+.officials-title {
+  color: #000;
+  font-family: "Righteous", sans-serif;
+  font-size: 1.5rem;
+  font-weight: normal;
+}
+
+.officials-title {
+  font-family: "Righteous", sans-serif;
+  font-size: 2.5rem;
+  font-weight: normal;
+}
+
+/* Officials Grid */
+.officials-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Still 3 columns */
+  gap: 1.5rem; /* Reduced gap */
+  justify-content: center;
+  align-items: start;
+  margin: 70px 170px 50px; /* Reduced margins */
+  padding: 20px; /* Reduced padding */
+}
+
+/* Official Card */
+.official-card {
+  background: linear-gradient(135deg, #59c2ff, #007aff);
+  padding: 2rem; /* Reduced padding */
+  border-radius: 30px; /* Slightly smaller border radius */
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.official-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Official Image */
+.official-image {
+  width: 190px; /* Adjust image size */
+  height: 160px;
+  object-fit: cover;
+  border-radius: 15%; /* Rounded corners */
+  margin-bottom: 1rem;
+}
+
+/* Text Details */
+.official-name {
+  font-family: "Righteous", sans-serif;
+  font-size: 1.2rem;
+  color: white;
+  margin-bottom: 0.5rem;
+  margin-top: 5px;
+}
+
+.official-position {
+  font-family: "Overpass", sans-serif;
+  font-weight: 300;
+  font-size: 1rem;
+  color: white;
+  opacity: 0.9;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .officials-grid {
+    grid-template-columns: repeat(4, 1fr); /* 2 columns for medium screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .officials-grid {
+    grid-template-columns: 1fr; /* 1 column for small screens */
+  }
+}

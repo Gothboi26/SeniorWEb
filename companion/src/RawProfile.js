@@ -41,27 +41,7 @@ const Profile = () => {
 
   return (
     <div className="profile-container">
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
       <h2>Profile</h2>
-=======
-      <h3>Profile</h3>
->>>>>>> Stashed changes
-=======
-      <h3>Profile</h3>
->>>>>>> Stashed changes
-=======
-      <h3>Profile</h3>
->>>>>>> Stashed changes
-=======
-      <h3>Profile</h3>
->>>>>>> Stashed changes
-=======
-      <h2>Profile</h2>
->>>>>>> parent of e09adf0 (I updated the files.)
       <div className="profile-pic">
         <img
           src={
@@ -74,6 +54,66 @@ const Profile = () => {
         />
       </div>
       
+      {isEditing ? (
+        <form onSubmit={handleSubmit} className="profile-form">
+          <label>First Name:</label>
+          <input
+            type="text"
+            name="firstName"
+            value={profile.firstName}
+            onChange={handleChange}
+            required
+          />
+          <label>Middle Name:</label>
+          <input
+            type="text"
+            name="middleName"
+            value={profile.middleName}
+            onChange={handleChange}
+            required
+          />
+          <label>Last Name:</label>
+          <input
+            type="text"
+            name="lastName"
+            value={profile.lastName}
+            onChange={handleChange}
+            required
+          />
+          <label>Birthday:</label>
+          <input
+            type="date"
+            name="birthday"
+            value={profile.birthday}
+            onChange={handleChange}
+            required
+          />
+          <label>Address:</label>
+          <input
+            type="text"
+            name="address"
+            value={profile.address}
+            onChange={handleChange}
+            required
+          />
+          <label>Upload ID:</label>
+          <input
+            type="file"
+            name="idFile"
+            onChange={handleFileChange}
+            required
+          />
+          <label>Upload Profile Picture:</label>
+          <input
+            type="file"
+            name="profilePicture"
+            onChange={handleFileChange}
+          />
+          <button type="submit" className="profile-edit-button">
+            Save
+          </button>
+        </form>
+      ) : (
         <div className="profile-details">
           <p>
             <strong>First Name:</strong> {profile.firstName || "N/A"}
@@ -100,16 +140,15 @@ const Profile = () => {
               ? profile.profilePicture.name
               : "No profile picture uploaded"}
           </p>
-          
+          {/* Show Edit button only if the role is 'client' */}
+          {role === "client" && (
+            <button onClick={toggleEdit} className="profile-edit-button">
+              Edit Profile
+            </button>
+          )}
+          <a href="/">Back to Home</a>
         </div>
-        <div className="bhome-b">
-          <button className="bhome-button">
-            <a href="/" className="bhome-link">Back to Home</a>
-          </button>
-        </div>
-        
-
-        
+      )}
     </div>
   );
 };

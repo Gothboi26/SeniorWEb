@@ -174,7 +174,12 @@ const SeniorCare = ({ role, handleLogout }) => {
           >
             Reserve a Slot
           </button>
-          
+          <button
+            className="secondary-button"
+            onClick={() => openModal("editInfo")}
+          >
+            Edit Information
+          </button>
           <button
             className="secondary-button"
             onClick={() => openModal("viewReservedSlot")}
@@ -292,13 +297,6 @@ const SeniorCare = ({ role, handleLogout }) => {
         <button onClick={closeModal}>Close</button>
       </Modal>
       <div className="bhome-b">
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
->>>>>>> parent of e09adf0 (I updated the files.)
           <button className="bhome-button">
             <a href="/" className="bhome-link">Back to Home</a>
           </button>
@@ -348,75 +346,6 @@ const SeniorCare = ({ role, handleLogout }) => {
                   </div>
                 </div>
               </footer>
-<<<<<<< HEAD
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-        <button className="bhome-button">
-          <a href="/" className="bhome-link">
-            Back to Home
-          </a>
-        </button>
-      </div>
-
-      <footer className="App-footer">
-        <div className="footer-section">
-          <h1>Barangay General Tiburcio De Leon</h1>
-          <div className="footer-content">
-            <div className="footer-text1">
-              <p>
-                For any inquiries, please contact us. <br />
-                Email: gentdeleonbarangay@gmail.com <br />
-                Contact Number: 091234567890
-              </p>
-            </div>
-            <div className="footer-icons-and-links">
-              <div className="footer-icons">
-                <a
-                  href="https://facebook.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img src={fb} alt="Facebook-Logo" className="icon fb-logo" />
-                </a>
-                <a href="mailto:gentdeleonbarangay@gmail.com">
-                  <img
-                    src={email}
-                    alt="Email-Logo"
-                    className="icon email-logo"
-                  />
-                </a>
-              </div>
-              <div className="vertical-line"></div>
-              <div className="footer-links">
-                <a href="/terms" className="footer-link">
-                  TERMS OF SERVICE
-                </a>
-                <a href="/privacy" className="footer-link">
-                  PRIVACY POLICY
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
-
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> parent of e09adf0 (I updated the files.)
     </div>
     
   );
