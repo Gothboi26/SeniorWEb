@@ -296,6 +296,7 @@ const SeniorCare = ({ role, handleLogout }) => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
           <button className="bhome-button">
             <a href="/" className="bhome-link">Back to Home</a>
           </button>
@@ -346,6 +347,8 @@ const SeniorCare = ({ role, handleLogout }) => {
                 </div>
               </footer>
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======
@@ -401,6 +404,9 @@ const SeniorCare = ({ role, handleLogout }) => {
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
