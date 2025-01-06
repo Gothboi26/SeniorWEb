@@ -1,4 +1,5 @@
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 /* Profile Container */
 .profile-container {
   max-width: 600px;
@@ -18,6 +19,13 @@ h2 {
   color: #800000;
 }
 
+=======
+h2 {
+  text-align: center;
+  color: #800000;
+}
+
+>>>>>>> Stashed changes
 /* Profile Container */
 .profile-container {
   max-width: 600px;
@@ -31,6 +39,9 @@ h2 {
 
 /* Text Styles */
 .profile-container h3 {
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
   font-family: "Righteous", sans-serif;
   font-weight: normal;

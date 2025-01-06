@@ -75,7 +75,10 @@ function Chat({ role, handleLogout }) {
         </div>
       </div>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
 
       <div className="bhome-b">
         <button className="bhome-button">
@@ -85,6 +88,9 @@ function Chat({ role, handleLogout }) {
         </button>
       </div>    
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
       <footer className="App-footer">
                 <div className="footer-section">

@@ -294,6 +294,7 @@ const SeniorCare = ({ role, handleLogout }) => {
       </Modal>
       <div className="bhome-b">
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
           <button className="bhome-button">
             <a href="/" className="bhome-link">Back to Home</a>
           </button>
@@ -344,6 +345,8 @@ const SeniorCare = ({ role, handleLogout }) => {
                 </div>
               </footer>
 =======
+=======
+>>>>>>> Stashed changes
         <button className="bhome-button">
           <a href="/" className="bhome-link">
             Back to Home
@@ -393,6 +396,9 @@ const SeniorCare = ({ role, handleLogout }) => {
         </div>
       </footer>
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     </div>
     
