@@ -69,10 +69,13 @@ const Emergency = ({ role, handleLogout }) => {
           </table>
         </div>
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+=======
+>>>>>>> parent of e09adf0 (I updated the files.)
         <div className="bhome-b">
           <button className="bhome-button">
             <a href="/" className="bhome-link">Back to Home</a>
@@ -125,6 +128,7 @@ const Emergency = ({ role, handleLogout }) => {
                 </div>
               </footer>
 
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> Stashed changes
@@ -191,6 +195,8 @@ const Emergency = ({ role, handleLogout }) => {
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> parent of e09adf0 (I updated the files.)
       </div>
     </div>
   );

@@ -146,6 +146,7 @@
   margin-top: 10px;
   margin-bottom: 0px;
 }
+<<<<<<< HEAD
 .events-list h3 {
   color: #fcfcfc;
   margin-bottom: 0;
@@ -162,6 +163,8 @@
   color: #fcfcfc;
   margin-bottom: 0;
 }
+=======
+>>>>>>> parent of e09adf0 (I updated the files.)
 
 
 /* Slideshow container styling */
@@ -841,15 +844,19 @@
 /* Event list container styling */
 .events-list {
   max-width: 300px;
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+=======
+>>>>>>> parent of e09adf0 (I updated the files.)
   padding: 20px 30px 20px;
   border-radius: 10px;
   background: linear-gradient(to bottom, #ef473a, #dc281e);
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   color: rgb(49, 49, 49);
+<<<<<<< HEAD
 =======
   padding: 20px 40PX 10PX;
   border-radius: 10px;
@@ -878,18 +885,14 @@
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   color: #fcfcfc;
 >>>>>>> Stashed changes
+=======
+>>>>>>> parent of e09adf0 (I updated the files.)
   height: 280px;
   overflow-y: auto;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
   gap: 10px;
-}
-
-.events-list p {
-  text-align: left;
-  margin-top: 0;
-  color: #fcfcfc;
 }
 
 /* ----- Barangay Officials ----- */

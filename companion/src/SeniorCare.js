@@ -113,9 +113,8 @@ const SeniorCare = ({ role, handleLogout }) => {
     <div className="senior-care-container">
       <Navbar role={role} handleLogout={handleLogout} />
       <h4 className="section-title">SENIOR CARE</h4>
-      
-      <ol className="instruction-list">
       <h2 className="section-appointment">Book an Appointment</h2>
+      <ol className="instruction-list">
         <li>
           <strong>Piliin ang Serbisyong Kailangan:</strong>
           <strong>
@@ -293,10 +292,13 @@ const SeniorCare = ({ role, handleLogout }) => {
         <button onClick={closeModal}>Close</button>
       </Modal>
       <div className="bhome-b">
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+=======
+>>>>>>> parent of e09adf0 (I updated the files.)
           <button className="bhome-button">
             <a href="/" className="bhome-link">Back to Home</a>
           </button>
@@ -346,6 +348,7 @@ const SeniorCare = ({ role, handleLogout }) => {
                   </div>
                 </div>
               </footer>
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> Stashed changes
@@ -412,6 +415,8 @@ const SeniorCare = ({ role, handleLogout }) => {
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> parent of e09adf0 (I updated the files.)
     </div>
     
   );

@@ -41,6 +41,7 @@ const Profile = () => {
 
   return (
     <div className="profile-container">
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -58,6 +59,9 @@ const Profile = () => {
 =======
       <h3>Profile</h3>
 >>>>>>> Stashed changes
+=======
+      <h2>Profile</h2>
+>>>>>>> parent of e09adf0 (I updated the files.)
       <div className="profile-pic">
         <img
           src={

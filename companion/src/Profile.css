@@ -1,7 +1,10 @@
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+=======
+>>>>>>> parent of e09adf0 (I updated the files.)
 /* Profile Container */
 .profile-container {
   max-width: 600px;
@@ -15,6 +18,7 @@
 
 /* Text Styles */
 .profile-container h2 {
+<<<<<<< HEAD
 =======
 h2 {
   text-align: center;
@@ -65,6 +69,8 @@ h2 {
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> parent of e09adf0 (I updated the files.)
   font-family: "Righteous", sans-serif;
   font-weight: normal;
   font-size: 2rem;

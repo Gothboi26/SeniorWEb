@@ -59,6 +59,7 @@
   font-weight: 300;
   background-color: #D60000;
   border-radius: 20px;
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -75,12 +76,15 @@
 =======
   color: #fcfcfc;
 >>>>>>> Stashed changes
+=======
+>>>>>>> parent of e09adf0 (I updated the files.)
 }
 
 .cancel-event {
   background-color: #007bff;
 }
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -112,6 +116,8 @@
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> parent of e09adf0 (I updated the files.)
 
 /* General button styles for consistency */
 button {

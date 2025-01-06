@@ -74,6 +74,7 @@ function Chat({ role, handleLogout }) {
           <button onClick={handleSendMessage} className="chat-send-button">Send</button>
         </div>
       </div>
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -104,6 +105,8 @@ function Chat({ role, handleLogout }) {
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> parent of e09adf0 (I updated the files.)
       <footer className="App-footer">
                 <div className="footer-section">
                   <h1>Barangay General Tiburcio De Leon</h1>
