@@ -1,203 +1,286 @@
-import React from "react";
-import "./Emergency.css"; // Ensure styles are updated to center content
+import React, { useState } from "react";
+import "./Emergency.css"; // Link to the updated CSS file
 import Navbar from "./Navbar"; // Import the Navbar component
-import fb from "./fb.png"; // For fb logo
-import email from "./email.png"; // For email logo
 
 const Emergency = ({ role, handleLogout }) => {
-  const emergencyHotlines = [
-    { name: "Police Station", number: "911" },
-    { name: "Fire Department", number: "112" },
-    { name: "Ambulance Services", number: "108" },
-  ];
+  const [modal, setModal] = useState(null);
+  const [ambulanceData, setAmbulanceData] = useState({
+    location: "",
+    condition: "",
+    contact: "",
+  });
+  const [policeData, setPoliceData] = useState({
+    location: "",
+    report: "",
+    contact: "",
+  });
+  const [submittedData, setSubmittedData] = useState({
+    ambulance: [],
+    police: [],
+  });
+  const [viewSubmittedModal, setViewSubmittedModal] = useState(false);
 
-  const emergencyContacts = [
-    { name: "Barangay Captain", number: "0917-123-4567" },
-    { name: "Barangay Office", number: "0918-987-6543" },
-    { name: "Neighborhood Watch", number: "0916-456-7890" },
-  ];
+  const openModal = (modalType) => {
+    setModal(modalType);
+  };
+
+  const closeModal = () => {
+    setModal(null);
+    setAmbulanceData({ location: "", condition: "", contact: "" });
+    setPoliceData({ location: "", report: "", contact: "" });
+  };
+
+  const handleAmbulanceChange = (e) => {
+    const { name, value } = e.target;
+    setAmbulanceData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handlePoliceChange = (e) => {
+    const { name, value } = e.target;
+    setPoliceData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleAmbulanceSubmit = (e) => {
+    e.preventDefault();
+    setSubmittedData((prevData) => ({
+      ...prevData,
+      ambulance: [...prevData.ambulance, ambulanceData],
+    }));
+    closeModal();
+  };
+
+  const handlePoliceSubmit = (e) => {
+    e.preventDefault();
+    setSubmittedData((prevData) => ({
+      ...prevData,
+      police: [...prevData.police, policeData],
+    }));
+    closeModal();
+  };
+
+  const showSubmittedData = () => {
+    setViewSubmittedModal(true);
+  };
+
+  const closeViewSubmittedModal = () => {
+    setViewSubmittedModal(false);
+  };
 
   return (
     <div className="emergency-container">
       <Navbar role={role} handleLogout={handleLogout} />
-      <div className="emergency-content">
-        <h4 className="section-title">EMERGENCY SERVICES</h4>
-        <h2 className="section-call">Need Help? Contact Below</h2>
-        <p className="emergency-instructions">
-          In case of an emergency, please refer to the contact details below.
-          Always prioritize your safety and provide accurate details when
-          calling for help!
-        </p>
+      <h4 className="section-title">EMERGENCY SERVICES</h4>
+      <h2 className="section-call">Need Help? Call someone </h2>
+      <p className="emergency-instructions">
+        Paalaala: Sa oras ng emergency, pindutin ang tamang button para sa nais
+        tawagan: <br />- Barangay Hotline <br />- Health Center <br />- Pulis o
+        Bumbero <br />
+        Siguraduhing ibigay ang tamang detalye tulad ng lokasyon, uri ng
+        emergency, at contact number.
+        <br />
+        Laging unahin ang kaligtasan!
+      </p>
 
-        <div className="emergency-contacts">
-          <h3>Emergency Hotlines</h3>
-          <table className="contacts-table">
-            <thead>
-              <tr>
-                <th>Service</th>
-                <th>Contact Number</th>
-              </tr>
-            </thead>
-            <tbody>
-              {emergencyHotlines.map((hotline, index) => (
-                <tr key={index}>
-                  <td>{hotline.name}</td>
-                  <td>{hotline.number}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        <div className="emergency-contacts">
-          <h3>Emergency Contacts</h3>
-          <table className="contacts-table">
-            <thead>
-              <tr>
-                <th>Contact Person</th>
-                <th>Contact Number</th>
-              </tr>
-            </thead>
-            <tbody>
-              {emergencyContacts.map((contact, index) => (
-                <tr key={index}>
-                  <td>{contact.name}</td>
-                  <td>{contact.number}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
->>>>>>> parent of e09adf0 (I updated the files.)
-        <div className="bhome-b">
-          <button className="bhome-button">
-            <a href="/" className="bhome-link">Back to Home</a>
-          </button>
-        </div>
-        
-        <footer className="App-footer">
-                <div className="footer-section">
-                  <h1>Barangay General Tiburcio De Leon</h1>
-                  <div className="footer-content">
-                    <div className="footer-text1">
-                      <p>
-                        For any inquiries, please contact us. <br />
-                        Email: gentdeleonbarangay@gmail.com <br />
-                        Contact Number: 091234567890
-                      </p>
-                    </div>
-                    <div className="footer-icons-and-links">
-                      <div className="footer-icons">
-                        <a
-                          href="https://facebook.com"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <img
-                            src={fb}
-                            alt="Facebook-Logo"
-                            className="icon fb-logo"
-                          />
-                        </a>
-                        <a href="mailto:gentdeleonbarangay@gmail.com">
-                          <img
-                            src={email}
-                            alt="Email-Logo"
-                            className="icon email-logo"
-                          />
-                        </a>
-                      </div>
-                      <div className="vertical-line"></div>
-                      <div className="footer-links">
-                        <a href="/terms" className="footer-link">
-                          TERMS OF SERVICE
-                        </a>
-                        <a href="/privacy" className="footer-link">
-                          PRIVACY POLICY
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </footer>
-
-<<<<<<< HEAD
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-      <div className="bhome-b">
-        <button className="bhome-button">
-          <a href="/" className="bhome-link">
-            Back to Home
-          </a>
+      {/* Emergency Buttons */}
+      <div className="button-container-column">
+        <button
+          className="emergency-button"
+          onClick={() => openModal("ambulance")}
+        >
+          <span className="icon">🚑</span>
+          Ambulance
+        </button>
+        <button
+          className="emergency-button"
+          onClick={() => openModal("police")}
+        >
+          <span className="icon">🚓</span>
+          Police Department
+        </button>
+        <button className="emergency-button" onClick={() => openModal("fire")}>
+          <span className="icon">🚒</span>
+          Fire Department
         </button>
       </div>
 
-        <footer className="App-footer">
-        <div className="footer-section">
-          <h1>Barangay General Tiburcio De Leon</h1>
-          <div className="footer-content">
-            <div className="footer-text1">
-              <p>
-                For any inquiries, please contact us. <br />
-                Email: gentdeleonbarangay@gmail.com <br />
-                Contact Number: 091234567890
-              </p>
-            </div>
-            <div className="footer-icons-and-links">
-              <div className="footer-icons">
-                <a
-                  href="https://facebook.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img src={fb} alt="Facebook-Logo" className="icon fb-logo" />
-                </a>
-                <a href="mailto:gentdeleonbarangay@gmail.com">
-                  <img
-                    src={email}
-                    alt="Email-Logo"
-                    className="icon email-logo"
-                  />
-                </a>
-              </div>
-              <div className="vertical-line"></div>
-              <div className="footer-links">
-                <a href="/terms" className="footer-link">
-                  TERMS OF SERVICE
-                </a>
-                <a href="/privacy" className="footer-link">
-                  PRIVACY POLICY
-                </a>
-              </div>
-            </div>
+      {/* Rectangular Buttons */}
+      <div className="button-container-row">
+        <button
+          className="rectangular-button"
+          onClick={() => openModal("contacts")}
+        >
+          📞 Emergency Contacts
+        </button>
+        <button
+          className="rectangular-button"
+          onClick={() => openModal("hotlines")}
+        >
+          ☎️ Emergency Hotlines
+        </button>
+        <button className="rectangular-button" onClick={showSubmittedData}>
+          📋 View Submitted Data
+        </button>
+      </div>
+
+      <a className="back-link" href="/">
+        Back to Home
+      </a>
+
+      {/* View Submitted Data Modal */}
+      {viewSubmittedModal && (
+        <div className="overlay">
+          <div className="modal">
+            <h2>Submitted Data</h2>
+            <h3>Ambulance Data:</h3>
+            {submittedData.ambulance.length > 0 ? (
+              <ul>
+                {submittedData.ambulance.map((data, index) => (
+                  <li key={index}>
+                    <strong>Location:</strong> {data.location},{" "}
+                    <strong>Condition:</strong> {data.condition},{" "}
+                    <strong>Contact:</strong> {data.contact}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>No ambulance data submitted yet.</p>
+            )}
+            <h3>Police Data:</h3>
+            {submittedData.police.length > 0 ? (
+              <ul>
+                {submittedData.police.map((data, index) => (
+                  <li key={index}>
+                    <strong>Location:</strong> {data.location},{" "}
+                    <strong>Report:</strong> {data.report},{" "}
+                    <strong>Contact:</strong> {data.contact}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>No police data submitted yet.</p>
+            )}
+            <button
+              type="button"
+              className="modal-close-button"
+              onClick={closeViewSubmittedModal}
+            >
+              Close
+            </button>
           </div>
         </div>
-      </footer>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> parent of e09adf0 (I updated the files.)
-      </div>
+      )}
+
+      {/* Call an Ambulance Modal */}
+      {modal === "ambulance" && (
+        <div className="overlay">
+          <div className="modal">
+            <h2>Call an Ambulance</h2>
+            <form onSubmit={handleAmbulanceSubmit}>
+              <div className="form-group">
+                <label htmlFor="location">Location:</label>
+                <input
+                  type="text"
+                  id="location"
+                  name="location"
+                  value={ambulanceData.location}
+                  onChange={handleAmbulanceChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="condition">Condition:</label>
+                <textarea
+                  id="condition"
+                  name="condition"
+                  value={ambulanceData.condition}
+                  onChange={handleAmbulanceChange}
+                  required
+                ></textarea>
+              </div>
+              <div className="form-group">
+                <label htmlFor="contact">Contact Number:</label>
+                <input
+                  type="tel"
+                  id="contact"
+                  name="contact"
+                  value={ambulanceData.contact}
+                  onChange={handleAmbulanceChange}
+                  required
+                />
+              </div>
+              <button type="submit" className="modal-submit-button">
+                Submit
+              </button>
+              <button
+                type="button"
+                className="modal-close-button"
+                onClick={closeModal}
+              >
+                Close
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Call a Police Modal */}
+      {modal === "police" && (
+        <div className="overlay">
+          <div className="modal">
+            <h2>Call the Police</h2>
+            <form onSubmit={handlePoliceSubmit}>
+              <div className="form-group">
+                <label htmlFor="location">Location:</label>
+                <input
+                  type="text"
+                  id="location"
+                  name="location"
+                  value={policeData.location}
+                  onChange={handlePoliceChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="report">Report:</label>
+                <textarea
+                  id="report"
+                  name="report"
+                  value={policeData.report}
+                  onChange={handlePoliceChange}
+                  required
+                ></textarea>
+              </div>
+              <div className="form-group">
+                <label htmlFor="contact">Contact Number:</label>
+                <input
+                  type="tel"
+                  id="contact"
+                  name="contact"
+                  value={policeData.contact}
+                  onChange={handlePoliceChange}
+                  required
+                />
+              </div>
+              <button type="submit" className="modal-submit-button">
+                Submit
+              </button>
+              <button
+                type="button"
+                className="modal-close-button"
+                onClick={closeModal}
+              >
+                Close
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

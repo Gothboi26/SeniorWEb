@@ -6,19 +6,18 @@
   justify-content: center;
   align-items: center;
   background-color: #ffffff;
-  padding: 20px 50px 10px 50px;
-  box-shadow: 0px 5px 5px #cccccb;
+  padding: 10px 20px;
 }
 
 .Navbar-logo-container {
   display: flex;
   align-items: center;
   position: absolute;
-  left: 50px;
+  left: 20px;
 }
 
 .Navbar-logo-container img {
-  width: 60px; /* Adjust as needed */
+  width: 40px; /* Adjust as needed */
   height: auto;
   margin-right: 10px;
 }
@@ -32,7 +31,7 @@
 .Navbar-links {
   list-style: none;
   display: flex;
-  gap: 30px;
+  gap: 15px;
 }
 
 .Navbar-links li {
@@ -40,16 +39,20 @@
 }
 
 .Navbar-links a {
-  color: #1F1785;
+  color: #666666;
   text-decoration: none;
   font-weight: bold;
   padding: 8px;
-  position: relative;
   transition: background-color 0.3s;
 }
 
+.Navbar-links a:hover {
+  background-color: #bbbbbb;
+  border-radius: 4px;
+}
+
 .Navbar-links-a {
-  color: #000;
+  color: #fff;
   text-decoration: none;
   font-weight: bold;
   padding: 8px;
@@ -57,41 +60,12 @@
 }
 
 .Navbar-links-a:hover {
-  color: #d60000;
+  background-color: #800000;
+  border-radius: 4px;
 }
-
-.Navbar-links-b:hover {
-  color: #d60000;
-}
-
-.Navbar-links a:after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 0;
-  height: 2px;
-  background-color: #d60000;
-  transition: width 0.3s ease, left 0.3s ease;
-}
-
-.Navbar-links a:hover:after {
-  width: 100%;
-  left: 0;
-  color: #d60000;
-}
-
 .Navbar-edit-profile {
   position: absolute;
-  right: 50px; /* Position it to the right edge */
-  
-}
-
-.Navbar-profile-button {
-  background-color: #d60000;
-  border-radius: 20px;
-  width: 100px;
-  text-align: center;
+  right: 20px; /* Position it to the right edge */
 }
 
 .Navbar-edit-profile a {
@@ -101,16 +75,13 @@
   font-size: 0.9em;
   padding: 8px;
   transition: background-color 0.3s;
-  font-family: "Righteous", sans-serif;
-  font-weight: lighter;
-  font-size: 15px;
-  
+  background-color: #c31c1c;
+  border-radius: 15px;
 }
 
-.Navbar-profile-button:hover {
+.Navbar-edit-profile a:hover {
   background-color: #800000; /* Optional: Add a hover effect */
-  border-radius: 20px;
-  width: 100px;
+  border-radius: 15px;
 }
 
 /* Sidebar Styling */
