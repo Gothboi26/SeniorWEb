@@ -59,12 +59,29 @@
   font-weight: 300;
   background-color: #D60000;
   border-radius: 20px;
+<<<<<<< Updated upstream
+=======
+  color: #fcfcfc;
+>>>>>>> Stashed changes
 }
 
 .cancel-event {
   background-color: #007bff;
 }
 
+<<<<<<< Updated upstream
+=======
+/* Modal Buttons */
+.save-button {
+  background-color: #007bff;
+  color: #fcfcfc;
+}
+
+.cancel-button {
+  background-color: #dc3545;
+  
+}
+>>>>>>> Stashed changes
 
 /* General button styles for consistency */
 button {

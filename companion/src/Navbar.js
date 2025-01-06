@@ -49,6 +49,9 @@ function Navbar({ handleLogout, role }) {
           <li>
             <Link to="/profile">Profile</Link>
           </li>
+          <li>
+            <Link to="/panic-button">Panic Button</Link>
+          </li>
         </ul>
       </div>
 

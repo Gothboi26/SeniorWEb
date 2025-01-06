@@ -246,7 +246,7 @@ const RectangleSection = ({ role }) => {
             <div className="Service-Actions">
               <button className="Service-Book-Button">
                 <Link to="/senior-care" className="book-link">
-                  Book
+                  Appointment
                 </Link>
               </button>
             </div>

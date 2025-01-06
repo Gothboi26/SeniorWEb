@@ -113,8 +113,9 @@ const SeniorCare = ({ role, handleLogout }) => {
     <div className="senior-care-container">
       <Navbar role={role} handleLogout={handleLogout} />
       <h4 className="section-title">SENIOR CARE</h4>
-      <h2 className="section-appointment">Book an Appointment</h2>
+      
       <ol className="instruction-list">
+      <h2 className="section-appointment">Book an Appointment</h2>
         <li>
           <strong>Piliin ang Serbisyong Kailangan:</strong>
           <strong>
@@ -292,6 +293,7 @@ const SeniorCare = ({ role, handleLogout }) => {
         <button onClick={closeModal}>Close</button>
       </Modal>
       <div className="bhome-b">
+<<<<<<< Updated upstream
           <button className="bhome-button">
             <a href="/" className="bhome-link">Back to Home</a>
           </button>
@@ -341,6 +343,57 @@ const SeniorCare = ({ role, handleLogout }) => {
                   </div>
                 </div>
               </footer>
+=======
+        <button className="bhome-button">
+          <a href="/" className="bhome-link">
+            Back to Home
+          </a>
+        </button>
+      </div>
+
+      <footer className="App-footer">
+        <div className="footer-section">
+          <h1>Barangay General Tiburcio De Leon</h1>
+          <div className="footer-content">
+            <div className="footer-text1">
+              <p>
+                For any inquiries, please contact us. <br />
+                Email: gentdeleonbarangay@gmail.com <br />
+                Contact Number: 091234567890
+              </p>
+            </div>
+            <div className="footer-icons-and-links">
+              <div className="footer-icons">
+                <a
+                  href="https://facebook.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img src={fb} alt="Facebook-Logo" className="icon fb-logo" />
+                </a>
+                <a href="mailto:gentdeleonbarangay@gmail.com">
+                  <img
+                    src={email}
+                    alt="Email-Logo"
+                    className="icon email-logo"
+                  />
+                </a>
+              </div>
+              <div className="vertical-line"></div>
+              <div className="footer-links">
+                <a href="/terms" className="footer-link">
+                  TERMS OF SERVICE
+                </a>
+                <a href="/privacy" className="footer-link">
+                  PRIVACY POLICY
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+>>>>>>> Stashed changes
     </div>
     
   );

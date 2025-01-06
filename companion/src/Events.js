@@ -127,9 +127,8 @@ const Events = () => {
   const deleteEvent = (id) => {
     if (window.confirm("Are you sure you want to delete this event?")) {
       setLoading(true);
-      fetch(`http://localhost/php/delete_events.php?id=${id}`, {
-        method: "POST",
-      })
+      fetch(`http://localhost/php/delete_events.php?id=${id}`, { method: "POST" })
+
         .then((response) => response.json())
         .then((data) => {
           if (data.status === "success") {

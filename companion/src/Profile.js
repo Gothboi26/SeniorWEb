@@ -41,7 +41,11 @@ const Profile = () => {
 
   return (
     <div className="profile-container">
+<<<<<<< Updated upstream
       <h2>Profile</h2>
+=======
+      <h3>Profile</h3>
+>>>>>>> Stashed changes
       <div className="profile-pic">
         <img
           src={

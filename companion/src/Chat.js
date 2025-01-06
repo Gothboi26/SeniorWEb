@@ -74,6 +74,18 @@ function Chat({ role, handleLogout }) {
           <button onClick={handleSendMessage} className="chat-send-button">Send</button>
         </div>
       </div>
+<<<<<<< Updated upstream
+=======
+
+      <div className="bhome-b">
+        <button className="bhome-button">
+          <a href="/" className="bhome-link">
+            Back to Home
+          </a>
+        </button>
+      </div>    
+
+>>>>>>> Stashed changes
       <footer className="App-footer">
                 <div className="footer-section">
                   <h1>Barangay General Tiburcio De Leon</h1>
