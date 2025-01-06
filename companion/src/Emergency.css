@@ -1,28 +1,3 @@
-/* Back to Home */
-
-.bhome-b {
-  display: flex; /* Add flexbox layout */
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  height: 100%; /* Ensure the container has enough height */
-  width: 100%; /* Ensure the container takes full width */
-}
-.bhome-button {
-  background-color: #d60000;
-  border-radius: 20px;
-  width: 250px;
-  height: auto;
-  text-align: center; 
-}
-
-.bhome-link {
-  color: #fcfcfc;
-  text-decoration: none;
-  font-weight: normal;
-  font-family: "Righteous", sans-serif;
-  font-size: 0.9rem;
-}
-
 /* General Styles */
 body {
   font-family: "Glacial Indifference", sans-serif;
@@ -98,6 +73,15 @@ body {
   cursor: pointer;
   width: 150px; /* Optional: Set a fixed width for buttons */
   height: 150px; /* Optional: Set a fixed height for buttons */
+}
+
+.emergency-button:hover {
+  background-color: #800000;
+  color: #e7e7e7;
+}
+
+.emergency-button .icon {
+  font-size: 50px;
 }
 
 /* Rectangular Buttons Container */
@@ -271,69 +255,4 @@ textarea {
 .modal-submit-button:hover,
 .modal-close-button:hover {
   background-color: #a00000;
-}
-
-* Center the content on the page */ .emergency-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background-color: #f9f9f9;
-  padding: 20px;
-}
-
-/* Center the inner content */
-.emergency-content {
-  text-align: center;
-  max-width: 100%;
-  width: 100%;
-}
-
-/* Instructions styling */
-.emergency-instructions {
-  font-size: 18px;
-  line-height: 2;
-  color: #333;
-  text-align: justify;
-  padding: 0 30%;
-}
-
-/* Table styling */
-.contacts-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 20px 0;
-}
-
-.contacts-table th,
-.contacts-table td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: center;
-}
-
-.contacts-table th {
-  background-color: #f2f2f2;
-  font-weight: bold;
-}
-
-.contacts-table tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-.contacts-table tr:hover {
-  background-color: #e8e8e8;
-}
-
-/* Back link styling */
-.back-link {
-  display: inline-block;
-  margin-top: 20px;
-  color: #007bff;
-  text-decoration: none;
-}
-
-.back-link:hover {
-  text-decoration: underline;
 }

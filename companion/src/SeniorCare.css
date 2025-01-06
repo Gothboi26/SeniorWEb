@@ -1,11 +1,6 @@
-/* Senior Care Container */
-.senior-care-container {
-  text-align: center;
-}
-
 /* Main Senior Care Button */
 .homepage-senior-care-button {
-  background-color: #D60000; /* Maroon background */
+  background-color: #800000; /* Maroon background */
   color: white; /* White text */
   border: none;
   border-radius: 8px;
@@ -111,20 +106,18 @@ strong {
 
 /* Buttons inside the Senior Care page */
 .secondary-button {
-  background-color: #1f1785; /* Button background */
+  background-color: #800000; /* Button background */
   color: #f8f8f8; /* Button text color */
-  border: 2px solid #1f1785; /* Border color */
-  border-radius: 40px; /* Slightly larger border radius for a softer look */
+  border: 2px solid #800000; /* Border color */
+  border-radius: 10px; /* Slightly larger border radius for a softer look */
   padding: 20px 10px; /* Increased padding for vertical size */
-  width: 400px; /* Fixed width for all buttons */
-  height: auto;
+  width: 250px; /* Fixed width for all buttons */
   font-size: 16px; /* Font size */
   font-weight: bold; /* Makes the text stand out */
   cursor: pointer; /* Pointer cursor on hover */
   text-align: center; /* Centers the text inside the button */
   transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
-  font-family: "Righteous", sans-serif;
-  font-weight: normal;
+  font-family: "Glacial Indifference", sans-serif;
 }
 
 .secondary-button:hover {
@@ -138,7 +131,7 @@ strong {
   padding: 25px;
   border-radius: 8px;
   background-color: #ffffff;
-  max-width: 600px;
+  max-width: 400px;
   width: 100%;
   margin: auto;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
@@ -158,4 +151,3 @@ strong {
   border: 1px solid #ccc;
   border-radius: 8px;
 }
-

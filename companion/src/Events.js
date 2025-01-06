@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import "./Events.css";
-import editIcon from "./edit.png";
-import deleteIcon from "./delete.png";
 
 const Events = () => {
   const [dateTime, setDateTime] = useState(new Date()); // Combined date and time state
@@ -19,9 +17,7 @@ const Events = () => {
   // Fetch events (either for the selected date or all events)
   useEffect(() => {
     const formattedDate = filterDate || dateTime.toISOString().split("T")[0]; // Use filterDate if provided, otherwise use dateTime
-    const url = `http://localhost/php/get_events.php?date=${
-      showAllEvents ? "" : formattedDate
-    }&sortOrder=${sortOrder}`;
+    const url = `http://localhost/php/get_events.php?date=${showAllEvents ? '' : formattedDate}&sortOrder=${sortOrder}`;
 
     fetch(url)
       .then((response) => response.json())
@@ -29,10 +25,7 @@ const Events = () => {
         if (data.status === "success" && Array.isArray(data.events)) {
           setEvents(data.events); // Ensure data.events is an array
         } else {
-          console.error(
-            "Failed to load events:",
-            data.message || "No events found"
-          );
+          console.error("Failed to load events:", data.message || "No events found");
         }
       })
       .catch((error) => {
@@ -80,10 +73,7 @@ const Events = () => {
 
     setLoading(true);
 
-    const formattedDateTime = dateTime
-      .toISOString()
-      .slice(0, 19)
-      .replace("T", " ");
+    const formattedDateTime = dateTime.toISOString().slice(0, 19).replace("T", " ");
     const newEvent = {
       id: editingEventId,
       date_time: formattedDateTime,
@@ -104,9 +94,7 @@ const Events = () => {
           setEvents((prevEvents) =>
             editingEventId
               ? prevEvents.map((event) =>
-                  event.id === editingEventId
-                    ? { ...newEvent, id: data.id }
-                    : event
+                  event.id === editingEventId ? { ...newEvent, id: data.id } : event
                 )
               : [...prevEvents, { ...newEvent, id: data.id }]
           );
@@ -133,9 +121,7 @@ const Events = () => {
         .then((response) => response.json())
         .then((data) => {
           if (data.status === "success") {
-            setEvents((prevEvents) =>
-              prevEvents.filter((event) => event.id !== id)
-            );
+            setEvents((prevEvents) => prevEvents.filter((event) => event.id !== id));
           } else {
             alert("Failed to delete event: " + data.message);
           }
@@ -152,77 +138,92 @@ const Events = () => {
   // Function to format date into a more readable format (e.g., "Monday, January 1, 2025")
   const formatDate = (date) => {
     return new Intl.DateTimeFormat("en-US", {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: true,
+      weekday: "long",   // "Monday"
+      year: "numeric",   // "2025"
+      month: "long",     // "January"
+      day: "numeric",    // "1"
+      hour: "2-digit",   // "2"
+      minute: "2-digit", // "30"
+      second: "2-digit", // "45"
+      hour12: true       // Use 12-hour clock (AM/PM)
     }).format(new Date(date));
   };
+  
 
   return (
-    <div className="events-tab">
-      <h2>Events</h2>
+    <div className="events-container">
+      <div className="events-header">
+        <h2>Events</h2>
+        <button onClick={() => openModal()} className="add-event-button">
+          Add Event
+        </button>
+      </div>
 
       <div className="filters">
-        <input
-          type="date"
-          value={filterDate}
-          onChange={(e) => setFilterDate(e.target.value)}
-        />
+        <div className="filter-date">
+          <input
+            type="date"
+            value={filterDate}
+            onChange={(e) => setFilterDate(e.target.value)} // Update filterDate state
+          />
+        </div>
+  
       </div>
 
       <div className="sort-options">
         <select
-          onChange={(e) => setSortOrder(e.target.value)}
-          value={sortOrder}
+          onChange={(e) => {
+            const selectedOption = e.target.value;
+            if (selectedOption === "asc" || selectedOption === "desc") {
+              setSortOrder(selectedOption); // Update the sort order
+            }
+          }}
+          value={sortOrder} // Dynamically set the value based on the state
         >
           <option value="asc">Sort Ascending</option>
           <option value="desc">Sort Descending</option>
         </select>
-
-        <button onClick={() => setShowAllEvents(!showAllEvents)}>
+        <button
+          className="toggle-events-button"
+          onClick={() => setShowAllEvents((prevState) => !prevState)}
+        >
           {showAllEvents ? "Show Events for Today" : "Show All Events"}
         </button>
-        <button className="event-modal" onClick={() => openModal()}>Add Event</button>
       </div>
 
-      <table className="table">
+      <table className="events-table">
         <thead>
           <tr>
             <th>Event Title</th>
             <th>Date and Time</th>
             <th>Description</th>
-            <th>Actions</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {events.length > 0 ? (
+          {Array.isArray(events) && events.length > 0 ? (
             events.map((event) => (
               <tr key={event.id}>
                 <td>{event.event_title}</td>
-                <td>{formatDate(event.date_time)}</td>
+                <td>{formatDate(event.date_time)}</td> {/* Using formatDate here */}
                 <td>{event.event_description}</td>
-                <td className="action-icons">
-                  <img src={editIcon} alt="Edit" />
-                  <img src={deleteIcon} alt="Delete" />
+                <td>
+                  <button className="edit-button" onClick={() => openModal(event)}>✏️</button>
+                  <button className="delete-button" onClick={() => deleteEvent(event.id)}>🗑️</button>
                 </td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan="4">No events available</td>
+              <td colSpan="4" className="no-events">
+                No events available
+              </td>
             </tr>
           )}
         </tbody>
       </table>
 
-      <Modal isOpen={modalIsOpen} onRequestClose={closeModal}
-      className="ReactModal__Content"
-      overlayclassName="ReactModal__Overlay">
+      <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="modal">
         <h2>{editingEventId ? "Edit Event" : "Add Event"}</h2>
         <input
           type="text"
@@ -239,11 +240,12 @@ const Events = () => {
           placeholder="Event Description"
           value={eventDescription}
           onChange={(e) => setEventDescription(e.target.value)}
+          rows="3"
         ></textarea>
-        <button className="save-event" onClick={saveEvent} disabled={loading}>
+        <button onClick={saveEvent} className="save-button" disabled={loading}>
           {loading ? "Saving..." : "Save Event"}
         </button>
-        <button className="cancel-event" onClick={closeModal}>Cancel</button>
+        <button onClick={closeModal} className="cancel-button">Cancel</button>
       </Modal>
     </div>
   );

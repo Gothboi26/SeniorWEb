@@ -78,6 +78,7 @@ const Appointments = () => {
       <table className="table">
         <thead>
           <tr>
+            <th>Name</th>
             <th>Type</th>
             <th>Date</th>
             <th>Time</th>
@@ -88,6 +89,7 @@ const Appointments = () => {
         <tbody>
           {appointments.map((appointment) => (
             <tr key={appointment.id}>
+              <td>{appointment.username}</td> {/* Display username from users table */}
               <td>{appointment.service}</td>
               <td>{appointment.date}</td>
               <td className="time-text">{appointment.time}</td>

@@ -175,7 +175,7 @@ const Overview = () => {
             <thead>
               <tr>
                 <th>Service</th>
-               
+                <th>Patient</th>
                 <th>Time</th> {/* Added Time column */}
               </tr>
             </thead>
@@ -183,7 +183,7 @@ const Overview = () => {
               {appointmentsByDate.map(appointment => (
                 <tr key={appointment.id}>
                   <td>{appointment.service}</td>
-                  
+                  <td>{appointment.username}</td>
                   <td>{appointment.time}</td> {/* Display Time */}
                 </tr>
               ))}
@@ -236,6 +236,7 @@ const Overview = () => {
           <thead>
             <tr>
               <th></th>
+              <th>Patient Name</th>
               <th>Gender</th>
               <th>Type</th>
               <th>Status</th>
@@ -248,7 +249,9 @@ const Overview = () => {
                 <td>
                   <input type="checkbox" />
                 </td>
+                <td>{appointment.username}</td>
                 <td>{appointment.sex}</td> {/* Display the gender (sex) of the patient */}
+
                 <td>{appointment.service}</td>
                 <td className={appointment.status.toLowerCase()}>{appointment.status}</td>
                 <td className="action-icons">

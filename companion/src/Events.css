@@ -1,134 +1,11 @@
-.event-modal .modal {
-  padding: 25px;
-  border-radius: 8px;
-  background-color: #ffffff;
-  max-width: 600px;
-  width: 100%;
-  margin: auto;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-.events-tab {
-  font-family: "Righteous", sans-serif;
-  max-width: 100%;
-  margin: 20px auto;
-  padding: 20px;
-  color: #333;
-}
-
-/* React-Modal Default Overlay Centering */
-.ReactModal__Overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.75); /* Dim background */
-  display: flex; /* Use Flexbox for centering */
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  z-index: 1000; /* Ensure it appears above other elements */
-}
-
-/* Modal Content Styling */
-.ReactModal__Content {
-  padding: 25px;
-  border-radius: 8px;
-  background-color: #ffffff;
-  max-width: 600px;
-  width: 100%;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-
-/* Add specific class overrides if needed */
-.custom-modal {
-  border: 2px solid #007bff;
-}
-
-.save-event,
-.cancel-event {
-  font-family: "Overpass", sans-serif;
-  font-weight: 300;
-  background-color: #D60000;
-  border-radius: 20px;
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-  color: #fcfcfc;
->>>>>>> Stashed changes
-=======
-  color: #fcfcfc;
->>>>>>> Stashed changes
-=======
-  color: #fcfcfc;
->>>>>>> Stashed changes
-=======
-  color: #fcfcfc;
->>>>>>> Stashed changes
-=======
->>>>>>> parent of e09adf0 (I updated the files.)
-}
-
-.cancel-event {
-  background-color: #007bff;
-}
-
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-/* Modal Buttons */
-.save-button {
-  background-color: #007bff;
-  color: #fcfcfc;
-}
-
-.cancel-button {
-  background-color: #dc3545;
-  
-}
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> parent of e09adf0 (I updated the files.)
-
 /* General button styles for consistency */
 button {
-  padding: 10px 15px;
+  padding: 10px 20px;
   font-size: 16px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: 0.3s ease, opacity 0.3s ease;
-  background-color: #45a049;
-  color: #ffffff;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
 }
 
 button:hover {
@@ -167,40 +44,35 @@ button:hover {
   margin-top: 20px;
 }
 
-.no-events {
+.events-table th,
+.events-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.events-table th {
+  background-color: #f2f2f2;
+}
+
+.events-table .no-events {
   text-align: center;
   color: #888;
 }
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 15px;
-}
 
-.table th,
-.table td {
-  padding: 15px 20px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-
-.table th {
-  background-color: #f4f4f4;
-  color: #333;
-}
-
-.table tr:hover {
-  background-color: #f9f9f9;
-}
-.action-icons {
-  display: flex;
-  gap: 8px;
-}
-
-.action-icons img {
-  width: 20px;
-  height: 20px;
+/* Buttons inside the Table */
+.edit-button,
+.delete-button {
+  border: none;
+  background: none;
   cursor: pointer;
+  font-size: 1rem;
+  margin: 0 5px;
+}
+
+.edit-button:hover,
+.delete-button:hover {
+  opacity: 0.7;
 }
 
 /* Header */
@@ -245,7 +117,7 @@ button:hover {
 }
 
 .sort-options button {
-  background-color: #4caf50;
+  background-color: #4CAF50;
   color: white;
   border: none;
 }
@@ -261,7 +133,7 @@ button:hover {
 
 /* Toggle Events Button */
 .toggle-events-button {
-  background-color: #2196f3;
+  background-color: #2196F3;
   color: white;
   padding: 8px 12px;
   border-radius: 5px;
@@ -270,7 +142,7 @@ button:hover {
 }
 
 .toggle-events-button:hover {
-  background-color: #1976d2;
+  background-color: #1976D2;
 }
 
 /* Filters */
@@ -289,6 +161,30 @@ button:hover {
 
 .filter-date {
   display: inline-block;
+}
+
+/* Modal */
+.modal {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+}
+
+.modal input,
+.modal textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.modal textarea {
+  resize: vertical;
 }
 
 /* Events Table No Events Message */
@@ -327,7 +223,7 @@ button:hover {
     width: 100%;
     box-sizing: border-box;
   }
-
+  
   /* Make modal content more responsive */
   .modal {
     max-width: 100%;
@@ -351,3 +247,4 @@ button:hover {
     font-size: 14px;
   }
 }
+
