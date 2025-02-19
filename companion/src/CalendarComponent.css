@@ -378,7 +378,7 @@ h3 {
   padding: 10px;
   display: flex;
   flex-wrap: wrap; /* Allows wrapping on smaller screens */
-  align-items: center;
+  align-items: center; 
   padding: 20px;
   /* border-radius: 20px; */
   gap: 30px; /* Adds spacing between items */
