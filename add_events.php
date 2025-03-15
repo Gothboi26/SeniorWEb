@@ -6,7 +6,7 @@ header("Content-Type: application/json; charset=UTF-8");
 
 $servername = "localhost";
 $username = "root";
-$password = "aliah1234";
+$password = "";
 $dbname = "calendar_app";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
