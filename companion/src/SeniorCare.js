@@ -5,6 +5,14 @@ import Navbar from "./Navbar";
 import fb from "./fb.png"; // For fb logo
 import email from "./email.png"; // For email logo
 
+const excludedDays = {
+  "Health Check-up": [0, 6], // 0 - 6 Sunday to Saturday
+  "Free Medicine": [0, 6],
+  Massage: [0, 6],
+  "Dental Check-up": [0, 6],
+  "Eye Check-up": [0, 6],
+};
+
 const SeniorCare = ({ role, handleLogout }) => {
   // State to control the modal visibility and modal content
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -26,11 +34,19 @@ const SeniorCare = ({ role, handleLogout }) => {
     "Eye Check-up",
   ];
   const times = {
-    "Health Check-up": ["9:00 AM", "1:00 PM", "3:00 PM"],
-    "Free Medicine": ["10:00 AM", "2:00 PM", "4:00 PM"],
-    Massage: ["11:00 AM", "2:30 PM", "5:00 PM"],
-    "Dental Check-up": ["9:30 AM", "12:00 PM", "3:30 PM"],
-    "Eye Check-up": ["10:30 AM", "1:30 PM", "4:30 PM"],
+    "Health Check-up": [
+      "9:00 AM - 10:00 AM",
+      "1:00 PM - 2:00 PM",
+      "3:00 PM - 4:00 PM",
+    ],
+    "Free Medicine": [
+      "10:00 AM - 12:00 PM",
+      "1:00 PM - 3:00 PM",
+      "4:00 PM - 5:00 PM",
+    ],
+    Massage: ["11:00 AM-12:00 PM", "2:30 PM - 3:30 PM", "4:00 PM - 5:00 PM"],
+    "Dental Check-up": ["9:30 AM - 11:30 AM", "1:00 PM - 4:30 PM"],
+    "Eye Check-up": ["9:30 AM - 11:30 AM", "1:30 PM - 4:30 PM"],
   };
 
   // Fetch reserved slots for the user (client) when component mounts
@@ -55,6 +71,30 @@ const SeniorCare = ({ role, handleLogout }) => {
     const service = e.target.value;
     setSelectedService(service);
     setAvailableTimes(times[service] || []); // Update available times based on selected service
+  };
+
+  const handleDateChange = (e) => {
+    const dateValue = e.target.value;
+    const selectedDay = new Date(dateValue).getDay(); // 0 = Sunday, 6 = Saturday
+
+    if (selectedDay === 0 || selectedDay === 6) {
+      alert(
+        "Weekends (Saturday and Sunday) are not allowed. Please select a weekday."
+      );
+      setSelectedDate("");
+      return;
+    }
+
+    if (excludedDays[selectedService]?.includes(selectedDay)) {
+      //FOR ANOTHER DAY
+      alert(
+        `The selected service is not available on this day. Please choose another date.`
+      );
+      setSelectedDate("");
+      return;
+    }
+
+    setSelectedDate(dateValue);
   };
 
   // Function to open modal and set content
@@ -223,8 +263,9 @@ const SeniorCare = ({ role, handleLogout }) => {
                 type="date"
                 id="date"
                 value={selectedDate}
-                onChange={(e) => setSelectedDate(e.target.value)}
+                onChange={handleDateChange}
                 className="date-input"
+                disabled={!selectedService}
               />
             </div>
 
@@ -275,7 +316,8 @@ const SeniorCare = ({ role, handleLogout }) => {
                       <strong>Time:</strong> {slot.time}
                     </p>
                     <p>
-                      <strong>Status:</strong> {slot.status || "Pending Approval"} {/* Show status */}
+                      <strong>Status:</strong>{" "}
+                      {slot.status || "Pending Approval"} {/* Show status */}
                     </p>
                     <hr />
                   </li>
@@ -300,52 +342,47 @@ const SeniorCare = ({ role, handleLogout }) => {
         Back to Home
       </a>
       <footer className="App-footer">
-                <div className="footer-section">
-                  <h1>Barangay General Tiburcio De Leon</h1>
-                  <div className="footer-content">
-                    <div className="footer-text1">
-                      <p>
-                        For any inquiries, please contact us. <br />
-                        Email: gentdeleonbarangay@gmail.com <br />
-                        Contact Number: 091234567890
-                      </p>
-                    </div>
-                    <div className="footer-icons-and-links">
-                      <div className="footer-icons">
-                        <a
-                          href="https://facebook.com"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <img
-                            src={fb}
-                            alt="Facebook-Logo"
-                            className="icon fb-logo"
-                          />
-                        </a>
-                        <a href="mailto:gentdeleonbarangay@gmail.com">
-                          <img
-                            src={email}
-                            alt="Email-Logo"
-                            className="icon email-logo"
-                          />
-                        </a>
-                      </div>
-                      <div className="vertical-line"></div>
-                      <div className="footer-links">
-                        <a href="/terms" className="footer-link">
-                          TERMS OF SERVICE
-                        </a>
-                        <a href="/privacy" className="footer-link">
-                          PRIVACY POLICY
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </footer>
+        <div className="footer-section">
+          <h1>Barangay General Tiburcio De Leon</h1>
+          <div className="footer-content">
+            <div className="footer-text1">
+              <p>
+                For any inquiries, please contact us. <br />
+                Email: gentdeleonbarangay@gmail.com <br />
+                Contact Number: 091234567890
+              </p>
+            </div>
+            <div className="footer-icons-and-links">
+              <div className="footer-icons">
+                <a
+                  href="https://facebook.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img src={fb} alt="Facebook-Logo" className="icon fb-logo" />
+                </a>
+                <a href="mailto:gentdeleonbarangay@gmail.com">
+                  <img
+                    src={email}
+                    alt="Email-Logo"
+                    className="icon email-logo"
+                  />
+                </a>
+              </div>
+              <div className="vertical-line"></div>
+              <div className="footer-links">
+                <a href="/terms" className="footer-link">
+                  TERMS OF SERVICE
+                </a>
+                <a href="/privacy" className="footer-link">
+                  PRIVACY POLICY
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
-    
   );
 };
 
