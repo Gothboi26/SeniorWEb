@@ -1,0 +1,2 @@
+[2025-03-15 20:08:27] SQLSTATE[42S02]: Base table or view not found: 1146 Table 'accounts.appointments' doesn't exist
+[2025-03-15 20:08:27] SQLSTATE[42S02]: Base table or view not found: 1146 Table 'accounts.appointments' doesn't exist
