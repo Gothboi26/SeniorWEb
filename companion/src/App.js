@@ -4,9 +4,9 @@ import Navbar from "./Navbar";
 import { Login } from "./AuthComponents";
 import AdminDashboard from "./AdminDashboard";
 import ClientDashboard from "./ClientDashboard";
-import logo from "./logo.png"; // For login page
-import fb from "./fb.png"; // For fb logo
-import email from "./email.png"; // For email logo
+import logo from "./assets/logo.png"; // For login page
+import fb from "./assets/fb.png"; // For fb logo
+import email from "./assets/email.png"; // For email logo
 import Emergency from "./Emergency";
 import Chat from "./Chat";
 import SeniorCare from "./SeniorCare";
@@ -50,7 +50,7 @@ function App() {
   const handleLogin = (role) => {
     localStorage.setItem("role", role);
     setRole(role);
-    navigate("/calendar")
+    navigate("/calendar");
   };
 
   const handleLogout = () => {

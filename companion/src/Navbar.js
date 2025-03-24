@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
-import logo from "./logo.png";
+import logo from "./assets/logo.png";
 
 function Navbar({ handleLogout, role }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);

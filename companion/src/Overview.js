@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import './Overview.css';
-import editIcon from "./edit.png";
-import deleteIcon from "./delete.png";
-import { Calendar } from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';  // Import Calendar styles
+import React, { useEffect, useState } from "react";
+import "./Overview.css";
+import editIcon from "./assets/edit.png";
+import deleteIcon from "./assets/delete.png";
+import { Calendar } from "react-calendar";
+import "react-calendar/dist/Calendar.css"; // Import Calendar styles
 
 const Overview = () => {
   const [appointments, setAppointments] = useState([]);
- 
+
   const [selectedDate, setSelectedDate] = useState(new Date()); // State for selected date
   const [appointmentsByDate, setAppointmentsByDate] = useState([]); // Appointments for the selected date
   const [editMode, setEditMode] = useState(false); // State to toggle edit mode
@@ -22,14 +22,13 @@ const Overview = () => {
 
   const fetchAppointmentsData = () => {
     setLoading(true);
-    fetch('http://localhost/php/appointments.php')
-      .then(response => response.json())
-      .then(data => {
+    fetch("http://localhost/php/appointments.php")
+      .then((response) => response.json())
+      .then((data) => {
         setAppointments(data);
-       
       })
-      .catch(error => {
-        console.error('Error fetching appointments:', error);
+      .catch((error) => {
+        console.error("Error fetching appointments:", error);
       })
       .finally(() => setLoading(false));
   };
@@ -43,7 +42,9 @@ const Overview = () => {
   // Filter appointments based on selected date
   const filterAppointmentsByDate = (date) => {
     const formattedDate = formatLocalDate(date); // Get date in local timezone format
-    const filteredAppointments = appointments.filter(appointment => appointment.date === formattedDate);
+    const filteredAppointments = appointments.filter(
+      (appointment) => appointment.date === formattedDate
+    );
     setAppointmentsByDate(filteredAppointments);
   };
 
@@ -51,8 +52,8 @@ const Overview = () => {
   const formatLocalDate = (date) => {
     const localDate = new Date(date);
     const year = localDate.getFullYear();
-    const month = String(localDate.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
-    const day = String(localDate.getDate()).padStart(2, '0');
+    const month = String(localDate.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
+    const day = String(localDate.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   };
 
@@ -64,19 +65,23 @@ const Overview = () => {
 
   // Handle Delete Button click
   const handleDelete = (appointmentId) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this appointment?");
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this appointment?"
+    );
     if (!confirmDelete) return;
 
     fetch(`http://localhost/php/appointments.php?id=${appointmentId}`, {
-      method: 'DELETE',
+      method: "DELETE",
     })
-      .then(response => response.json())
+      .then((response) => response.json())
       .then(() => {
-        setAppointments(prevAppointments => prevAppointments.filter(app => app.id !== appointmentId));
-        alert('Appointment deleted successfully.');
+        setAppointments((prevAppointments) =>
+          prevAppointments.filter((app) => app.id !== appointmentId)
+        );
+        alert("Appointment deleted successfully.");
       })
-      .catch(error => {
-        console.error('Error deleting appointment:', error);
+      .catch((error) => {
+        console.error("Error deleting appointment:", error);
       });
   };
 
@@ -85,26 +90,26 @@ const Overview = () => {
     if (isSaving) return; // Prevent multiple submissions
 
     setIsSaving(true);
-    fetch('http://localhost/php/appointments.php', {
-      method: 'POST',
+    fetch("http://localhost/php/appointments.php", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(updatedAppointment),
     })
-      .then(response => response.json())
-      .then(data => {
-        setAppointments(prevAppointments => {
-          return prevAppointments.map(appointment =>
+      .then((response) => response.json())
+      .then((data) => {
+        setAppointments((prevAppointments) => {
+          return prevAppointments.map((appointment) =>
             appointment.id === data.id ? data : appointment
           );
         });
         setEditMode(false);
         setCurrentAppointment(null);
-        alert('Appointment updated successfully.');
+        alert("Appointment updated successfully.");
       })
-      .catch(error => {
-        console.error('Error updating appointment:', error);
+      .catch((error) => {
+        console.error("Error updating appointment:", error);
       })
       .finally(() => setIsSaving(false));
   };
@@ -134,9 +139,7 @@ const Overview = () => {
       <div className="statistics-section">
         <div className="statistics">
           <h3>Patient's Statistics</h3>
-          <div className="stats-chart">
-            {/* Placeholder for chart */}
-          </div>
+          <div className="stats-chart">{/* Placeholder for chart */}</div>
           <div className="stats-toggle">
             <button>Week</button>
             <button>Month</button>
@@ -157,7 +160,9 @@ const Overview = () => {
             tileClassName={({ date, view }) => {
               // Highlight dates with appointments
               const formattedDate = formatLocalDate(date);
-              return appointments.some(app => app.date === formattedDate) ? 'highlight' : null;
+              return appointments.some((app) => app.date === formattedDate)
+                ? "highlight"
+                : null;
             }}
           />
         </div>
@@ -175,15 +180,13 @@ const Overview = () => {
             <thead>
               <tr>
                 <th>Service</th>
-               
                 <th>Time</th> {/* Added Time column */}
               </tr>
             </thead>
             <tbody>
-              {appointmentsByDate.map(appointment => (
+              {appointmentsByDate.map((appointment) => (
                 <tr key={appointment.id}>
                   <td>{appointment.service}</td>
-                  
                   <td>{appointment.time}</td> {/* Display Time */}
                 </tr>
               ))}
@@ -206,22 +209,41 @@ const Overview = () => {
             <input
               type="text"
               value={currentAppointment.service}
-              onChange={(e) => setCurrentAppointment({ ...currentAppointment, service: e.target.value })}
+              onChange={(e) =>
+                setCurrentAppointment({
+                  ...currentAppointment,
+                  service: e.target.value,
+                })
+              }
             />
             <label>Status:</label>
             <input
               type="text"
               value={currentAppointment.status}
-              onChange={(e) => setCurrentAppointment({ ...currentAppointment, status: e.target.value })}
+              onChange={(e) =>
+                setCurrentAppointment({
+                  ...currentAppointment,
+                  status: e.target.value,
+                })
+              }
             />
             <label>Time:</label>
             <input
               type="text"
               value={currentAppointment.time}
-              onChange={(e) => setCurrentAppointment({ ...currentAppointment, time: e.target.value })}
+              onChange={(e) =>
+                setCurrentAppointment({
+                  ...currentAppointment,
+                  time: e.target.value,
+                })
+              }
             />
-            <button type="submit" disabled={isSaving}>{isSaving ? 'Saving...' : 'Save'}</button>
-            <button type="button" onClick={() => setEditMode(false)}>Cancel</button>
+            <button type="submit" disabled={isSaving}>
+              {isSaving ? "Saving..." : "Save"}
+            </button>
+            <button type="button" onClick={() => setEditMode(false)}>
+              Cancel
+            </button>
           </form>
         </div>
       )}
@@ -248,12 +270,23 @@ const Overview = () => {
                 <td>
                   <input type="checkbox" />
                 </td>
-                <td>{appointment.sex}</td> {/* Display the gender (sex) of the patient */}
+                <td>{appointment.sex}</td>{" "}
+                {/* Display the gender (sex) of the patient */}
                 <td>{appointment.service}</td>
-                <td className={appointment.status.toLowerCase()}>{appointment.status}</td>
+                <td className={appointment.status.toLowerCase()}>
+                  {appointment.status}
+                </td>
                 <td className="action-icons">
-                  <img src={editIcon} alt="Edit" onClick={() => handleEdit(appointment)} />
-                  <img src={deleteIcon} alt="Delete" onClick={() => handleDelete(appointment.id)} />
+                  <img
+                    src={editIcon}
+                    alt="Edit"
+                    onClick={() => handleEdit(appointment)}
+                  />
+                  <img
+                    src={deleteIcon}
+                    alt="Delete"
+                    onClick={() => handleDelete(appointment.id)}
+                  />
                 </td>
               </tr>
             ))}

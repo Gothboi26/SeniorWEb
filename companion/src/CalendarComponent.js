@@ -18,15 +18,14 @@ import ChatInquiries from "./ChatInquiries";
 import Events from "./Events";
 import Settings from "./Setting";
 import "./Sidebar.css";
-import logo from "./logo.png";
-import appoint from "./appoint.png"; // For Senior Care logo
-import emergency from "./emergency.png"; // For Emergency Services logo
-import chat from "./chat.png"; // For Chat Assistance logo
-import doctor from "./doctor.png";
-import arrow from "./arrow.png";
-import person from "./person.jpg";
-import boy from "./boy.png";
-import girl from "./girl.png";
+import logo from "./assets/logo.png";
+import appoint from "./assets/appoint.png"; // For Senior Care logo
+import emergency from "./assets/emergency.png"; // For Emergency Services logo
+import chat from "./assets/chat.png"; // For Chat Assistance logo
+import doctor from "./assets/doctor.png";
+import arrow from "./assets/arrow.png";
+import boy from "./assets/boy.png";
+import girl from "./assets/girl.png";
 
 Modal.setAppElement("#root");
 
@@ -285,9 +284,8 @@ const RectangleSection = ({ role }) => {
               )}
             </ul>
           </div>
-          
         </div>
-      </div> 
+      </div>
 
       <div className="barangay-health-officials">
         <div className="officials-header">
@@ -534,6 +532,7 @@ function CalendarComponent() {
             <div className="facebook-page">
               <iframe
                 src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FBarangay-Gen-T-De-Leon-61550950657692&tabs=timeline&width=500&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+                title="Barangay Facebook Page"
                 width="500"
                 height="500"
                 style={{ border: "none", overflow: "hidden" }}

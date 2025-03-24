@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./SeniorList.css";
-import editIcon from "./edit.png";
-import deleteIcon from "./delete.png";
+import editIcon from "./assets/edit.png";
+import deleteIcon from "./assets/delete.png";
 
 const SeniorList = () => {
   const [patients, setPatients] = useState([]);
