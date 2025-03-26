@@ -5,6 +5,14 @@ import Navbar from "./Navbar";
 import fb from "./assets/fb.png"; // For fb logo
 import email from "./assets/email.png"; // For email logo
 
+const excludedDays = {
+  "Health Check-up": [0, 6], // 0 - 6 Sunday to Saturday
+  "Free Medicine": [0, 6],
+  Massage: [0, 6],
+  "Dental Check-up": [0, 6],
+  "Eye Check-up": [0, 6],
+};
+
 const SeniorCare = ({ role, handleLogout }) => {
   // State to control the modal visibility and modal content
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -26,11 +34,42 @@ const SeniorCare = ({ role, handleLogout }) => {
     "Eye Check-up",
   ];
   const times = {
-    "Health Check-up": ["9:00 AM", "1:00 PM", "3:00 PM"],
-    "Free Medicine": ["10:00 AM", "2:00 PM", "4:00 PM"],
-    Massage: ["11:00 AM", "2:30 PM", "5:00 PM"],
-    "Dental Check-up": ["9:30 AM", "12:00 PM", "3:30 PM"],
-    "Eye Check-up": ["10:30 AM", "1:30 PM", "4:30 PM"],
+    "Health Check-up": [
+      "9:00 AM - 10:00 AM",
+      "1:00 PM - 2:00 PM",
+      "3:00 PM - 4:00 PM",
+    ],
+    "Free Medicine": [
+      "10:00 AM - 12:00 PM",
+      "1:00 PM - 3:00 PM",
+      "4:00 PM - 5:00 PM",
+    ],
+    Massage: ["11:00 AM-12:00 PM", "2:30 PM - 3:30 PM", "4:00 PM - 5:00 PM"],
+    "Dental Check-up": ["9:30 AM - 11:30 AM", "1:00 PM - 4:30 PM"],
+    "Eye Check-up": ["9:30 AM - 11:30 AM", "1:30 PM - 4:30 PM"],
+  };
+  const handleDateChange = (e) => {
+    const dateValue = e.target.value;
+    const selectedDay = new Date(dateValue).getDay(); // 0 = Sunday, 6 = Saturday
+
+    if (selectedDay === 0 || selectedDay === 6) {
+      alert(
+        "Weekends (Saturday and Sunday) are not allowed. Please select a weekday."
+      );
+      setSelectedDate("");
+      return;
+    }
+
+    if (excludedDays[selectedService]?.includes(selectedDay)) {
+      //FOR ANOTHER DAY
+      alert(
+        `The selected service is not available on this day. Please choose another date.`
+      );
+      setSelectedDate("");
+      return;
+    }
+
+    setSelectedDate(dateValue);
   };
 
   // Fetch reserved slots for the user (client) when component mounts
@@ -115,12 +154,12 @@ const SeniorCare = ({ role, handleLogout }) => {
       <h4 className="section-title">SENIOR CARE</h4>
       <h2 className="section-appointment">Book an Appointment</h2>
       <ol className="instruction-list">
+        <strong>
+          Mga Hakbang sa Pag-book ng Appointment Gamit ang Aplikasyon para sa
+          Serbisyong Pangkalusugan at Iba Pa para sa mga Nakatatanda
+        </strong>
         <li>
           <strong>Piliin ang Serbisyong Kailangan:</strong>
-          <strong>
-            Mga Hakbang sa Pag-book ng Appointment Gamit ang Aplikasyon para sa
-            Serbisyong Pangkalusugan at Iba Pa para sa mga Nakatatanda
-          </strong>
           <p>
             Hanapin ang mga serbisyong pangkalusugan tulad ng health check-up,
             masahe, libreng gamot, dental check-up, o eye check-up.
@@ -223,8 +262,9 @@ const SeniorCare = ({ role, handleLogout }) => {
                 type="date"
                 id="date"
                 value={selectedDate}
-                onChange={(e) => setSelectedDate(e.target.value)}
+                onChange={handleDateChange}
                 className="date-input"
+                disabled={!selectedService}
               />
             </div>
 

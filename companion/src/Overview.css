@@ -1,6 +1,5 @@
 /* Overview.css */
-@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 .overview-container {
   display: flex;
   flex-direction: column;
@@ -37,9 +36,9 @@
 }
 
 .total-patients {
-  border: 1px solid #ddd;  
-  background-color: black; 
-  color: white; 
+  border: 1px solid #ddd;
+  background-color: black;
+  color: white;
 }
 
 .total-patients .count {

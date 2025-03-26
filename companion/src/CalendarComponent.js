@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 import Modal from "react-modal";
-// import Slideshow from "./Slideshow";
 import { Link } from "react-router-dom";
 import "./CalendarComponent.css";
 import "react-calendar/dist/Calendar.css";
@@ -520,11 +520,10 @@ function CalendarComponent() {
       <div className="homepage">
         <div className="home-contents">
           <div className="home-header">
-            <p className="home-subheader">companiON</p>
             <h1 className="home-title">Senior Care Services</h1>
             <p className="home-description">
-              Maalaga, makatao, at angkop na serbisyo upang matulungan ang
-              nakatatanda na mamuhay nang komportable, ligtas, at may dignidad.
+              Maalaga at angkop na serbisyo upang matulungan ang nakatatanda na
+              mamuhay nang komportable, ligtas, at walang pag-aalinlangan.
             </p>
           </div>
 

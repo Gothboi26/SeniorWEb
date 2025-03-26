@@ -31,7 +31,7 @@ h2 {
 }
 p {
   font-size: 18px; /* Adjust the size as needed */
-  color: #1e1e1e; /* Set your desired font color */
+  color: #fcfcfc; /* Set your desired font color */
 }
 
 strong {
@@ -143,11 +143,89 @@ strong {
 
 /* Styling for service, date, and time selects */
 .service-select,
-.date-input,
+v .date-input,
 .time-select {
   width: 100%;
   padding: 10px;
   margin: 10px 0;
   border: 1px solid #ccc;
   border-radius: 8px;
+}
+/* ----- Responsive Design for Tablets (max-width: 768px) ----- */
+@media only screen and (max-width: 768px) {
+  /* Adjust button styles for smaller screens */
+  .homepage-senior-care-button {
+    padding: 8px 12px;
+    font-size: 14px;
+    gap: 5px; /* Reduce space between icon and text */
+  }
+
+  /* Adjust heading and text sizes */
+  h2 {
+    font-size: 16px;
+    margin-bottom: 1px;
+  }
+
+  h4 {
+    font-size: 13px;
+  }
+
+  .instruction-list p,
+  strong {
+    font-size: 13px;
+    margin: 15px;
+  }
+
+  /* Modify note container */
+  .note {
+    padding: 10px 15px;
+    font-size: 14px;
+    max-width: 90%; /* Make it responsive */
+  }
+
+  /* Modify button container */
+  .button-container {
+    gap: 15px;
+    margin-block: 15px;
+  }
+
+  /* Modify secondary button */
+  .secondary-button {
+    padding: 15px 8px;
+    width: 200px; /* Reduce width */
+    font-size: 14px;
+  }
+
+  /* Adjust instruction list */
+  .instruction-list {
+    max-width: 90%;
+  }
+
+  .instruction-list li {
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
+
+  .instruction-list li::before {
+    left: 0;
+  }
+
+  /* Modify modal for smaller screens */
+  .modal {
+    max-width: 90%;
+    padding: 20px;
+  }
+
+  /* Adjust input fields */
+  .service-select,
+  .date-input,
+  .time-select {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  /* Back to Home link adjustments */
+  .back-link {
+    font-size: 12px;
+  }
 }

@@ -1,5 +1,28 @@
 /* Navbar.css */
+/* Top Header Styles */
+.TopHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1f1785;
+  color: white;
+  padding: 22px 60px;
+  font-size: 20px;
+  font-weight: 600;
+  width: 100%;
+  font-family: "roboto", "sans-serif";
+}
 
+.TopHeader-title {
+  font-size: 20px;
+  text-align: center; /* Center text */
+  width: 40%; /* Make sure it takes full width */
+  display: flex;
+  justify-content: center; /* Horizontally center */
+  align-items: center; /* Vertically center if needed */
+  margin-right: 100px;
+}
+/* Main Navbar Styles */
 .Navbar {
   display: flex;
   font-size: 1.2em;
@@ -8,6 +31,9 @@
   background-color: #ffffff;
   padding: 20px 50px 10px 50px;
   box-shadow: 0px 5px 5px #cccccb;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .Navbar-logo-container {
@@ -18,45 +44,71 @@
 }
 
 .Navbar-logo-container img {
-  width: 60px; /* Adjust as needed */
+  width: 95px; /* Adjust as needed */
   height: auto;
-  margin-right: 10px;
+  margin-right: 15px;
 }
 
 .Navbar-logo {
-  font-size: 1em;
+  font-size: 1.4em;
   font-weight: bold;
   color: #d60000;
+}
+
+.Navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 55px 50px;
+  height: 70px;
+  width: 100%;
+}
+
+/* Center the main navigation links */
+.Navbar-links-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
 }
 
 .Navbar-links {
   list-style: none;
   display: flex;
   gap: 30px;
+  padding: 0;
+  margin: 0;
 }
 
 .Navbar-links li {
   display: inline;
 }
 
-.Navbar-links a {
-  color: #1F1785;
+.Navbar-links a,
+.Navbar-right a {
+  color: #1f1785;
   text-decoration: none;
-  font-weight: bold;
   padding: 8px;
   position: relative;
   transition: background-color 0.3s;
+  font-size: 25px;
+  font-family: "Roboto", "sans-serif";
+  font-weight: 700;
 }
 
-.Navbar-links-a {
-  color: #000;
+.Navbar-links-a,
+.Navbar-right a {
+  color: #1f1785;
   text-decoration: none;
   font-weight: bold;
   padding: 8px;
   transition: background-color 0.3s;
+  font-size: 25px;
+  font-family: "Roboto", "sans-serif";
+  font-weight: 700;
 }
 
-.Navbar-links-a:hover {
+.Navbar-links-a:hover,
+.Navbar-right a:hover {
   color: #d60000;
 }
 
@@ -64,7 +116,8 @@
   color: #d60000;
 }
 
-.Navbar-links a:after {
+.Navbar-links a:after,
+.Navbar-right a:after {
   content: "";
   position: absolute;
   bottom: 0;
@@ -75,42 +128,20 @@
   transition: width 0.3s ease, left 0.3s ease;
 }
 
-.Navbar-links a:hover:after {
+.Navbar-links a:hover:after,
+.Navbar-right a:hover:after {
   width: 100%;
   left: 0;
   color: #d60000;
 }
 
-.Navbar-edit-profile {
+/* Right-aligned Logout & Profile */
+.Navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 30px;
   position: absolute;
-  right: 50px; /* Position it to the right edge */
-  
-}
-
-.Navbar-profile-button {
-  background-color: #d60000;
-  border-radius: 20px;
-  width: 100px;
-  text-align: center;
-}
-
-.Navbar-edit-profile a {
-  color: #fff; /* Set the font color to red */
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 0.9em;
-  padding: 8px;
-  transition: background-color 0.3s;
-  font-family: "Righteous", sans-serif;
-  font-weight: lighter;
-  font-size: 15px;
-  
-}
-
-.Navbar-profile-button:hover {
-  background-color: #800000; /* Optional: Add a hover effect */
-  border-radius: 20px;
-  width: 100px;
+  right: 50px;
 }
 
 /* Sidebar Styling */
@@ -187,6 +218,12 @@
   .Navbar {
     padding: 40px 40px;
   }
+  .Navbar-logo-container {
+    left: 16px;
+  }
+  .Navbar-logo {
+    font-size: 85%;
+  }
 
   .Sidebar-links a {
     width: 100%;
@@ -198,6 +235,6 @@
   }
 
   .Sidebar.open {
-    right: 0;
+    right: 328p;
   }
 }

@@ -312,3 +312,92 @@ textarea {
 .back-link:hover {
   text-decoration: underline;
 }
+
+/* ----- Responsive Design for Tablets (max-width: 768px) ----- */
+@media only screen and (max-width: 768px) {
+  /* General Styles */
+  body {
+    font-size: 14px; /* Reduce default font size */
+  }
+
+  /* Emergency Instructions */
+  .emergency-instructions {
+    font-size: 16px;
+    padding: 0 10%; /* Reduce padding for smaller screens */
+  }
+
+  /* Adjust Button Containers */
+  .button-container,
+  .button-container-column,
+  .rectangular-buttons-container {
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: center; /* Center align buttons */
+    gap: 15px; /* Reduce spacing */
+  }
+
+  .button-container-row {
+    gap: 10px; /* Reduce spacing for better fit */
+  }
+
+  /* Button Adjustments */
+  .homepage-emergency-services-button,
+  .emergency-button {
+    padding: 12px 20px;
+    font-size: 16px;
+    width: 100%; /* Make buttons full width */
+    max-width: 250px;
+  }
+
+  .rectangular-button {
+    width: 90%; /* Make buttons responsive */
+    max-width: 400px;
+    font-size: 18px;
+    height: auto; /* Adjust height automatically */
+    padding: 12px;
+  }
+
+  /* Modal Adjustments */
+  .modal {
+    width: 95%;
+    padding: 20px;
+    max-width: 350px; /* Slightly smaller modal */
+  }
+
+  .modal-submit-button,
+  .modal-close-button {
+    font-size: 14px;
+    padding: 8px 15px;
+  }
+
+  /* Input Fields */
+  .form-group input,
+  .form-group textarea {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  /* Center Content Adjustments */
+  .emergency-container {
+    padding: 0;
+  }
+
+  .emergency-content {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Table Adjustments */
+  .contacts-table {
+    font-size: 14px;
+  }
+
+  .contacts-table th,
+  .contacts-table td {
+    padding: 8px;
+  }
+
+  /* Back Link Adjustments */
+  .back-link {
+    font-size: 12px;
+  }
+}

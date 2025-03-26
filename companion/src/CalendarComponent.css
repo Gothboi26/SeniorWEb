@@ -46,26 +46,54 @@
 }
 
 /* ----- Home ----- */
-
+body,
+html {
+  overflow-x: hidden;
+  width: 100%;
+}
+.container {
+  max-width: 100%;
+}
 .CalendarComponent {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  margin-top: 20px;
   width: 100%;
 }
-
 .homepage {
-  padding: 50px 70px 10px 70px;
-  margin-bottom: 70px;
+  position: relative;
+  width: 100vw;
+  height: 65vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.homepage::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("./assets/valenzuelabg.jpg") no-repeat center center;
+  background-size: cover;
+  filter: blur(3px); /* Increase blur for visibility */
+  opacity: 01;
+  z-index: 0;
 }
 
 .home-contents {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+  padding: 75px;
+  background: transparent;
 }
 
 .home-header {
@@ -74,37 +102,32 @@
   align-items: flex-start;
   gap: 5px; /* Space between the elements */
   flex: 1;
+  margin: 135px;
+  margin-bottom: 200px;
   margin-right: 20%;
 }
 
-.home-subheader {
-  color: #d60000;
-  font-size: 2rem;
-  margin-top: 2%;
-  font-family: 'Righteous', sans-serif;
-  font-weight: normal;
-  margin: 0;
-  margin-bottom: 0;
-}
-
 .home-title {
-  font-size: 3.7rem;
-  font-family: 'Righteous', sans-serif;
-  font-weight: normal;
+  font-size: 5rem;
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
   line-height: 1.2;
   margin-top: 0;
   margin-bottom: 5px;
+  color: #fcfcfc;
+  text-shadow: 0px 0px 55px #000;
 }
 
 .home-description {
-  font-size: 1.2rem;
-  margin-bottom: 20px;
+  font-size: 2rem;
+  margin-bottom: 48px;
   margin-top: 0;
   text-align: left;
-  color: #555;
+  margin-top: 55px;
   margin-right: 60px;
-  font-weight: 300;
-  
+  font-weight: 400;
+  color: #fcfcfc;
+  text-shadow: 0px 0px 55px #000;
 }
 
 .explore-button {
@@ -116,7 +139,7 @@
   border-radius: 20px;
   font-size: 1rem;
   cursor: pointer;
-  font-family: "Righteous", sans-serif;
+  font-family: "Roboto", sans-serif;
   width: 200px;
 }
 
@@ -146,7 +169,6 @@ h3 {
   margin-top: 10px;
   margin-bottom: 0px;
 }
-
 
 /* Slideshow container styling */
 .slideshow-container {
@@ -311,12 +333,17 @@ h3 {
   margin-bottom: 10px;
   font-size: 16px;
   word-wrap: break-word;
+  color: #fcfcfc;
 }
 
 .events-list li strong {
   display: block;
   font-weight: bold;
   margin-bottom: 5px;
+  color: #fcfcfc;
+}
+.events-list p {
+  color: #fcfcfc;
 }
 
 .events-list li span {
@@ -358,27 +385,12 @@ h3 {
   max-width: 100%; /* Prevent unwanted constraints */
 }
 
-/* ----- Choices Styling ----- */
-.choices {
-  justify-content: center; /* Align items in the center horizontally */
-  gap: 10px; /* Space between items */
-  background-color: #ecf7fb;
-
-  display: flex;
-  flex-wrap: wrap; /* Keep wrapping items on smaller screens */
-
-  width: 100vw; /* Occupy the full width of the viewport */
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box; /* Include padding and border in width/height */
-}
-
 .rectangle21 {
   margin: 30px;
   padding: 10px;
   display: flex;
   flex-wrap: wrap; /* Allows wrapping on smaller screens */
-  align-items: center; 
+  align-items: center;
   padding: 20px;
   /* border-radius: 20px; */
   gap: 30px; /* Adds spacing between items */
@@ -393,13 +405,35 @@ h3 {
   align-items: center;
   text-align: center;
   border-radius: 40px;
-  height: 350px;
-  width: 300px;
-  background-color: #ffffff;
-  color: #1e1e1e;
+  height: 425px;
+  width: 370px;
+  margin: 10px 0;
+  background-color: #c31c1c;
+  color: #ffffff;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15); /* Updated shadow for better look */
   padding: 20px; /* Inner spacing for content */
   transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+}
+
+.rectangle23.paalala1 h2 {
+  color: #f3f3f3;
+  font-size: 20px;
+  margin-bottom: 10px;
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  font-weight: 600;
+  font-size: 23px;
+}
+
+.rectangle23.paalala1 p {
+  color: #ececec;
+  font-size: 15px;
+  /* line-height: 1.5;   Better readability */
+  text-align: justify;
+  margin: 15px 30px 10px;
+  text-align: left;
+  font-weight: 300;
+  font-size: 23px;
 }
 
 /* --- Senior Care --- */
@@ -420,8 +454,8 @@ h3 {
 }
 
 .rectangle23.seniorcare h2 {
-  font-family: "Righteous", sans-serif;
-  font-weight: lighter;
+  font-family: "Roboto", sans-serif;
+  font-weight: 600;
   font-size: 24px;
   text-align: left;
   color: #1e1e1e; /* Text color */
@@ -437,7 +471,6 @@ h3 {
   border-radius: 20px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
   cursor: pointer;
-  font-size: 14px;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
@@ -445,8 +478,6 @@ h3 {
   background-color: #b30000;
   transform: scale(1.05); /* Slight zoom on hover */
 }
-
-
 
 /* --- Emergency Services --- */
 .rectangle23.emergencyservices .Emergency-Title {
@@ -465,8 +496,8 @@ h3 {
 }
 
 .rectangle23.emergencyservices h2 {
-  font-family: "Righteous", sans-serif;
-  font-weight: lighter;
+  font-family: "Roboto", sans-serif;
+  font-weight: 600;
   font-size: 24px;
   text-align: left;
   color: #1e1e1e; /* Text color */
@@ -482,12 +513,11 @@ h3 {
   border-radius: 20px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
   cursor: pointer;
-  font-size: 14px;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .emergency-services-button:hover {
-  background-color: #b30000;
+  background-color: #d60000;
   transform: scale(1.05); /* Slight zoom on hover */
 }
 
@@ -508,8 +538,8 @@ h3 {
 }
 
 .rectangle23.chatassistance h2 {
-  font-family: "Righteous", sans-serif;
-  font-weight: lighter;
+  font-family: "Roboto", sans-serif;
+  font-weight: 600;
   font-size: 24px;
   text-align: left;
   color: #1e1e1e; /* Text color */
@@ -525,7 +555,6 @@ h3 {
   border-radius: 20px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
   cursor: pointer;
-  font-size: 14px;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
@@ -537,9 +566,9 @@ h3 {
 .senior-care-button-text,
 .emergency-services-button-text,
 .chat-assistance-button-text {
-  font-family: "Righteous", sans-serif;
-  font-weight: lighter;
-  font-size: 18px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 600;
+  font-size: 22px;
 }
 
 /* Senior Care, Emergency Services, and Chat Assistance */
@@ -551,8 +580,8 @@ h3 {
   justify-content: space-between; /* Distribute content evenly */
   align-items: center;
   border-radius: 40px;
-  height: 350px;
-  width: 280px;
+  height: 425px;
+  width: 327px;
   background-color: #ffffff;
   color: #1e1e1e;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15); /* Updated shadow for better look */
@@ -566,44 +595,17 @@ h3 {
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.25); /* Enhanced shadow on hover */
 }
 
-/* Specific card styling: Paalala section */
-.rectangle23.paalala1 {
-  background-color: #c31c1c;
-  padding: 15px;
-  margin: 10px 0;
-  border-radius: 40px; /* Rounded corners for uniformity */
-  color: #ffffff;
-}
-
-.rectangle23.paalala1 h2 {
-  color: #f3f3f3;
-  font-size: 20px;
-  margin-bottom: 10px;
-  text-align: center;
-  font-family: "Righteous", sans-serif;
-  font-weight: lighter;
-}
-
-.rectangle23.paalala1 p {
-  color: #ececec;
-  font-size: 15px;
-  /* line-height: 1.5;   Better readability */
-  text-align: justify;
-  margin: 15px 30px 10px;
-  text-align: left;
-  font-weight: 300;
-}
 /* ----- Text Styles ----- */
 .rectangle23.seniorcare h2,
 .rectangle23.emergencyservices h2,
 .rectangle23.chatassistance h2 {
-  font-family: "Righteous", sans-serif;
-  font-weight: lighter;
+  font-family: "Roboto", sans-serif;
+  font-weight: 600;
+  font-size: 35px;
 }
 
 /* Icon styling */
 .rectangle23 h2 {
-  font-size: 18px;
   color: #1e1e1e;
   margin-bottom: 10px;
   display: flex;
@@ -615,7 +617,7 @@ h3 {
 .rectangle23.seniorcare p,
 .rectangle23.emergencyservices p,
 .rectangle23.chatassistance p {
-  font-size: 15px;
+  font-size: 22px;
   color: #606060;
   margin: 20px 30px 10px;
   text-align: left;
@@ -665,18 +667,23 @@ h3 {
 }
 
 .Service-Subheader {
-  color: #d60000;
-  font-family: "Righteous", sans-serif;
-  font-size: 1.5rem;
-  font-weight: normal;
-  margin-top: 2%;
+  color: #fcfcfc;
+  background-color: #201885;
+  font-family: "Roboto", sans-serif;
+  border-radius: 25px;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-left: 14%;
+  padding: 8px;
   text-align: center;
+  width: 75%;
 }
 
 .Service-Title {
-  font-family: "Righteous", sans-serif;
-  font-size: 2.5rem;
-  font-weight: normal;
+  font-family: "Roboto", sans-serif;
+  font-size: 3rem;
+  font-weight: 600;
+  margin-top: 50px;
 }
 
 .Service-Content {
@@ -725,7 +732,7 @@ h3 {
 
 .Service-Name {
   font-size: 2rem;
-  font-weight: normal;
+  font-weight: 600;
   color: #d60000;
   display: flex; /* Use flexbox for horizontal alignment */
   align-items: center; /* Vertically aligns text and icon */
@@ -737,7 +744,7 @@ h3 {
   font-family: "Overpass", sans-serif;
   font-weight: 300;
   font-weight: 200;
-  font-size: 1.2rem;
+  font-size: 2rem;
   color: #555;
   margin: 1rem 0;
 }
@@ -757,7 +764,7 @@ h3 {
   font-size: 1rem;
   cursor: pointer;
   width: 50%;
-  font-family: "Righteous", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-weight: 100;
 }
 
@@ -776,26 +783,23 @@ h3 {
 }
 
 .Events-Header {
-  font-family: "Righteous", sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 .Events-Subheader {
   color: #d60000;
-  font-family: "Righteous", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 1.5rem;
-  font-weight: normal;
+  font-weight: 600;
   margin-top: 2%;
   text-align: center;
 }
 
 .Events-Title {
-  font-family: "Righteous", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 2.5rem;
-  font-weight: normal;
+  font-weight: 600;
 }
-
-
-
 
 /* Container for aligning calendar, events list, and slideshow */
 .events-container {
@@ -817,20 +821,24 @@ h3 {
 }
 
 /* Calendar highlight event styling */
-.react-calendar__tile.highlight-event {
-  background-color: blueviolet;
-  border-radius: 50%;
+.react-calendar,
+.react-calendar *,
+.react-calendar *:before,
+.react-calendar *:after {
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+  font-weight: 600;
+  border-radius: 15px;
 }
-
 /* Event list container styling */
 .events-list {
-  max-width: 300px;
+  max-width: 80%;
   padding: 20px 30px 20px;
   border-radius: 10px;
-  background: linear-gradient(to bottom, #ef473a, #dc281e);
+  background: #c31c1c;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   color: rgb(49, 49, 49);
-  height: 280px;
+  height: 315px;
   overflow-y: auto;
   flex-shrink: 0;
   display: flex;
@@ -852,24 +860,24 @@ h3 {
 
 .officials-subheader {
   color: #d60000;
-  font-family: "Righteous", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 1.5rem;
-  font-weight: normal;
+  font-weight: 600;
   margin-top: 2%;
   text-align: center;
 }
 
 .officials-title {
   color: #000;
-  font-family: "Righteous", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 1.5rem;
-  font-weight: normal;
+  font-weight: 600;
 }
 
 .officials-title {
-  font-family: "Righteous", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 2.5rem;
-  font-weight: normal;
+  font-weight: 600;
 }
 
 /* Officials Grid */
@@ -913,7 +921,7 @@ h3 {
 
 /* Text Details */
 .official-name {
-  font-family: "Righteous", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 1.2rem;
   color: white;
   margin-bottom: 0.5rem;

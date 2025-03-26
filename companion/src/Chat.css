@@ -11,14 +11,14 @@
 
 h1 {
   text-align: center;
-  font-family: "Righteous", sans-serif;
-  font-weight: 100;
+  font-family: "Roboto", sans-serif;
+  font-weight: 600;
   margin-top: 0;
 }
 
 h2 {
-  font-family: "Righteous", sans-serif;
-  font-weight: 100;
+  font-family: "Roboto", sans-serif;
+  font-weight: 600;
 }
 
 .chat-description p {
@@ -43,7 +43,6 @@ h2 {
   align-items: center;
   margin-top: 10px;
   gap: 10px;
-
 }
 
 .chat-input {
@@ -56,7 +55,7 @@ h2 {
 .chat-send-button {
   padding: 10px 20px;
   border: none;
-  background-color: #007BFF;
+  background-color: #007bff;
   color: white;
   border-radius: 15px;
   cursor: pointer;
