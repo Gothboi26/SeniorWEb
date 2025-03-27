@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import Navbar from "./Navbar"; // Import the Navbar component
+import Footer from "./Footer";
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -41,6 +43,7 @@ const Profile = () => {
 
   return (
     <div className="profile-container">
+      <Navbar role={role} /> {/* Add Navbar at the top */}
       <h2>Profile Page</h2>
       <img
         src={
@@ -146,6 +149,7 @@ const Profile = () => {
           <a href="/">Back to Home</a>
         </div>
       )}
+      <Footer role={role} />
     </div>
   );
 };
