@@ -44,7 +44,10 @@ const Profile = () => {
   return (
     <div className="profile-container">
       <Navbar role={role} /> {/* Add Navbar at the top */}
-      <h2>Profile Page</h2>
+      <div className="profile-title-container">
+        <h2 className="profile-title">Profile Page</h2>
+      </div>
+      
       <img
         src={
           profile.profilePicture
