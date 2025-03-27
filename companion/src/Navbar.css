@@ -12,16 +12,6 @@
   width: 100%;
   font-family: "roboto", "sans-serif";
 }
-
-.TopHeader-title {
-  font-size: 20px;
-  text-align: center; /* Center text */
-  width: 40%; /* Make sure it takes full width */
-  display: flex;
-  justify-content: center; /* Horizontally center */
-  align-items: center; /* Vertically center if needed */
-  margin-right: 100px;
-}
 /* Main Navbar Styles */
 .Navbar {
   display: flex;
@@ -203,6 +193,19 @@
 }
 
 @media (max-width: 768px) {
+  .TopHeader {
+    font-size: 12px;
+    padding: 15px;
+  }
+  .Navbar-logo-container img {
+    width: 50px; /* Adjust size as needed */
+    height: auto;
+  }
+
+  .Navbar-right {
+    display: none;
+  }
+
   .Navbar-links {
     display: none;
   }
@@ -216,7 +219,7 @@
   }
 
   .Navbar {
-    padding: 40px 40px;
+    padding: 30px 40px;
   }
   .Navbar-logo-container {
     left: 16px;

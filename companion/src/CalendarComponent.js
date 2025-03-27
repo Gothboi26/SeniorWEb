@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import "./EventHomepage.css";
+import "./OfficialsHomepage.css";
+import "./ServicesHomepage.css";
+import "./ChoicesHomepage.css";
 import Modal from "react-modal";
 import { Link } from "react-router-dom";
 import "./CalendarComponent.css";
-import "react-calendar/dist/Calendar.css";
 import "./Emergency.css";
 import "./Chat.css";
 import "./SeniorCare.css";
@@ -255,34 +258,36 @@ const RectangleSection = ({ role }) => {
 
       <div className="Events">
         <div className="Events-Header">
-          <p className="Events-Subheader">EVENTS</p>
-          <h1 className="Events-Title">Our Important Events</h1>
+          <p className="Events-Subheader">ACTIVITIES</p>
+          <h1 className="Events-Title">Calendar of Activities</h1>
         </div>
+
         <div className="events-container">
-          <div className="calendar-container">
-            <Calendar
-              onChange={onDateChange}
-              value={date}
-              locale="en-US"
-              tileClassName={tileClassName}
-            />
-          </div>
+          <Calendar
+            onChange={onDateChange}
+            value={date}
+            locale="en-US"
+            tileClassName={tileClassName}
+          />
+
           <div className="events-list">
-            <h3>Events on {date.toDateString()}</h3>
-            <ul>
-              {events && events.length > 0 ? (
-                events.map((event) => (
+            <h3 className="Events-listheader">
+              Events on {date.toDateString()}
+            </h3>
+            {events && events.length > 0 ? (
+              <ul>
+                {events.map((event) => (
                   <li key={event.id}>
-                    <strong>{event.event_title}</strong> Event Name:{" "}
+                    <strong>{event.event_title}</strong> -{" "}
                     {event.event_description}
                   </li>
-                ))
-              ) : (
-                <p>
-                  No events for this date. You can still click on other dates.
-                </p>
-              )}
-            </ul>
+                ))}
+              </ul>
+            ) : (
+              <p>
+                No events for this date. You can still click on other dates.
+              </p>
+            )}
           </div>
         </div>
       </div>
@@ -290,7 +295,7 @@ const RectangleSection = ({ role }) => {
       <div className="barangay-health-officials">
         <div className="officials-header">
           <p className="officials-subheader">OFFICIALS</p>
-          <h1 className="officials-title">Our Barangay Officials</h1>
+          <h1 className="officials-title">Our Barangay Health Officials</h1>
         </div>
         <div class="officials-grid">
           <div class="official-card">

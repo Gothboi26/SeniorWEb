@@ -7,7 +7,6 @@ function Navbar({ handleLogout, role }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
 
-  // Update time every second
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTime(new Date());
@@ -15,7 +14,6 @@ function Navbar({ handleLogout, role }) {
     return () => clearInterval(timer);
   }, []);
 
-  // Format date and time
   const formattedDate = currentTime.toLocaleDateString("en-US", {
     weekday: "long",
     year: "numeric",
@@ -24,22 +22,20 @@ function Navbar({ handleLogout, role }) {
   });
   const formattedTime = currentTime.toLocaleTimeString();
 
-  // Render Navbar only if the role is "client"
   if (role !== "client") {
     return null;
   }
 
   return (
     <>
-      {/* Top Header (Date | companION | Time) */}
-      <div className="TopHeader">
+      {/* Top Header - Always Visible */}
+      <div className={`TopHeader ${isSidebarOpen ? "hide-topheader" : ""}`}>
         <span className="TopHeader-date">{formattedDate}</span>
-        <span className="TopHeader-title">companiON</span>
         <span className="TopHeader-time">{formattedTime}</span>
       </div>
 
-      {/* Main Navbar */}
-      <nav className="Navbar">
+      {/* Navbar - Hidden on Mobile when Sidebar is Open */}
+      <nav className={`Navbar ${isSidebarOpen ? "hide-navbar" : ""}`}>
         <div className="Navbar-logo-container">
           <img src={logo} alt="Logo" />
           <div className="Navbar-logo">Brgy. Gen. T. De Leon</div>
@@ -54,7 +50,7 @@ function Navbar({ handleLogout, role }) {
           <div className="Navbar-hamburger-icon"></div>
         </div>
 
-        {/* Sidebar for mobile */}
+        {/* Sidebar */}
         <div className={`Sidebar ${isSidebarOpen ? "open" : ""}`}>
           <ul className="Sidebar-links">
             <li>
@@ -62,6 +58,12 @@ function Navbar({ handleLogout, role }) {
             </li>
             <li>
               <Link to="/senior-care">Senior Care</Link>
+            </li>
+            <li>
+              <Link to="/emergency">Emergency Contacts</Link>
+            </li>
+            <li>
+              <Link to="/chat">Chat Assistance</Link>
             </li>
             <li>
               <Link onClick={handleLogout} to="#logout">
@@ -74,7 +76,7 @@ function Navbar({ handleLogout, role }) {
           </ul>
         </div>
 
-        {/* Centered Navigation Links */}
+        {/* Centered Navbar Links */}
         <div className="Navbar-links-container">
           <ul className="Navbar-links">
             <li>
