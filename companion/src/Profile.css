@@ -1,7 +1,7 @@
 /* Full-screen layout */
 body {
   font-family: "Roboto", sans-serif;
-  background-color: #ebebd3;
+  background-color: #ffffff;
   margin: 0;
   padding: 0;
 }
@@ -20,142 +20,149 @@ body {
 /* Profile Title Container */
 .profile-title-container {
   width: 100%;
-  height: 80px; /* Adjust height if needed */
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: #ffffff;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Added drop shadow */
 }
 
-/* Profile Text Styling */
+
+/* Profile Title */
 .profile-title {
-  font-size: 2.2rem; /* Adjust font size if needed */
+  font-size: 2.2rem;
   font-weight: bold;
-  color: #b71c1c; /* Deep red color */
+  color: #b71c1c;
   text-align: center;
-}
-
-
-
-/* Profile Header */
-h2 {
-  font-size: 36px;
-  font-weight: bold;
-  color: #c31c1c;
-  margin-bottom: 20px;
-  text-align: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center; /* Ensures vertical centering */
+  justify-content: center; /* Ensures horizontal centering */
+  margin: 0; /* Removes extra spacing */
 }
 
 /* Profile Form */
 .profile-form {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 20px;
   max-width: 900px;
   width: 100%;
   background-color: white;
   padding: 40px;
   border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Profile Photo Section */
-.profile-photo {
+/* Profile Details Container */
+.profile-details-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Image Section */
+.profile-image-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
+  width: 200px;
 }
 
-.profile-img {
+.profile-image {
   width: 150px;
   height: 150px;
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid #151515;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-.profile-photo input {
-  margin-top: 15px;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+.upload-button {
+  margin-top: 10px;
+  padding: 10px;
   font-size: 14px;
-}
-
-/* Profile Details */
-.profile-details {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.profile-details label {
-  font-size: 18px;
-  font-weight: 500;
-  color: #000;
-  margin-bottom: 8px;
-  text-align: left;
-}
-
-.profile-details input {
-  width: 100%;
-  padding: 12px;
-  font-size: 16px;
-  border: 1px solid #151515;
-  border-radius: 20px;
-  background-color: #ffffff;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
-}
-
-/* Buttons */
-.profile-button,
-.profile-edit-button {
-  font-size: 18px;
-  padding: 15px 25px;
-  border-radius: 20px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.profile-button {
-  background-color: #800000;
-  color: white;
-  width: 150px;
-  height: 150px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.profile-button:hover {
-  background-color: #a00000;
-}
-
-.profile-edit-button {
   background-color: #4caf50;
   color: white;
-  width: 200px;
-  margin: 20px auto;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.profile-edit-button:hover {
+.upload-button:hover {
   background-color: #45a049;
 }
 
-/* Activity History */
-.activity-history {
-  width: 80%;
-  max-width: 900px;
-  height: 200px;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
-  padding: 20px;
+/* Profile Fields */
+.profile-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  flex: 1;
 }
 
+.input-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.input-group label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #151515;
+  border-radius: 5px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Sections Alignment */
+.info-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+}
+
+.info-container .section {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* Buttons */
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.save-button, .back-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.save-button {
+  background-color: #2196F3;
+  color: white;
+}
+
+.back-button {
+  background-color: #757575;
+  color: white;
+}
+
+.save-button:hover {
+  background-color: #1e88e5;
+}
+
+.back-button:hover {
+  background-color: #616161;
+}
