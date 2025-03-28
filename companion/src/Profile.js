@@ -47,30 +47,39 @@ const Profile = () => {
     <div className="profile-container">
       <Navbar role={role} />
       <div className="profile-title-container">
-        <h2 className="profile-title">Profile Page</h2>
+        <h1 className="profile-title">Profile Page</h1>
       </div>
       <div className="profile-details-container">
-        <div className="image-name-container">
-          <div className="profile-image-section">
-            <img
-              src={
-                profile.profilePicture
-                  ? URL.createObjectURL(profile.profilePicture)
-                  : "https://via.placeholder.com/150"
-              }
-              alt="Profile"
-              className="profile-image"
-            />
-            <input type="file" id="upload-image" onChange={handleFileChange} />
-            <label htmlFor="upload-image" className="upload-button">Upload Image</label>
-          </div>
-          <div className="name-container">
+      <div className="image-name-container">
+        <div className="profile-image-section">
+          <img
+            src={
+              profile.profilePicture
+                ? URL.createObjectURL(profile.profilePicture)
+                : "https://via.placeholder.com/150"
+            }
+            alt="Profile"
+            className="profile-image"
+          />
+          <input
+            type="file"
+            id="upload-image"
+            onChange={handleFileChange}
+            className="file-input"
+          />
+          <label htmlFor="upload-image" className="upload-button">Upload Image</label>
+        </div>
+
+        <div className="profile-fields">
+          <div className="name-group">
             <label>First Name:</label>
             <input type="text" name="firstName" value={profile.firstName} onChange={handleChange} />
 
             <label>Middle Name:</label>
             <input type="text" name="middleName" value={profile.middleName} onChange={handleChange} />
+          </div>
 
+          <div className="name-group">
             <label>Last Name:</label>
             <input type="text" name="lastName" value={profile.lastName} onChange={handleChange} />
 
@@ -78,6 +87,9 @@ const Profile = () => {
             <input type="text" name="extensionName" value={profile.extensionName} onChange={handleChange} />
           </div>
         </div>
+      </div>
+
+
 
         <div className="barangay-info-container">
           <div>
@@ -90,33 +102,61 @@ const Profile = () => {
           </div>
         </div>
 
+        <div className="address-container">
+          <label>Address:</label>
+          <input type="text" name="address" value={profile.address} onChange={handleChange} />
+        </div>
+
         <div className="personal-info-container">
-          <label>Age:</label>
-          <input type="text" name="age" value={profile.age} onChange={handleChange} />
+          <div>
+            <label>Age:</label>
+            <input type="text" name="age" value={profile.age} onChange={handleChange} />
+          </div>
 
-          <label>Sex:</label>
-          <input type="text" name="sex" value={profile.sex} onChange={handleChange} />
+          <div>
+            <label>Sex:</label>
+            <input type="text" name="sex" value={profile.sex} onChange={handleChange} />
+          </div>
 
-          <label>Birthday:</label>
-          <input type="date" name="birthday" value={profile.birthday} onChange={handleChange} />
+          <div>
+            <label>Birthday:</label>
+            <input type="date" name="birthday" value={profile.birthday} onChange={handleChange} />
+          </div>
 
-          <label>Civil Status:</label>
-          <input type="text" name="civilStatus" value={profile.civilStatus} onChange={handleChange} />
+          <div>
+            <label>Civil Status:</label>
+            <input type="text" name="civilStatus" value={profile.civilStatus} onChange={handleChange} />
+          </div>
         </div>
 
         <div className="emergency-contact-container">
-          <label>Emergency Contact Person:</label>
-          <input type="text" name="emergencyContactPerson" value={profile.emergencyContactPerson} onChange={handleChange} />
+          <div>
+            <label>Emergency Contact Person:</label>
+            <input type="text" name="emergencyContactPerson" value={profile.emergencyContactPerson} onChange={handleChange} />
+          </div>
 
-          <label>Relationship:</label>
-          <input type="text" name="relationship" value={profile.relationship} onChange={handleChange} />
+          <div>
+            <label>Relationship:</label>
+            <input type="text" name="relationship" value={profile.relationship} onChange={handleChange} />
+          </div>
 
-          <label>Contact Number:</label>
-          <input type="text" name="contactNumber" value={profile.contactNumber} onChange={handleChange} />
+          <div>
+            <label>Contact Number:</label>
+            <input type="text" name="contactNumber" value={profile.contactNumber} onChange={handleChange} />
+          </div>
         </div>
 
-        <button type="submit" onClick={handleSubmit} className="save-button">Save</button>
-        <button className="back-button">Back to Home</button>
+        
+        <div className="temp-buttons">
+          <div className="submit-button-container">
+            <button type="submit" onClick={handleSubmit} className="submit-button">Save</button>
+          </div>  
+          <div className="back-button-container">
+            <button className="back-button">Back to Home</button>
+          </div>         
+        </div>
+
+
       </div>
       <Footer role={role} />
     </div>
