@@ -47,8 +47,7 @@ function Chat({ role, handleLogout }) {
       <Navbar role={role} handleLogout={handleLogout} />
       <div className="chat-assistance">
         <div className="chat-header">
-          <h2>Chat Assistance</h2>
-          <h1>Need Help? Chat Us!</h1>
+          <h1 className="chat-title">Need Help? Chat Us!</h1>
         </div>
         <div className="chat-description">
           <p>Paalala sa Paggamit ng Chat Assistance:</p>
