@@ -46,58 +46,66 @@ function Chat({ role, handleLogout }) {
     <div>
       <Navbar role={role} handleLogout={handleLogout} />
       <div className="chat-assistance">
-        <div className="chat-header">
-          <h1 className="chat-title">Need Help? Chat Us!</h1>
+        <div className="chat-header-container">
+          <h1 className="chat-title">Chat Assistance</h1>
         </div>
-        <div className="chat-description">
-          <p>Paalala sa Paggamit ng Chat Assistance:</p>
-          <ul>
-            <li>
-              Magpakilala - Ibigay ang iyong buong pangalan at dahilan ng
-              pag-chat.
-            </li>
-            <li>
-              Maging malinaw - Ipaliwanag nang maayos ang iyong tanong o
-              concern.
-            </li>
-            <li>
-              Hintayin ang tugon - Maghintay nang ilang saglit habang sinusuri
-              ng admin ang iyong mensahe.
-            </li>
-            <li>
-              Iwasan ang spam - Huwag magpadala ng paulit-ulit na mensahe.
-            </li>
-          </ul>
-          <p>
-            Ang Chat Assistance ay para sa mabilis at maayos na komunikasyon.
-            Salamat sa iyong pakikiisa!
-          </p>
-        </div>
-
-        <div className="chat-window">
-          {messages.map((message, index) => (
-            <div
-              key={index}
-              className={`chat-bubble ${
-                message.from === username ? "user" : "bot"
-              }`}
-            >
-              <strong>{message.from}:</strong> {message.content}
+        <div className="chat-details-container">
+          <div className="chat-description">
+            <p className="chat-desc-title">
+              <strong>Paalala: </strong>
+              Ang Chat Assistance ay idinisenyo upang magbigay ng agarang kasagutan sa inyong mga katanungan. Layunin nitong maghatid ng malinaw at tiyak na impormasyon upang maging mabilis at maayos ang inyong karanasan.
+            </p>
+            <ul className="chat-desc">
+              <li>
+                <strong>Maging malinaw </strong>
+                - Siguraduhing maayos at detalyado ang inyong tanong o concern upang mas madaling maibigay ang tamang sagot.
+              </li>
+              <li>
+                <strong>Hintayin ang tugon </strong>
+                - Maghintay nang ilang saglit habang sinusuri ng admin ang inyong mensahe upang maibigay ang naaangkop na kasagutan.
+              </li>
+              <li>
+                <strong>Iwasan ang spam </strong>
+                - Iwasang magpadala ng paulit-ulit na mensahe upang hindi maantala ang proseso ng pagbibigay ng tulong.
+              </li>
+            </ul>
+          </div>
+            
+          <div className="chat-window-container">
+            <div className="chat-window-box">
+            {messages.map((message, index) => (
+              <div
+                key={index}
+                className={`chat-bubble ${
+                  message.from === username ? "user" : "bot"
+                }`}>
+                <strong>{message.from}:</strong> 
+                {message.content}
+              </div>))}
             </div>
-          ))}
+
+            <div className="chat-input-container">
+              <div className="chat-input">
+                <input
+                  type="text1"
+                  value={newMessage}
+                  onChange={(e) => setNewMessage(e.target.value)}
+                  placeholder="Type your message..."
+                  className="chat-input-text"
+                />
+                <button onClick={handleSendMessage} className="chat-send-button">
+                  Send
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          
+
         </div>
-        <div className="chat-input-container">
-          <input
-            type="text"
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            placeholder="Type your message..."
-            className="chat-input"
-          />
-          <button onClick={handleSendMessage} className="chat-send-button">
-            Send
-          </button>
-        </div>
+        
+
       </div>
       <footer className="App-footer">
         <div className="footer-section">

@@ -1,12 +1,25 @@
 /* Chat.js Specific Styles */
+
+/* Chat Assistance Container */
 .chat-assistance {
-  background: #fff;
-  padding: 20px;
+  background: #FBFBF6;;
+  padding: 0;
+  margin: 0;
   border-radius: 8px;
   font-family: "Arial", sans-serif;
   max-width: 100%;
-  margin: 20px 50px;
   color: #333;
+}
+
+/* Chat Header Container */
+.chat-header-container {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Added drop shadow */
 }
 
 .chat-title h1 {
@@ -14,51 +27,115 @@
   font-family: "Roboto", sans-serif;
   font-weight: 600;
   margin-top: 0;
+  color: red;
 }
 
-h2 {
+/*  Chat Details Container */
+
+.chat-details-container {
+  padding: 20px;
+  margin: 40px 20rem;
   font-family: "Roboto", sans-serif;
-  font-weight: 600;
+  background-color: #FBFBF6;
 }
 
-.chat-description p {
+/* Chat Description Container */
+.chat-description {
+  padding: 40px 60px 30px;
+  background-color: #fff8e1;
+  border: 3px solid #C31C1C;
+  border-radius: 40px;
+  line-height: 1.7rem;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.chat-desc-title {
   margin-bottom: 20px;
-  font-size: 1.5rem;
-  color: #333;
-  font-family: "Overpass", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  text-align: justify;
+  color: #272927;
+  margin-top: 0;
+  
+}
+
+.chat-desc-title strong {
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+  color: #800000;
+  font-weight: bold;
   margin-top: 10px;
 }
 
-.chat-window {
-  border: 1px solid #ccc;
+.chat-desc {
+  font-size: 1.2rem;
+  text-align: justify;
+}
+
+.chat-desc strong {
+  font-size: 1.3rem;
+  text-align: justify;
+}
+
+/* Chat Window Container */
+.chat-window-container {
+  padding: 20px 0;
+}
+.chat-window-box {
+  background-color: #ffffff;
+  border: 2px solid #0C0C0C;
+  border-radius: 40px;
   padding: 10px;
   height: 300px;
-  overflow-y: scroll;
+  overflow-y: auto;
   margin-top: 10px;
 }
 
+/* Chat Input Container */
 .chat-input-container {
+  margin-top: 30px;
+  width: 100%; /* Make it span the full width of the container */
+}
+.chat-input {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 10px;
-  gap: 10px;
+  gap: 10px; /* Reduced gap for a more compact look */
+  width: 100%; /* Ensure it takes full width */
 }
 
-.chat-input {
-  width: 80%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 15px;
+/* Chat Input Text */
+.chat-input-text {
+  flex: 1; /* Make the input take the remaining space */
+}
+
+input[type="text1"] {
+  width: 100%;
+  padding: 10px 30px;
+  font-family: "Roboto", sans-serif;
+  font-style: italic;
+  font-size: 1.5rem;
+  border: 1.5px solid #0C0C0C;
+  border-radius: 20px;
+  outline: none;
+  transition: border-color 0.3s ease;
+  margin-right: 10px;
+}
+
+ input[type="text1"]:focus {
+  border-color: #C31C1C;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
 }
 
 .chat-send-button {
   padding: 10px 20px;
   border: none;
-  background-color: #007bff;
+  background-color: #C31C1C;
   color: white;
-  border-radius: 15px;
+  border-radius: 20px;
+  width: 10rem;
   cursor: pointer;
+  font-size: 1.5rem;
 }
 
 .chat-bubble {
