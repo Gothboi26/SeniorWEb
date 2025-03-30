@@ -86,7 +86,7 @@ function Navbar({ handleLogout, role }) {
             </li>
             <li>
               <Link to="/senior-care" className="Navbar-links-b">
-                Appointments
+                Senior Care
               </Link>
             </li>
             <li>
