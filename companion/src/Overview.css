@@ -1,12 +1,13 @@
 /* Overview.css */
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
 .overview-container {
   display: flex;
   flex-direction: column;
   gap: 20px;
   padding: 20px;
   background-color: #f5f7fc;
-  font-family: "Righteous", sans-serif; /* Apply the font family here */
+  font-family: "Roboto", sans-serif; /* Apply the font family here */
 }
 
 .summary-cards {
@@ -26,36 +27,50 @@
   background-color: #fff;
   color: #000;
   border: 1px solid #ddd;
+  border: 10px;
+}
+
+.card-light .change{
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #000000;
+  margin-left: 10px;
+}
+
+.card-light h3{
+  background-color: #fff;
+  color: #888;
 }
 
 .card .count {
   font-size: 2rem;
   font-weight: bold;
-  margin: 10px 0;
+  margin: 10px;
   color: rgb(0, 0, 0);
+  text-align: center;
+  padding: 10px;
 }
 
 .total-patients {
   border: 1px solid #ddd;
   background-color: black;
   color: white;
+  border: 10px;
 }
 
 .total-patients .count {
   font-size: 2rem;
   font-weight: bold;
   margin: 10px 0;
+  padding: 10px;
   color: rgb(255, 255, 255);
 }
 
 .total-patients .change {
-  font-size: 0.9rem;
-  color: #d3d1d1;
-}
-
-.card .change {
-  font-size: 0.9rem;
-  color: #888;
+  font-size: 0.8rem;
+  color: #ffffff;
+  font-weight: bold;
+  margin-left: 10px;
 }
 
 .statistics-section {
@@ -64,37 +79,49 @@
 }
 
 .statistics {
-  flex: 2;
+  flex: 1;
   background-color: #fff;
   padding: 20px;
   border-radius: 10px;
 }
 
-.stats-chart {
-  height: 200px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f0f0f0;
-  margin: 20px 0;
-  border-radius: 10px;
+.statistics h3 {
+  margin-left: 10px;
+  color: #000;
+  text-align: left;
 }
 
-.stats-toggle button {
-  margin-right: 10px;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
-  background-color: #ddd;
-  cursor: pointer;
+.stats-chart {
+  width: 100%; /* Limit width so the container beside it has space */
+  max-width: 500px; /* Prevent it from getting too large */
+  height: 100%;
+  max-height: 500px; /* Prevent excessive height */
+  margin: auto;
+}
+
+
+.stats-chart canvas {
+  width: 100%; 
+  height: 100%;
+  padding: 10px;
 }
 
 .appointments {
   flex: 1;
   background-color: #000;
   color: #fff;
-  padding: 20px;
-  border-radius: 10px;
+  padding: 25px;
+  border-radius: 15px;
+}
+
+.appointments p{
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.appointments h3 {
+  color: rgb(255, 255, 255);
+  padding-bottom: 10px;
 }
 
 .appointment-nav {
@@ -103,6 +130,19 @@
   align-items: center;
   margin-bottom: 20px;
   color: white;
+  
+}
+
+.appointment-nav button {
+  background-color: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1.2rem;
+  font-weight: bold;
+    padding: 8px 12px;
+  border-radius: 5px;
 }
 
 .appointment-date {
@@ -202,20 +242,6 @@
   cursor: pointer;
 }
 
-.appointments-for-date {
-  padding: 20px;
-  margin-top: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-}
-
-.appointments-for-date h3 {
-  font-size: 1.6rem;
-  margin-bottom: 15px;
-  font-weight: 600;
-  color: #333;
-}
-
 .appointments-table {
   width: 100%;
   border-collapse: collapse;
@@ -228,24 +254,6 @@
   text-align: left;
   border: 1px solid #ddd;
   font-size: 1rem;
-}
-
-.appointments-table th {
-  background-color: #f0f0f0;
-  font-weight: bold;
-  color: #444;
-}
-
-.appointments-table tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-.appointments-table tr:hover {
-  background-color: #f1f1f1;
-}
-
-.appointments-table td {
-  color: #555;
 }
 
 .status-inquiry {
@@ -283,8 +291,4 @@
   margin-right: 5px;
 }
 
-.appointments-for-date p {
-  color: #888;
-  font-size: 1.2rem;
-  font-weight: 400;
-}
+

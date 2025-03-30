@@ -1,73 +1,146 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import "./Overview.css";
 import editIcon from "./assets/edit.png";
 import deleteIcon from "./assets/delete.png";
-import { Calendar } from "react-calendar";
-import "react-calendar/dist/Calendar.css"; // Import Calendar styles
+import { Bar } from "react-chartjs-2";
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
+
+// Register Chart.js components
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+
 
 const Overview = () => {
   const [appointments, setAppointments] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [appointmentsByDate, setAppointmentsByDate] = useState([]);
+  const [editMode, setEditMode] = useState(false);
+  const [currentAppointment, setCurrentAppointment] = useState(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  const [selectedDate, setSelectedDate] = useState(new Date()); // State for selected date
-  const [appointmentsByDate, setAppointmentsByDate] = useState([]); // Appointments for the selected date
-  const [editMode, setEditMode] = useState(false); // State to toggle edit mode
-  const [currentAppointment, setCurrentAppointment] = useState(null); // State for the appointment being edited
-  const [isSaving, setIsSaving] = useState(false); // To track if an appointment is being saved
-  const [loading, setLoading] = useState(true); // Loading state for fetching data
+  const formatLocalDate = (date) => {
+    const localDate = new Date(date);
+    const year = localDate.getFullYear();
+    const month = String(localDate.getMonth() + 1).padStart(2, "0");
+    const day = String(localDate.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
 
-  // Fetch appointments data on mount
-  useEffect(() => {
-    fetchAppointmentsData();
-  }, []);
+  const filterAppointmentsByDate = useCallback((date) => {
+    const formattedDate = formatLocalDate(date);
+    const filteredAppointments = appointments.filter(
+      (appointment) => appointment.date === formattedDate
+    );
+    setAppointmentsByDate(filteredAppointments);
+  }, [appointments]);
 
-  const fetchAppointmentsData = () => {
+  const fetchAppointmentsData = useCallback(() => {
     setLoading(true);
     fetch("http://localhost/php/appointments.php")
       .then((response) => response.json())
       .then((data) => {
         setAppointments(data);
       })
-      .catch((error) => {
-        console.error("Error fetching appointments:", error);
-      })
+      .catch((error) => console.error("Error fetching appointments:", error))
       .finally(() => setLoading(false));
+  }, []);
+
+  useEffect(() => {
+    fetchAppointmentsData();
+  }, [fetchAppointmentsData]); // Fetch data once when the component mounts
+
+  useEffect(() => {
+    if (appointments.length > 0) {
+      filterAppointmentsByDate(selectedDate);
+    }
+  }, [selectedDate, appointments, filterAppointmentsByDate]); // Runs when appointments or selectedDate changes
+
+
+  const handlePrevDate = () => {
+    setSelectedDate((prevDate) => {
+      const newDate = new Date(prevDate);
+      newDate.setMonth(newDate.getMonth() - 1);
+      return newDate;
+    });
   };
 
-  // Handle date selection from the calendar
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-    filterAppointmentsByDate(date);
+  const handleNextDate = () => {
+    setSelectedDate((prevDate) => {
+      const newDate = new Date(prevDate);
+      newDate.setMonth(newDate.getMonth() + 1);
+      return newDate;
+    });
   };
+  
+const [ageDistribution, setAgeDistribution] = useState({
+  "60-65": 0,
+  "66-70": 0,
+  "71-75": 0,
+  "76-80": 0,
+});
 
-  // Filter appointments based on selected date
-  const filterAppointmentsByDate = (date) => {
-    const formattedDate = formatLocalDate(date); // Get date in local timezone format
-    const filteredAppointments = appointments.filter(
-      (appointment) => appointment.date === formattedDate
-    );
-    setAppointmentsByDate(filteredAppointments);
-  };
+const fetchAgeDistribution = useCallback(() => {
+  fetch("http://localhost/php/get_users.php")
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.status === "success") {
+        const ageData = { "60-65": 0, "66-70": 0, "71-75": 0, "76-80": 0 };
 
-  // Helper function to convert a Date object to a local 'YYYY-MM-DD' format
-  const formatLocalDate = (date) => {
-    const localDate = new Date(date);
-    const year = localDate.getFullYear();
-    const month = String(localDate.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
-    const day = String(localDate.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  };
+        data.data.forEach((user) => {
+          const age = parseInt(user.age, 10);
+          if (age >= 60 && age <= 65) ageData["60-65"]++;
+          else if (age >= 66 && age <= 70) ageData["66-70"]++;
+          else if (age >= 71 && age <= 75) ageData["71-75"]++;
+          else if (age >= 76 && age <= 80) ageData["76-80"]++;
+        });
 
-  // Handle Edit Button click
+        setAgeDistribution(ageData);
+      } else {
+        console.error("Failed to fetch users:", data.message);
+      }
+    })
+    .catch((error) => console.error("Error fetching user data:", error));
+}, []);
+
+useEffect(() => {
+  fetchAgeDistribution();
+}, [fetchAgeDistribution]);
+
+const maxYValue = Math.max(...Object.values(ageDistribution)) + 2; // Add extra line above highest bar
+
+const chartOptions = {
+  responsive: true,
+  plugins: {
+    title: { display: true, text: "Age Distribution of Senior Patients" }
+  },
+  scales: {
+    x: { title: { display: true, text: "Senior Age Group" } }, 
+    y: { 
+      title: { display: true, text: "Number of Senior Patients" }, 
+      beginAtZero: true,
+      suggestedMax: maxYValue // Ensures extra space above highest bar
+    }
+  }
+};
+
+const getChartData = () => ({
+  labels: Object.keys(ageDistribution),
+  datasets: [
+    {
+      label: "Number of Senior Patients",
+      data: Object.values(ageDistribution),
+      backgroundColor: "#4A90E2",
+    },
+  ],
+});
+
   const handleEdit = (appointment) => {
     setEditMode(true);
     setCurrentAppointment(appointment);
   };
 
-  // Handle Delete Button click
   const handleDelete = (appointmentId) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this appointment?"
-    );
+    const confirmDelete = window.confirm("Are you sure you want to delete this appointment?");
     if (!confirmDelete) return;
 
     fetch(`http://localhost/php/appointments.php?id=${appointmentId}`, {
@@ -85,9 +158,8 @@ const Overview = () => {
       });
   };
 
-  // Handle save (edit appointment)
   const handleSaveEdit = (updatedAppointment) => {
-    if (isSaving) return; // Prevent multiple submissions
+    if (isSaving) return;
 
     setIsSaving(true);
     fetch("http://localhost/php/appointments.php", {
@@ -99,11 +171,11 @@ const Overview = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        setAppointments((prevAppointments) => {
-          return prevAppointments.map((appointment) =>
+        setAppointments((prevAppointments) =>
+          prevAppointments.map((appointment) =>
             appointment.id === data.id ? data : appointment
-          );
-        });
+          )
+        );
         setEditMode(false);
         setCurrentAppointment(null);
         alert("Appointment updated successfully.");
@@ -116,7 +188,6 @@ const Overview = () => {
 
   return (
     <div className="overview-container">
-      {/* Summary Cards */}
       <div className="summary-cards">
         <div className="card total-patients">
           <h3>Total Patients</h3>
@@ -125,74 +196,51 @@ const Overview = () => {
         </div>
         <div className="card card-light">
           <h3>Total Appointments</h3>
-          <p className="count">1.000</p>
+          <p className="count">1,000</p>
           <p className="change">20% Last Month</p>
         </div>
         <div className="card card-light">
           <h3>Total Inquiries</h3>
-          <p className="count">500</p> {/* Display the number of inquiries */}
+          <p className="count">500</p>
           <p className="change">20% Last Month</p>
         </div>
       </div>
 
-      {/* Statistics and Appointments */}
       <div className="statistics-section">
         <div className="statistics">
           <h3>Patient's Statistics</h3>
-          <div className="stats-chart">{/* Placeholder for chart */}</div>
-          <div className="stats-toggle">
-            <button>Week</button>
-            <button>Month</button>
-            <button>Year</button>
+          
+          {/* Bar Chart */}
+          <div className="stats-chart">
+            <Bar data={getChartData()} options={chartOptions} />
           </div>
         </div>
 
         <div className="appointments">
           <h3>Appointments</h3>
           <div className="appointment-nav">
-            {/* Additional navigation can be added here */}
+              <button onClick={handlePrevDate}>&lt;</button>
+              <span>
+                {selectedDate.toLocaleString("en-US", { month: "long", year: "numeric" })}
+              </span>
+              <button onClick={handleNextDate}>&gt;</button>
           </div>
-
-          {/* Calendar */}
-          <Calendar
-            onChange={handleDateChange}
-            value={selectedDate}
-            tileClassName={({ date, view }) => {
-              // Highlight dates with appointments
-              const formattedDate = formatLocalDate(date);
-              return appointments.some((app) => app.date === formattedDate)
-                ? "highlight"
-                : null;
-            }}
-          />
+            {loading ? (
+              <p>Loading...</p>
+            ) : appointmentsByDate.length === 0 ? (
+              <p>No appointments available.</p>
+            ) : (
+              <ul>
+                {appointmentsByDate.map((appointment) => (
+                  <li key={appointment.id} className="appointment-item">
+                    <p>{appointment.details}</p>
+                    <img src={editIcon} alt="Edit" onClick={() => setEditMode(true)} />
+                    <img src={deleteIcon} alt="Delete" onClick={() => handleDelete(appointment.id)} />
+                  </li>
+                ))}
+              </ul>
+            )}
         </div>
-      </div>
-
-      {/* Display appointments for selected date */}
-      <div className="appointments-for-date">
-        <h3>Appointments on {selectedDate.toLocaleDateString()}</h3>
-        {loading ? (
-          <p>Loading appointments...</p>
-        ) : appointmentsByDate.length === 0 ? (
-          <p>No appointments on this date.</p>
-        ) : (
-          <table className="appointments-table">
-            <thead>
-              <tr>
-                <th>Service</th>
-                <th>Time</th> {/* Added Time column */}
-              </tr>
-            </thead>
-            <tbody>
-              {appointmentsByDate.map((appointment) => (
-                <tr key={appointment.id}>
-                  <td>{appointment.service}</td>
-                  <td>{appointment.time}</td> {/* Display Time */}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
       </div>
 
       {/* Edit Appointment Modal or Form */}
@@ -258,6 +306,7 @@ const Overview = () => {
           <thead>
             <tr>
               <th></th>
+              <th>Patients Name</th>
               <th>Gender</th>
               <th>Type</th>
               <th>Status</th>

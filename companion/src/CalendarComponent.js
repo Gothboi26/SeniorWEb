@@ -384,7 +384,7 @@ function CalendarComponent() {
                 alt="Logo"
                 className="sidebar1-logo-img"
               />
-              Overview
+              Dashboard
             </li>
             <li
               onClick={() => setSelectedOption("seniors")}
