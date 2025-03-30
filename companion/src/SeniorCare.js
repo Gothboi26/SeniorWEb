@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import "./SeniorCare.css";
 import Navbar from "./Navbar";
-import fb from "./assets/fb.png"; // For fb logo
-import email from "./assets/email.png"; // For email logo
+import Footer from "./Footer";
 
 const excludedDays = {
   "Health Check-up": [0, 6], // 0 - 6 Sunday to Saturday
@@ -340,47 +339,7 @@ const SeniorCare = ({ role, handleLogout }) => {
       <a href="/" className="back-link">
         Back to Home
       </a>
-      <footer className="App-footer">
-        <div className="footer-section">
-          <h1>Barangay General Tiburcio De Leon</h1>
-          <div className="footer-content">
-            <div className="footer-text1">
-              <p>
-                For any inquiries, please contact us. <br />
-                Email: gentdeleonbarangay@gmail.com <br />
-                Contact Number: 091234567890
-              </p>
-            </div>
-            <div className="footer-icons-and-links">
-              <div className="footer-icons">
-                <a
-                  href="https://facebook.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img src={fb} alt="Facebook-Logo" className="icon fb-logo" />
-                </a>
-                <a href="mailto:gentdeleonbarangay@gmail.com">
-                  <img
-                    src={email}
-                    alt="Email-Logo"
-                    className="icon email-logo"
-                  />
-                </a>
-              </div>
-              <div className="vertical-line"></div>
-              <div className="footer-links">
-                <a href="/terms" className="footer-link">
-                  TERMS OF SERVICE
-                </a>
-                <a href="/privacy" className="footer-link">
-                  PRIVACY POLICY
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer role={role} />
     </div>
   );
 };
