@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 import { Login } from "./AuthComponents";
 import AdminDashboard from "./AdminDashboard";
 import ClientDashboard from "./ClientDashboard";
 import logo from "./assets/logo.png"; // For login page
-import fb from "./assets/fb.png"; // For fb logo
-import email from "./assets/email.png"; // For email logo
 import Emergency from "./Emergency";
 import Chat from "./Chat";
 import SeniorCare from "./SeniorCare";
@@ -112,51 +111,7 @@ function App() {
               )}
             </main>
             {role === "client" && (
-              <footer className="App-footer">
-                <div className="footer-section">
-                  <h1>Barangay General Tiburcio De Leon</h1>
-                  <div className="footer-content">
-                    <div className="footer-text1">
-                      <p>
-                        For any inquiries, please contact us. <br />
-                        Email: gentdeleonbarangay@gmail.com <br />
-                        Contact Number: 091234567890
-                      </p>
-                    </div>
-                    <div className="footer-icons-and-links">
-                      <div className="footer-icons">
-                        <a
-                          href="https://facebook.com"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <img
-                            src={fb}
-                            alt="Facebook-Logo"
-                            className="icon fb-logo"
-                          />
-                        </a>
-                        <a href="mailto:gentdeleonbarangay@gmail.com">
-                          <img
-                            src={email}
-                            alt="Email-Logo"
-                            className="icon email-logo"
-                          />
-                        </a>
-                      </div>
-                      <div className="vertical-line"></div>
-                      <div className="footer-links">
-                        <a href="/terms" className="footer-link">
-                          TERMS OF SERVICE
-                        </a>
-                        <a href="/privacy" className="footer-link">
-                          PRIVACY POLICY
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </footer>
+              <Footer role={role} />
             )}
           </>
         )}
