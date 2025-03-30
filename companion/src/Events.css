@@ -16,6 +16,16 @@ button:hover {
 .add-event-button {
   background-color: #28a745;
   color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 15px 22px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-family: "Roboto", sans-serif;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .add-event-button:hover {
@@ -35,6 +45,29 @@ button:hover {
 
 .cancel-button:hover {
   background-color: #c82333;
+}
+
+/* Events Container */
+.events-container {
+  background-color: white;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Events Table Container */
+.events-table-container {
+  width: 100%;
+}
+/* Align Add Event, Filters, and Sort Options to the Right */
+.events-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-left: 800px;
 }
 
 /* Events Table */
@@ -84,24 +117,22 @@ button:hover {
 }
 
 .events-header h2 {
-  font-family: "Glacial Indifference", sans-serif;
-  font-size: 1.8rem;
+  font-family: "Roboto", sans-serif;
+  font-size: 2rem;
   color: #333;
 }
 
 /* Sort Options */
 .sort-options {
   display: flex;
-  justify-content: flex-start;
   align-items: center;
   gap: 10px;
-  margin-bottom: 20px;
 }
 
 .sort-options select,
 .sort-options button {
-  padding: 8px 12px;
-  font-size: 14px;
+  padding: 9px 12px;
+  font-size: 16px;
   border-radius: 5px;
 }
 
@@ -117,7 +148,7 @@ button:hover {
 }
 
 .sort-options button {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   border: none;
 }
@@ -133,7 +164,7 @@ button:hover {
 
 /* Toggle Events Button */
 .toggle-events-button {
-  background-color: #2196F3;
+  background-color: #2196f3;
   color: white;
   padding: 8px 12px;
   border-radius: 5px;
@@ -142,14 +173,13 @@ button:hover {
 }
 
 .toggle-events-button:hover {
-  background-color: #1976D2;
+  background-color: #1976d2;
 }
 
 /* Filters */
 .filters {
   display: flex;
   gap: 10px;
-  margin-bottom: 20px;
 }
 
 .filter-date input {
@@ -195,6 +225,10 @@ button:hover {
 
 /* Responsive Styles */
 @media screen and (max-width: 768px) {
+  .events-container {
+    padding: 10px;
+  }
+
   .events-header {
     flex-direction: column;
     align-items: flex-start;
@@ -223,7 +257,7 @@ button:hover {
     width: 100%;
     box-sizing: border-box;
   }
-  
+
   /* Make modal content more responsive */
   .modal {
     max-width: 100%;
@@ -247,4 +281,3 @@ button:hover {
     font-size: 14px;
   }
 }
-
