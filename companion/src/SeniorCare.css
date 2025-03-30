@@ -20,41 +20,116 @@
   background-color: #a00000; /* Darker maroon on hover */
 }
 
-h4 {
-  font-size: 20px;
-  color: #800000;
+/* Senior Care Container */
+.senior-care-container {
+  background: #FBFBF6;;
+  padding: 0;
+  margin: 0;
+  border-radius: 8px;
+  font-family: "Roboto", sans-serif;
+  max-width: 100%;
+  color: #333;
+}
+
+/* Senior Title Container */
+.senior-title-container {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Added drop shadow */
+}
+
+.senior-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #b71c1c;
+  margin: 0; /* Removes extra spacing */
+  text-align: center; /* Center text within the element */
+}
+
+/* Senior Details Container */
+.senior-details-container {
+  padding: 20px;
+  margin: 40px 20rem;
+  background-color: #FBFBF6;
+}
+
+.senior-title-p {
+  color: #fcfcfc;
+  background-color: #C31c1c;
+  font-family: "Roboto", sans-serif;
+  border-radius: 50px;
+  font-size: 1.4rem;
+  font-weight: 600;
+  justify-content: center;
+  align-items: center;
+  padding: 25px 40px;
   text-align: center;
 }
-h2 {
-  color: #800000;
-  margin-bottom: 10px;
-}
-p {
-  font-size: 18px; /* Adjust the size as needed */
-  color: #fcfcfc; /* Set your desired font color */
+
+/* Instructions Container */
+.instruction-container {
+  margin-top: 40px;
 }
 
-strong {
-  font-size: 18px; /* Adjust the size as needed */
+/* Instruction List */
+.instruction-desc {
+  text-align: justify; /* Justifies the text */
+  padding: 40px 40px;
+  list-style: none;
+  max-width: 100%; /* Optional: Set a max width for better readability */
+  background-color: #FFFFFF;
+  border-radius: 30px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  line-height: 1.7rem;
+}
+
+.instruction-list li {
+  margin-bottom: 20px;
+  text-align: justify; /* Ensures the content of each list item is justified */
+  position: relative; /* Positioning for the number */
+}
+
+.instruction-list p{
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: #1E1E1E;
+}
+
+.instruction-list strong {
+  font-size: 1.4rem; /* Adjust the size as needed */
   color: #1e1e1e; /* Set your desired font color */
 }
-.note {
-  background-color: #fff8e1; /* Light yellow background for visibility */
-  border: 2px solid #800000; /* Maroon border to match the theme */
-  border-radius: 8px; /* Rounded corners */
-  padding: 15px 20px; /* Add padding for a comfortable layout */
-  font-size: 16px; /* Adjust font size for readability */
-  color: #333; /* Dark text for good contrast */
-  margin: 20px auto; /* Center the note and add vertical spacing */
-  max-width: 800px; /* Set a max width for better text wrapping */
-  text-align: justify; /* Ensure the text is justified for a clean look */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+.instruction-list li::before {
+  position: absolute;
+  left: -30px; /* Position the number to the left of the text */  font-weight: bold;
+  color: #800000;
 }
 
-.note strong {
+.senior-paalala{
+  margin: 40px 0;
+}
+
+.senior-p {
+  font-size: 1.3rem;
+  font-weight: 400;
+  padding: 20px 40px 30px;
+  background-color: #fff8e1;
+  border: 3px solid #C31C1C;
+  border-radius: 30px;
+  line-height: 1.4rem;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.senior-p strong {
   color: #800000; /* Highlight the "Paalala" in maroon */
   font-weight: bold; /* Emphasize the title */
 }
+
+
 
 /* Button layout inside Senior Care page */
 .button-container {
@@ -79,30 +154,6 @@ strong {
   text-decoration: underline;
 }
 
-/* Instruction List */
-.instruction-list {
-  text-align: justify; /* Justifies the text */
-  margin: 20px auto;
-  padding: 0;
-  list-style: none;
-  counter-reset: list-counter; /* Initialize counter */
-  max-width: 800px; /* Optional: Set a max width for better readability */
-}
-
-.instruction-list li {
-  margin-bottom: 20px;
-  text-align: justify; /* Ensures the content of each list item is justified */
-  position: relative; /* Positioning for the number */
-}
-
-.instruction-list li::before {
-  counter-increment: list-counter; /* Increment the counter for each list item */
-  content: counter(list-counter) ". "; /* Display the counter value */
-  position: absolute;
-  left: -30px; /* Position the number to the left of the text */
-  font-weight: bold;
-  color: #800000;
-}
 
 /* Buttons inside the Senior Care page */
 .secondary-button {

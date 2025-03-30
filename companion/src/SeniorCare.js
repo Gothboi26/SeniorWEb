@@ -151,59 +151,74 @@ const SeniorCare = ({ role, handleLogout }) => {
   return (
     <div className="senior-care-container">
       <Navbar role={role} handleLogout={handleLogout} />
-      <h4 className="section-title">SENIOR CARE</h4>
-      <h2 className="section-appointment">Book an Appointment</h2>
-      <ol className="instruction-list">
-        <strong>
-          Mga Hakbang sa Pag-book ng Appointment Gamit ang Aplikasyon para sa
-          Serbisyong Pangkalusugan at Iba Pa para sa mga Nakatatanda
-        </strong>
-        <li>
-          <strong>Piliin ang Serbisyong Kailangan:</strong>
-          <p>
-            Hanapin ang mga serbisyong pangkalusugan tulad ng health check-up,
-            masahe, libreng gamot, dental check-up, o eye check-up.
-            <br />- Pindutin ang serbisyong nais n'yo i-book.
+      <div className="senior-title-container">
+        <h1 className="senior-title">Senior Care</h1>
+      </div>
+
+      <div className="senior-details-container">
+        <p className="senior-title-p">Mga Hakbang sa Pag-book ng Appointment Gamit ang Aplikasyon para sa
+        Serbisyong Pangkalusugan at Iba Pa para sa mga Nakatatanda</p>
+      
+        <div className="instruction-container">
+          <div className="instruction-desc">
+            <ol className="instruction-list">
+              <li>
+                <strong>Piliin ang Serbisyong Kailangan:</strong>
+                <p>
+                  Hanapin ang mga serbisyong pangkalusugan tulad ng health check-up,
+                  masahe, libreng gamot, dental check-up, o eye check-up.
+                  Pindutin ang serbisyong nais n'yo i-book.
+                </p>
+              </li>
+              <li>
+                <strong>Pumili ng Araw at Oras ng Appointment:</strong>
+                <p>
+                  Pagkatapos piliin ang serbisyo, lilitaw ang kalendaryo o listahan ng
+                  mga available na oras. Pumili ng petsa at oras na
+                  pinakakomportable para sa inyo.
+                </p>
+              </li>
+              <li>
+                <strong>Kumpirmahin ang Appointment:</strong>
+                <p>
+                  Kapag nakapili na ng araw at oras, pindutin ang "Kumpirmahin" o
+                  "Book Appointment" na button. Lalabas ang detalye ng inyong
+                  appointment, kasama ang petsa, oras, at lokasyon ng serbisyong
+                  napili.
+                </p>
+              </li>
+              <li>
+                <strong>Tandaan ang Detalye ng Appointment:</strong>
+                <p>
+                  Tingnan ang confirmation message o text na ipadadala ng app.
+                  Tandaan ang petsa at oras ng inyong appointment.
+                </p>
+              </li>
+              <li>
+                <strong>Dumating sa Takdang Oras ng Appointment:</strong>
+                <p>
+                  - Siguraduhing dumating sa tamang oras o 10-15 minuto bago ang
+                  schedule upang maayos ang proseso ng inyong pagbisita.
+                </p>
+              </li>
+            </ol>
+          </div>
+          
+        </div>
+
+        <div className="senior-paalala">
+          <p className="senior-p">
+          <strong>Paalala: </strong>
+          Sa pamamagitan ng pag-book ng appointment, kayo ay bibigyan ng
+          prayoridad sa clinic o health center. Hindi na kailangang maghintay ng
+          matagal dahil nakatakda na ang inyong oras.
           </p>
-        </li>
-        <li>
-          <strong>Pumili ng Araw at Oras ng Appointment:</strong>
-          <p>
-            Pagkatapos piliin ang serbisyo, lilitaw ang kalendaryo o listahan ng
-            mga available na oras. <br />- Pumili ng petsa at oras na
-            pinakakomportable para sa inyo.
-          </p>
-        </li>
-        <li>
-          <strong>Kumpirmahin ang Appointment:</strong>
-          <p>
-            Kapag nakapili na ng araw at oras, pindutin ang "Kumpirmahin" o
-            "Book Appointment" na button. <br />- Lalabas ang detalye ng inyong
-            appointment, kasama ang petsa, oras, at lokasyon ng serbisyong
-            napili.
-          </p>
-        </li>
-        <li>
-          <strong>Tandaan ang Detalye ng Appointment:</strong>
-          <p>
-            - Tingnan ang confirmation message o text na ipadadala ng app.
-            Tandaan ang petsa at oras ng inyong appointment.
-          </p>
-        </li>
-        <li>
-          <strong>Dumating sa Takdang Oras ng Appointment:</strong>
-          <p>
-            - Siguraduhing dumating sa tamang oras o 10-15 minuto bago ang
-            schedule upang maayos ang proseso ng inyong pagbisita.
-          </p>
-        </li>
-      </ol>
-      <p className="note">
-        <strong>Paalala:</strong>
-        Sa pamamagitan ng pag-book ng appointment, kayo ay bibigyan ng
-        prayoridad sa clinic o health center. Hindi na kailangang maghintay ng
-        matagal dahil nakatakda na ang inyong oras.
-      </p>
+        </div>
+
+      </div>
+      
+      
+      
       {/* Conditionally render buttons based on role */}
       {role === "client" && (
         <div className="button-container">
