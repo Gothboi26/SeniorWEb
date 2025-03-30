@@ -150,7 +150,14 @@ const SeniorCare = ({ role, handleLogout }) => {
   return (
     <div className="senior-care-container">
       <Navbar role={role} handleLogout={handleLogout} />
-      <h4 className="section-title">SENIOR CARE</h4>
+      <div className="senior-title-container">
+        <h1 className="senior-title">Senior Care</h1>
+      </div>
+
+      <div className="">
+
+      </div>
+      
       <h2 className="section-appointment">Book an Appointment</h2>
       <ol className="instruction-list">
         <strong>
