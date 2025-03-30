@@ -162,7 +162,7 @@ const Events = () => {
   };
 
   return (
-    <div className="events-container">
+    <div className="events-admin-container">
       <div className="events-header">
         <h2>Events</h2>
         <div className="events-controls">
