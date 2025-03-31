@@ -1,11 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Overpass:wght@100..900&family=Righteous&display=swap");
-
+@import url('https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100..900;1,100..900&family=Righteous&display=swap');
 
 .App {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  font-family: "Overpass", sans-serif;
+  font-family: "Roboto", sans-serif;
   background-color: white;
 }
 .App-content {

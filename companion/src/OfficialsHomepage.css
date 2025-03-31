@@ -1,0 +1,107 @@
+/* ----- Barangay Officials ----- */
+/* Main Container */
+.barangay-health-officials {
+  text-align: center;
+  padding: 1rem;
+}
+
+/* Header Section */
+.officials-header {
+  margin-bottom: 2rem;
+}
+
+.officials-subheader {
+  color: #fcfcfc;
+  background-color: #201885;
+  font-family: "Roboto", sans-serif;
+  border-radius: 25px;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-left: 14%;
+  padding: 8px;
+  text-align: center;
+  width: 75%;
+}
+
+.officials-title {
+  color: #000;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.officials-title {
+  font-family: "Roboto", sans-serif;
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+/* Officials Grid */
+.officials-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Still 3 columns */
+  gap: 1.5rem; /* Reduced gap */
+  justify-content: center;
+  align-items: start;
+  margin: 70px 170px 50px; /* Reduced margins */
+  padding: 20px; /* Reduced padding */
+}
+
+/* Official Card */
+.official-card {
+  background: linear-gradient(135deg, #59c2ff, #007aff);
+  padding: 2rem; /* Reduced padding */
+  border-radius: 30px; /* Slightly smaller border radius */
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.official-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Official Image */
+.official-image {
+  width: 190px; /* Adjust image size */
+  height: 160px;
+  object-fit: cover;
+  border-radius: 15%; /* Rounded corners */
+  margin-bottom: 1rem;
+}
+
+/* Text Details */
+.official-name {
+  font-family: "Roboto", sans-serif;
+  font-size: 1.2rem;
+  color: white;
+  margin-bottom: 0.5rem;
+  margin-top: 5px;
+}
+
+.official-position {
+  font-family: "roboto", sans-serif;
+  font-weight: 300;
+  font-size: 1rem;
+  color: white;
+  opacity: 0.9;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .officials-grid {
+    grid-template-columns: repeat(4, 1fr); /* 2 columns for medium screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .officials-grid {
+    grid-template-columns: 1fr; /* 1 column for small screens */
+  }
+}

@@ -1,0 +1,137 @@
+/* ----- Services Section ----- */
+.Service-Section {
+  text-align: center;
+  padding: 2rem;
+  margin-bottom: 3%;
+}
+
+.Service-Header {
+  margin-bottom: 2rem;
+}
+
+.Service-Subheader {
+  color: #fcfcfc;
+  background-color: #201885;
+  font-family: "Roboto", sans-serif;
+  border-radius: 25px;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-left: 14%;
+  padding: 8px;
+  text-align: center;
+  width: 75%;
+}
+
+.Service-Title {
+  font-family: "Roboto", sans-serif;
+  font-size: 3rem;
+  font-weight: 600;
+  margin-top: 50px;
+}
+
+.Service-Content {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Aligns content consistently */
+  gap: 4rem;
+  margin-top: 3%;
+}
+
+.Service-Icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.Service-Icon img {
+  width: 24px;
+  height: 24px;
+  transition: transform 0.2s;
+}
+
+.Service-Image img {
+  width: 500px;
+  height: 630px;
+}
+
+.Service-Icon:hover img {
+  transform: scale(1.1);
+}
+
+.Service-Details {
+  text-align: left;
+  max-width: 550px;
+  position: relative;
+}
+
+.Service-Texts {
+  animation: slideIn 0.5s ease-in-out; /* Apply animation */
+}
+
+.Service-Name-Wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Keeps the name and icon aligned */
+  margin-bottom: 1rem;
+}
+
+.Service-Name {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #d60000;
+  display: flex; /* Use flexbox for horizontal alignment */
+  align-items: center; /* Vertically aligns text and icon */
+  gap: 7.5rem; /* Adds space between the text and the arrow */
+  text-align: left;
+}
+
+.Service-Description {
+  font-family: "roboto", sans-serif;
+  font-weight: 300;
+  font-weight: 200;
+  font-size: 2rem;
+  color: #555;
+  margin: 1rem 0;
+}
+
+.Service-Actions {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.Service-Book-Button {
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 50%;
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+}
+
+.Service-Book-Button:hover {
+  background-color: #d10000;
+}
+
+.book-link {
+  color: #f3f3f3;
+  text-decoration: none;
+}
+/* Add animation for Service Content */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px); /* Slight slide-in from below */
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

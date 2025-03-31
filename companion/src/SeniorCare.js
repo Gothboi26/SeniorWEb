@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import "./SeniorCare.css";
 import Navbar from "./Navbar";
-import fb from "./fb.png"; // For fb logo
-import email from "./email.png"; // For email logo
+import fb from "./assets/fb.png"; // For fb logo
+import email from "./assets/email.png"; // For email logo
 
 const excludedDays = {
   "Health Check-up": [0, 6], // 0 - 6 Sunday to Saturday
@@ -48,6 +48,29 @@ const SeniorCare = ({ role, handleLogout }) => {
     "Dental Check-up": ["9:30 AM - 11:30 AM", "1:00 PM - 4:30 PM"],
     "Eye Check-up": ["9:30 AM - 11:30 AM", "1:30 PM - 4:30 PM"],
   };
+  const handleDateChange = (e) => {
+    const dateValue = e.target.value;
+    const selectedDay = new Date(dateValue).getDay(); // 0 = Sunday, 6 = Saturday
+
+    if (selectedDay === 0 || selectedDay === 6) {
+      alert(
+        "Weekends (Saturday and Sunday) are not allowed. Please select a weekday."
+      );
+      setSelectedDate("");
+      return;
+    }
+
+    if (excludedDays[selectedService]?.includes(selectedDay)) {
+      //FOR ANOTHER DAY
+      alert(
+        `The selected service is not available on this day. Please choose another date.`
+      );
+      setSelectedDate("");
+      return;
+    }
+
+    setSelectedDate(dateValue);
+  };
 
   // Fetch reserved slots for the user (client) when component mounts
   useEffect(() => {
@@ -71,30 +94,6 @@ const SeniorCare = ({ role, handleLogout }) => {
     const service = e.target.value;
     setSelectedService(service);
     setAvailableTimes(times[service] || []); // Update available times based on selected service
-  };
-
-  const handleDateChange = (e) => {
-    const dateValue = e.target.value;
-    const selectedDay = new Date(dateValue).getDay(); // 0 = Sunday, 6 = Saturday
-
-    if (selectedDay === 0 || selectedDay === 6) {
-      alert(
-        "Weekends (Saturday and Sunday) are not allowed. Please select a weekday."
-      );
-      setSelectedDate("");
-      return;
-    }
-
-    if (excludedDays[selectedService]?.includes(selectedDay)) {
-      //FOR ANOTHER DAY
-      alert(
-        `The selected service is not available on this day. Please choose another date.`
-      );
-      setSelectedDate("");
-      return;
-    }
-
-    setSelectedDate(dateValue);
   };
 
   // Function to open modal and set content
@@ -155,12 +154,12 @@ const SeniorCare = ({ role, handleLogout }) => {
       <h4 className="section-title">SENIOR CARE</h4>
       <h2 className="section-appointment">Book an Appointment</h2>
       <ol className="instruction-list">
+        <strong>
+          Mga Hakbang sa Pag-book ng Appointment Gamit ang Aplikasyon para sa
+          Serbisyong Pangkalusugan at Iba Pa para sa mga Nakatatanda
+        </strong>
         <li>
           <strong>Piliin ang Serbisyong Kailangan:</strong>
-          <strong>
-            Mga Hakbang sa Pag-book ng Appointment Gamit ang Aplikasyon para sa
-            Serbisyong Pangkalusugan at Iba Pa para sa mga Nakatatanda
-          </strong>
           <p>
             Hanapin ang mga serbisyong pangkalusugan tulad ng health check-up,
             masahe, libreng gamot, dental check-up, o eye check-up.

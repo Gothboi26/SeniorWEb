@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import "./EventHomepage.css";
+import "./OfficialsHomepage.css";
+import "./ServicesHomepage.css";
+import "./ChoicesHomepage.css";
 import Modal from "react-modal";
-// import Slideshow from "./Slideshow";
 import { Link } from "react-router-dom";
 import "./CalendarComponent.css";
-import "react-calendar/dist/Calendar.css";
 import "./Emergency.css";
 import "./Chat.css";
 import "./SeniorCare.css";
@@ -18,15 +21,14 @@ import ChatInquiries from "./ChatInquiries";
 import Events from "./Events";
 import Settings from "./Setting";
 import "./Sidebar.css";
-import logo from "./logo.png";
-import appoint from "./appoint.png"; // For Senior Care logo
-import emergency from "./emergency.png"; // For Emergency Services logo
-import chat from "./chat.png"; // For Chat Assistance logo
-import doctor from "./doctor.png";
-import arrow from "./arrow.png";
-import person from "./person.jpg";
-import boy from "./boy.png";
-import girl from "./girl.png";
+import logo from "./assets/logo.png";
+import appoint from "./assets/appoint.png"; // For Senior Care logo
+import emergency from "./assets/emergency.png"; // For Emergency Services logo
+import chat from "./assets/chat.png"; // For Chat Assistance logo
+import doctor from "./assets/doctor.png";
+import arrow from "./assets/arrow.png";
+import boy from "./assets/boy.png";
+import girl from "./assets/girl.png";
 
 Modal.setAppElement("#root");
 
@@ -256,43 +258,44 @@ const RectangleSection = ({ role }) => {
 
       <div className="Events">
         <div className="Events-Header">
-          <p className="Events-Subheader">EVENTS</p>
-          <h1 className="Events-Title">Our Important Events</h1>
+          <p className="Events-Subheader">ACTIVITIES</p>
+          <h1 className="Events-Title">Calendar of Activities</h1>
         </div>
+
         <div className="events-container">
-          <div className="calendar-container">
-            <Calendar
-              onChange={onDateChange}
-              value={date}
-              locale="en-US"
-              tileClassName={tileClassName}
-            />
-          </div>
+          <Calendar
+            onChange={onDateChange}
+            value={date}
+            locale="en-US"
+            tileClassName={tileClassName}
+          />
+
           <div className="events-list">
-            <h3>Events on {date.toDateString()}</h3>
-            <ul>
-              {events && events.length > 0 ? (
-                events.map((event) => (
+            <h3 className="Events-listheader">
+              Events on {date.toDateString()}
+            </h3>
+            {events && events.length > 0 ? (
+              <ul>
+                {events.map((event) => (
                   <li key={event.id}>
-                    <strong>{event.event_title}</strong> Event Name:{" "}
+                    <strong>{event.event_title}</strong> -{" "}
                     {event.event_description}
                   </li>
-                ))
-              ) : (
-                <p>
-                  No events for this date. You can still click on other dates.
-                </p>
-              )}
-            </ul>
+                ))}
+              </ul>
+            ) : (
+              <p>
+                No events for this date. You can still click on other dates.
+              </p>
+            )}
           </div>
-          
         </div>
-      </div> 
+      </div>
 
       <div className="barangay-health-officials">
         <div className="officials-header">
           <p className="officials-subheader">OFFICIALS</p>
-          <h1 className="officials-title">Our Barangay Officials</h1>
+          <h1 className="officials-title">Our Barangay Health Officials</h1>
         </div>
         <div class="officials-grid">
           <div class="official-card">
@@ -381,7 +384,7 @@ function CalendarComponent() {
                 alt="Logo"
                 className="sidebar1-logo-img"
               />
-              Overview
+              Dashboard
             </li>
             <li
               onClick={() => setSelectedOption("seniors")}
@@ -522,11 +525,10 @@ function CalendarComponent() {
       <div className="homepage">
         <div className="home-contents">
           <div className="home-header">
-            <p className="home-subheader">companiON</p>
             <h1 className="home-title">Senior Care Services</h1>
             <p className="home-description">
-              Maalaga, makatao, at angkop na serbisyo upang matulungan ang
-              nakatatanda na mamuhay nang komportable, ligtas, at may dignidad.
+              Maalaga at angkop na serbisyo upang matulungan ang nakatatanda na
+              mamuhay nang komportable, ligtas, at walang pag-aalinlangan.
             </p>
           </div>
 
@@ -534,6 +536,7 @@ function CalendarComponent() {
             <div className="facebook-page">
               <iframe
                 src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FBarangay-Gen-T-De-Leon-61550950657692&tabs=timeline&width=500&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+                title="Barangay Facebook Page"
                 width="500"
                 height="500"
                 style={{ border: "none", overflow: "hidden" }}

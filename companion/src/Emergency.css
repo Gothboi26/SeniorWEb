@@ -1,17 +1,161 @@
 /* General Styles */
 body {
-  font-family: "Glacial Indifference", sans-serif;
+  font-family: "Roboto", sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f9f9f9; /* Light background */
 }
 
-.emergency-instructions {
-  font-size: 18px;
-  line-height: 2;
+/* Emergency Content */
+.emergency-content {
+  background: #FBFBF6;;
+  padding: 0;
+  margin: 0;
+  border-radius: 8px;
+  font-family: "Roboto", sans-serif;
+  max-width: 100%;
   color: #333;
+}
+
+
+/* Emergency Title Container */
+.emergency-title-container {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Added drop shadow */
+}
+
+.emergency-title-container h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #b71c1c;
+  margin: 0; /* Removes extra spacing */
+  text-align: center; /* Center text within the element */
+}
+
+/* Emergency Details Container */
+.emergency-details-container { 
+  padding: 20px;
+  margin: 40px 20rem;
+  background-color: #FBFBF6;
+}
+
+.emergency-description {
+  padding: 40px 60px 30px;
+  background-color: #fff8e1;
+  border: 3px solid #C31C1C;
+  border-radius: 40px;
+  line-height: 1.7rem;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.emergency-desc-title {
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+  font-weight: 400;
   text-align: justify;
-  padding: 0 30%; /* Add horizontal padding to center the content visually */
+  color: #272927;
+  margin-top: 0;
+}
+
+.emergency-desc-title strong {
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+  color: #800000;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.emergency-desc {
+  font-size: 1.2rem;
+  justify-content: left;
+  text-align: justify;
+}
+
+/* Button Styles */
+.buttons-container {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  align-items: center;
+  margin: 40px;
+  
+}
+
+.police-container button,
+.ambulance-container button,
+.firetruck-container button, 
+.family-container button {
+  width: 250px;
+  height: 250px;
+  background-color: #b71c1c;
+  color: white;
+  border: 6px solid #ffffff;
+  border-radius: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.police-container:hover,
+.ambulance-container:hover,
+.firetruck-container:hover, 
+.family-container:hover {
+  width: 250px;
+  height: 250px;
+  background-color: #b71c1c;
+  border: 6px solid #ffffff;
+  color: white;
+  border-radius: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Image Styles */
+.buttons-container img {
+  width: 150px;
+  height: 150px;
+  margin-bottom: 8px;
+}
+
+.buttons-container span {
+  font-size: 1.8rem;
+}
+
+.hotlines-container {
+  padding: 20px;
+  margin: 40px 20rem;
+}
+
+.hotlines-title,
+.contacts-title {
+  color: #fcfcfc;
+  background-color: #C31c1c;
+  font-family: "Roboto", sans-serif;
+  border-radius: 25px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  text-align: center;
 }
 
 .button-container {
@@ -248,22 +392,6 @@ textarea {
   background-color: #a00000;
 }
 
-* Center the content on the page */ .emergency-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background-color: #f9f9f9;
-  padding: 20px;
-}
-
-/* Center the inner content */
-.emergency-content {
-  text-align: center;
-  max-width: 100%;
-  width: 100%;
-}
 
 /* Instructions styling */
 .emergency-instructions {
@@ -279,6 +407,7 @@ textarea {
   width: 100%;
   border-collapse: collapse;
   margin: 20px 0;
+  font-size: 1rem;
 }
 
 .contacts-table th,
@@ -311,4 +440,93 @@ textarea {
 
 .back-link:hover {
   text-decoration: underline;
+}
+
+/* ----- Responsive Design for Tablets (max-width: 768px) ----- */
+@media only screen and (max-width: 768px) {
+  /* General Styles */
+  body {
+    font-size: 14px; /* Reduce default font size */
+  }
+
+  /* Emergency Instructions */
+  .emergency-instructions {
+    font-size: 16px;
+    padding: 0 10%; /* Reduce padding for smaller screens */
+  }
+
+  /* Adjust Button Containers */
+  .button-container,
+  .button-container-column,
+  .rectangular-buttons-container {
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: center; /* Center align buttons */
+    gap: 15px; /* Reduce spacing */
+  }
+
+  .button-container-row {
+    gap: 10px; /* Reduce spacing for better fit */
+  }
+
+  /* Button Adjustments */
+  .homepage-emergency-services-button,
+  .emergency-button {
+    padding: 12px 20px;
+    font-size: 16px;
+    width: 100%; /* Make buttons full width */
+    max-width: 250px;
+  }
+
+  .rectangular-button {
+    width: 90%; /* Make buttons responsive */
+    max-width: 400px;
+    font-size: 18px;
+    height: auto; /* Adjust height automatically */
+    padding: 12px;
+  }
+
+  /* Modal Adjustments */
+  .modal {
+    width: 95%;
+    padding: 20px;
+    max-width: 350px; /* Slightly smaller modal */
+  }
+
+  .modal-submit-button,
+  .modal-close-button {
+    font-size: 14px;
+    padding: 8px 15px;
+  }
+
+  /* Input Fields */
+  .form-group input,
+  .form-group textarea {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  /* Center Content Adjustments */
+  .emergency-container {
+    padding: 0;
+  }
+
+  .emergency-content {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Table Adjustments */
+  .contacts-table {
+    font-size: 14px;
+  }
+
+  .contacts-table th,
+  .contacts-table td {
+    padding: 8px;
+  }
+
+  /* Back Link Adjustments */
+  .back-link {
+    font-size: 12px;
+  }
 }
