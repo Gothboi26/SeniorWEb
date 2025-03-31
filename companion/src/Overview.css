@@ -30,15 +30,31 @@
   border: 10px;
 }
 
-.card-light .change{
-  font-size: 0.8rem;
-  font-weight: bold;
-  color: #000000;
-  margin-left: 10px;
-}
-
 .card-light h3{
   background-color: #fff;
+  color: #888;
+}
+
+.card.card-light {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers the chart */
+  text-align: center;
+  height: auto; /* Adjust height if needed */
+}
+
+.card-light canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+.no-appointments {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px; /* Adjust as needed */
+  text-align: center;
+  font-weight: bold;
   color: #888;
 }
 
@@ -66,20 +82,13 @@
   color: rgb(255, 255, 255);
 }
 
-.total-patients .change {
-  font-size: 0.8rem;
-  color: #ffffff;
-  font-weight: bold;
-  margin-left: 10px;
-}
-
 .statistics-section {
   display: flex;
   gap: 20px;
 }
 
 .statistics {
-  flex: 1;
+  flex: 1.5;
   background-color: #fff;
   padding: 20px;
   border-radius: 10px;
