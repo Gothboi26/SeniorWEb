@@ -32,7 +32,7 @@
 /* Left-align the heading */
 .left-aligned {
   text-align: left;
-  font-family: "Glacial Indifference", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 1.5rem;
   color: #333;
 }
@@ -51,7 +51,7 @@
 .table td {
   padding: 12px;
   text-align: left;
-  font-family: "Glacial Indifference", sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 .table thead th {

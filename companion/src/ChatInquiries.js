@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./ChatInquiries.css";
-import sendIcon from "./send.png"; // Importing the send button icon
+import sendIcon from "./assets/send.png"; // Importing the send button icon
 
 const ChatInquiries = () => {
   const [ws, setWs] = useState(null);
@@ -10,7 +10,9 @@ const ChatInquiries = () => {
   useEffect(() => {
     const socket = new WebSocket("ws://localhost:8080");
     socket.onopen = () => {
-      socket.send(JSON.stringify({ type: 'register', content: { role: 'admin' } }));
+      socket.send(
+        JSON.stringify({ type: "register", content: { role: "admin" } })
+      );
     };
 
     socket.onmessage = (event) => {
@@ -25,10 +27,10 @@ const ChatInquiries = () => {
 
   const handleSendMessage = () => {
     if (ws.readyState === WebSocket.OPEN) {
-      const message = { from: 'admin', to: 'client', content: newMessage };
-      ws.send(JSON.stringify({ type: 'message', ...message }));
+      const message = { from: "admin", to: "client", content: newMessage };
+      ws.send(JSON.stringify({ type: "message", ...message }));
       setNewMessage("");
-      setMessages(prevMessages => [...prevMessages, message]);
+      setMessages((prevMessages) => [...prevMessages, message]);
     } else {
       console.warn("WebSocket is not open yet. Please try again.");
     }
@@ -39,7 +41,12 @@ const ChatInquiries = () => {
       <header className="chat-header">Chat Inquiries</header>
       <div className="chat-window">
         {messages.map((message, index) => (
-          <div key={index} className={`message ${message.from === 'admin' ? 'outgoing' : 'incoming'}`}>
+          <div
+            key={index}
+            className={`message ${
+              message.from === "admin" ? "outgoing" : "incoming"
+            }`}
+          >
             {message.content}
           </div>
         ))}

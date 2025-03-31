@@ -1,38 +1,11 @@
-/* Responsive Design for Small Screens */
-@media (max-width: 768px) {
-  .events-container {
-    flex-direction: column; /* Stack elements vertically */
-    align-items: center;
-    gap: 15px;
-  }
-
-  .react-calendar,
-  .events-list {
-    width: 90%; /* Adjust width for smaller screens */
-    height: auto; /* Allow height to adjust dynamically */
-    padding: 15px;
-  }
-
-  .Events-Subheader,
-  .Events-Title {
-    text-align: center; /* Center the text for better readability */
-    width: 100%;
-  }
-
-  .events-list {
-    max-width: 90%;
-    overflow-y: auto;
-  }
-  .rectangle23 {
-    width: 90%;
-    height: auto; /* Allow dynamic height */
-    padding: 15px;
-  }
-
-  .choices {
-    flex-direction: column; /* Stack cards vertically */
-    gap: 15px;
-  }
+/* ----- Home ----- */
+body,
+html {
+  overflow-x: hidden;
+  width: 100%;
+}
+.container {
+  max-width: 100%;
 }
 /* ----- Home ----- */
 body,
@@ -68,8 +41,8 @@ html {
   height: 100%;
   background: url("./assets/valenzuelabg.jpg") no-repeat center center;
   background-size: cover;
-  filter: blur(3px); /* Increase blur for visibility */
-  opacity: 01;
+  filter: blur(3px);
+  opacity: 1;
   z-index: 0;
 }
 
@@ -84,12 +57,11 @@ html {
   padding: 75px;
   background: transparent;
 }
-
 .home-header {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 5px; /* Space between the elements */
+  gap: 5px;
   flex: 1;
   margin: 135px;
   margin-bottom: 200px;
@@ -110,7 +82,6 @@ html {
 .home-description {
   font-size: 2rem;
   margin-bottom: 48px;
-  margin-top: 0;
   text-align: left;
   margin-top: 55px;
   margin-right: 60px;
@@ -157,4 +128,72 @@ h3 {
   text-align: center;
   margin-top: 10px;
   margin-bottom: 0px;
+}
+
+@media (max-width: 768px) {
+  .homepage {
+    height: auto;
+    padding: 20px 0;
+  }
+
+  .home-title {
+    font-size: 2.5rem;
+    margin-top: 10px;
+  }
+  .home-description {
+    font-size: 1.1rem;
+    margin: 10px;
+  }
+
+  .facebook-box {
+    padding: 15px;
+  }
+  .facebook-page {
+    padding: 15px;
+  }
+
+  .home-contents {
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+  }
+
+  .home-header {
+    text-align: center;
+    align-items: center;
+    margin: 0;
+  }
+  .events-container {
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center;
+    gap: 15px;
+  }
+
+  .react-calendar,
+  .events-list {
+    width: 90%; /* Adjust width for smaller screens */
+    height: auto; /* Allow height to adjust dynamically */
+    padding: 15px;
+  }
+
+  .Events-Subheader,
+  .Events-Title {
+    text-align: center; /* Center the text for better readability */
+    width: 100%;
+  }
+
+  .events-list {
+    max-width: 90%;
+    overflow-y: auto;
+  }
+  .rectangle23 {
+    width: 90%;
+    height: auto; /* Allow dynamic height */
+    padding: 15px;
+  }
+
+  .choices {
+    flex-direction: column; /* Stack cards vertically */
+    gap: 15px;
+  }
 }

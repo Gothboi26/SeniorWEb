@@ -31,7 +31,6 @@ import boy from "./assets/boy.png";
 import girl from "./assets/girl.png";
 
 Modal.setAppElement("#root");
-
 // Array of Health Services
 const services = [
   {
