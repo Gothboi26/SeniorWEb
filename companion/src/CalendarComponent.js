@@ -456,17 +456,6 @@ function CalendarComponent() {
               />
               Settings
             </li>
-            <li
-              onClick={() => setSelectedOption("help")}
-              className="sidebar1-item"
-            >
-              <img
-                src="/icons/help.png"
-                alt="Logo"
-                className="sidebar1-logo-img"
-              />
-              Help & Support
-            </li>
           </ul>
 
           <div className="sidebar-logout" onClick={handleLogout}>
@@ -508,11 +497,6 @@ function CalendarComponent() {
               </div>
             )}
             {selectedOption === "settings" && <Settings />}
-            {selectedOption === "help" && (
-              <div>
-                <h2>Help & Support</h2>
-              </div>
-            )}
           </div>
         </div>
       </div>

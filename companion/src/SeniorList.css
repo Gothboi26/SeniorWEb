@@ -87,7 +87,7 @@
 }
 /* Add Senior Button */
 .add-senior-button {
-  background-color: #34a853;
+  background-color: #C31C1C;
   color: white;
   border: none;
   border-radius: 8px;
@@ -103,7 +103,6 @@
 }
 
 .add-senior-button:hover {
-  background-color: #34a853;
   transform: scale(1.05);
 }
 
@@ -147,7 +146,9 @@
 
 .modal-buttons {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 100px;
+  margin: 10px;
 }
 
 .modal-buttons button {

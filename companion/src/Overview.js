@@ -136,7 +136,7 @@ const getChartData = () => ({
     {
       label: "Number of Senior Patients",
       data: Object.values(ageDistribution),
-      backgroundColor: "#4A90E2",
+      backgroundColor: "#C31C1C",
     },
   ],
 });

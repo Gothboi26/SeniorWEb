@@ -85,7 +85,7 @@ p {
 }
 
 .toggle-switch:checked + .slider {
-  background-color: #4caf50;
+  background-color: #C31C1C;
 }
 
 .toggle-switch:checked + .slider:before {
