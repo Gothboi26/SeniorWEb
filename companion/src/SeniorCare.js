@@ -4,8 +4,6 @@ import "./SeniorCare.css";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import BackToHome from "./BackToHome";
-import fb from "./assets/fb.png"; // For fb logo
-import email from "./assets/email.png"; // For email logo
 
 const excludedDays = {
   "Health Check-up": [0, 6], // 0 - 6 Sunday to Saturday
