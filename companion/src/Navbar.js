@@ -107,7 +107,7 @@ function Navbar({ handleLogout, role }) {
           <Link to="/profile" className="profile-link">
             Profile
           </Link>
-          <Link onClick={handleLogout} className="Navbar-links-a" to="#logout">
+          <Link onClick={handleLogout} className="logout-link" to="#logout">
             Logout
           </Link>
         </div>
