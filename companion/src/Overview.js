@@ -2,17 +2,18 @@ import React, { useEffect, useState, useCallback } from "react";
 import "./Overview.css";
 import editIcon from "./assets/edit.png";
 import deleteIcon from "./assets/delete.png";
-import { Bar } from "react-chartjs-2";
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
+import { Bar, Pie } from "react-chartjs-2";
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend } from "chart.js";
 
 // Register Chart.js components
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend);
 
 
 const Overview = () => {
   const [appointments, setAppointments] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [appointmentsByDate, setAppointmentsByDate] = useState([]);
+  const [appointmentsByService, setAppointmentsByService] = useState({});
   const [editMode, setEditMode] = useState(false);
   const [currentAppointment, setCurrentAppointment] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
@@ -35,14 +36,17 @@ const Overview = () => {
   }, [appointments]);
 
   const fetchAppointmentsData = useCallback(() => {
-    setLoading(true);
     fetch("http://localhost/php/appointments.php")
       .then((response) => response.json())
       .then((data) => {
         setAppointments(data);
+        processAppointmentsByService(data);
+        setLoading(false); // <-- Add this line
       })
-      .catch((error) => console.error("Error fetching appointments:", error))
-      .finally(() => setLoading(false));
+      .catch((error) => {
+        console.error("Error fetching appointments:", error);
+        setLoading(false); // <-- Also add here to stop loading even if an error occurs
+      });
   }, []);
 
   useEffect(() => {
@@ -79,12 +83,15 @@ const [ageDistribution, setAgeDistribution] = useState({
   "76-80": 0,
 });
 
+const [totalPatients, setTotalPatients] = useState(0);
+
 const fetchAgeDistribution = useCallback(() => {
   fetch("http://localhost/php/get_users.php")
     .then((response) => response.json())
     .then((data) => {
       if (data.status === "success") {
         const ageData = { "60-65": 0, "66-70": 0, "71-75": 0, "76-80": 0 };
+        setTotalPatients(data.data.length); // Count total patients
 
         data.data.forEach((user) => {
           const age = parseInt(user.age, 10);
@@ -129,11 +136,35 @@ const getChartData = () => ({
     {
       label: "Number of Senior Patients",
       data: Object.values(ageDistribution),
-      backgroundColor: "#4A90E2",
+      backgroundColor: "#C31C1C",
     },
   ],
 });
 
+  const processAppointmentsByService = (data) => {
+    const serviceCount = {};
+
+    data.forEach((appointment) => {
+      const service = appointment.service || "Unknown";
+      serviceCount[service] = (serviceCount[service] || 0) + 1;
+    });
+
+    setAppointmentsByService(serviceCount);
+  };
+
+    // Prepare Data for Pie Chart
+  const getPieChartData = () => ({
+    labels: Object.keys(appointmentsByService),
+    datasets: [
+      {
+        data: Object.values(appointmentsByService),
+        backgroundColor: [
+          "#FF6384", "#36A2EB", "#FFCE56", "#4CAF50", "#FF9800", "#9C27B0",
+        ],
+      },
+    ],
+  });
+  
   const handleEdit = (appointment) => {
     setEditMode(true);
     setCurrentAppointment(appointment);
@@ -191,18 +222,19 @@ const getChartData = () => ({
       <div className="summary-cards">
         <div className="card total-patients">
           <h3>Total Patients</h3>
-          <p className="count">15,000</p>
-          <p className="change">20% Last Month</p>
+          <p className="count">{totalPatients}</p>
         </div>
         <div className="card card-light">
           <h3>Total Appointments</h3>
-          <p className="count">1,000</p>
-          <p className="change">20% Last Month</p>
+            {Object.keys(appointmentsByService).length > 0 ? (
+              <Pie data={getPieChartData()} />
+            ) : (
+              <p className="no-appointments">No appointment data available.</p>
+            )}
         </div>
         <div className="card card-light">
-          <h3>Total Inquiries</h3>
+          <h3>Seniors per Chapter</h3>
           <p className="count">500</p>
-          <p className="change">20% Last Month</p>
         </div>
       </div>
 

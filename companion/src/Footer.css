@@ -1,120 +1,119 @@
 /* ----- Footer Section ----- */
 .App-footer {
-    background-color: #1f1785;
-    padding: 20px 0;
-    width: 100%;
-  }
-  
-  /* Footer main container */
-  .footer-section {
-    color: #d9d8d8;
-    margin: 0 auto;
-    padding: 20px;
-    font-size: 14px;
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    max-width: 1200px; /* Prevents stretching on large screens */
-  }
-  
-  /* Footer title */
-  .App-footer h1 {
-    font-size: 18px;
-    margin-top: 10px;
-    margin-bottom: 20px;
-    text-align: left;
-  }
-  
-  /* Footer content - Desktop: Row Layout */
+  background-color: #1f1785;
+  padding: 20px 0;
+  width: 100%;
+}
+
+/* Footer main container */
+.footer-section {
+  color: #d9d8d8;
+  margin: 0 auto;
+  padding: 20px;
+  font-size: 14px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px; /* Prevents stretching on large screens */
+}
+
+/* Footer title */
+.App-footer h1 {
+  font-size: 18px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+/* Footer content - Desktop: Row Layout */
+.footer-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Left side - Contact Information */
+.footer-text1 {
+  flex: 1;
+}
+
+.footer-text1 p {
+  color: #d9d9d9;
+  font-size: 13px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Icons & Links Container */
+.footer-icons-and-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Icons - Facebook & Email */
+.footer-icons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-icons img {
+  width: 25px;
+  height: auto;
+  transition: transform 0.3s;
+}
+
+.footer-icons img:hover {
+  transform: scale(1.1);
+}
+
+/* Vertical Separator Line */
+.vertical-line {
+  width: 2px;
+  height: 50px;
+  background-color: #d9d8d8;
+}
+
+/* Footer Links - Terms & Privacy */
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.footer-link {
+  color: #d9d8d8;
+  font-size: 13px;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-link:hover {
+  color: #ffd700;
+}
+
+/* ----- Responsive Adjustments ----- */
+@media (max-width: 768px) {
   .footer-content {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
+    flex-direction: column;
+    text-align: center;
   }
-  
-  /* Left side - Contact Information */
-  .footer-text1 {
-    flex: 1;
-  }
-  
-  .footer-text1 p {
-    color: #d9d9d9;
-    font-size: 13px;
-    margin: 0;
-    line-height: 1.5;
-  }
-  
-  /* Icons & Links Container */
+
   .footer-icons-and-links {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-  
-  /* Icons - Facebook & Email */
-  .footer-icons {
-    display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 10px;
   }
-  
-  .footer-icons img {
-    width: 25px;
-    height: auto;
-    transition: transform 0.3s;
-  }
-  
-  .footer-icons img:hover {
-    transform: scale(1.1);
-  }
-  
-  /* Vertical Separator Line */
-  .vertical-line {
-    width: 2px;
-    height: 50px;
-    background-color: #d9d8d8;
-  }
-  
-  /* Footer Links - Terms & Privacy */
+
   .footer-links {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
+    align-items: center;
   }
-  
-  .footer-link {
-    color: #d9d8d8;
-    font-size: 13px;
-    text-decoration: none;
-    transition: color 0.3s;
+
+  .vertical-line {
+    display: none; /* Hides vertical line on small screens */
   }
-  
-  .footer-link:hover {
-    color: #ffd700;
-  }
-  
-  /* ----- Responsive Adjustments ----- */
-  @media (max-width: 768px) {
-    .footer-content {
-      flex-direction: column;
-      text-align: center;
-    }
-  
-    .footer-icons-and-links {
-      flex-direction: column;
-      gap: 10px;
-    }
-  
-    .footer-links {
-      align-items: center;
-    }
-  
-    .vertical-line {
-      display: none; /* Hides vertical line on small screens */
-    }
-  }
-  
+}

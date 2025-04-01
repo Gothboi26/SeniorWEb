@@ -17,22 +17,34 @@
   margin-bottom: 20px;
 }
 
-/* Sort button */
+/* Sort dropdown button */
 .sort-dropdown {
-  padding: 10px;
+  padding: 10px 15px;
   font-size: 14px;
   border-radius: 5px;
-  border: 1px solid #28a745;
   cursor: pointer;
   margin-left: 10px;
-  background-color: #28a745;
+  background-color: #C31C1C;
   color: white;
+  border: none; 
+  outline: none;
+  appearance: none;
+}
+
+/* To ensure the dropdown arrow is white */
+.sort-dropdown::-ms-expand {
+  display: none;
+}
+
+.sort-dropdown option {
+  background-color: white; /* Makes dropdown options white */
+  color: black; /* Text color inside the dropdown */
 }
 
 /* Left-align the heading */
 .left-aligned {
   text-align: left;
-  font-family: "Glacial Indifference", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 1.5rem;
   color: #333;
 }
@@ -51,7 +63,7 @@
 .table td {
   padding: 12px;
   text-align: left;
-  font-family: "Glacial Indifference", sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 .table thead th {

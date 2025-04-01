@@ -91,7 +91,7 @@ function App() {
 
                   <div className="login-container">
                     <h1>
-                      Welcome to Barangay General Tiburcio De Leon Health Portal
+                      Welcome to Barangay General Tiburcio De Leon Senior Care Portal
                     </h1>
                     <p className="description">
                       This platform is designed to make health services more

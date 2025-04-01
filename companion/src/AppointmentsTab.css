@@ -1,6 +1,6 @@
 /* Container styling */
 .appointments-tab {
-  font-family: "Arial", sans-serif;
+  font-family: "Roboto", sans-serif;
   max-width: 100%;
   margin: 20px auto;
   padding: 20px;
@@ -51,7 +51,7 @@ input[type="number"] {
 .update-btn {
   display: block;
   width: 100%;
-  background-color: #4caf50;
+  background-color: #C31C1C;
   color: #fff;
   font-size: 16px;
   padding: 10px;
