@@ -2,6 +2,7 @@ import React from "react";
 import "./Emergency.css"; // Ensure styles are updated to center content
 import Navbar from "./Navbar"; // Import the Navbar component
 import Footer from "./Footer";
+import BackToHome from "./BackToHome";
 import police from "./assets/police.png";
 import ambulance from "./assets/ambulance.png";
 import firetruck from "./assets/firetruck.png";
@@ -138,9 +139,7 @@ const Emergency = ({ role, handleLogout }) => {
           
         </div>
 
-        <a className="back-link" href="/">
-          Back to Home
-        </a>
+        <BackToHome role={role} />
 
         <Footer role={role} />
       </div>
