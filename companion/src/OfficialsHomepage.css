@@ -1,13 +1,19 @@
-/* ----- Barangay Officials ----- */
-/* Main Container */
-.barangay-health-officials {
-  text-align: center;
-  padding: 1rem;
+/* General Styles */
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f5f5f7; /* Light gradient background */
 }
 
-/* Header Section */
+/* Section Header */
+.barangay-health-officials {
+  text-align: center;
+  padding: 50px;
+}
+
 .officials-header {
-  margin-bottom: 2rem;
+  margin-bottom: 20px;
 }
 
 .officials-subheader {
@@ -24,84 +30,173 @@
 }
 
 .officials-title {
-  color: #000;
   font-family: "Roboto", sans-serif;
-  font-size: 1.5rem;
+  font-size: 3rem;
   font-weight: 600;
+  margin-top: 50px;
 }
 
-.officials-title {
-  font-family: "Roboto", sans-serif;
-  font-size: 2.5rem;
-  font-weight: 600;
-}
-
-/* Officials Grid */
-.officials-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr); /* Still 3 columns */
-  gap: 1.5rem; /* Reduced gap */
-  justify-content: center;
-  align-items: start;
-  margin: 70px 170px 50px; /* Reduced margins */
-  padding: 20px; /* Reduced padding */
-}
-
-/* Official Card */
-.official-card {
-  background: linear-gradient(135deg, #59c2ff, #007aff);
-  padding: 2rem; /* Reduced padding */
-  border-radius: 30px; /* Slightly smaller border radius */
-  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  height: 100%;
+/* Ensure slides don't break out of container */
+.card-wrapper {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  overflow: hidden;
+  width: 100%;
 }
 
-.official-card:hover {
+/* Adjust card styles */
+.card-item {
+  min-width: 300px;
+  margin: 20px 15px;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s;
+}
+
+/* Fix overflow issue */
+.container {
+  width: 90%;
+  max-width: 1100px;
+  margin: 20px auto;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+
+.card-item:hover {
   transform: scale(1.05);
-  box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Official Image */
-.official-image {
-  width: 190px; /* Adjust image size */
-  height: 160px;
+/* Smoothen the transition for rapid clicking */
+.card-list {
+  display: flex;
+  width: 100%;
+  list-style: none;
+  transition: transform 0.5s ease-in-out;
+  padding: 0;
+  margin: 0;
+}
+
+/* Prevent transition flickering */
+.card-list.no-transition {
+  transition: none;
+}
+
+/* Make sure the transition feels buttery smooth */
+.card-item {
+  min-width: 300px;
+  margin: 20px 15px;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease-in-out;
+}
+
+.card-item:hover {
+  transform: scale(1.05);
+}
+
+
+
+
+/* Card Image */
+.official-card img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-radius: 15%; /* Rounded corners */
-  margin-bottom: 1rem;
+  border-radius: 8px;
+  margin-bottom: 12px;
 }
 
-/* Text Details */
-.official-name {
-  font-family: "Roboto", sans-serif;
-  font-size: 1.2rem;
-  color: white;
-  margin-bottom: 0.5rem;
-  margin-top: 5px;
-}
-
+/* Official Position */
 .official-position {
-  font-family: "roboto", sans-serif;
-  font-weight: 300;
-  font-size: 1rem;
-  color: white;
-  opacity: 0.9;
-  margin-top: 0;
-  margin-bottom: 0;
+  font-size: 0.9rem;
+  color: #6c757d;
+  font-weight: 500;
+  margin-bottom: 5px;
 }
 
+/* Official Name */
+.official-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #4b0082; /* Dark Purple */
+  margin-bottom: 10px;
+}
+
+/* Read More Button */
+.read-more {
+  display: flex;
+  align-items: center;
+  color: #4b0082;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+.read-more:hover {
+  color: #800080; /* Brighter purple on hover */
+}
+
+/* Arrow Icon */
+.read-more img {
+  width: 20px;
+  height: 20px;
+  margin-left: 8px;
+  transition: transform 0.2s;
+}
+
+.read-more:hover img {
+  transform: translateX(5px);
+}
+
+/* Carousel Buttons */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.carousel-btn img {
+  width: 35px;
+  height: 35px;
+}
+
+.prev {
+  left: -10px;
+}
+
+.next {
+  right: -10px;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-  .officials-grid {
-    grid-template-columns: repeat(4, 1fr); /* 2 columns for medium screens */
+  .card-item {
+    min-width: 260px;
+  }
+
+  .carousel-btn img {
+    width: 28px;
+    height: 28px;
   }
 }
 
 @media (max-width: 480px) {
-  .officials-grid {
-    grid-template-columns: 1fr; /* 1 column for small screens */
+  .card-item {
+    min-width: 220px;
+  }
+
+  .carousel-btn img {
+    width: 24px;
+    height: 24px;
   }
 }
