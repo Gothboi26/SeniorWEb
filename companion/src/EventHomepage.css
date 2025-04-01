@@ -9,8 +9,8 @@
   font-weight: 600;
   line-height: 1.6em;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-  border-radius: 10px;
-  padding: 20px;
+  border-radius: 20px;
+  padding: 50px;
   font-size: 22px;
   overflow: hidden; /* Prevents unwanted scroll */
 }
@@ -101,18 +101,18 @@
 /* Events Container */
 .events-container {
   display: flex;
-  gap: 20px;
+  gap: 50px;
   justify-content: center;
   align-items: flex-start;
   flex-wrap: nowrap;
-  margin-top: 70px;
+  margin-top: 3%;
   width: 100%;
-  margin-bottom: 105px;
+  margin-bottom: 3%;
 }
 
 .events-list h3 {
   color: #1e1e1e;
-  font-size: 30px;
+  font-size: 2rem;
   font-family: "Roboto", "sans-serif";
   font-weight: 600;
 }
@@ -137,8 +137,10 @@
 }
 .events-list p {
   color: #1e1e1e;
-  font-size: 25px;
-  font-weight: 500;
+  font-size: 1.8rem;
+  font-weight: 400;
+  padding: 30px 50px;
+  list-style-type: disc;
 }
 
 .events-list li span {

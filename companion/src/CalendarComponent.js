@@ -13,6 +13,7 @@ import "./Emergency.css";
 import "./Chat.css";
 import "./SeniorCare.css";
 import "./Profile.css";
+import "./ChoicesHomepage.css";  // Make sure ito ang last na import
 import Overview from "./Overview";
 import SeniorList from "./SeniorList";
 import Appointments from "./Appointments";

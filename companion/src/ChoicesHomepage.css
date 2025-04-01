@@ -6,12 +6,10 @@
 
 .rectangle21 {
   margin: 30px;
-  padding: 10px;
   display: flex;
   flex-wrap: wrap; /* Allows wrapping on smaller screens */
   align-items: center;
   padding: 20px;
-  /* border-radius: 20px; */
   gap: 30px; /* Adds spacing between items */
   width: 100%;
   height: 100%;
@@ -36,23 +34,20 @@
 
 .rectangle23.paalala1 h2 {
   color: #f3f3f3;
-  font-size: 20px;
+  font-size: 23px;
   margin-bottom: 10px;
   text-align: center;
   font-family: "Roboto", sans-serif;
   font-weight: 600;
-  font-size: 23px;
 }
 
 .rectangle23.paalala1 p {
   color: #ececec;
-  font-size: 15px;
-  /* line-height: 1.5;   Better readability */
+  font-size: 23px;
   text-align: justify;
   margin: 15px 30px 10px;
   text-align: left;
   font-weight: 300;
-  font-size: 23px;
 }
 
 /* --- Senior Care --- */
@@ -81,22 +76,27 @@
   margin: 0; /* Remove default margins */
 }
 
-.senior-care-button {
-  margin-top: 15px;
-  padding: 8px 16px;
-  width: 70%;
-  background-color: #d60000;
-  color: #fff;
-  border-radius: 20px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+.rectangle23 .senior-care-button,
+.rectangle23 .emergency-services-button,
+.rectangle23 .chat-assistance-button {
+    margin-top: 20px !important;
+    padding: 12px 20px !important;
+    width: 75% !important;
+    background-color: #d60000 !important;
+    color: #fff !important;
+    border-radius: 20px !important;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15) !important;
+    cursor: pointer !important;
+    transition: background-color 0.3s ease, transform 0.3s ease !important;
 }
 
-.senior-care-button:hover {
-  background-color: #b30000;
-  transform: scale(1.05); /* Slight zoom on hover */
+.rectangle23 .senior-care-button:hover,
+.rectangle23 .emergency-services-button:hover,
+.rectangle23 .chat-assistance-button:hover {
+    background-color: #b30000 !important;
+    transform: scale(1.05) !important;
 }
+
 
 /* --- Emergency Services --- */
 .rectangle23.emergencyservices .Emergency-Title {
@@ -121,23 +121,6 @@
   text-align: left;
   color: #1e1e1e; /* Text color */
   margin: 0; /* Remove default margins */
-}
-
-.emergency-services-button {
-  margin-top: 50px;
-  padding: 8px 16px;
-  width: 70%;
-  background-color: #d60000;
-  color: #fff;
-  border-radius: 20px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.emergency-services-button:hover {
-  background-color: #d60000;
-  transform: scale(1.05); /* Slight zoom on hover */
 }
 
 /* --- Chat Assistance --- */
@@ -169,7 +152,7 @@
   margin-top: 50px;
   padding: 8px 16px;
   width: 70%;
-  background-color: #d60000;
+  background-color: #C31C1C;
   color: #fff;
   border-radius: 20px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
@@ -198,7 +181,7 @@
   flex-direction: column; /* Stack content vertically */
   justify-content: space-between; /* Distribute content evenly */
   align-items: center;
-  border-radius: 40px;
+  border-radius: 30px;
   height: 425px;
   width: 327px;
   background-color: #ffffff;
@@ -289,14 +272,11 @@
   .rectangle23.chatassistance h2 {
     font-size: 18px; /* Reduce title font size */
   }
-  .senior-care-button {
-    margin-top: 12px;
-    width: 80%; /* Adjusted for smaller screens */
-  }
+  .senior-care-button,
   .chat-assistance-button,
   .emergency-services-button {
-    margin-top: 34px;
-    width: 65%; /* Adjusted for smaller screens */
+    margin-top: 20px;
+    width: 80%; /* Consistent width for all buttons */
   }
   .senior-care-button-text,
   .emergency-services-button-text,

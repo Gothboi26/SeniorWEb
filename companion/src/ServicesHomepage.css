@@ -33,7 +33,7 @@
   display: flex;
   justify-content: center;
   align-items: center; /* Aligns content consistently */
-  gap: 4rem;
+  gap: 5rem;
   margin-top: 3%;
 }
 
@@ -91,7 +91,7 @@
 .Service-Description {
   font-family: "Roboto", sans-serif;
   font-weight: 300;
-  font-size: 2rem;
+  font-size: 1.8rem;
   color: #555;
   margin: 1rem 0;
 }
@@ -108,7 +108,7 @@
   border: none;
   border-radius: 40px;
   padding: 0.5rem 1rem;
-  font-size: 1.7rem;
+  font-size: 1.5rem;
   cursor: pointer;
   width: 100%;
   font-family: "Roboto", sans-serif;
