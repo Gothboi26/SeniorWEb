@@ -1,28 +1,28 @@
 /* ----- Footer Section ----- */
 .App-footer {
   background-color: #1f1785;
-  padding: 20px 0;
+  padding: 40px 20px; /* Keeps padding consistent */
   width: 100%;
+  display: flex;
+  justify-content: center; /* Centers content */
 }
 
 /* Footer main container */
 .footer-section {
   color: #d9d8d8;
-  margin: 0 auto;
+  width: 85%; /* Reduced from 90% for less side margin */
+  max-width: 1100px; /* Prevents stretching on large screens */
   padding: 20px;
-  font-size: 14px;
+  font-size: 1.2rem; /* Increased text size */
   text-align: left;
   display: flex;
   flex-direction: column;
-  max-width: 1200px; /* Prevents stretching on large screens */
 }
 
 /* Footer title */
 .App-footer h1 {
-  font-size: 18px;
-  margin-top: 10px;
-  margin-bottom: 20px;
-  text-align: left;
+  font-size: 1.3rem; /* Increased size for better visibility */
+  margin: 10px 0 20px;
 }
 
 /* Footer content - Desktop: Row Layout */
@@ -31,50 +31,55 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  gap: 20px;
+  gap: 30px; /* Increased gap for better spacing */
+  margin: 0 auto; /* Ensures content stays in center */
+  width: 100%;
 }
 
 /* Left side - Contact Information */
 .footer-text1 {
   flex: 1;
+  max-width: 450px; /* Prevents text from stretching */
 }
 
 .footer-text1 p {
   color: #d9d9d9;
-  font-size: 13px;
+  font-size: 1.2rem; /* Increased text size */
   margin: 0;
-  line-height: 1.5;
+  line-height: 1.6; /* Slightly increased for better readability */
 }
 
 /* Icons & Links Container */
 .footer-icons-and-links {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 30px;
 }
 
-/* Icons - Facebook & Email */
+/* Icons - Facebook & Email (Aligned Vertically) */
 .footer-icons {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Changed to vertical alignment */
   align-items: center;
-  gap: 10px;
+  gap: 15px;
 }
 
 .footer-icons img {
-  width: 25px;
+  width: 40px; /* Increased size */
   height: auto;
-  transition: transform 0.3s;
+  transition: transform 0.3s ease-in-out;
 }
 
+/* Hover Effect for Icons */
 .footer-icons img:hover {
-  transform: scale(1.1);
+  transform: scale(1.2) rotate(5deg); /* Slight rotation for a modern effect */
+  filter: brightness(1.3); /* Makes it brighter */
 }
 
 /* Vertical Separator Line */
 .vertical-line {
   width: 2px;
-  height: 50px;
+  height: 60px; /* Made it a bit taller */
   background-color: #d9d8d8;
 }
 
@@ -83,30 +88,124 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
+  gap: 12px; /* Adjusted spacing */
 }
 
 .footer-link {
   color: #d9d8d8;
-  font-size: 13px;
+  font-size: 1.2rem; /* Increased text size */
   text-decoration: none;
-  transition: color 0.3s;
+  transition: color 0.3s, transform 0.3s ease-in-out;
+}
+
+/* Hover Effect for Footer Links */
+.footer-link:hover {
+  color: #ffd700;
+  transform: translateX(5px); /* Adds a subtle slide effect */
+}
+
+/* ----- Modal Popup Window ----- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* Dark background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 50px;
+  border-radius: 15px;
+  width: 60%;
+  max-width: 600px;
+  text-align: left;
+  position: relative;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+  overflow-y: auto;
+  max-height: 80vh;
+}
+
+/* Modal Text Styling */
+.modal-content h2,
+.modal-content h3 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.modal-content h2 {
+  text-align: center;
+}
+
+.modal-content h3 {
+  text-align: left;
+}
+
+.modal-content p {
+  color: #555;
+  margin: 8px 0;
+  line-height: 1.6;
+}
+
+.modal-content ul {
+  margin: 10px 0;
+  padding-left: 20px;
+}
+
+.modal-content li {
+  margin: 5px 0;
+  list-style-type: disc;
+}
+
+/* Close Button */
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #555;
+  transition: color 0.3s ease;
+}
+
+.close-button:hover {
+  color: #e63946;
+}
+
+/* Footer Link (Button) */
+.footer-link {
+  background: none;
+  border: none;
+  color: #d9d8d8;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.2s;
 }
 
 .footer-link:hover {
   color: #ffd700;
+  transform: scale(1.1);
 }
+
+
 
 /* ----- Responsive Adjustments ----- */
 @media (max-width: 768px) {
   .footer-content {
     flex-direction: column;
     text-align: center;
+    gap: 20px;
   }
 
   .footer-icons-and-links {
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
   }
 
   .footer-links {

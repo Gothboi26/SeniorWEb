@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import BackToHome from "./BackToHome";
 import "./Chat.css";
+
 
 
 function Chat({ role, handleLogout }) {
@@ -107,6 +109,9 @@ function Chat({ role, handleLogout }) {
         
 
       </div>
+
+      <BackToHome role={role}/>
+
       <Footer role={role} />
     </div>
   );

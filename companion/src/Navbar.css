@@ -73,24 +73,11 @@
   display: inline;
 }
 
-.Navbar-links a,
-.Navbar-right a {
+.Navbar-links a {
   color: #1f1785;
   text-decoration: none;
   padding: 8px;
   position: relative;
-  transition: background-color 0.3s;
-  font-size: 25px;
-  font-family: "Roboto", "sans-serif";
-  font-weight: 700;
-}
-
-.Navbar-links-a,
-.Navbar-right a {
-  color: #1f1785;
-  text-decoration: none;
-  font-weight: bold;
-  padding: 8px;
   transition: background-color 0.3s;
   font-size: 25px;
   font-family: "Roboto", "sans-serif";
@@ -129,9 +116,43 @@
 .Navbar-right {
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 20px; /* Space between buttons */
   position: absolute;
   right: 50px;
+  padding: 10px;
+}
+
+.Navbar-right a {
+  text-decoration: none;
+  padding: 10px 30px;
+  font-size: 23px; /* Set font size to 25px */
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  border-radius: 25px;
+  transition: 0.3s ease-in-out;
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.profile-link {
+  background-color: #C31C1C;
+  color: white;
+  border: none;
+}
+
+.profile-link:hover {
+  background-color: #a71919; /* Darker shade on hover */
+}
+
+/* Logout Button - White with Red Border */
+.logout-link {
+  background-color: white;
+  color: #C31C1C;
+  border: 2px solid #C31C1C;
+}
+
+.logout-link:hover {
+  background-color: #C31C1C;
+  color: white;
 }
 
 /* Sidebar Styling */
