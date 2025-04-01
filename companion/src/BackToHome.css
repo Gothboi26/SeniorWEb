@@ -1,0 +1,30 @@
+.back-home-container {
+    width: 100%;
+    text-align: center;
+    margin-top: 40px; /* Adds spacing from content */
+    margin-bottom: 20px; /* Adds spacing above the footer */
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: #FFFFFF;
+    background-color: #C31C1C;
+    font-size: 1.2rem;
+    padding: 15px 30px;
+    border-radius: 40px;
+    transition: background 0.3s ease, transform 0.2s ease;
+    gap: 10px;
+}
+
+.back-link:hover {
+    background-color: #a52a2a;
+    transform: scale(1.05);
+}
+
+.arrow-icon {
+    width: 21px;  /* Adjust the size */
+    height: 21px;
+    margin-right: 8px; /* Space between icon and text */
+}
