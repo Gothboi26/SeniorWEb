@@ -20,6 +20,7 @@ import EmergenciesAdmin from "./EmergenciesAdmin";
 import ChatInquiries from "./ChatInquiries";
 import Events from "./Events";
 import Settings from "./Setting";
+import Officials from "./Officials";
 import "./Sidebar.css";
 import logo from "./assets/logo.png";
 import appoint from "./assets/appoint.png"; // For Senior Care logo
@@ -27,8 +28,6 @@ import emergency from "./assets/emergency.png"; // For Emergency Services logo
 import chat from "./assets/chat.png"; // For Chat Assistance logo
 import doctor from "./assets/doctor.png";
 import arrow from "./assets/arrow.png";
-import boy from "./assets/boy.png";
-import girl from "./assets/girl.png";
 
 Modal.setAppElement("#root");
 // Array of Health Services
@@ -290,55 +289,9 @@ const RectangleSection = ({ role }) => {
           </div>
         </div>
       </div>
-
-      <div className="barangay-health-officials">
-        <div className="officials-header">
-          <p className="officials-subheader">OFFICIALS</p>
-          <h1 className="officials-title">Our Barangay Health Officials</h1>
-        </div>
-        <div class="officials-grid">
-          <div class="official-card">
-            <img src={boy} alt="brgy-official" class="official-image" />
-            <p class="official-name">Ferrer, Rizalino </p>
-            <p class="official-position">Punong Barangay</p>
-          </div>
-          <div class="official-card">
-            <img src={girl} alt="brgy-official" class="official-image" />
-            <p class="official-name">Matos, Rica</p>
-            <p class="official-position">Kagawad</p>
-          </div>
-          <div class="official-card">
-            <img src={girl} alt="brgy-official" class="official-image" />
-            <p class="official-name">De Gula, Susan</p>
-            <p class="official-position">Kagawad</p>
-          </div>
-          <div class="official-card">
-            <img src={girl} alt="brgy-official" class="official-image" />
-            <p class="official-name">Dela Cruz, Zella</p>
-            <p class="official-position">Kagawad</p>
-          </div>
-          <div class="official-card">
-            <img src={boy} alt="brgy-official" class="official-image" />
-            <p class="official-name">Moises, Beltran</p>
-            <p class="official-position">Kagawad</p>
-          </div>
-          <div class="official-card">
-            <img src={boy} alt="brgy-official" class="official-image" />
-            <p class="official-name">Bernardino, Bogie</p>
-            <p class="official-position">Kagawad</p>
-          </div>
-          <div class="official-card">
-            <img src={boy} alt="brgy-official" class="official-image" />
-            <p class="official-name">Edgardo, Dizon</p>
-            <p class="official-position">Kagawad</p>
-          </div>
-          <div class="official-card">
-            <img src={girl} alt="brgy-official" class="official-image" />
-            <p class="official-name">Colibao, Shennel</p>
-            <p class="official-position">Kagawad</p>
-          </div>
-        </div>
-      </div>
+      
+      <Officials ></Officials>
+      
     </div>
   );
 };

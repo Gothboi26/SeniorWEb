@@ -47,8 +47,8 @@
 }
 
 .Service-Icon img {
-  width: 24px;
-  height: 24px;
+  width: 40px;
+  height: 40px;
   transition: transform 0.2s;
 }
 
@@ -79,9 +79,9 @@
 }
 
 .Service-Name {
-  font-size: 2rem;
+  font-size: 3rem;
   font-weight: 600;
-  color: #d60000;
+  color: #C31C1C;
   display: flex; /* Use flexbox for horizontal alignment */
   align-items: center; /* Vertically aligns text and icon */
   gap: 7.5rem; /* Adds space between the text and the arrow */
@@ -89,9 +89,8 @@
 }
 
 .Service-Description {
-  font-family: "roboto", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-weight: 300;
-  font-weight: 200;
   font-size: 2rem;
   color: #555;
   margin: 1rem 0;
@@ -104,16 +103,16 @@
 }
 
 .Service-Book-Button {
-  background-color: red;
+  background-color: #C31C1C;
   color: white;
   border: none;
-  border-radius: 20px;
+  border-radius: 40px;
   padding: 0.5rem 1rem;
-  font-size: 1rem;
+  font-size: 1.7rem;
   cursor: pointer;
-  width: 50%;
+  width: 100%;
   font-family: "Roboto", sans-serif;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .Service-Book-Button:hover {
