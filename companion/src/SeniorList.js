@@ -138,7 +138,7 @@ const SeniorList = () => {
             <th>Health Issue</th>
             <th>Email</th>
             <th>Barangay ID</th>
-            <th>Group Chapter</th>
+            <th>Chapter Alliance</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -215,21 +215,22 @@ const SeniorList = () => {
             <input type="text" name="barangay_id" placeholder="Barangay ID (max 5 digits)" value={formData.barangay_id} onChange={handleInputChange} maxLength="5" />
             <select name="group_chapter" value={formData.group_chapter} onChange={handleInputChange}>
               <option value="">Select Barangay Chapter</option>
-              <option value="Chapter 1">TAMARAW</option>
-              <option value="Chapter 2">GUMAMELA</option>
-              <option value="Chapter 3">AZICATE</option>
-              <option value="Chapter 4">FISCA</option>
-              <option value="Chapter 5">EL GRANDE</option>
-              <option value="Chapter 6">TANADA</option>
-              <option value="Chapter 7">UPPER TIBANGAN</option>
-              <option value="Chapter 8">POLICARPIO</option>
-              <option value="Chapter 9">VICTORIA</option>
-              <option value="Chapter 10">BAHAY PARI</option>
-              <option value="Chapter 11">RMS</option>
-              <option value="Chapter 12">SANTIAGO</option>
-              <option value="Chapter 13">SITIO SANTOLAN</option>
-              <option value="Chapter 14">DE GULA/PEREZ</option>
-              <option value="Chapter 15">ANGELES SENIOR CITIZENS ALLIANCE</option>
+              <option value="NONE">NONE</option>
+              <option value="TAMARAW">TAMARAW</option>
+              <option value="GUMAMELA">GUMAMELA</option>
+              <option value="AZICATE">AZICATE</option>
+              <option value="FISCA">FISCA</option>
+              <option value="EL GRANDE">EL GRANDE</option>
+              <option value="TANADA">TANADA</option>
+              <option value="UPPER TIBANGAN">UPPER TIBANGAN</option>
+              <option value="POLICARPIO">POLICARPIO</option>
+              <option value="VICTORIA">VICTORIA</option>
+              <option value="BAHAY PARI">BAHAY PARI</option>
+              <option value="RMS1">RMS</option>
+              <option value="SANTIAGO">SANTIAGO</option>
+              <option value="SITIO SANTOLAN">SITIO SANTOLAN</option>
+              <option value="DE GULA/PEREZ">DE GULA/PEREZ</option>
+              <option value="ANGELES SENIOR CITIZENS ALLIANCE">ANGELES SENIOR CITIZENS ALLIANCE</option>
             </select>
 
             <div className="modal-buttons">
