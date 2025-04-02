@@ -6,7 +6,7 @@ import Footer from "./Footer";
 import BackToHome from "./BackToHome";
 
 const excludedDays = {
-  "Health Check-up": [0, 6], // 0 - 6 Sunday to Saturday
+  "Health Check-up": [0, 6],
   "Free Medicine": [0, 6],
   Massage: [0, 6],
   "Dental Check-up": [0, 6],
@@ -14,18 +14,15 @@ const excludedDays = {
 };
 
 const SeniorCare = ({ role, handleLogout }) => {
-  // State to control the modal visibility and modal content
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
 
-  // State to control the user inputs and reservation data
   const [selectedService, setSelectedService] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [availableTimes, setAvailableTimes] = useState([]);
   const [selectedTime, setSelectedTime] = useState("");
-  const [reservedSlots, setReservedSlots] = useState([]); // Store multiple reserved slots
+  const [reservedSlots, setReservedSlots] = useState([]);
 
-  // Mock data for services and available times
   const services = [
     "Health Check-up",
     "Free Medicine",
@@ -33,38 +30,28 @@ const SeniorCare = ({ role, handleLogout }) => {
     "Dental Check-up",
     "Eye Check-up",
   ];
+
   const times = {
-    "Health Check-up": [
-      "9:00 AM - 10:00 AM",
-      "1:00 PM - 2:00 PM",
-      "3:00 PM - 4:00 PM",
-    ],
-    "Free Medicine": [
-      "10:00 AM - 12:00 PM",
-      "1:00 PM - 3:00 PM",
-      "4:00 PM - 5:00 PM",
-    ],
-    Massage: ["11:00 AM-12:00 PM", "2:30 PM - 3:30 PM", "4:00 PM - 5:00 PM"],
+    "Health Check-up": ["9:00 AM - 10:00 AM", "1:00 PM - 2:00 PM", "3:00 PM - 4:00 PM"],
+    "Free Medicine": ["10:00 AM - 12:00 PM", "1:00 PM - 3:00 PM", "4:00 PM - 5:00 PM"],
+    Massage: ["11:00 AM - 12:00 PM", "2:30 PM - 3:30 PM", "4:00 PM - 5:00 PM"],
     "Dental Check-up": ["9:30 AM - 11:30 AM", "1:00 PM - 4:30 PM"],
     "Eye Check-up": ["9:30 AM - 11:30 AM", "1:30 PM - 4:30 PM"],
   };
+
+  // Handle date selection
   const handleDateChange = (e) => {
     const dateValue = e.target.value;
-    const selectedDay = new Date(dateValue).getDay(); // 0 = Sunday, 6 = Saturday
+    const selectedDay = new Date(dateValue).getDay();
 
     if (selectedDay === 0 || selectedDay === 6) {
-      alert(
-        "Weekends (Saturday and Sunday) are not allowed. Please select a weekday."
-      );
+      alert("Weekends (Saturday and Sunday) are not allowed. Please select a weekday.");
       setSelectedDate("");
       return;
     }
 
     if (excludedDays[selectedService]?.includes(selectedDay)) {
-      //FOR ANOTHER DAY
-      alert(
-        `The selected service is not available on this day. Please choose another date.`
-      );
+      alert(`The selected service is not available on this day. Please choose another date.`);
       setSelectedDate("");
       return;
     }
@@ -72,13 +59,16 @@ const SeniorCare = ({ role, handleLogout }) => {
     setSelectedDate(dateValue);
   };
 
-  // Fetch reserved slots for the user (client) when component mounts
+  // Fetch reserved appointments
   useEffect(() => {
     const fetchReservedSlots = async () => {
       try {
-        const response = await fetch("http://localhost/php/appointments.php"); // Backend endpoint to fetch reserved slots
+        const response = await fetch("http://localhost/php/appointments.php", {
+          method: "GET",
+          credentials: "include",
+        });
         const data = await response.json();
-        setReservedSlots(data); // Store the reserved slots with their current status
+        setReservedSlots(data);
       } catch (error) {
         console.error("Error fetching reserved slots:", error);
       }
@@ -89,20 +79,18 @@ const SeniorCare = ({ role, handleLogout }) => {
     }
   }, [role]);
 
-  // Function to handle service change
+  // Handle service selection
   const handleServiceChange = (e) => {
     const service = e.target.value;
     setSelectedService(service);
-    setAvailableTimes(times[service] || []); // Update available times based on selected service
+    setAvailableTimes(times[service] || []);
   };
 
-  // Function to open modal and set content
   const openModal = (contentType) => {
     setModalContent(contentType);
     setModalIsOpen(true);
   };
 
-  // Close modal
   const closeModal = () => {
     setModalIsOpen(false);
     setModalContent("");
@@ -111,35 +99,32 @@ const SeniorCare = ({ role, handleLogout }) => {
     setSelectedTime("");
   };
 
-  // Handle reservation confirmation (send to backend)
+  // Reservation handler
   const handleReservation = async () => {
     const newReservation = {
       service: selectedService,
       date: selectedDate,
       time: selectedTime,
-      user_id: 1, // Assuming a user_id is set, replace it with actual user ID if needed
-      status: "Pending Approval", // Add the "Pending Approval" status
+      status: "Pending Approval",
     };
 
-    // Send reservation data to backend (add new reservation to the database)
     try {
       const response = await fetch("http://localhost/php/appointments.php", {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(newReservation),
       });
+
       const data = await response.json();
 
       if (response.ok) {
-        // Update local state with the reservation and its "Pending Approval" status
         setReservedSlots([...reservedSlots, newReservation]);
-
-        // Show confirmation message
         alert("Your reservation is confirmed. It is pending approval.");
       } else {
-        console.error("Error in reservation:", data.error);
+        console.error("Reservation failed:", data.error);
       }
     } catch (error) {
       console.error("Error making reservation:", error);
@@ -156,183 +141,107 @@ const SeniorCare = ({ role, handleLogout }) => {
       </div>
 
       <div className="senior-details-container">
-        <p className="senior-title-p">Mga Hakbang sa Pag-book ng Appointment Gamit ang Aplikasyon para sa
-        Serbisyong Pangkalusugan at Iba Pa para sa mga Nakatatanda</p>
-      
+        <p className="senior-title-p">
+          Mga Hakbang sa Pag-book ng Appointment Gamit ang Aplikasyon para sa Serbisyong Pangkalusugan at Iba Pa para sa mga Nakatatanda
+        </p>
+
         <div className="instruction-container">
           <div className="instruction-desc">
             <ol className="instruction-list">
               <li>
                 <strong>Piliin ang Serbisyong Kailangan:</strong>
-                <p>
-                  Hanapin ang mga serbisyong pangkalusugan tulad ng health check-up,
-                  masahe, libreng gamot, dental check-up, o eye check-up.
-                  Pindutin ang serbisyong nais n'yo i-book.
-                </p>
+                <p>Hanapin ang mga serbisyong pangkalusugan tulad ng health check-up, masahe, libreng gamot, dental check-up, o eye check-up. Pindutin ang serbisyong nais n'yo i-book.</p>
               </li>
               <li>
                 <strong>Pumili ng Araw at Oras ng Appointment:</strong>
-                <p>
-                  Pagkatapos piliin ang serbisyo, lilitaw ang kalendaryo o listahan ng
-                  mga available na oras. Pumili ng petsa at oras na
-                  pinakakomportable para sa inyo.
-                </p>
+                <p>Pagkatapos piliin ang serbisyo, lilitaw ang kalendaryo o listahan ng mga available na oras. Pumili ng petsa at oras na pinakakomportable para sa inyo.</p>
               </li>
               <li>
                 <strong>Kumpirmahin ang Appointment:</strong>
-                <p>
-                  Kapag nakapili na ng araw at oras, pindutin ang "Kumpirmahin" o
-                  "Book Appointment" na button. Lalabas ang detalye ng inyong
-                  appointment, kasama ang petsa, oras, at lokasyon ng serbisyong
-                  napili.
-                </p>
+                <p>Kapag nakapili na ng araw at oras, pindutin ang "Kumpirmahin" o "Book Appointment". Lalabas ang detalye ng inyong appointment.</p>
               </li>
               <li>
-                <strong>Tandaan ang Detalye ng Appointment:</strong>
-                <p>
-                  Tingnan ang confirmation message o text na ipadadala ng app.
-                  Tandaan ang petsa at oras ng inyong appointment.
-                </p>
+                <strong>Tandaan ang Detalye:</strong>
+                <p>Tingnan ang confirmation message. Tandaan ang petsa at oras.</p>
               </li>
               <li>
-                <strong>Dumating sa Takdang Oras ng Appointment:</strong>
-                <p>
-                  - Siguraduhing dumating sa tamang oras o 10-15 minuto bago ang
-                  schedule upang maayos ang proseso ng inyong pagbisita.
-                </p>
+                <strong>Dumating sa Takdang Oras:</strong>
+                <p>Siguraduhing dumating 10-15 minuto bago ang schedule.</p>
               </li>
             </ol>
           </div>
-          
         </div>
 
         <div className="senior-paalala">
           <p className="senior-p">
-          <strong>Paalala: </strong>
-          Sa pamamagitan ng pag-book ng appointment, kayo ay bibigyan ng
-          prayoridad sa clinic o health center. Hindi na kailangang maghintay ng
-          matagal dahil nakatakda na ang inyong oras.
+            <strong>Paalala: </strong>Sa pamamagitan ng pag-book ng appointment, kayo ay bibigyan ng prayoridad sa clinic o health center.
           </p>
         </div>
-
       </div>
-      
-      
-      
-      {/* Conditionally render buttons based on role */}
+
       {role === "client" && (
         <div className="button-container">
-          <button
-            className="secondary-button"
-            onClick={() => openModal("reserveSlot")}
-          >
+          <button className="secondary-button" onClick={() => openModal("reserveSlot")}>
             Reserve a Slot
           </button>
-          <button
-            className="secondary-button"
-            onClick={() => openModal("editInfo")}
-          >
+          <button className="secondary-button" onClick={() => openModal("editInfo")}>
             Edit Information
           </button>
-          <button
-            className="secondary-button"
-            onClick={() => openModal("viewReservedSlot")}
-          >
+          <button className="secondary-button" onClick={() => openModal("viewReservedSlot")}>
             View Reserved Slot
           </button>
         </div>
       )}
-      {/* Modal */}
+
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        contentLabel="Reserve Slot Modal"
+        contentLabel="Reservation Modal"
         className="modal"
       >
-        <h2>{modalContent === "reserveSlot" && "Reserve a Slot"}</h2>
+        <h2>
+          {modalContent === "reserveSlot" && "Reserve a Slot"}
+          {modalContent === "viewReservedSlot" && "Your Reserved Slots"}
+          {modalContent === "editInfo" && "Edit Information"}
+        </h2>
 
-        {/* Content for Reserve Slot */}
         {modalContent === "reserveSlot" && (
           <div>
-            <div>
-              <label htmlFor="service">Choose a service:</label>
-              <select
-                id="service"
-                value={selectedService}
-                onChange={handleServiceChange}
-                className="service-select"
-              >
-                <option value="">Select a service</option>
-                {services.map((service, index) => (
-                  <option key={index} value={service}>
-                    {service}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <label htmlFor="service">Choose a service:</label>
+            <select id="service" value={selectedService} onChange={handleServiceChange} className="service-select">
+              <option value="">Select a service</option>
+              {services.map((service, idx) => (
+                <option key={idx} value={service}>{service}</option>
+              ))}
+            </select>
 
-            <div>
-              <label htmlFor="date">Choose a date:</label>
-              <input
-                type="date"
-                id="date"
-                value={selectedDate}
-                onChange={handleDateChange}
-                className="date-input"
-                disabled={!selectedService}
-              />
-            </div>
+            <label htmlFor="date">Choose a date:</label>
+            <input type="date" id="date" value={selectedDate} onChange={handleDateChange} className="date-input" disabled={!selectedService} />
 
-            <div>
-              <label htmlFor="time">Choose a time:</label>
-              <select
-                id="time"
-                value={selectedTime}
-                onChange={(e) => setSelectedTime(e.target.value)}
-                className="time-select"
-                disabled={!selectedService || !selectedDate}
-              >
-                <option value="">Select a time</option>
-                {availableTimes.length > 0 &&
-                  availableTimes.map((time, index) => (
-                    <option key={index} value={time}>
-                      {time}
-                    </option>
-                  ))}
-              </select>
-            </div>
+            <label htmlFor="time">Choose a time:</label>
+            <select id="time" value={selectedTime} onChange={(e) => setSelectedTime(e.target.value)} className="time-select" disabled={!selectedService || !selectedDate}>
+              <option value="">Select a time</option>
+              {availableTimes.map((time, idx) => (
+                <option key={idx} value={time}>{time}</option>
+              ))}
+            </select>
 
-            <button
-              onClick={handleReservation}
-              className="secondary-button"
-              disabled={!selectedService || !selectedDate || !selectedTime}
-            >
+            <button onClick={handleReservation} className="secondary-button" disabled={!selectedService || !selectedDate || !selectedTime}>
               Confirm Reservation
             </button>
           </div>
         )}
 
-        {/* Content for View Reserved Slot */}
         {modalContent === "viewReservedSlot" && (
           <div>
-            <h3>Your Reserved Slots</h3>
             {reservedSlots.length > 0 ? (
               <ul>
                 {reservedSlots.map((slot, index) => (
                   <li key={index}>
-                    <p>
-                      <strong>Service:</strong> {slot.service}
-                    </p>
-                    <p>
-                      <strong>Date:</strong> {slot.date}
-                    </p>
-                    <p>
-                      <strong>Time:</strong> {slot.time}
-                    </p>
-                    <p>
-                      <strong>Status:</strong>{" "}
-                      {slot.status || "Pending Approval"} {/* Show status */}
-                    </p>
+                    <p><strong>Service:</strong> {slot.service}</p>
+                    <p><strong>Date:</strong> {slot.date}</p>
+                    <p><strong>Time:</strong> {slot.time}</p>
+                    <p><strong>Status:</strong> {slot.status || "Pending Approval"}</p>
                     <hr />
                   </li>
                 ))}
@@ -343,7 +252,6 @@ const SeniorCare = ({ role, handleLogout }) => {
           </div>
         )}
 
-        {/* Other modal content */}
         {modalContent === "editInfo" && (
           <div>
             <p>Here you can edit your personal information.</p>
@@ -352,11 +260,9 @@ const SeniorCare = ({ role, handleLogout }) => {
 
         <button onClick={closeModal}>Close</button>
       </Modal>
-      
-      <BackToHome role={role}/>
-      
+
+      <BackToHome role={role} />
       <Footer role={role} />
-      
     </div>
   );
 };
