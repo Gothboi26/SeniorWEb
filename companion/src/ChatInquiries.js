@@ -6,6 +6,7 @@ const ChatInquiries = () => {
   const [ws, setWs] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [notifications, setNotifications] = useState([]); // Store notifications
 
   useEffect(() => {
     const socket = new WebSocket("ws://localhost:8080");
@@ -17,7 +18,13 @@ const ChatInquiries = () => {
 
     socket.onmessage = (event) => {
       const messageData = JSON.parse(event.data);
-      setMessages((prevMessages) => [...prevMessages, messageData]);
+
+      if (messageData.type === "notification") {
+        // Handle admin notifications
+        setNotifications((prev) => [...prev, messageData.content]);
+      } else {
+        setMessages((prevMessages) => [...prevMessages, messageData]);
+      }
     };
 
     setWs(socket);
@@ -26,7 +33,7 @@ const ChatInquiries = () => {
   }, []);
 
   const handleSendMessage = () => {
-    if (ws.readyState === WebSocket.OPEN) {
+    if (ws && ws.readyState === WebSocket.OPEN) {
       const message = { from: "admin", to: "client", content: newMessage };
       ws.send(JSON.stringify({ type: "message", ...message }));
       setNewMessage("");
@@ -39,6 +46,21 @@ const ChatInquiries = () => {
   return (
     <div className="chat-container">
       <header className="chat-header">Chat Inquiries</header>
+
+      {/* Notifications Section */}
+      {notifications.length > 0 && (
+        <div className="notifications">
+          <h4>Notifications</h4>
+          <ul>
+            {notifications.map((notification, index) => (
+              <li key={index} className="notification-item">
+                {notification}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       <div className="chat-window">
         {messages.map((message, index) => (
           <div

@@ -135,3 +135,22 @@
     width: 24px;
     height: 24px;
   }
+  .notifications {
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+  }
+  
+  .notifications h4 {
+    margin: 0 0 10px;
+    font-size: 16px;
+    color: #856404;
+  }
+  
+  .notification-item {
+    font-size: 14px;
+    color: #856404;
+    margin-bottom: 5px;
+  }
