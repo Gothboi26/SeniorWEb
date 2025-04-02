@@ -5,24 +5,35 @@ function Login({ setRole }) {
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
-    const response = await fetch("http://localhost/php/login.php", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    });
-    const result = await response.json();
+    try {
+      const response = await fetch("http://localhost/php/login.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include", // 🔐 Required for PHP session cookies
+        body: JSON.stringify({ username, password }),
+      });
 
-    if (result.status === "success") {
-      setRole(result.role);
-      alert(`Logged in as ${result.role}`);
-    } else {
-      alert(result.message);
+      const result = await response.json();
+
+      if (result.status === "success") {
+        setRole(result.role);
+        alert(`Logged in as ${result.role}`);
+        // Optional: redirect or store login state
+      } else {
+        alert(result.message);
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+      alert("Login failed. Check server connection.");
     }
   };
 
   return (
     <div className="form-container">
-      <label htmlFor="username">Email</label>
+      <h2>Login</h2>
+      <label htmlFor="username">Username</label>
       <input
         type="text"
         id="username"
@@ -30,6 +41,7 @@ function Login({ setRole }) {
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
+
       <label htmlFor="password">Password</label>
       <input
         type="password"
@@ -38,6 +50,7 @@ function Login({ setRole }) {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
+
       <p className="forgot-password">Forgot Password?</p>
       <button onClick={handleLogin}>Login</button>
     </div>
@@ -50,39 +63,61 @@ function Register() {
   const [role, setRole] = useState("client");
 
   const handleRegister = async () => {
-    const response = await fetch("http://localhost/php/register.php", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password, role }),
-    });
-    const result = await response.json();
+    try {
+      const response = await fetch("http://localhost/php/register.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include", // Not required unless session is created on register
+        body: JSON.stringify({ username, password, role }),
+      });
 
-    if (result.status === "success") {
-      alert("Registration successful");
-    } else {
-      alert(result.message);
+      const result = await response.json();
+
+      if (result.status === "success") {
+        alert("Registration successful");
+      } else {
+        alert(result.message);
+      }
+    } catch (error) {
+      console.error("Registration failed:", error);
+      alert("Registration failed. Check server connection.");
     }
   };
 
   return (
-    <div>
+    <div className="form-container">
       <h2>Register</h2>
+
+      <label htmlFor="register-username">Username</label>
       <input
         type="text"
+        id="register-username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
-        placeholder="Username"
+        placeholder="Enter username"
       />
+
+      <label htmlFor="register-password">Password</label>
       <input
         type="password"
+        id="register-password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
+        placeholder="Enter password"
       />
-      <select value={role} onChange={(e) => setRole(e.target.value)}>
+
+      <label htmlFor="role">Select Role</label>
+      <select
+        id="role"
+        value={role}
+        onChange={(e) => setRole(e.target.value)}
+      >
         <option value="client">Client</option>
         <option value="admin">Admin</option>
       </select>
+
       <button onClick={handleRegister}>Register</button>
     </div>
   );
