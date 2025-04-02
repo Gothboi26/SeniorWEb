@@ -168,3 +168,18 @@
   background-color: #a00000;
   color: white;
 }
+.tag {
+  display: inline-block;
+  background-color: #eee;
+  padding: 4px 8px;
+  margin: 4px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+.tag button {
+  background: none;
+  border: none;
+  margin-left: 6px;
+  cursor: pointer;
+  color: red;
+}
