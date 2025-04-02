@@ -1,123 +1,199 @@
 import React, { useEffect, useState } from "react";
-import "./Appointments.css"; // Ensure this CSS file contains the styles
+import "./Appointments.css";
 
 const Appointments = () => {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [statusMessage, setStatusMessage] = useState(""); // To display success/error messages
+  const [statusMessage, setStatusMessage] = useState("");
+  const [editing, setEditing] = useState(null);
+  const [activeTab, setActiveTab] = useState("pending");
 
-  // Fetch appointments from the backend when the component mounts
   useEffect(() => {
-    const fetchAppointments = async () => {
-      try {
-        const response = await fetch("http://localhost/php/appointments.php"); // Fetch all appointments
-        const data = await response.json();
-
-        // Update the state with the fetched data
-        if (data && Array.isArray(data)) {
-          setAppointments(data);
-        } else {
-          console.error("Invalid response from backend:", data);
-        }
-
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching appointments:", error);
-        setLoading(false);
-      }
-    };
-
     fetchAppointments();
   }, []);
 
-  // Function to handle approve or reject action
-  const handleAction = async (appointmentId, status) => {
-    setStatusMessage(""); // Reset previous status message
+  const fetchAppointments = async () => {
     try {
-      const response = await fetch("http://localhost/php/update_appointment.php", { // Update PHP file path
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          appointment_id: appointmentId,
-          status: status, // approved or rejected
-        }),
+      const response = await fetch("http://localhost/php/get_appointment.php", {
+        credentials: "include",
       });
-
-      const result = await response.json();
-
-      if (response.ok && result.success) {
-        // Update the appointment status in the state after action is performed
-        setAppointments((prevAppointments) =>
-          prevAppointments.map((app) =>
-            app.id === appointmentId ? { ...app, status: status } : app
-          )
-        );
-        setStatusMessage("Appointment status updated successfully.");
-      } else {
-        setStatusMessage("Failed to update appointment status.");
-        console.error("Failed to update appointment status", result.error);
-      }
+      const data = await response.json();
+      const normalizedData = data.map((a) => ({
+        ...a,
+        status: a.status ? a.status.toLowerCase() : "pending",
+      }));
+      setAppointments(normalizedData);
     } catch (error) {
-      console.error("Error handling action:", error);
-      setStatusMessage("An error occurred while updating the status.");
+      console.error("Failed to fetch appointments:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  // Show a loading message if data is being fetched
-  if (loading) {
-    return <div>Loading appointments...</div>;
-  }
+  const updateStatus = async (appointmentId, status) => {
+    try {
+      const response = await fetch("http://localhost/php/get_appointment.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ appointment_id: appointmentId, status }),
+      });
+      const result = await response.json();
+      if (result.success) {
+        setAppointments((prev) =>
+          prev.map((a) => (a.id === appointmentId ? { ...a, status } : a))
+        );
+        setStatusMessage("Status updated successfully.");
+      }
+    } catch (error) {
+      console.error("Error updating status:", error);
+      setStatusMessage("Failed to update status.");
+    }
+  };
+
+  const deleteAppointment = async (appointmentId) => {
+    try {
+      const response = await fetch("http://localhost/php/get_appointment.php", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ appointment_id: appointmentId }),
+      });
+      const result = await response.json();
+      if (result.success) {
+        setAppointments((prev) => prev.filter((a) => a.id !== appointmentId));
+        setStatusMessage("Appointment deleted successfully.");
+      }
+    } catch (error) {
+      console.error("Delete failed:", error);
+      setStatusMessage("Failed to delete appointment.");
+    }
+  };
+
+  const saveEdit = async () => {
+    try {
+      const response = await fetch("http://localhost/php/get_appointment.php", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(editing),
+      });
+      const result = await response.json();
+      if (result.success) {
+        setAppointments((prev) =>
+          prev.map((a) => (a.id === editing.appointment_id ? { ...a, ...editing } : a))
+        );
+        setStatusMessage("Appointment updated successfully.");
+        setEditing(null);
+      }
+    } catch (error) {
+      console.error("Update error:", error);
+      setStatusMessage("Failed to update appointment.");
+    }
+  };
+
+  const filteredAppointments = appointments.filter(
+    (app) => (app.status || "pending").toLowerCase() === activeTab
+  );
 
   return (
     <div className="table-container">
-      <h2>Appointment Request</h2>
-      {/* Display success/error message */}
+      <h2>Appointment Management</h2>
+
+      <div className="tabs">
+        {["pending", "approved", "rejected"].map((tab) => (
+          <button
+            key={tab}
+            className={`tab-button ${activeTab === tab ? "active" : ""}`}
+            onClick={() => setActiveTab(tab)}
+          >
+            {tab.charAt(0).toUpperCase() + tab.slice(1)}
+          </button>
+        ))}
+      </div>
+
       {statusMessage && <div className="status-message">{statusMessage}</div>}
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Type</th>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {appointments.map((appointment) => (
-            <tr key={appointment.id}>
-              <td>{appointment.service}</td>
-              <td>{appointment.date}</td>
-              <td className="time-text">{appointment.time}</td>
-              <td>
-                <span className={`status ${appointment.status.toLowerCase()}`}>
-                  {appointment.status} {/* Display current status */}
-                </span>
-              </td>
-              <td className="action-icons">
-                <button
-                  className="approve-button"
-                  onClick={() => handleAction(appointment.id, "approved")}
-                  disabled={appointment.status === "approved"} // Disable button if already approved
-                >
-                  ✔
-                </button>
-                <button
-                  className="reject-button"
-                  onClick={() => handleAction(appointment.id, "rejected")}
-                  disabled={appointment.status === "rejected"} // Disable button if already rejected
-                >
-                  ✖
-                </button>
-              </td>
+
+      {loading ? (
+        <div>Loading appointments...</div>
+      ) : (
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Type</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Status</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {filteredAppointments.map((app) => (
+              <tr key={app.id}>
+                <td>{app.username}</td>
+                <td>
+                  {editing?.appointment_id === app.id ? (
+                    <input
+                      value={editing.service}
+                      onChange={(e) => setEditing({ ...editing, service: e.target.value })}
+                    />
+                  ) : (
+                    app.service
+                  )}
+                </td>
+                <td>
+                  {editing?.appointment_id === app.id ? (
+                    <input
+                      type="date"
+                      value={editing.date}
+                      onChange={(e) => setEditing({ ...editing, date: e.target.value })}
+                    />
+                  ) : (
+                    app.date
+                  )}
+                </td>
+                <td>
+                  {editing?.appointment_id === app.id ? (
+                    <input
+                      value={editing.time}
+                      onChange={(e) => setEditing({ ...editing, time: e.target.value })}
+                    />
+                  ) : (
+                    app.time
+                  )}
+                </td>
+                <td>
+                  <span className={`status ${app.status}`}>{app.status}</span>
+                </td>
+                <td className="action-icons">
+                  {activeTab === "pending" ? (
+                    <>
+                      <button
+                        className="approve-button"
+                        onClick={() => updateStatus(app.id, "approved")}
+                      >
+                        ✔
+                      </button>
+                      <button
+                        className="reject-button"
+                        onClick={() => updateStatus(app.id, "rejected")}
+                      >
+                        ✖
+                      </button>
+                    </>
+                  ) : (
+                    <span className="no-actions">—</span>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 };
 
 export default Appointments;
+  
