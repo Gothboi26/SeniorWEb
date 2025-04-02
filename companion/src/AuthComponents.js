@@ -11,7 +11,7 @@ function Login({ setRole }) {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include", // 🔐 Required for PHP session cookies
+        credentials: "include",
         body: JSON.stringify({ username, password }),
       });
 
@@ -20,13 +20,18 @@ function Login({ setRole }) {
       if (result.status === "success") {
         setRole(result.role);
         alert(`Logged in as ${result.role}`);
-        // Optional: redirect or store login state
       } else {
         alert(result.message);
       }
     } catch (error) {
       console.error("Login failed:", error);
       alert("Login failed. Check server connection.");
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleLogin();
     }
   };
 
@@ -40,6 +45,7 @@ function Login({ setRole }) {
         placeholder="Juan"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
+        onKeyDown={handleKeyDown}
       />
 
       <label htmlFor="password">Password</label>
@@ -49,6 +55,7 @@ function Login({ setRole }) {
         placeholder="Juan123"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        onKeyDown={handleKeyDown}
       />
 
       <p className="forgot-password">Forgot Password?</p>
@@ -69,7 +76,7 @@ function Register() {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include", // Not required unless session is created on register
+        credentials: "include",
         body: JSON.stringify({ username, password, role }),
       });
 
@@ -86,6 +93,12 @@ function Register() {
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleRegister();
+    }
+  };
+
   return (
     <div className="form-container">
       <h2>Register</h2>
@@ -96,6 +109,7 @@ function Register() {
         id="register-username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
+        onKeyDown={handleKeyDown}
         placeholder="Enter username"
       />
 
@@ -105,6 +119,7 @@ function Register() {
         id="register-password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        onKeyDown={handleKeyDown}
         placeholder="Enter password"
       />
 
