@@ -53,20 +53,6 @@ CREATE TABLE IF NOT EXISTS events (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
-CREATE TABLE emergency_reports (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT NOT NULL,
-  type ENUM('Police', 'Ambulance', 'Fire Truck', 'Family') NOT NULL,
-  full_name VARCHAR(100),
-  contact_number VARCHAR(20) NOT NULL,
-  location TEXT NOT NULL,
-  notes TEXT,
-  status ENUM('active', 'ongoing', 'resolved') DEFAULT 'active',
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-);
-
-
 CREATE TABLE user_profile (
   id INT AUTO_INCREMENT PRIMARY KEY,
   user_id INT,
@@ -84,4 +70,17 @@ CREATE TABLE user_profile (
   address VARCHAR(255),
   profilePicture LONGTEXT,
   FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+
+CREATE TABLE emergencies (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  username VARCHAR(100) NOT NULL,
+  type VARCHAR(50) NOT NULL,
+  location VARCHAR(255) NOT NULL,
+  full_name VARCHAR(100) NOT NULL,
+  contact_number VARCHAR(50) NOT NULL,
+  status VARCHAR(20) NOT NULL DEFAULT 'Ongoing',
+  date_reported DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
