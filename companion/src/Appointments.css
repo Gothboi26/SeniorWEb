@@ -1,13 +1,52 @@
 /* Table container */
-.table-container {
-  padding: 20px;
+.appointment-table-container {
+  /* padding: 20px;
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin: 20px auto;
-  max-width: 100%;
+  max-width: 100%; */
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  margin: 20px auto;
+  margin-bottom: 15px;
   overflow-x: auto; /* Allow horizontal scroll on smaller screens */
 }
+
+.admin-appoint-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.admin-appoint-header h2 {
+  font-family: "Roboto", sans-serif;
+  font-size: 1.8rem;
+  color: #1E1E1E;
+  margin-bottom: 15px;
+}
+
+.appoint-tabs {
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: "Roboto", sans-serif;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+  justify-content: flex-end;
+}
+
+.appoint-tabs button {
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: none;
+  background-color: #C31C1C;
+  color: #FFFFFF;
+}
+
 
 /* Left-align the heading */
 .left-aligned {
@@ -19,7 +58,7 @@
 }
 
 /* Table styles */
-.table {
+.appointment-table {
   width: 100%;
   border-collapse: collapse;
   background-color: #f9f9f9;
@@ -28,24 +67,26 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.table th,
-.table td {
-  padding: 12px;
+.appointment-table th,
+.appointment-table td {
+  padding: 10px 20px;
   text-align: left;
+  font-size: 1rem;
   font-family: "Roboto", sans-serif;
 }
 
-.table thead th {
-  background-color: #d6e4ff;
-  color: #333;
-  font-size: 14px;
+.appointment-table thead th {
+  background-color: #D0CDF6;
+  color: #1e1e1e;
+  font-size: 1rem;
+  text-align: center;
 }
 
-.table tbody tr {
+.appointment-table tbody tr {
   border-bottom: 1px solid #ccc;
 }
 
-.table tbody tr:last-child {
+.appointment-table tbody tr:last-child {
   border-bottom: none;
 }
 
@@ -94,7 +135,7 @@
 
 /* Medium screens (tablets) */
 @media (max-width: 768px) {
-  .table-container {
+  .appointment-table-container {
     width: 100%; /* Ensure the table container spans full width */
     padding: 10px;
   }
@@ -121,7 +162,7 @@
 
 /* Small screens (mobile devices) */
 @media (max-width: 480px) {
-  .table-container {
+  .appointment-table-container {
     padding: 5px;
   }
 
@@ -146,7 +187,7 @@
   }
 
   /* Ensure the table is scrollable horizontally */
-  .table-container {
+  .appointment-table-container {
     overflow-x: auto;
   }
 }

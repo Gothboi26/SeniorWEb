@@ -7,13 +7,12 @@ body {
 }
 
 /* Table Container */
-.table-container {
-  max-width: 1200px;
-  margin: 30px auto;
-  padding: 20px;
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+.emergency-table-container {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  margin: 20px auto;
+  margin-bottom: 15px;
   overflow-x: auto;
 }
 
@@ -27,21 +26,32 @@ body {
   margin-bottom: 20px;
 }
 
-.left-aligned {
+.emergency-left {
   font-size: 1.8rem;
-  font-weight: 600;
-  color: #333;
+  margin-bottom: 10px;
+  color: #1E1E1E;
 }
 
-input[type="text"] {
-  padding: 10px;
+.filter-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.filter-sort {
+  padding: 10px 20px;
   font-size: 14px;
-  border-radius: 6px;
+  border-radius: 20px;
   border: 1px solid #ccc;
   outline: none;
   width: 250px;
   transition: border 0.3s ease;
 }
+
+.filter-sort:focus {
+  border-color: #007bff;
+}
+
 
 input[type="text"]:focus {
   border-color: #c31c1c;
@@ -49,9 +59,9 @@ input[type="text"]:focus {
 
 /* Sort Dropdown */
 .sort-dropdown {
-  padding: 10px 15px;
-  font-size: 14px;
-  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 20px;
   background-color: #c31c1c;
   color: #fff;
   border: none;
@@ -69,7 +79,7 @@ input[type="text"]:focus {
 }
 
 /* Table Styles */
-.table {
+.emergency-table-container .table {
   width: 100%;
   border-collapse: collapse;
   border-radius: 10px;
@@ -77,12 +87,12 @@ input[type="text"]:focus {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
-.table th,
-.table td {
-  padding: 14px;
+.emergency-table-container .table th,
+.emergency-table-container .table td {
+  padding: 10px 20px;
   text-align: left;
-  font-size: 14px;
-  color: #333;
+  font-size: 1rem;
+  color: #1E1E1E;
   vertical-align: middle;
 }
 
@@ -106,24 +116,30 @@ input[type="text"]:focus {
 
 /* Status Tags */
 .table td.status-active {
-  background-color: #fff3cd;
-  color: #856404;
+  background-color: #FF6B6B;
+  color: #1E1E1E;
   font-weight: 500;
   border-radius: 5px;
 }
 
 .table td.status-ongoing {
-  background-color: #cce5ff;
-  color: #004085;
+  background-color: #9AC3FF;
+  color: #1E1E1E;
+  font-weight: 600;
+}
+
+.table td.status-resolved {
+  background-color: #6BCB77;
+  color: #1E1E1E;
   font-weight: 500;
   border-radius: 5px;
 }
 
-.table td.status-resolved {
-  background-color: #d4edda;
-  color: #155724;
-  font-weight: 500;
-  border-radius: 5px;
+.status-action {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #C31C1C;
+  border: none;
 }
 
 /* Updating Text Style */

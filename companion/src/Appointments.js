@@ -97,27 +97,32 @@ const Appointments = () => {
   );
 
   return (
-    <div className="table-container">
-      <h2>Appointment Management</h2>
+    <div className="appointment-table-container">
+      <div className="admin-appoint-header">
+        <h2>Appointment Management</h2>
+        <div className="appoint-tabs">
+          {["pending", "approved", "rejected"].map((tab) => (
+            <button
+              key={tab}
+              className={`tab-button ${activeTab === tab ? "active" : ""}`}
+              onClick={() => setActiveTab(tab)}
+            >
+              {tab.charAt(0).toUpperCase() + tab.slice(1)}
+            </button>
+          ))}
+        </div>
 
-      <div className="tabs">
-        {["pending", "approved", "rejected"].map((tab) => (
-          <button
-            key={tab}
-            className={`tab-button ${activeTab === tab ? "active" : ""}`}
-            onClick={() => setActiveTab(tab)}
-          >
-            {tab.charAt(0).toUpperCase() + tab.slice(1)}
-          </button>
-        ))}
       </div>
+      
+
+      
 
       {statusMessage && <div className="status-message">{statusMessage}</div>}
 
       {loading ? (
         <div>Loading appointments...</div>
       ) : (
-        <table className="table">
+        <table className="appointment-table">
           <thead>
             <tr>
               <th>Username</th>

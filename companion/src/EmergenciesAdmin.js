@@ -91,11 +91,11 @@ const EmergenciesAdmin = () => {
   };
 
   return (
-    <div className="table-container">
+    <div className="emergency-table-container">
       <div className="header-container">
-        <h2 className="left-aligned">Emergencies</h2>
-        <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-          <input
+        <h2 className="emergency-left">Emergencies</h2>
+        <div className="filter-right">
+          <input className="filter-sort"
             type="text"
             placeholder="Search by name, type, status, location, or contact"
             value={searchTerm}
@@ -147,7 +147,7 @@ const EmergenciesAdmin = () => {
                   {loadingStatusIndex === index ? (
                     <span className="loading-text">Updating...</span>
                   ) : (
-                    <select
+                    <select className="status-action"
                       value={item.status}
                       onChange={(e) => handleStatusChange(index, e.target.value)}
                     >
