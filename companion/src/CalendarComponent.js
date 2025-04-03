@@ -256,40 +256,62 @@ const RectangleSection = ({ role }) => {
       </div>
 
       <div className="Events">
-        <div className="Events-Header">
-          <p className="Events-Subheader">ACTIVITIES</p>
-          <h1 className="Events-Title">Calendar of Activities</h1>
-        </div>
+  <div className="Events-Header">
+    <p className="Events-Subheader">ACTIVITIES</p>
+    <h1 className="Events-Title">Calendar of Activities</h1>
+  </div>
 
-        <div className="events-container">
-          <Calendar
-            onChange={onDateChange}
-            value={date}
-            locale="en-US"
-            tileClassName={tileClassName}
-          />
+  <div className="events-container">
+    <Calendar
+      onChange={onDateChange}
+      value={date}
+      locale="en-US"
+      tileClassName={tileClassName}
+    />
 
-          <div className="events-list">
-            <h3 className="Events-listheader">
-              Events on {date.toDateString()}
-            </h3>
-            {events && events.length > 0 ? (
-              <ul>
-                {events.map((event) => (
-                  <li key={event.id}>
-                    <strong>{event.event_title}</strong> -{" "}
-                    {event.event_description}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p>
-                No events for this date. You can still click on other dates.
+    <div className="events-list">
+      <h3 className="Events-listheader">Events on {date.toDateString()}</h3>
+
+      {events && events.length > 0 ? (
+        <div className="event-list-container">
+          {events.map((event) => (
+            <div key={event.id} className="event-item">
+              <h4 className="event-title">
+                📝 <strong>Event Title:</strong> {event.event_title || "Untitled Event"}
+              </h4>
+
+              <p className="event-description">
+                📄 <strong>Event Description:</strong>{" "}
+                {event.event_description || "No description available."}
               </p>
-            )}
-          </div>
+
+              <div className="event-meta">
+                <span className="location">{event.location || "Location not specified"}</span>
+                <span className="organizer">{event.organizer || "Organizer unknown"}</span>
+                <span className="datetime">
+                  {event.date_time
+                    ? new Date(event.date_time).toLocaleString("en-US", {
+                        month: "long",
+                        day: "numeric",
+                        year: "numeric",
+                        hour: "numeric",
+                        minute: "2-digit",
+                        hour12: true,
+                      })
+                    : "Time not available"}
+                </span>
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
+      ) : (
+        <p>No events for this date. You can still click on other dates.</p>
+      )}
+    </div>
+  </div>
+</div>
+
+
       
       <Officials ></Officials>
       

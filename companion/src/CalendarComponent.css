@@ -1,21 +1,14 @@
-/* ----- Home ----- */
+/* ----- Home Base Styles ----- */
 body,
 html {
   overflow-x: hidden;
   width: 100%;
 }
+
 .container {
   max-width: 100%;
 }
-/* ----- Home ----- */
-body,
-html {
-  overflow-x: hidden;
-  width: 100%;
-}
-.container {
-  max-width: 100%;
-}
+
 .CalendarComponent {
   display: flex;
   flex-direction: column;
@@ -23,6 +16,7 @@ html {
   justify-content: flex-start;
   width: 100%;
 }
+
 .homepage {
   position: relative;
   width: 100vw;
@@ -57,6 +51,7 @@ html {
   padding: 75px;
   background: transparent;
 }
+
 .home-header {
   display: flex;
   flex-direction: column;
@@ -91,7 +86,7 @@ html {
 }
 
 .explore-button {
-  margin-top: 20px; /* Space between text and button */
+  margin-top: 20px;
   padding: 10px 20px;
   background-color: #d60000;
   color: white;
@@ -104,16 +99,16 @@ html {
 }
 
 .explore-button:hover {
-  background-color: #800000; /* Darker color on hover */
+  background-color: #800000;
 }
 
-/* Facebook Box Styling */
+/* Facebook Section */
 .facebook-box {
   background-color: #f1f1f1;
   padding: 20px;
   border-radius: 20px;
   width: 100%;
-  max-width: 520px; /* Set a max width for the box */
+  max-width: 520px;
 }
 
 .facebook-page {
@@ -130,6 +125,120 @@ h3 {
   margin-bottom: 0px;
 }
 
+/* ----- Events Section Layout ----- */
+.Events {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.events-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1500px;
+  margin-top: 20px;
+}
+
+.react-calendar {
+  flex: 1;
+  min-width: 350px;
+  height: 400px;
+  border-radius: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  padding: 10px;
+}
+
+/* Make events list same height/width as calendar */
+.events-list {
+  flex: 1;
+  min-width: 350px;
+  height: 400px;
+  overflow-y: auto;
+  border-radius: 15px;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  scroll-behavior: smooth;
+}
+
+.events-list::-webkit-scrollbar {
+  width: 6px;
+}
+.events-list::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+/* -------------------------- */
+/*       Event List Cards     */
+/* -------------------------- */
+
+.event-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-top: 1.5rem;
+  width: 100%;
+}
+
+.event-item {
+  background-color: #fff;
+  border-left: 5px solid #007bff;
+  padding: 16px 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.event-item:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.event-title {
+  font-weight: bold;
+  font-size: 30px;
+  color: #111;
+  margin-bottom: 6px;
+}
+
+.event-description {
+  font-style: italic;
+  font-size: 6px;
+  color: #444;
+  margin-bottom: 1px;
+  text-align: left;
+}
+
+.event-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: #555;
+}
+
+.event-meta span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.event-meta span.location::before {
+  content: "📍 Location:";
+}
+.event-meta span.organizer::before {
+  content: "👤 Organizer:";
+}
+.event-meta span.datetime::before {
+  content: "🕒 Time:";
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
   .homepage {
     height: auto;
@@ -140,6 +249,7 @@ h3 {
     font-size: 2.5rem;
     margin-top: 10px;
   }
+
   .home-description {
     font-size: 1.1rem;
     margin: 10px;
@@ -148,6 +258,7 @@ h3 {
   .facebook-box {
     padding: 15px;
   }
+
   .facebook-page {
     padding: 15px;
   }
@@ -163,37 +274,42 @@ h3 {
     align-items: center;
     margin: 0;
   }
+
   .events-container {
-    flex-direction: column; /* Stack elements vertically */
+    flex-direction: column;
     align-items: center;
-    gap: 15px;
   }
 
   .react-calendar,
   .events-list {
-    width: 90%; /* Adjust width for smaller screens */
-    height: auto; /* Allow height to adjust dynamically */
-    padding: 15px;
+    width: 90%;
+    height: auto;
   }
 
-  .Events-Subheader,
-  .Events-Title {
-    text-align: center; /* Center the text for better readability */
-    width: 100%;
-  }
-
-  .events-list {
-    max-width: 90%;
-    overflow-y: auto;
-  }
   .rectangle23 {
     width: 90%;
-    height: auto; /* Allow dynamic height */
+    height: auto;
     padding: 15px;
   }
 
   .choices {
-    flex-direction: column; /* Stack cards vertically */
+    flex-direction: column;
     gap: 15px;
+  }
+
+  .event-item {
+    padding: 12px 14px;
+  }
+
+  .event-title {
+    font-size: 16px;
+  }
+
+  .event-description {
+    font-size: 13px;
+  }
+
+  .event-meta {
+    font-size: 13px;
   }
 }
