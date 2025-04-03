@@ -6,6 +6,7 @@ import deleteIcon from "./assets/delete.png";
 const SeniorList = () => {
   const [patients, setPatients] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [editingId, setEditingId] = useState(null); // 👈 track if editing
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -34,8 +35,12 @@ const SeniorList = () => {
         const response = await fetch("http://localhost/php/get_users.php");
         if (!response.ok) throw new Error("Failed to fetch data");
         const result = await response.json();
-        if (result.status === "success") setPatients(result.data);
-        else alert(result.message);
+        if (result.status === "success") {
+          const clientsOnly = result.data.filter(user => user.role === "client");
+          setPatients(clientsOnly);
+        } else {
+          alert(result.message);
+        }
       } catch (error) {
         console.error("Error fetching patients:", error.message);
       }
@@ -46,7 +51,6 @@ const SeniorList = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-
     if (name === "barangay_id") {
       if (/^\d{0,5}$/.test(value)) {
         setFormData({ ...formData, [name]: value });
@@ -102,19 +106,9 @@ const SeniorList = () => {
       const result = await response.json();
       if (result.status === "success") {
         alert("Senior added successfully");
-        setPatients([...patients, payload]);
+        setPatients([...patients, { ...payload, role: "client" }]);
         setShowModal(false);
-        setFormData({
-          username: "",
-          password: "",
-          barangay_id: "",
-          group_chapter: "",
-          email_address: "",
-          age: "",
-          sex: "",
-          address: "",
-          health_issues: []
-        });
+        resetForm();
       } else {
         alert(result.message);
       }
@@ -123,11 +117,98 @@ const SeniorList = () => {
     }
   };
 
+  const handleEdit = (patient) => {
+    setFormData({
+      username: patient.username,
+      password: "", // Not editable here
+      barangay_id: patient.barangay_id,
+      group_chapter: patient.group_chapter,
+      email_address: patient.email_address,
+      age: patient.age,
+      sex: patient.sex,
+      address: patient.address,
+      health_issues: patient.health_issue?.split(",") || []
+    });
+    setEditingId(patient.id);
+    setShowModal(true);
+  };
+
+  const handleUpdateSenior = async () => {
+    const payload = {
+      ...formData,
+      health_issue: formData.health_issues.join(","),
+      id: editingId
+    };
+
+    try {
+      const response = await fetch("http://localhost/php/update_user.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      const result = await response.json();
+      if (result.status === "success") {
+        alert("Senior updated successfully");
+        setPatients(prev =>
+          prev.map(p => (p.id === editingId ? { ...payload, role: "client" } : p))
+        );
+        setShowModal(false);
+        setEditingId(null);
+        resetForm();
+      } else {
+        alert(result.message);
+      }
+    } catch (error) {
+      console.error("Error updating senior:", error.message);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this user?")) return;
+
+    try {
+      const response = await fetch("http://localhost/php/delete_user.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id })
+      });
+
+      const result = await response.json();
+      if (result.status === "success") {
+        alert("Senior deleted");
+        setPatients(prev => prev.filter(p => p.id !== id));
+      } else {
+        alert(result.message);
+      }
+    } catch (error) {
+      console.error("Error deleting senior:", error.message);
+    }
+  };
+
+  const resetForm = () => {
+    setFormData({
+      username: "",
+      password: "",
+      barangay_id: "",
+      group_chapter: "",
+      email_address: "",
+      age: "",
+      sex: "",
+      address: "",
+      health_issues: []
+    });
+  };
+
   return (
     <div className="table-container">
       <div className="table-header">
-        <h2>All Patients</h2>
-        <button className="add-senior-button" onClick={() => setShowModal(true)}>
+        <h2>All Clients</h2>
+        <button className="add-senior-button" onClick={() => {
+          setShowModal(true);
+          setEditingId(null);
+          resetForm();
+        }}>
           Add Senior
         </button>
       </div>
@@ -135,33 +216,31 @@ const SeniorList = () => {
       <table className="table">
         <thead>
           <tr>
-            <th></th>
             <th>Username</th>
+            <th>Barangay ID</th>
+            <th>Chapter Alliance</th>
+            <th>Email Address</th>
             <th>Age</th>
             <th>Sex</th>
             <th>Address</th>
             <th>Health Issue</th>
-            <th>Email</th>
-            <th>Barangay ID</th>
-            <th>Chapter Alliance</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
           {patients.map((patient, index) => (
             <tr key={index}>
-              <td><input type="checkbox" /></td>
               <td>{patient.username}</td>
+              <td>{patient.barangay_id}</td>
+              <td>{patient.group_chapter}</td>
+              <td>{patient.email_address}</td>
               <td>{patient.age}</td>
               <td>{patient.sex}</td>
               <td>{patient.address}</td>
               <td>{patient.health_issue?.split(",").join(", ")}</td>
-              <td>{patient.email_address}</td>
-              <td>{patient.barangay_id}</td>
-              <td>{patient.group_chapter}</td>
               <td className="action-icons">
-                <img src={editIcon} alt="Edit" />
-                <img src={deleteIcon} alt="Delete" />
+                <img src={editIcon} alt="Edit" onClick={() => handleEdit(patient)} />
+                <img src={deleteIcon} alt="Delete" onClick={() => handleDelete(patient.id)} />
               </td>
             </tr>
           ))}
@@ -171,35 +250,14 @@ const SeniorList = () => {
       {showModal && (
         <div className="modal-overlay">
           <div className="modal">
-            <h2>Add Senior</h2>
+            <h2>{editingId ? "Edit Senior" : "Add Senior"}</h2>
 
-            <input
-              type="text"
-              name="username"
-              placeholder="Username"
-              value={formData.username}
-              onChange={handleInputChange}
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleInputChange}
-            />
-            <input
-              type="text"
-              name="barangay_id"
-              placeholder="Barangay ID (5 digits)"
-              value={formData.barangay_id}
-              onChange={handleInputChange}
-              maxLength="5"
-            />
-            <select
-              name="group_chapter"
-              value={formData.group_chapter}
-              onChange={handleInputChange}
-            >
+            <input type="text" name="username" placeholder="Username" value={formData.username} onChange={handleInputChange} />
+            {!editingId && (
+              <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleInputChange} />
+            )}
+            <input type="text" name="barangay_id" placeholder="Barangay ID (5 digits)" value={formData.barangay_id} onChange={handleInputChange} maxLength="5" />
+            <select name="group_chapter" value={formData.group_chapter} onChange={handleInputChange}>
               <option value="">Select Barangay Chapter</option>
               <option value="NONE">NONE</option>
               <option value="TAMARAW">TAMARAW</option>
@@ -219,82 +277,58 @@ const SeniorList = () => {
               <option value="ANGELES SENIOR CITIZENS ALLIANCE">ANGELES SENIOR CITIZENS ALLIANCE</option>
             </select>
 
-            <input
-              type="email"
-              name="email_address"
-              placeholder="Email Address"
-              value={formData.email_address}
-              onChange={handleInputChange}
-            />
-            <input
-              type="number"
-              name="age"
-              placeholder="Age (60+)"
-              value={formData.age}
-              onChange={handleInputChange}
-            />
-            <select
-              name="sex"
-              value={formData.sex}
-              onChange={handleInputChange}
-            >
+            <input type="email" name="email_address" placeholder="Email Address" value={formData.email_address} onChange={handleInputChange} />
+            <input type="number" name="age" placeholder="Age (60+)" value={formData.age} onChange={handleInputChange} />
+            <select name="sex" value={formData.sex} onChange={handleInputChange}>
               <option value="">Select Sex</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
             </select>
-            <input
-              type="text"
-              name="address"
-              placeholder="Address"
-              value={formData.address}
-              onChange={handleInputChange}
-            />
+            <input type="text" name="address" placeholder="Address" value={formData.address} onChange={handleInputChange} />
 
             <label>Health Issues (max 3)</label>
             <div className="selected-tags">
               {formData.health_issues.map((issue, index) => (
                 <span key={index} className="tag">
                   {issue}
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setFormData({
-                        ...formData,
-                        health_issues: formData.health_issues.filter((_, i) => i !== index)
-                      })
-                    }
-                  >
+                  <button type="button" onClick={() =>
+                    setFormData({
+                      ...formData,
+                      health_issues: formData.health_issues.filter((_, i) => i !== index)
+                    })}>
                     ×
                   </button>
                 </span>
               ))}
             </div>
-            <select
-              onChange={(e) => {
-                const value = e.target.value;
-                if (
-                  value &&
-                  !formData.health_issues.includes(value) &&
-                  formData.health_issues.length < 3
-                ) {
-                  setFormData({
-                    ...formData,
-                    health_issues: [...formData.health_issues, value]
-                  });
-                }
-              }}
-            >
+            <select onChange={(e) => {
+              const value = e.target.value;
+              if (value && !formData.health_issues.includes(value) && formData.health_issues.length < 3) {
+                setFormData({
+                  ...formData,
+                  health_issues: [...formData.health_issues, value]
+                });
+              }
+            }}>
               <option value="">Select Health Issue</option>
               {healthIssueOptions.map((opt, i) => (
-                <option key={i} value={opt}>
-                  {opt}
-                </option>
+                <option key={i} value={opt}>{opt}</option>
               ))}
             </select>
 
             <div className="modal-buttons">
-              <button onClick={handleAddSenior}>Submit</button>
-              <button onClick={() => setShowModal(false)}>Cancel</button>
+              {editingId ? (
+                <button onClick={handleUpdateSenior}>Update</button>
+              ) : (
+                <button onClick={handleAddSenior}>Submit</button>
+              )}
+              <button onClick={() => {
+                setShowModal(false);
+                setEditingId(null);
+                resetForm();
+              }}>
+                Cancel
+              </button>
             </div>
           </div>
         </div>
