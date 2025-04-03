@@ -29,6 +29,13 @@ const Emergency = ({ role, handleLogout }) => {
     { name: "Neighborhood Watch", number: "0916-456-7890" },
   ];
 
+  const emergencyOptions = [
+    { type: "Police", icon: police },
+    { type: "Ambulance", icon: ambulance },
+    { type: "Fire Truck", icon: firetruck },
+    { type: "Family", icon: family },
+  ];
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!selectedType || !location || !contactNumber || !fullName) {
@@ -47,9 +54,7 @@ const Emergency = ({ role, handleLogout }) => {
     try {
       const response = await fetch("http://localhost/php/submit_emergency.php", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
         credentials: "include",
       });
@@ -73,13 +78,6 @@ const Emergency = ({ role, handleLogout }) => {
     }
   };
 
-  const emergencyOptions = [
-    { type: "Police", icon: police },
-    { type: "Ambulance", icon: ambulance },
-    { type: "Fire Truck", icon: firetruck },
-    { type: "Family", icon: family },
-  ];
-
   return (
     <div className="emergency-container">
       <Navbar role={role} handleLogout={handleLogout} />
@@ -89,9 +87,7 @@ const Emergency = ({ role, handleLogout }) => {
         </div>
 
         <div className="emergency-description">
-          <p>
-            <strong>Paalala:</strong> Ang Emergency Assistance ay idinisenyo upang magbigay ng mabilis at maaasahang tulong sa oras ng pangangailangan.
-          </p>
+          <p><strong>Paalala:</strong> Ang Emergency Assistance ay idinisenyo upang magbigay ng mabilis at maaasahang tulong sa oras ng pangangailangan.</p>
           <ul>
             <li>Pindutin ang tamang button para sa nais na serbisyo.</li>
             <li>Ibigay ang tamang detalye tulad ng lokasyon, uri ng emergency, at contact number.</li>
@@ -119,7 +115,8 @@ const Emergency = ({ role, handleLogout }) => {
             <div className="emergency-popup-inner">
               <button className="close-popup" onClick={() => setShowForm(false)}>×</button>
               <form className="emergency-form" onSubmit={handleSubmit}>
-                <h3>Submit {selectedType} Emergency</h3>
+                <h3><span role="img" aria-label="alert">🚨</span> Emergency Alert</h3>
+
                 <input
                   type="text"
                   placeholder="Full Name"
@@ -127,6 +124,7 @@ const Emergency = ({ role, handleLogout }) => {
                   onChange={(e) => setFullName(e.target.value)}
                   required
                 />
+
                 <input
                   type="text"
                   placeholder="Location"
@@ -134,6 +132,19 @@ const Emergency = ({ role, handleLogout }) => {
                   onChange={(e) => setLocation(e.target.value)}
                   required
                 />
+
+                <select
+                  value={selectedType}
+                  onChange={(e) => setSelectedType(e.target.value)}
+                  required
+                >
+                  <option value="" disabled>Select Emergency Type</option>
+                  <option value="Police">Police</option>
+                  <option value="Ambulance">Ambulance</option>
+                  <option value="Fire Truck">Fire Truck</option>
+                  <option value="Family">Family</option>
+                </select>
+
                 <input
                   type="text"
                   placeholder="Contact Number"
@@ -141,12 +152,17 @@ const Emergency = ({ role, handleLogout }) => {
                   onChange={(e) => setContactNumber(e.target.value)}
                   required
                 />
+
                 <textarea
                   placeholder="Additional Notes (optional)"
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                 ></textarea>
-                <button type="submit">Submit Emergency</button>
+
+                <button type="submit">✅ Submit</button>
+                <button type="button" onClick={() => setShowForm(false)} style={{ backgroundColor: "#a00000" }}>
+                  ❌ Cancel
+                </button>
               </form>
             </div>
           </div>
@@ -156,7 +172,7 @@ const Emergency = ({ role, handleLogout }) => {
           <div className="emergency-popup">
             <div className="emergency-popup-inner">
               <button className="close-popup" onClick={() => setSuccessMessage("")}>×</button>
-              <p style={{ fontSize: "1.2rem", color: "green" }}>{successMessage}</p>
+              <p className="success-message">{successMessage}</p>
             </div>
           </div>
         )}
