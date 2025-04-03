@@ -1,120 +1,135 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { Component } from "react";
 import "./OfficialsHomepage.css";
-import boy from './assets/boy.png';
-import girl from './assets/girl.png';
-import leftarrow from './assets/redleft.png';
-import rightarrow from './assets/redright.png';
+import boy from "./assets/boy.png";
+import girl from "./assets/girl.png";
+import leftarrow from "./assets/redleft.png";
+import rightarrow from "./assets/redright.png";
 
-const Officials = () => {
-    const officials = [
-        { name: "Ferrer, Rizalino", position: "Punong Barangay", img: boy },
-        { name: "Matos, Rica", position: "Kagawad", img: girl },
-        { name: "De Gula, Susan", position: "Kagawad", img: girl },
-        { name: "Dela Cruz, Zella", position: "Kagawad", img: girl },
-        { name: "Moises, Beltran", position: "Kagawad", img: boy },
-        { name: "Bernardino, Bogie", position: "Kagawad", img: boy },
-        { name: "Edgardo, Dizon", position: "Kagawad", img: boy },
-        { name: "Colibao, Shennel", position: "Kagawad", img: girl },
-    ];
-
-    const visibleSlides = 3;
-    const totalSlides = officials.length;
-    const [currentIndex, setCurrentIndex] = useState(visibleSlides);
-    const [isTransitioning, setIsTransitioning] = useState(false);
-    const carouselRef = useRef(null);
-
-    // Extended slides for smooth infinite loop
-    const extendedSlides = [
-        ...officials.slice(-visibleSlides),
-        ...officials,
-        ...officials.slice(0, visibleSlides)
-    ];
-
-    const slideWidthPercentage = 100 / visibleSlides;
-
-    useEffect(() => {
-        const ref = carouselRef.current;
-
-        const handleTransitionEnd = () => {
-            setIsTransitioning(false);
-
-            if (currentIndex >= totalSlides + visibleSlides) {
-                ref.style.transition = "none";
-                setCurrentIndex(visibleSlides);
-                ref.style.transform = `translateX(-${visibleSlides * slideWidthPercentage}%)`;
-            } else if (currentIndex <= 0) {
-                ref.style.transition = "none";
-                setCurrentIndex(totalSlides);
-                ref.style.transform = `translateX(-${totalSlides * slideWidthPercentage}%)`;
-            }
-
-            requestAnimationFrame(() => {
-                ref.style.transition = "transform 0.5s ease-in-out";
-            });
-        };
-
-        ref.addEventListener("transitionend", handleTransitionEnd);
-        return () => {
-            ref.removeEventListener("transitionend", handleTransitionEnd);
-        };
-    }, [currentIndex, totalSlides, visibleSlides, slideWidthPercentage]);
-
-    const handleNext = () => {
-        if (isTransitioning) return;
-        setIsTransitioning(true);
-        setCurrentIndex((prev) => prev + 1);
+class Officials extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      index: 0,
     };
+    this.officials = [
+      { name: "Ferrer, Rizalino", position: "Punong Barangay", img: boy },
+      { name: "Matos, Rica", position: "Kagawad", img: girl },
+      { name: "De Gula, Susan", position: "Kagawad", img: girl },
+      { name: "Dela Cruz, Zella", position: "Kagawad", img: girl },
+      { name: "Moises, Beltran", position: "Kagawad", img: boy },
+      { name: "Bernardino, Bogie", position: "Kagawad", img: boy },
+      { name: "Edgardo, Dizon", position: "Kagawad", img: boy },
+      { name: "Colibao, Shennel", position: "Kagawad", img: girl },
+    ];
+    this.intervalRef = null;
+  }
 
-    const handlePrev = () => {
-        if (isTransitioning) return;
-        setIsTransitioning(true);
-        setCurrentIndex((prev) => prev - 1);
-    };
+  componentDidMount() {
+    this.startAutoSlide();
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.intervalRef);
+  }
+
+  startAutoSlide = () => {
+    this.intervalRef = setInterval(() => {
+      this.setState((prevState) => ({
+        index: (prevState.index + 1) % this.officials.length,
+      }));
+    }, 3000);
+  };
+
+  nextSlide = () => {
+    this.setState(
+      (prevState) => ({
+        index: (prevState.index + 1) % this.officials.length,
+      }),
+      this.startAutoSlide
+    );
+  };
+
+  prevSlide = () => {
+    this.setState(
+      (prevState) => ({
+        index:
+          (prevState.index - 1 + this.officials.length) % this.officials.length,
+      }),
+      this.startAutoSlide
+    );
+  };
+
+  render() {
+    const { index } = this.state;
+    const prevIndex1 =
+      (index - 2 + this.officials.length) % this.officials.length;
+    const prevIndex2 =
+      (index - 1 + this.officials.length) % this.officials.length;
+    const nextIndex1 = (index + 1) % this.officials.length;
+    const nextIndex2 = (index + 2) % this.officials.length;
 
     return (
-        <div className="barangay-health-officials">
-            <div className="officials-header">
-                <p className="officials-subheader">OFFICIALS</p>
-                <h1 className="officials-title">Our Barangay Health Officials</h1>
-            </div>
-            <div className="container">
-                <button className="carousel-btn prev" onClick={handlePrev}>
-                    <img src={leftarrow} alt="Previous" />
-                </button>
-                <div className="card-wrapper">
-                    <ul
-                        className="card-list"
-                        ref={carouselRef}
-                        style={{
-                            transform: `translateX(-${currentIndex * slideWidthPercentage}%)`,
-                            transition: isTransitioning ? "transform 0.5s ease-in-out" : "none",
-                        }}
-                    >
-                        {extendedSlides.map((official, index) => {
-                            // Check if the slide is visible
-                            const isVisible = 
-                                index >= currentIndex && index < currentIndex + visibleSlides;
-                            return (
-                                <li
-                                    className={`card-item ${isVisible ? "visible" : ""}`}
-                                    key={index}
-                                >
-                                    <div className="official-card">
-                                        <img src={official.img} alt="brgy-official" className="official-image" />
-                                        <p className="official-name">{official.name}</p>
-                                        <p className="official-position">{official.position}</p>
-                                    </div>
-                                </li>
-                            );
-                        })}
-                    </ul>
-                </div>
-                <button className="carousel-btn next" onClick={handleNext}>
-                    <img src={rightarrow} alt="Next" />
-                </button>
-            </div>
+      <div className="barangay-health-officials">
+        <div className="Officials-Header">
+          <p className="Officials-Subheader">OFFICIALS</p>
+          <h1 className="Officials-Title">Our Barangay Officials</h1>
         </div>
+
+        <div className="card-wrapper">
+          <button className="carousel-btn prev" onClick={this.prevSlide}>
+            <img src={leftarrow} alt="Previous" />
+          </button>
+
+          <div className="card-item prev-item">
+            <img
+              src={this.officials[prevIndex1].img}
+              alt={this.officials[prevIndex1].name}
+              className="side-image"
+            />
+          </div>
+
+          <div className="card-item prev-item">
+            <img
+              src={this.officials[prevIndex2].img}
+              alt={this.officials[prevIndex2].name}
+              className="side-image"
+            />
+          </div>
+
+          <div className="card-item">
+            <img
+              src={this.officials[index].img}
+              alt={this.officials[index].name}
+            />
+            <h3 className="official-name">{this.officials[index].name}</h3>
+            <p className="official-position">
+              {this.officials[index].position}
+            </p>
+          </div>
+
+          <div className="card-item next-item">
+            <img
+              src={this.officials[nextIndex1].img}
+              alt={this.officials[nextIndex1].name}
+              className="side-image"
+            />
+          </div>
+
+          <div className="card-item next-item">
+            <img
+              src={this.officials[nextIndex2].img}
+              alt={this.officials[nextIndex2].name}
+              className="side-image"
+            />
+          </div>
+
+          <button className="carousel-btn next" onClick={this.nextSlide}>
+            <img src={rightarrow} alt="Next" />
+          </button>
+        </div>
+      </div>
     );
-};
+  }
+}
 
 export default Officials;

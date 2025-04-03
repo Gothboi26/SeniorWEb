@@ -193,26 +193,63 @@
   transform: scale(1.1);
 }
 
-
-
-/* ----- Responsive Adjustments ----- */
 @media (max-width: 768px) {
-  .footer-content {
-    flex-direction: column;
+  .App-footer {
+    padding: 0px 0px; /* Reduce padding */
+  }
+  .App-footer h1 {
+    font-size: 16px;
     text-align: center;
-    gap: 20px;
   }
 
-  .footer-icons-and-links {
+  .footer-section {
+    width: 100%; /* Make it span the full width */
+    font-size: 1rem; /* Reduce text size */
+    padding: 10px; /* Reduce padding */
+  }
+
+  .footer-content {
     flex-direction: column;
-    gap: 15px;
+    align-items: center;
+    text-align: center;
+    gap: 5px; /* Adjust spacing */
+  }
+
+  .footer-text1 {
+    max-width: 100%; /* Allow it to shrink */
+  }
+
+  .footer-text1 p {
+    font-size: 14px;
+    line-height: 1.4;
+    margin-right: 90px;
+  }
+
+  .footer-icons {
+    flex-direction: row; /* Ensure horizontal alignment on mobile */
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .footer-icons img {
+    width: 30px; /* Make icons smaller */
   }
 
   .footer-links {
+    flex-direction: row;
     align-items: center;
   }
 
+  .footer-link {
+    font-size: 12px;
+    padding: 6px;
+  }
+  .footer-icons-and-links {
+    margin-left: 20px;
+    gap: 25px;
+  }
+
   .vertical-line {
-    display: none; /* Hides vertical line on small screens */
+    display: none; /* Hide the vertical line for a cleaner look */
   }
 }

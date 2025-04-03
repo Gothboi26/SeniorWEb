@@ -1,6 +1,6 @@
 /* General Styles */
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   margin: 0;
   padding: 0;
   background: #f5f5f7; /* Light gradient background */
@@ -12,24 +12,25 @@ body {
   padding: 50px;
 }
 
-.officials-header {
-  margin-bottom: 20px;
+/* Events Header */
+.Officials-Header {
+  font-family: "Roboto", sans-serif;
 }
 
-.officials-subheader {
+.Officials-Subheader {
   color: #fcfcfc;
   background-color: #201885;
   font-family: "Roboto", sans-serif;
   border-radius: 25px;
   font-size: 2rem;
   font-weight: 700;
-  margin-left: 14%;
+  margin-left: 15%;
   padding: 8px;
   text-align: center;
-  width: 75%;
+  width: 71%;
 }
 
-.officials-title {
+.Officials-Title {
   font-family: "Roboto", sans-serif;
   font-size: 3rem;
   font-weight: 600;
@@ -39,19 +40,29 @@ body {
 /* Ensure slides don't break out of container */
 .card-wrapper {
   display: flex;
-  overflow: hidden;
-  width: 100%;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
 
 /* Adjust card styles */
 .card-item {
-  min-width: 300px;
-  margin: 20px 15px;
+  width: 300px;
+  margin: 0 15px;
   background: #ffffff;
   padding: 30px;
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s;
+  text-align: center;
+  transition: transform 0.5s ease-in-out;
+}
+
+/* Center image */
+.card-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 12px;
 }
 
 /* Fix overflow issue */
@@ -64,14 +75,29 @@ body {
   border-radius: 12px;
 }
 
-
 .card-item:hover {
   transform: scale(1.05);
+}
+
+/* Side previews */
+.prev-item,
+.next-item {
+  width: 220px; /* Slightly smaller */
+  opacity: 0.5;
+}
+
+.side-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
 }
 
 /* Smoothen the transition for rapid clicking */
 .card-list {
   display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   list-style: none;
   transition: transform 0.5s ease-in-out;
@@ -92,15 +118,12 @@ body {
   padding: 30px;
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.5s ease-in-out;
 }
 
 .card-item:hover {
   transform: scale(1.05);
 }
-
-
-
 
 /* Card Image */
 .official-card img {
@@ -117,6 +140,7 @@ body {
   color: #6c757d;
   font-weight: 500;
   margin-bottom: 5px;
+  text-align: center;
 }
 
 /* Official Name */
@@ -147,7 +171,7 @@ body {
   width: 20px;
   height: 20px;
   margin-left: 8px;
-  transition: transform 0.2s;
+  transition: transform 0.5s;
 }
 
 .read-more:hover img {
@@ -163,6 +187,7 @@ body {
   border: none;
   cursor: pointer;
   z-index: 10;
+  margin: 0 15px;
 }
 
 .carousel-btn img {
@@ -171,32 +196,48 @@ body {
 }
 
 .prev {
-  left: -10px;
+  left: 20px; /* Move it inside */
 }
 
 .next {
-  right: -10px;
+  right: 20px;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .officials-title {
+    font-size: 2rem;
+  }
   .card-item {
     min-width: 260px;
   }
-
   .carousel-btn img {
     width: 28px;
     height: 28px;
   }
+  .prev {
+    left: 30px;
+  }
+  .next {
+    right: 30px;
+  }
 }
 
 @media (max-width: 480px) {
+  .officials-title {
+    font-size: 2rem;
+  }
   .card-item {
     min-width: 220px;
   }
-
   .carousel-btn img {
     width: 24px;
     height: 24px;
+  }
+  .prev {
+    left: 40px;
+  }
+  .next {
+    right: 40px;
   }
 }

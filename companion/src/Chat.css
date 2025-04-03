@@ -25,7 +25,7 @@
   text-align: center;
   font-family: "Roboto", sans-serif;
   font-weight: 600;
-  color: #C31C1C;
+  color: #c31c1c;
 }
 
 /*  Chat Details Container */
@@ -151,4 +151,53 @@ input[type="text1"]:focus {
 .bot {
   background-color: #f1f1f1;
   align-self: flex-start;
+}
+
+/* Responsive Design for Mobile */
+@media screen and (max-width: 768px) {
+  .chat-header-container {
+    height: 60px;
+  }
+  .chat-header-container h1 {
+    font-size: 1.5rem;
+  }
+  .chat-details-container {
+    margin: 20px 10px;
+    padding: 15px;
+  }
+  .chat-description {
+    padding: 20px;
+    font-size: 1rem;
+  }
+  .chat-desc-title {
+    font-size: 1.1rem;
+  }
+  .chat-desc {
+    font-size: 1rem;
+  }
+  .chat-window-box {
+    height: 250px;
+    padding: 8px;
+  }
+  .chat-input-container {
+    margin-top: 15px;
+  }
+  .chat-input {
+    flex-direction: column;
+    gap: 5px;
+  }
+  .chat-input-text {
+    width: 100%;
+  }
+  input[type="text1"] {
+    font-size: 1.2rem;
+    padding: 8px 20px;
+  }
+  .chat-send-button {
+    width: 100%;
+    font-size: 1.3rem;
+  }
+  .chat-bubble {
+    max-width: 90%;
+  }
 }
