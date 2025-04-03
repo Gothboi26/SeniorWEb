@@ -201,7 +201,7 @@ const SeniorList = () => {
   };
 
   return (
-    <div className="table-container">
+    <div className="senior-list-container">
       <div className="table-header">
         <h2>All Clients</h2>
         <button className="add-senior-button" onClick={() => {
@@ -218,7 +218,7 @@ const SeniorList = () => {
           <tr>
             <th>Username</th>
             <th>Barangay ID</th>
-            <th>Chapter Alliance</th>
+            <th>Chapter</th>
             <th>Email Address</th>
             <th>Age</th>
             <th>Sex</th>
@@ -239,8 +239,8 @@ const SeniorList = () => {
               <td>{patient.address}</td>
               <td>{patient.health_issue?.split(",").join(", ")}</td>
               <td className="action-icons">
-                <img src={editIcon} alt="Edit" onClick={() => handleEdit(patient)} />
-                <img src={deleteIcon} alt="Delete" onClick={() => handleDelete(patient.id)} />
+                <button className="edit-button" onClick={() => handleEdit(patient)}>Edit</button>
+                <button className="delete-button" onClick={() => handleDelete(patient.id)}>Delete</button>
               </td>
             </tr>
           ))}
@@ -248,8 +248,8 @@ const SeniorList = () => {
       </table>
 
       {showModal && (
-        <div className="modal-overlay">
-          <div className="modal">
+        <div className="senior-modal-overlay">
+          <div className="senior-modal">
             <h2>{editingId ? "Edit Senior" : "Add Senior"}</h2>
 
             <input type="text" name="username" placeholder="Username" value={formData.username} onChange={handleInputChange} />
@@ -291,7 +291,7 @@ const SeniorList = () => {
               {formData.health_issues.map((issue, index) => (
                 <span key={index} className="tag">
                   {issue}
-                  <button type="button" onClick={() =>
+                  <button className="senior-tag" onClick={() =>
                     setFormData({
                       ...formData,
                       health_issues: formData.health_issues.filter((_, i) => i !== index)
@@ -316,11 +316,11 @@ const SeniorList = () => {
               ))}
             </select>
 
-            <div className="modal-buttons">
+            <div className="senior-modal-buttons">
               {editingId ? (
-                <button onClick={handleUpdateSenior}>Update</button>
+                <button className="submit-senior" onClick={handleUpdateSenior}>Update</button>
               ) : (
-                <button onClick={handleAddSenior}>Submit</button>
+                <button className="delete-senior" onClick={handleAddSenior}>Submit</button>
               )}
               <button onClick={() => {
                 setShowModal(false);

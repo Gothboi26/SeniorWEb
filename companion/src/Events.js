@@ -170,7 +170,7 @@ const Events = () => {
       <div className="events-header">
         <h2>Events</h2>
         <div className="events-controls">
-          <button onClick={() => openModal()} className="add-event-button">
+          <button className="events-button" onClick={() => openModal()} className="add-event-button">
             Add Event
           </button>
           <div className="filters">
