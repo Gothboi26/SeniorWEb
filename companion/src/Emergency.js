@@ -9,13 +9,14 @@ import firetruck from "./assets/firetruck.png";
 import family from "./assets/family.png";
 
 const Emergency = ({ role, handleLogout }) => {
-  const [selectedType, setSelectedType] = useState("");
-  const [location, setLocation] = useState("");
-  const [contactNumber, setContactNumber] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [notes, setNotes] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const [showForm, setShowForm] = useState(false);
+
+  const emergencyOptions = [
+    { type: "Police", icon: police },
+    { type: "Ambulance", icon: ambulance },
+    { type: "Fire Truck", icon: firetruck },
+    { type: "Family", icon: family },
+  ];
 
   const emergencyHotlines = [
     { name: "Police Station", number: "911" },
@@ -29,144 +30,62 @@ const Emergency = ({ role, handleLogout }) => {
     { name: "Neighborhood Watch", number: "0916-456-7890" },
   ];
 
-  const emergencyOptions = [
-    { type: "Police", icon: police },
-    { type: "Ambulance", icon: ambulance },
-    { type: "Fire Truck", icon: firetruck },
-    { type: "Family", icon: family },
-  ];
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!selectedType || !location || !contactNumber || !fullName) {
-      alert("Please complete all required fields.");
-      return;
-    }
-
-    const payload = {
-      type: selectedType,
-      location,
-      contact_number: contactNumber,
-      full_name: fullName,
-      notes,
-    };
+  const handleEmergencyClick = async (type) => {
+    console.log("Sending emergency type:", type);
 
     try {
-      const response = await fetch("http://localhost/php/submit_emergency.php", {
+      const res = await fetch("http://localhost/php/submit_emergency.php", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        headers: {
+          "Content-Type": "application/json",
+        },
         credentials: "include",
+        body: JSON.stringify({ type }),
       });
 
-      const data = await response.json();
+      const data = await res.json();
+
       if (data.success) {
-        setSuccessMessage("Emergency submitted successfully.");
-        setLocation("");
-        setContactNumber("");
-        setFullName("");
-        setNotes("");
-        setSelectedType("");
-        setShowForm(false);
+        setSuccessMessage(`✅ ${type} emergency submitted successfully.`);
         setTimeout(() => setSuccessMessage(""), 4000);
+      } else if (data.error === "missing_profile") {
+        const goToProfile = window.confirm(
+          "❌ Your profile is incomplete. Would you like to complete it now?"
+        );
+        if (goToProfile) {
+          window.location.href = "/profile"; // or use navigate("/profile") if using React Router
+        }
       } else {
-        alert("Error: " + (data.error || "Submission failed."));
+        alert("❌ Error: " + (data.error || "Submission failed."));
       }
     } catch (error) {
       console.error("Submission error:", error);
-      alert("Network error. Please check CORS or server availability.");
+      alert("❌ Network or backend error.");
     }
   };
 
   return (
     <div className="emergency-container">
       <Navbar role={role} handleLogout={handleLogout} />
-      <div className="emergency-content">
-        <div className="emergency-title-container">
-          <h1 className="emergency-title">Emergency Services</h1>
-        </div>
 
-        <div className="emergency-description">
-          <p><strong>Paalala:</strong> Ang Emergency Assistance ay idinisenyo upang magbigay ng mabilis at maaasahang tulong sa oras ng pangangailangan.</p>
-          <ul>
-            <li>Pindutin ang tamang button para sa nais na serbisyo.</li>
-            <li>Ibigay ang tamang detalye tulad ng lokasyon, uri ng emergency, at contact number.</li>
-          </ul>
-        </div>
+      <div className="emergency-content">
+        <h1 className="emergency-title">Emergency Services</h1>
+        <p className="emergency-description">
+          <strong>Paalala:</strong> I-click ang button ng emergency na kailangan mo. Ang iyong profile data ay awtomatikong gagamitin.
+        </p>
 
         <div className="buttons-container">
           {emergencyOptions.map(({ type, icon }) => (
             <button
               key={type}
-              className={`emergency-button ${selectedType === type ? "selected" : ""}`}
-              onClick={() => {
-                setSelectedType(type);
-                setShowForm(true);
-              }}
+              className="emergency-button"
+              onClick={() => handleEmergencyClick(type)}
             >
               <img src={icon} alt={type} className="emergency-icon" />
               <span>{type}</span>
             </button>
           ))}
         </div>
-
-        {showForm && (
-          <div className="emergency-popup">
-            <div className="emergency-popup-inner">
-              <button className="close-popup" onClick={() => setShowForm(false)}>×</button>
-              <form className="emergency-form" onSubmit={handleSubmit}>
-                <h3><span role="img" aria-label="alert">🚨</span> Emergency Alert</h3>
-
-                <input
-                  type="text"
-                  placeholder="Full Name"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  required
-                />
-
-                <input
-                  type="text"
-                  placeholder="Location"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  required
-                />
-
-                <select
-                  value={selectedType}
-                  onChange={(e) => setSelectedType(e.target.value)}
-                  required
-                >
-                  <option value="" disabled>Select Emergency Type</option>
-                  <option value="Police">Police</option>
-                  <option value="Ambulance">Ambulance</option>
-                  <option value="Fire Truck">Fire Truck</option>
-                  <option value="Family">Family</option>
-                </select>
-
-                <input
-                  type="text"
-                  placeholder="Contact Number"
-                  value={contactNumber}
-                  onChange={(e) => setContactNumber(e.target.value)}
-                  required
-                />
-
-                <textarea
-                  placeholder="Additional Notes (optional)"
-                  value={notes}
-                  onChange={(e) => setNotes(e.target.value)}
-                ></textarea>
-
-                <button type="submit">✅ Submit</button>
-                <button type="button" onClick={() => setShowForm(false)} style={{ backgroundColor: "#a00000" }}>
-                  ❌ Cancel
-                </button>
-              </form>
-            </div>
-          </div>
-        )}
 
         {successMessage && (
           <div className="emergency-popup">
@@ -182,17 +101,11 @@ const Emergency = ({ role, handleLogout }) => {
             <p className="hotlines-title">Emergency Hotlines</p>
             <table className="contacts-table">
               <thead>
-                <tr>
-                  <th>Service</th>
-                  <th>Contact Number</th>
-                </tr>
+                <tr><th>Service</th><th>Number</th></tr>
               </thead>
               <tbody>
-                {emergencyHotlines.map((hotline, index) => (
-                  <tr key={index}>
-                    <td>{hotline.name}</td>
-                    <td>{hotline.number}</td>
-                  </tr>
+                {emergencyHotlines.map((h, i) => (
+                  <tr key={i}><td>{h.name}</td><td>{h.number}</td></tr>
                 ))}
               </tbody>
             </table>
@@ -202,17 +115,11 @@ const Emergency = ({ role, handleLogout }) => {
             <p className="contacts-title">Emergency Contacts</p>
             <table className="contacts-table">
               <thead>
-                <tr>
-                  <th>Contact Person</th>
-                  <th>Contact Number</th>
-                </tr>
+                <tr><th>Contact</th><th>Number</th></tr>
               </thead>
               <tbody>
-                {emergencyContacts.map((contact, index) => (
-                  <tr key={index}>
-                    <td>{contact.name}</td>
-                    <td>{contact.number}</td>
-                  </tr>
+                {emergencyContacts.map((c, i) => (
+                  <tr key={i}><td>{c.name}</td><td>{c.number}</td></tr>
                 ))}
               </tbody>
             </table>

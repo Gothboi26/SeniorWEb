@@ -4,8 +4,9 @@ import "./EmergenciesAdmin.css";
 const EmergenciesAdmin = () => {
   const [data, setData] = useState([]);
   const [sortConfig, setSortConfig] = useState(null);
-  const [showNewPopup, setShowNewPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [loadingStatusIndex, setLoadingStatusIndex] = useState(null);
   const previousDataRef = useRef([]);
 
   useEffect(() => {
@@ -16,12 +17,12 @@ const EmergenciesAdmin = () => {
         });
         const result = await response.json();
 
-        if (
-          previousDataRef.current.length > 0 &&
-          result.length > previousDataRef.current.length
-        ) {
-          setShowNewPopup(true);
-          setTimeout(() => setShowNewPopup(false), 4000);
+        const previousData = previousDataRef.current;
+
+        if (previousData.length > 0 && result.length > previousData.length) {
+          const newCount = result.length - previousData.length;
+          setPopupMessage(`🔔 ${newCount} new emergency report${newCount > 1 ? "s" : ""} received!`);
+          setTimeout(() => setPopupMessage(""), 4000);
         }
 
         previousDataRef.current = result;
@@ -37,10 +38,11 @@ const EmergenciesAdmin = () => {
   }, []);
 
   const filteredData = data.filter((item) =>
-    item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    item.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    item.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (item.notes && item.notes.toLowerCase().includes(searchTerm.toLowerCase()))
+    item.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.type?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.status?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.location?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.contact_number?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const sortedData = [...filteredData];
@@ -68,6 +70,8 @@ const EmergenciesAdmin = () => {
     const confirmChange = window.confirm(`Are you sure you want to change status to '${newStatus}'?`);
     if (!confirmChange) return;
 
+    setLoadingStatusIndex(index);
+
     const updatedData = [...data];
     updatedData[index].status = newStatus;
     setData(updatedData);
@@ -81,6 +85,8 @@ const EmergenciesAdmin = () => {
       });
     } catch (err) {
       console.error("Failed to update status", err);
+    } finally {
+      setLoadingStatusIndex(null);
     }
   };
 
@@ -91,7 +97,7 @@ const EmergenciesAdmin = () => {
         <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
           <input
             type="text"
-            placeholder="Search by name, type, status or notes"
+            placeholder="Search by name, type, status, location, or contact"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{ padding: "8px", borderRadius: "5px", border: "1px solid #ccc" }}
@@ -101,13 +107,15 @@ const EmergenciesAdmin = () => {
             <option value="name:descending">Sort by Name (Z-A)</option>
             <option value="status:ascending">Sort by Status (A-Z)</option>
             <option value="status:descending">Sort by Status (Z-A)</option>
+            <option value="date:descending">Sort by Date (Newest)</option>
+            <option value="date:ascending">Sort by Date (Oldest)</option>
           </select>
         </div>
       </div>
 
-      {showNewPopup && (
+      {popupMessage && (
         <div className="popup-notification">
-          <p>🔔 New emergency report received!</p>
+          <p>{popupMessage}</p>
         </div>
       )}
 
@@ -116,11 +124,11 @@ const EmergenciesAdmin = () => {
           <tr>
             <th>Name</th>
             <th>Date</th>
-            <th>Time Reported</th>
-            <th>Type of Emergency</th>
+            <th>Time</th>
+            <th>Type</th>
             <th>Location</th>
+            <th>Contact Number</th>
             <th>Status</th>
-            <th>Notes</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -133,22 +141,28 @@ const EmergenciesAdmin = () => {
                 <td>{item.time}</td>
                 <td>{item.type}</td>
                 <td>{item.location}</td>
+                <td>{item.contact_number}</td>
                 <td className={`status-${item.status.toLowerCase()}`}>{item.status}</td>
-                <td>{item.notes || "—"}</td>
                 <td>
-                  <select
-                    value={item.status}
-                    onChange={(e) => handleStatusChange(index, e.target.value)}
-                  >
-                    <option value="Active">Active</option>
-                    <option value="Ongoing">Ongoing</option>
-                    <option value="Resolved">Resolved</option>
-                  </select>
+                  {loadingStatusIndex === index ? (
+                    <span className="loading-text">Updating...</span>
+                  ) : (
+                    <select
+                      value={item.status}
+                      onChange={(e) => handleStatusChange(index, e.target.value)}
+                    >
+                      <option value="Active">Active</option>
+                      <option value="Ongoing">Ongoing</option>
+                      <option value="Resolved">Resolved</option>
+                    </select>
+                  )}
                 </td>
               </tr>
             ))
           ) : (
-            <tr><td colSpan={8}>No emergency reports found.</td></tr>
+            <tr>
+              <td colSpan={8}>No emergency reports found.</td>
+            </tr>
           )}
         </tbody>
       </table>
