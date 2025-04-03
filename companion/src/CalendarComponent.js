@@ -29,6 +29,7 @@ import emergency from "./assets/emergency.png"; // For Emergency Services logo
 import chat from "./assets/chat.png"; // For Chat Assistance logo
 import doctor from "./assets/doctor.png";
 import arrow from "./assets/arrow.png";
+import Senior from "./assets/senior.png";
 
 Modal.setAppElement("#root");
 // Array of Health Services
@@ -349,13 +350,17 @@ function CalendarComponent() {
             <span className="sidebar-logo-text">Brgy. Gen. T. De Leon</span>
           </div>
 
+          <hr className="sidebar-divider" />
+
           <ul>
+            
+
             <li
               onClick={() => setSelectedOption("overview")}
               className="sidebar1-item"
             >
               <img
-                src="/icons/overview.png"
+                src="/icons/dashboard.png"
                 alt="Logo"
                 className="sidebar1-logo-img"
               />
@@ -366,8 +371,8 @@ function CalendarComponent() {
               className="sidebar1-item"
             >
               <img
-                src="/icons/seniors.png"
-                alt="Logo"
+                src="/assets/senior.png"
+                alt="Senior"
                 className="sidebar1-logo-img"
               />
               Seniors
@@ -388,7 +393,7 @@ function CalendarComponent() {
               className="sidebar1-item"
             >
               <img
-                src="/icons/app.png"
+                src="/icons/appoint.png"
                 alt="Logo"
                 className="sidebar1-logo-img"
               />
@@ -420,28 +425,24 @@ function CalendarComponent() {
 
           <hr className="sidebar-divider" />
 
-          <ul>
-            <li
-              onClick={() => setSelectedOption("settings")}
-              className="sidebar1-item"
-            >
-              <img
-                src="/icons/settings.png"
-                alt="Logo"
-                className="sidebar1-logo-img"
-              />
-              Settings
-            </li>
-          </ul>
-
-          <div className="sidebar-logout" onClick={handleLogout}>
-            Admin Name
-            <img
-              src="/icons/logout.png"
-              alt="Logout"
-              className="sidebar-logout-icon"
-            />
+          <div className="settings">
+            <ul>
+              <li
+                onClick={() => setSelectedOption("settings")}
+                className="settings-item"
+              >
+                <img
+                  src="/icons/settings.png"
+                  alt="Logo"
+                  className="sidebar1-logo-img"
+                />
+                Settings
+              </li>
+            </ul>
           </div>
+          
+
+          
         </div>
 
         <div className="main-content">
