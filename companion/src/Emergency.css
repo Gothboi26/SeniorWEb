@@ -3,21 +3,18 @@ body {
   font-family: "Roboto", sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f9f9f9; /* Light background */
+  background-color: #f9f9f9;
 }
 
-/* Emergency Content */
 .emergency-content {
   background: #fbfbf6;
   padding: 0;
   margin: 0;
   border-radius: 8px;
-  font-family: "Roboto", sans-serif;
   max-width: 100%;
   color: #333;
 }
 
-/* Emergency Title Container */
 .emergency-title-container {
   width: 100%;
   height: 80px;
@@ -25,22 +22,15 @@ body {
   align-items: center;
   justify-content: center;
   background-color: #ffffff;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Added drop shadow */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 .emergency-title-container h1 {
   font-size: 2rem;
   font-weight: bold;
   color: #b71c1c;
-  margin: 0; /* Removes extra spacing */
-  text-align: center; /* Center text within the element */
-}
-
-/* Emergency Details Container */
-.emergency-details-container {
-  padding: 20px;
-  margin: 40px 20rem;
-  background-color: #fbfbf6;
+  margin: 0;
+  text-align: center;
 }
 
 .emergency-description {
@@ -49,361 +39,69 @@ body {
   border: 3px solid #c31c1c;
   border-radius: 40px;
   line-height: 1.7rem;
+  margin: 40px auto;
+  max-width: 800px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.emergency-desc-title {
-  margin-bottom: 20px;
-  font-size: 1.2rem;
-  font-weight: 400;
-  text-align: justify;
-  color: #272927;
-  margin-top: 0;
-}
-
-.emergency-desc-title strong {
-  margin-bottom: 20px;
-  font-size: 1.3rem;
-  color: #800000;
-  font-weight: bold;
-  margin-top: 10px;
-}
-
-.emergency-desc {
-  font-size: 1.2rem;
-  justify-content: left;
-  text-align: justify;
-}
-
-/* Button Styles */
 .buttons-container {
   display: flex;
   gap: 30px;
   justify-content: center;
   align-items: center;
-  margin: 40px;
+  flex-wrap: wrap;
+  margin: 40px auto;
+  max-width: 900px;
 }
 
-.police-container button,
-.ambulance-container button,
-.firetruck-container button,
-.family-container button {
-  width: 250px;
-  height: 250px;
-  background-color: #b71c1c;
-  color: white;
-  border: 6px solid #ffffff;
-  border-radius: 40px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.police-container:hover,
-.ambulance-container:hover,
-.firetruck-container:hover,
-.family-container:hover {
-  width: 250px;
-  height: 250px;
-  background-color: #b71c1c;
-  border: 6px solid #ffffff;
-  color: white;
-  border-radius: 40px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-/* Image Styles */
-.buttons-container img {
+.emergency-button {
   width: 150px;
   height: 150px;
-  margin-bottom: 8px;
+  background-color: #c31c1c;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  gap: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.buttons-container span {
-  font-size: 1.8rem;
+.emergency-button:hover {
+  background-color: #a00000;
+}
+
+.emergency-icon {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
 }
 
 .hotlines-container {
-  padding: 20px;
-  margin: 40px 20rem;
+  margin: 40px auto;
+  padding: 0 20px;
+  max-width: 900px;
 }
 
 .hotlines-title,
 .contacts-title {
-  color: #fcfcfc;
   background-color: #c31c1c;
-  font-family: "Roboto", sans-serif;
-  border-radius: 25px;
+  color: white;
   font-size: 1.5rem;
-  font-weight: 600;
-  justify-content: center;
-  align-items: center;
-  padding: 8px;
+  padding: 10px;
+  border-radius: 20px;
   text-align: center;
-}
-
-.button-container {
-  display: flex;
-  justify-content: center; /* Center buttons horizontally */
-  gap: 20px; /* Space between buttons */
-  margin-top: 20px;
-  flex-wrap: nowrap; /* Prevent buttons from wrapping to the next line */
-}
-
-.button-container-column {
-  display: flex;
-  flex-direction: row; /* Keep the buttons in a row */
-  justify-content: center; /* Center the buttons horizontally within the container */
-  align-items: center; /* Optionally center the buttons vertically if needed */
-  gap: 50px; /* Space between buttons */
-  margin-top: 20px;
-  width: 100%; /* Ensures the container takes full width of its parent */
-}
-.button-container-row {
-  display: flex;
-  flex-direction: column; /* Keep the buttons in a row */
-  justify-content: center; /* Center the buttons horizontally within the container */
-  align-items: center; /* Optionally center the buttons vertically if needed */
-  gap: 20px; /* Space between buttons */
-  margin-top: 20px;
-  width: 100%; /* Ensures the container takes full width of its parent */
-}
-.homepage-emergency-services-button {
-  background-color: #800000; /* Maroon background */
-  color: white; /* White text */
-  border: none;
-  border-radius: 8px;
-  padding: 10px 15px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  font-family: "Roboto", sans-serif;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px; /* Space between icon and text */
-  position: relative; /* Make button the reference point for absolute positioning */
-}
-/* Emergency Button Styling */
-.emergency-button {
-  background-color: #c31c1c;
-  color: #f8f8f8;
-  border: none;
-  border-radius: 25px;
-  padding: 15px 30px;
-  font-size: 20px;
-  display: flex;
-  flex-direction: column; /* Stack icon on top of text */
-  align-items: center; /* Center the icon and text */
-  justify-content: center; /* Center buttons horizontally */
-  gap: 10px; /* Space between icon and text */
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  cursor: pointer;
-  width: 150px; /* Optional: Set a fixed width for buttons */
-  height: 150px; /* Optional: Set a fixed height for buttons */
-}
-
-/* Rectangular Buttons Container */
-.rectangular-buttons-container {
-  display: flex;
-  justify-content: center; /* Center buttons horizontally */
-  gap: 20px; /* Space between buttons */
-  margin-top: 20px;
-}
-
-/* Rectangular Buttons */
-.rectangular-button {
-  background-color: #c31c1c;
-  color: #f8f8f8;
-  border: none;
-  border-radius: 30px;
-  padding: 15px 30px;
-  font-size: 25px;
-  display: flex;
-  flex-direction: column; /* Stack icon on top of text */
-  align-items: center; /* Center the icon and text */
-  justify-content: center;
-  gap: 10px; /* Space between icon and text */
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  cursor: pointer;
-  width: 550px; /* Fixed width for buttons */
-  height: 100px; /* Fixed height for buttons */
-}
-
-.rectangular-button:hover {
-  background-color: #800000; /* Darker maroon on hover */
-}
-
-/* Rectangular Buttons Container */
-.rectangular-buttons-container {
-  display: flex;
-  flex-direction: column; /* Stack buttons vertically */
-  justify-content: center; /* Center buttons vertically within the container */
-  align-items: center; /* Center buttons horizontally */
-  gap: 20px; /* Space between buttons */
-  margin-top: 20px;
-  width: 100%; /* Ensure the container takes up full width */
-}
-
-/* Back to Home Link */
-.back-link {
-  text-decoration: none;
-  color: #800000;
-  font-size: 14px;
-}
-
-.back-link:hover {
-  text-decoration: underline;
-}
-
-/* Modal Styles */
-.modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  width: 90%;
-  max-width: 400px;
-  text-align: center;
-}
-
-.modal h2 {
-  margin-bottom: 15px;
-}
-
-.modal p {
   margin-bottom: 20px;
 }
 
-/* Modal Form Styling */
-.form-group {
-  margin-bottom: 15px;
-  text-align: left;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-  color: #800000;
-}
-
-input,
-textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
-}
-
-textarea {
-  height: 80px;
-}
-
-/* Submit and Close Button Styling */
-.modal-submit-button,
-.modal-close-button {
-  background-color: #800000;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  cursor: pointer;
-  margin: 5px;
-}
-
-.modal-submit-button:hover,
-.modal-close-button:hover {
-  background-color: #a00000;
-}
-
-/* Overlay */
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 999;
-}
-/* Modal Form Styling */
-.form-group {
-  margin-bottom: 15px;
-  text-align: left;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-  color: #800000;
-}
-
-input,
-textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
-}
-
-textarea {
-  height: 80px;
-}
-
-/* Submit and Close Button Styling */
-.modal-submit-button,
-.modal-close-button {
-  background-color: #800000;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  cursor: pointer;
-  margin: 5px;
-}
-
-.modal-submit-button:hover,
-.modal-close-button:hover {
-  background-color: #a00000;
-}
-
-/* Instructions styling */
-.emergency-instructions {
-  font-size: 18px;
-  line-height: 2;
-  color: #333;
-  text-align: justify;
-  padding: 0 30%;
-}
-
-/* Table styling */
 .contacts-table {
   width: 100%;
   border-collapse: collapse;
-  margin: 20px 0;
   font-size: 1rem;
 }
 
@@ -416,7 +114,6 @@ textarea {
 
 .contacts-table th {
   background-color: #f2f2f2;
-  font-weight: bold;
 }
 
 .contacts-table tr:nth-child(even) {
@@ -427,103 +124,91 @@ textarea {
   background-color: #e8e8e8;
 }
 
-/* Back link styling */
-.back-link {
-  display: inline-block;
-  margin-top: 20px;
-  color: #007bff;
-  text-decoration: none;
+/* Popup Modal */
+.emergency-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
-.back-link:hover {
-  text-decoration: underline;
+.emergency-popup-inner {
+  background-color: white;
+  padding: 30px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
-/* ----- Responsive Design for Tablets (max-width: 768px) ----- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.close-popup {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #800000;
+  cursor: pointer;
+}
+
+.emergency-form input,
+.emergency-form textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.emergency-form button {
+  background-color: #800000;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  width: 100%;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.emergency-form button:hover {
+  background-color: #a00000;
+}
+
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 12px 20px;
+  border-radius: 10px;
+  margin: 20px auto;
+  width: fit-content;
+  font-size: 1rem;
+  text-align: center;
+  border: 1px solid #c3e6cb;
+}
+
 @media only screen and (max-width: 768px) {
-  /* General Styles */
-  body {
-    font-size: 14px; /* Reduce default font size */
+  .buttons-container {
+    flex-direction: column;
+    gap: 20px;
   }
-
-  /* Emergency Instructions */
-  .emergency-instructions {
-    font-size: 16px;
-    padding: 0 10%; /* Reduce padding for smaller screens */
-  }
-
-  /* Adjust Button Containers */
-  .button-container,
-  .button-container-column,
-  .rectangular-buttons-container {
-    flex-direction: column; /* Stack buttons vertically */
-    align-items: center; /* Center align buttons */
-    gap: 15px; /* Reduce spacing */
-  }
-
-  .button-container-row {
-    gap: 10px; /* Reduce spacing for better fit */
-  }
-
-  /* Button Adjustments */
-  .homepage-emergency-services-button,
-  .emergency-button {
-    padding: 12px 20px;
-    font-size: 16px;
-    width: 100%; /* Make buttons full width */
-    max-width: 250px;
-  }
-
-  .rectangular-button {
-    width: 90%; /* Make buttons responsive */
-    max-width: 400px;
-    font-size: 18px;
-    height: auto; /* Adjust height automatically */
-    padding: 12px;
-  }
-
-  /* Modal Adjustments */
-  .modal {
-    width: 95%;
+  .emergency-description {
     padding: 20px;
-    max-width: 350px; /* Slightly smaller modal */
-  }
-
-  .modal-submit-button,
-  .modal-close-button {
-    font-size: 14px;
-    padding: 8px 15px;
-  }
-
-  /* Input Fields */
-  .form-group input,
-  .form-group textarea {
-    font-size: 14px;
-    padding: 8px;
-  }
-
-  /* Center Content Adjustments */
-  .emergency-container {
-    padding: 0;
-  }
-
-  .emergency-content {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  /* Table Adjustments */
-  .contacts-table {
-    font-size: 14px;
-  }
-
-  .contacts-table th,
-  .contacts-table td {
-    padding: 8px;
-  }
-
-  /* Back Link Adjustments */
-  .back-link {
-    font-size: 12px;
   }
 }

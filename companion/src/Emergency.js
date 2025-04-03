@@ -1,6 +1,6 @@
-import React from "react";
-import "./Emergency.css"; // Ensure styles are updated to center content
-import Navbar from "./Navbar"; // Import the Navbar component
+import React, { useState } from "react";
+import "./Emergency.css";
+import Navbar from "./Navbar";
 import Footer from "./Footer";
 import BackToHome from "./BackToHome";
 import police from "./assets/police.png";
@@ -9,6 +9,14 @@ import firetruck from "./assets/firetruck.png";
 import family from "./assets/family.png";
 
 const Emergency = ({ role, handleLogout }) => {
+  const [selectedType, setSelectedType] = useState("");
+  const [location, setLocation] = useState("");
+  const [contactNumber, setContactNumber] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [notes, setNotes] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [showForm, setShowForm] = useState(false);
+
   const emergencyHotlines = [
     { name: "Police Station", number: "911" },
     { name: "Fire Department", number: "112" },
@@ -21,6 +29,57 @@ const Emergency = ({ role, handleLogout }) => {
     { name: "Neighborhood Watch", number: "0916-456-7890" },
   ];
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!selectedType || !location || !contactNumber || !fullName) {
+      alert("Please complete all required fields.");
+      return;
+    }
+
+    const payload = {
+      type: selectedType,
+      location,
+      contact_number: contactNumber,
+      full_name: fullName,
+      notes,
+    };
+
+    try {
+      const response = await fetch("http://localhost/php/submit_emergency.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+        credentials: "include",
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        setSuccessMessage("Emergency submitted successfully.");
+        setLocation("");
+        setContactNumber("");
+        setFullName("");
+        setNotes("");
+        setSelectedType("");
+        setShowForm(false);
+        setTimeout(() => setSuccessMessage(""), 4000);
+      } else {
+        alert("Error: " + (data.error || "Submission failed."));
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+      alert("Network error. Please check CORS or server availability.");
+    }
+  };
+
+  const emergencyOptions = [
+    { type: "Police", icon: police },
+    { type: "Ambulance", icon: ambulance },
+    { type: "Fire Truck", icon: firetruck },
+    { type: "Family", icon: family },
+  ];
+
   return (
     <div className="emergency-container">
       <Navbar role={role} handleLogout={handleLogout} />
@@ -28,64 +87,80 @@ const Emergency = ({ role, handleLogout }) => {
         <div className="emergency-title-container">
           <h1 className="emergency-title">Emergency Services</h1>
         </div>
-        
-        <div className="emergency-details-container">
-          <div className="emergency-description"> 
-            <p className="emergency-desc-title">
-              <strong>Paalala: </strong>
-              Ang Emergency Assistance ay idinisenyo upang magbigay ng mabilis at maaasahang tulong sa oras ng pangangailangan. Layunin nitong maghatid ng malinaw, tiyak, at agarang impormasyon upang matiyak ang tamang aksyon at solusyon sa anumang uri ng emergency.
-            </p>
-            <ul className="emergency-desc">
-              <li>
-              Sa oras ng emergency, pindutin ang tamang button para sa nais tawagan:
-              </li>
-              <li>
-              Siguraduhing ibigay ang tamang detalye tulad ng lokasyon, uri ng emergency, at contact number.
-              </li>
-              <li>
-                <strong>Pangalan</strong>
-              </li>
-              <li>
-                <strong>Address</strong>
-              </li>
-              <li>
-                <strong>Contact Number</strong>
-              </li>
-            </ul>
-          </div>
 
-          <div className="buttons-container">
-            <div className="police-container">
-              <button>
-                  <img src={police} className="police-icon" alt="police"></img>
-                  <span className="police-title">Police Patrol</span>
-              </button>
-            </div>
-            <div className="ambulance-container">
-              <button>
-                  <img src={ambulance} className="ambulance-icon"alt="ambulance"></img>
-                  <span className="ambulance-title">Ambulance</span>
-              </button>
-            </div>
-            <div className="firetruck-container">
-              <button>
-                  <img src={firetruck} className="firetruck-icon"alt="firetruck"></img>
-                  <span className="firetruck-title">Fire Truck</span>
-              </button>
-            </div>
-            <div className="family-container">
-              <button>
-                  <img src={family} className="family-icon" alt="family"></img>
-                  <span className="family-title">Family</span>
-              </button>
-            </div>
-          </div>
-
-
-
-
+        <div className="emergency-description">
+          <p>
+            <strong>Paalala:</strong> Ang Emergency Assistance ay idinisenyo upang magbigay ng mabilis at maaasahang tulong sa oras ng pangangailangan.
+          </p>
+          <ul>
+            <li>Pindutin ang tamang button para sa nais na serbisyo.</li>
+            <li>Ibigay ang tamang detalye tulad ng lokasyon, uri ng emergency, at contact number.</li>
+          </ul>
         </div>
-        
+
+        <div className="buttons-container">
+          {emergencyOptions.map(({ type, icon }) => (
+            <button
+              key={type}
+              className={`emergency-button ${selectedType === type ? "selected" : ""}`}
+              onClick={() => {
+                setSelectedType(type);
+                setShowForm(true);
+              }}
+            >
+              <img src={icon} alt={type} className="emergency-icon" />
+              <span>{type}</span>
+            </button>
+          ))}
+        </div>
+
+        {showForm && (
+          <div className="emergency-popup">
+            <div className="emergency-popup-inner">
+              <button className="close-popup" onClick={() => setShowForm(false)}>×</button>
+              <form className="emergency-form" onSubmit={handleSubmit}>
+                <h3>Submit {selectedType} Emergency</h3>
+                <input
+                  type="text"
+                  placeholder="Full Name"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  required
+                />
+                <input
+                  type="text"
+                  placeholder="Location"
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                  required
+                />
+                <input
+                  type="text"
+                  placeholder="Contact Number"
+                  value={contactNumber}
+                  onChange={(e) => setContactNumber(e.target.value)}
+                  required
+                />
+                <textarea
+                  placeholder="Additional Notes (optional)"
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                ></textarea>
+                <button type="submit">Submit Emergency</button>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {successMessage && (
+          <div className="emergency-popup">
+            <div className="emergency-popup-inner">
+              <button className="close-popup" onClick={() => setSuccessMessage("")}>×</button>
+              <p style={{ fontSize: "1.2rem", color: "green" }}>{successMessage}</p>
+            </div>
+          </div>
+        )}
+
         <div className="hotlines-container">
           <div className="hotlines">
             <p className="hotlines-title">Emergency Hotlines</p>
@@ -108,7 +183,7 @@ const Emergency = ({ role, handleLogout }) => {
           </div>
 
           <div className="contacts">
-          <p className="contacts-title">Emergency Contacts</p>
+            <p className="contacts-title">Emergency Contacts</p>
             <table className="contacts-table">
               <thead>
                 <tr>
@@ -126,21 +201,9 @@ const Emergency = ({ role, handleLogout }) => {
               </tbody>
             </table>
           </div>
-
-        </div>
-
-        <div className="emergency-contacts">
-          <h3>Emergency Hotlines</h3>
-          
-        </div>
-
-        <div className="emergency-contacts">
-          <h3>Emergency Contacts</h3>
-          
         </div>
 
         <BackToHome role={role} />
-
         <Footer role={role} />
       </div>
     </div>
