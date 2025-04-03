@@ -1,280 +1,265 @@
-/* Main Senior Care Button */
-.homepage-senior-care-button {
-  background-color: #800000; /* Maroon background */
-  color: white; /* White text */
-  border: none;
-  border-radius: 8px;
-  padding: 10px 15px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  font-family: "Roboto", sans-serif;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px; /* Space between icon and text */
-  position: relative; /* Make button the reference point for absolute positioning */
-}
-
-.senior-care-button:hover {
-  background-color: #a00000; /* Darker maroon on hover */
-}
-
-/* Senior Care Container */
+/* Main container */
 .senior-care-container {
-  background: #fbfbf6;
-  padding: 0;
-  margin: 0;
-  border-radius: 8px;
   font-family: "Roboto", sans-serif;
-  max-width: 100%;
-  color: #333;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  padding-bottom: 30px;
 }
 
-/* Senior Title Container */
+/* Title Section */
 .senior-title-container {
-  width: 100%;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #ffffff;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Added drop shadow */
+  text-align: center;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .senior-title {
   font-size: 2rem;
-  font-weight: bold;
-  color: #b71c1c;
-  margin: 0; /* Removes extra spacing */
-  text-align: center; /* Center text within the element */
+  color: #800000;
+  margin: 0;
 }
 
-/* Senior Details Container */
+/* Instruction Section */
 .senior-details-container {
-  padding: 20px;
-  margin: 40px 20rem;
-  background-color: #fbfbf6;
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 25px;
+  background: #fffaf5;
+  border-radius: 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  line-height: 1.6;
 }
 
-.senior-title-p {
-  color: #fcfcfc;
-  background-color: #c31c1c;
-  font-family: "Roboto", sans-serif;
-  border-radius: 50px;
-  font-size: 1.4rem;
-  font-weight: 600;
-  justify-content: center;
-  align-items: center;
-  padding: 25px 40px;
-  text-align: center;
-}
-
-/* Instructions Container */
-.instruction-container {
-  margin-top: 40px;
-}
-
-/* Instruction List */
-.instruction-desc {
-  text-align: justify; /* Justifies the text */
-  padding: 40px 40px;
-  list-style: none;
-  max-width: 100%; /* Optional: Set a max width for better readability */
-  background-color: #ffffff;
-  border-radius: 30px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-  line-height: 1.7rem;
+.instruction-list {
+  margin-top: 10px;
+  padding-left: 20px;
+  list-style-type: decimal;
+  color: #444;
 }
 
 .instruction-list li {
-  margin-bottom: 20px;
-  text-align: justify; /* Ensures the content of each list item is justified */
-  position: relative; /* Positioning for the number */
-}
-
-.instruction-list p {
-  font-size: 1.3rem;
-  font-weight: 400;
-  color: #1e1e1e;
-}
-
-.instruction-list strong {
-  font-size: 1.4rem; /* Adjust the size as needed */
-  color: #1e1e1e; /* Set your desired font color */
-}
-.instruction-list li::before {
-  position: absolute;
-  left: -30px; /* Position the number to the left of the text */
-  font-weight: bold;
-  color: #800000;
+  margin-bottom: 10px;
 }
 
 .senior-paalala {
-  margin: 40px 0;
+  margin-top: 20px;
+  font-weight: bold;
+  color: #b71c1c;
 }
 
-.senior-p {
-  font-size: 1.3rem;
-  font-weight: 400;
-  padding: 20px 40px 30px;
-  background-color: #fff8e1;
-  border: 3px solid #c31c1c;
-  border-radius: 30px;
-  line-height: 1.4rem;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+/* Button Wrapper & Container */
+.button-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
 }
 
-.senior-p strong {
-  color: #800000; /* Highlight the "Paalala" in maroon */
-  font-weight: bold; /* Emphasize the title */
-}
-
-/* Button layout inside Senior Care page */
 .button-container {
   display: flex;
-  flex-direction: column; /* Stack buttons vertically */
-  align-items: center; /* Center align the buttons */
-  gap: 20px; /* Add space between buttons */
-  margin-block: 20px;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin: 30px 0;
 }
 
-/* Back to Home Link */
-.back-link {
-  text-decoration: none;
-  color: #800000;
-  font-size: 14px;
-  display: block; /* Ensure it behaves like a block element */
-  text-align: center; /* Center the text */
-  margin: 20px auto; /* Add vertical spacing and center horizontally */
-}
-
-.back-link:hover {
-  text-decoration: underline;
-}
-
-/* Buttons inside the Senior Care page */
+/* Buttons */
 .secondary-button {
-  background-color: #800000; /* Button background */
-  color: #f8f8f8; /* Button text color */
-  border: 2px solid #800000; /* Border color */
-  border-radius: 10px; /* Slightly larger border radius for a softer look */
-  padding: 20px 10px; /* Increased padding for vertical size */
-  width: 250px; /* Fixed width for all buttons */
-  font-size: 16px; /* Font size */
-  font-weight: bold; /* Makes the text stand out */
-  cursor: pointer; /* Pointer cursor on hover */
-  text-align: center; /* Centers the text inside the button */
-  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
-  font-family: "Roboto", sans-serif;
+  background-color: #800000;
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  min-width: 180px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
 }
 
 .secondary-button:hover {
-  background-color: #ebebeb; /* Light gray on hover */
-  color: #800000; /* Maroon text on hover */
-  transform: scale(1.05); /* Slight zoom effect on hover */
+  background-color: #a00000;
 }
 
-/* Modal container styling */
+.gray-button {
+  background-color: #ccc;
+  color: #333;
+}
+
+.gray-button:hover {
+  background-color: #bbb;
+}
+
+/* Modal Layout */
 .modal {
-  padding: 25px;
-  border-radius: 8px;
-  background-color: #ffffff;
-  max-width: 400px;
-  width: 100%;
+  background: white;
+  padding: 30px;
+  max-width: 600px;
   margin: auto;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  overflow-y: auto;
+  max-height: 90vh;
 }
 
-/* Styling for service, date, and time selects */
-.service-select,
-.date-input,
-.time-select {
+.modal h2 {
+  text-align: center;
+  color: #800000;
+  margin-bottom: 20px;
+}
+
+/* Input Fields */
+.input-field {
+  display: block;
   width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
+  padding: 12px;
+  margin: 10px 0 20px;
   border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  box-sizing: border-box;
 }
-/* ----- Responsive Design for Tablets (max-width: 768px) ----- */
-@media only screen and (max-width: 768px) {
-  /* Adjust button styles for smaller screens */
-  .homepage-senior-care-button {
-    padding: 8px 12px;
-    font-size: 14px;
-    gap: 5px; /* Reduce space between icon and text */
+
+.input-field:focus {
+  border-color: #800000;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(128, 0, 0, 0.1);
+}
+
+/* Modal Buttons */
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+/* Appointments Table */
+.appointments-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  font-size: 0.95rem;
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+}
+
+.appointments-table th,
+.appointments-table td {
+  padding: 12px;
+  text-align: center;
+  border: 1px solid #eee;
+}
+
+.appointments-table th {
+  background-color: #800000;
+  color: white;
+  font-weight: 600;
+}
+
+.appointments-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .senior-title {
+    font-size: 1.6rem;
   }
 
-  /* Adjust heading and text sizes */
-  h2 {
-    font-size: 16px;
-    margin-bottom: 1px;
+  .senior-details-container {
+    padding: 20px;
+    margin: 20px 10px;
   }
 
-  h4 {
-    font-size: 13px;
-  }
-
-  .instruction-list p,
-  strong {
-    font-size: 13px;
-    margin: 15px;
-  }
-
-  /* Modify note container */
-  .note {
-    padding: 10px 15px;
-    font-size: 14px;
-    max-width: 90%; /* Make it responsive */
-  }
-
-  /* Modify button container */
-  .button-container {
-    gap: 15px;
-    margin-block: 15px;
-  }
-
-  /* Modify secondary button */
-  .secondary-button {
-    padding: 15px 8px;
-    width: 200px; /* Reduce width */
-    font-size: 14px;
-  }
-
-  /* Adjust instruction list */
   .instruction-list {
-    max-width: 90%;
+    padding-left: 15px;
   }
 
-  .instruction-list li {
-    font-size: 14px;
-    margin-bottom: 15px;
+  .button-container {
+    flex-direction: column;
+    gap: 10px;
   }
 
-  .instruction-list li::before {
-    left: 0;
+  .secondary-button {
+    width: 100%;
+    max-width: 300px;
   }
 
-  /* Modify modal for smaller screens */
   .modal {
-    max-width: 90%;
+    width: 90%;
     padding: 20px;
   }
 
-  /* Adjust input fields */
-  .service-select,
-  .date-input,
-  .time-select {
+  .appointments-table th,
+  .appointments-table td {
     padding: 8px;
-    font-size: 14px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .senior-title {
+    font-size: 1.4rem;
   }
 
-  /* Back to Home link adjustments */
-  .back-link {
-    font-size: 12px;
+  .modal h2 {
+    font-size: 1.2rem;
   }
+
+  .input-field {
+    font-size: 0.95rem;
+  }
+
+  .appointments-table {
+    font-size: 0.85rem;
+  }
+}
+/* Appointments Table (Red Themed) */
+.appointments-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  font-size: 0.95rem;
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border: 2px solid #b71c1c;
+}
+
+.appointments-table th,
+.appointments-table td {
+  padding: 12px;
+  text-align: center;
+  border: 1px solid #e0b4b4;
+}
+
+.appointments-table th {
+  background-color: #b71c1c;
+  color: white;
+  font-weight: 600;
+}
+
+.appointments-table td {
+  color: #800000;
+}
+
+.appointments-table tr:nth-child(even) {
+  background-color: #fff5f5;
+}
+/* Fix modal section headings */
+.modal h2,
+.modal h3 {
+  color: #b71c1c; /* Maroon / Red */
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* Optional: Increase spacing between tables */
+.modal h3 {
+  margin-top: 30px;
 }
