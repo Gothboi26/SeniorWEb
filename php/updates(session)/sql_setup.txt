@@ -65,3 +65,23 @@ CREATE TABLE emergency_reports (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+
+CREATE TABLE user_profile (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT,
+  firstName VARCHAR(100),
+  middleName VARCHAR(100),
+  lastName VARCHAR(100),
+  extensionName VARCHAR(50),
+  birthday DATE,
+  age INT,
+  sex VARCHAR(10),
+  civilStatus VARCHAR(50),
+  emergencyContactPerson VARCHAR(100),
+  contactNumber VARCHAR(20),
+  relationship VARCHAR(50),
+  address VARCHAR(255),
+  profilePicture LONGTEXT,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
