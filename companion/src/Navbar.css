@@ -148,6 +148,8 @@
   background-color: white;
   color: #C31C1C;
   border: 2px solid #C31C1C;
+  border-radius: 40px;
+  font-weight: 600;
 }
 
 .logout-link:hover {

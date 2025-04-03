@@ -448,17 +448,11 @@ function CalendarComponent() {
         <div className="main-content">
           <div className="header1">
             <div className="greeting">
-              <h1>Hello, ADMIN NAME</h1>
-              <p>Good morning!</p>
+              <h1>Dashboard</h1>
             </div>
-            <div className="search-input-wrapper">
-              <span className="search-icon">🔍</span>
-              <input
-                type="text"
-                placeholder="Search for anything"
-                className="search-bar"
-              />
-            </div>
+          <div className="logout-admin">
+            <button className="logout-link" onClick={handleLogout}>Logout</button>
+          </div>
           </div>
 
           <div className="content">

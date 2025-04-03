@@ -231,7 +231,7 @@ const getChartData = () => ({
     <div className="overview-container">
       <div className="summary-cards">
         <div className="card total-patients">
-          <h3>Total Patients</h3>
+          <h3>Total Number of Seniors</h3>
           <p className="count">{totalPatients}</p>
         </div>
         <div className="card card-light">
@@ -242,6 +242,7 @@ const getChartData = () => ({
               <p className="no-appointments">No appointment data available.</p>
             )}
         </div>
+    
         <div className="card card-light">
           <h3>Seniors per Chapter</h3>
           <p className="count">500</p>
@@ -254,37 +255,46 @@ const getChartData = () => ({
           
           {/* Bar Chart */}
           <div className="stats-chart">
-            <Bar data={getChartData()} options={chartOptions} />
+          <Bar data={getChartData()} options={chartOptions} />
           </div>
         </div>
 
-        <div className="appointments">
-          <h3>Appointments</h3>
-          <div className="appointment-nav">
-              <button onClick={handlePrevDate}>&lt;</button>
-              <span>
-                {selectedDate.toLocaleString("en-US", { month: "long", year: "numeric" })}
-              </span>
-              <button onClick={handleNextDate}>&gt;</button>
-          </div>
-            {loading ? (
-              <p>Loading...</p>
-            ) : appointmentsByDate.length === 0 ? (
-              <p>No appointments available.</p>
-            ) : (
-              <ul>
-                {appointmentsByDate.map((appointment) => (
-                  <li key={appointment.id} className="appointment-item">
-                    <p>{appointment.details}</p>
-                    <img src={editIcon} alt="Edit" onClick={() => setEditMode(true)} />
-                    <img src={deleteIcon} alt="Delete" onClick={() => handleDelete(appointment.id)} />
-                  </li>
-                ))}
-              </ul>
-            )}
+        <div className="card card-light">
+          <h3>Senior Age Group</h3>
+          <Bar data={getChartData()} options={chartOptions} />
         </div>
+
+        
       </div>
 
+
+    <div className="appointment-table">
+      <div className="appointments">
+            <h3>Appointments</h3>
+            <div className="appointment-nav">
+                <button onClick={handlePrevDate}>&lt;</button>
+                <span>
+                  {selectedDate.toLocaleString("en-US", { month: "long", year: "numeric" })}
+                </span>
+                <button onClick={handleNextDate}>&gt;</button>
+            </div>
+              {loading ? (
+                <p>Loading...</p>
+              ) : appointmentsByDate.length === 0 ? (
+                <p>No appointments available.</p>
+              ) : (
+                <ul>
+                  {appointmentsByDate.map((appointment) => (
+                    <li key={appointment.id} className="appointment-item">
+                      <p>{appointment.details}</p>
+                      <img src={editIcon} alt="Edit" onClick={() => setEditMode(true)} />
+                      <img src={deleteIcon} alt="Delete" onClick={() => handleDelete(appointment.id)} />
+                    </li>
+                  ))}
+                </ul>
+              )}
+        </div>
+    </div>        
       {/* Edit Appointment Modal or Form */}
       {editMode && currentAppointment && (
         <div className="edit-modal">
@@ -338,52 +348,6 @@ const getChartData = () => ({
         </div>
       )}
 
-      {/* Patients Table */}
-      <div className="patients-table-container">
-        <div className="patients-table-header">
-          <h2>All Patients</h2>
-          <button className="see-all-button">See All</button>
-        </div>
-        <table className="patients-table">
-          <thead>
-            <tr>
-              <th></th>
-              <th>Patients Name</th>
-              <th>Gender</th>
-              <th>Type</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {appointments.map((appointment) => (
-              <tr key={appointment.id}>
-                <td>
-                  <input type="checkbox" />
-                </td>
-                <td>{appointment.sex}</td>{" "}
-                {/* Display the gender (sex) of the patient */}
-                <td>{appointment.service}</td>
-                <td className={appointment.status.toLowerCase()}>
-                  {appointment.status}
-                </td>
-                <td className="action-icons">
-                  <img
-                    src={editIcon}
-                    alt="Edit"
-                    onClick={() => handleEdit(appointment)}
-                  />
-                  <img
-                    src={deleteIcon}
-                    alt="Delete"
-                    onClick={() => handleDelete(appointment.id)}
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
     </div>
   );
 };

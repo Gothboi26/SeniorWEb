@@ -1,6 +1,6 @@
 .admin-layout {
   display: flex;
-  height: 100vh;
+  background-color: #FBFBFB;
 }
 
 /* Sidebar styles */
@@ -77,11 +77,12 @@
 
 .content {
   flex: 1;
-  padding: 20px;
+  padding: 40px;
   overflow-y: auto;
-  background-color: aliceblue;
+  background-color: #FFFFFF;
   border-radius: 20px;
   height: 88vh;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .settings ul li {
@@ -115,15 +116,9 @@
 }
 
 .greeting h1 {
-  font-size: 1.8em;
+  font-size: 4rem;
   margin: 0;
-  color: #333;
-}
-
-.greeting p {
-  font-size: 1.2em;
-  color: #666;
-  margin: 5px 0 0;
+  color: #1e1e1e;
 }
 
 .search-input-wrapper {
