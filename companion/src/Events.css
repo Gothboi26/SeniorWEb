@@ -1,9 +1,12 @@
 /* General button styles for consistency */
 .events-button {
+  background-color: #C31C1C;
+  color: #ffffff;
   padding: 10px 20px;
-  font-size: 16px;
+  font-size: 1rem;
+  font-weight: 500;
   border: none;
-  border-radius: 5px;
+  border-radius: 20px;
   cursor: pointer;
   transition: background-color 0.3s ease, opacity 0.3s ease;
 }
@@ -40,11 +43,13 @@ events-button:hover {
 .save-button {
   background-color: #34a853;
   color: white;
+  border-radius: 20px;
 }
 
 .cancel-button {
   background-color: #dc3545;
   color: white;
+  border-radius: 20px;
 }
 
 .cancel-button:hover {
@@ -53,14 +58,11 @@ events-button:hover {
 
 /* Events Container */
 .events-admin-container {
-  background-color: white;
   padding: 15px;
-  border-radius: 12px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   margin: 20px auto;
-      margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 /* Events Table Container */
@@ -74,7 +76,7 @@ events-button:hover {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 15px;
+  gap: 20px;
   justify-content: flex-end; /* Aligns to the right */
 }
 
@@ -93,10 +95,11 @@ events-button:hover {
   border: 1px solid #ddd;
   padding: 10px;
   text-align: center;
+  color: #1E1E1E;
 }
 
 .events-table th {
-  background: #d6e4ff;
+  background: #D0CDF6;
 }
 
 .events-table .no-events {
@@ -105,13 +108,27 @@ events-button:hover {
 }
 
 /* Buttons inside the Table */
-.edit-button,
+.actions- {
+  gap: 100px;
+}
+
+.edit-button
+ {
+  background-color: #5CB338;
+  color: #FFFFFF;
+  border: 2px solid #5CB338;
+  border-radius: 40px;
+  font-weight: 600;
+  padding: 10px 20px;
+}
+
 .delete-button {
-  border: none;
-  background: none;
-  cursor: pointer;
-  font-size: 1rem;
-  margin: 0 5px;
+  background-color: #C31C1C;
+  color: #FFFFFF;
+  border: 2px solid #C31C1C;
+  border-radius: 40px;
+  font-weight: 600;
+  padding: 10px 20px;
 }
 
 .edit-button:hover,
@@ -129,8 +146,8 @@ events-button:hover {
 
 .events-header h2 {
   font-family: "Roboto", sans-serif;
-  font-size: 1.6rem;
-  color: #333;
+  font-size: 1.8rem;
+  color: #1E1E1E;
   margin-bottom: 15px;
 }
 
@@ -138,13 +155,13 @@ events-button:hover {
 .sort-options {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
 }
 
 .sort-options select,
 .sort-options button {
-  padding: 9px 12px;
-  font-size: 16px;
+  padding: 9px 20px;
+  font-size: 1rem;
   border-radius: 5px;
 }
 
@@ -152,6 +169,8 @@ events-button:hover {
   border: 1px solid #ccc;
   background-color: #fff;
   cursor: pointer;
+  border-radius: 20px;
+  padding: 10px 20px;
 }
 
 .sort-options select:focus {
@@ -163,6 +182,9 @@ events-button:hover {
   background-color: #C31C1C;
   color: white;
   border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-weight: 500
 }
 
 .sort-options button:disabled {
@@ -186,40 +208,74 @@ events-button:hover {
   gap: 10px;
 }
 
-.filter-date input {
-  padding: 5px 10px;
-  font-size: 14px;
+.filter-date-container input {
+  padding: 10px 20px;
+}
+
+.filters input {
+  padding: 10px 15px;
+  font-size: 1rem;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 20px;
 }
 
 .filter-date {
   display: inline-block;
 }
 
-/* Modal */
-.modal {
+/* Modal Box */
+.events-modal {
   background: white;
-  padding: 20px;
+  padding: 30px 40px;
   border-radius: 10px;
-  width: 100%;
-  max-width: 400px;
-  margin: auto;
+  width: 500px;
+  max-width: 90%; /* Makes it responsive */
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
 }
 
-.modal input,
-.modal textarea {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  font-size: 14px;
+.event-modal-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.event-modal-text h2 {
+  font-size: 1rem;
+}
+
+.events-modal input  {
+  border-radius: 20px;
+  font-size: 1rem;
+  padding: 5px 10px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.modal textarea {
-  resize: vertical;
+/* Centering the Modal Properly */
+.ReactModal__Overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+/* Animation for smooth appearance */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 
 /* Events Table No Events Message */
 .no-events {
@@ -281,7 +337,7 @@ events-button:hover {
   }
 
   /* Make modal content more responsive */
-  .modal {
+  .events-modal {
     max-width: 100%;
     padding: 15px;
   }
@@ -289,17 +345,17 @@ events-button:hover {
   /* Adjust table for mobile view */
   .events-table th,
   .events-table td {
-    font-size: 14px;
+    font-size: 1rem;
     padding: 8px;
   }
 
   /* Input fields in the modal */
-  .modal input,
-  .modal textarea {
+  .events-modal input,
+  .events-modal textarea {
     font-size: 14px;
   }
 
-  .modal textarea {
+  .events-modal textarea {
     font-size: 14px;
   }
 }

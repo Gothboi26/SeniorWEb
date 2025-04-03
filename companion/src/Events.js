@@ -170,11 +170,11 @@ const Events = () => {
       <div className="events-header">
         <h2>Events</h2>
         <div className="events-controls">
-          <button className="events-button" onClick={() => openModal()} className="add-event-button">
+          <button className="events-button" onClick={() => openModal()}>
             Add Event
           </button>
           <div className="filters">
-            <input
+            <input className="filter-date-container"
               type="date"
               value={filterDate}
               onChange={(e) => setFilterDate(e.target.value)}
@@ -220,18 +220,17 @@ const Events = () => {
                   <td>{formatDate(event.date_time)}</td>
                   <td>{event.event_description}</td>
                   <td>
-                    <button
-                      className="edit-button"
-                      onClick={() => openModal(event)}
-                    >
-                      ✏️
-                    </button>
-                    <button
-                      className="delete-button"
-                      onClick={() => deleteEvent(event.id)}
-                    >
-                      🗑️
-                    </button>
+                    <div className="action-icons">
+                      <button
+                        className="edit-button"
+                        onClick={() => openModal(event)}
+                      >Edit</button>
+                      <button
+                        className="delete-button"
+                        onClick={() => deleteEvent(event.id)}
+                      >Delete</button>
+                    </div>
+                    
                   </td>
                 </tr>
               ))
@@ -245,9 +244,9 @@ const Events = () => {
           </tbody>
         </table>
       </div>
-
-      <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="modal">
-        <h2>{editingEventId ? "Edit Event" : "Add Event"}</h2>
+      
+      <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="events-modal">
+        <h2 className="event-modal-text">{editingEventId ? "Edit Event" : "Add Event"}</h2>
         <input
           type="text"
           placeholder="Event Title"
