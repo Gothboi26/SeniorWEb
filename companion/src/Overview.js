@@ -36,18 +36,28 @@ const Overview = () => {
   }, [appointments]);
 
   const fetchAppointmentsData = useCallback(() => {
-    fetch("http://localhost/php/appointments.php")
+    fetch("http://localhost/php/appointments.php", {
+      credentials: "include", // Ensures session cookies are sent
+    })
       .then((response) => response.json())
       .then((data) => {
-        setAppointments(data);
-        processAppointmentsByService(data);
-        setLoading(false); // <-- Add this line
+        console.log("Fetched Data:", data); // Debugging
+  
+        if (data.status === "success" && Array.isArray(data.data)) {
+          setAppointments(data.data);
+          processAppointmentsByService(data.data);
+        } else {
+          console.error("Unexpected API response format:", data);
+          setAppointments([]); // Ensure it's an empty array to prevent errors
+        }
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching appointments:", error);
-        setLoading(false); // <-- Also add here to stop loading even if an error occurs
+        setLoading(false);
       });
   }, []);
+  
 
   useEffect(() => {
     fetchAppointmentsData();
