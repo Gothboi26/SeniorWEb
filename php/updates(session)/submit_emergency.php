@@ -1,56 +1,71 @@
 <?php
 session_start();
 
-header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: http://localhost:3000");
 header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
+header("Content-Type: application/json");
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    header("Access-Control-Allow-Methods: POST, OPTIONS");
-    header("Access-Control-Allow-Headers: Content-Type");
-    exit(0);
+    http_response_code(200);
+    exit();
 }
 
-// Verify user is logged in
-if (!isset($_SESSION['user_id'])) {
-    echo json_encode(["error" => "User not logged in."]);
+if (!isset($_SESSION["user_id"])) {
+    echo json_encode(["success" => false, "error" => "Not logged in."]);
     exit;
 }
 
-$user_id = $_SESSION['user_id'];
+$user_id = $_SESSION["user_id"];
+$input = json_decode(file_get_contents("php://input"), true);
+$type = isset($input["type"]) ? trim($input["type"]) : null;
 
-// DB setup
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "";
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    echo json_encode(["error" => "Connection failed"]);
+if (!$type) {
+    echo json_encode(["success" => false, "error" => "Missing emergency type."]);
     exit;
 }
 
-$data = json_decode(file_get_contents("php://input"), true);
+try {
+    $pdo = new PDO("mysql:host=localhost;dbname=sampol", "root", "");
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-if (empty($data["type"]) || empty($data["location"]) || empty($data["contact_number"])) {
-    echo json_encode(["error" => "Missing required fields"]);
-    exit;
-}
+    // Get username, address from users + contactNumber from user_profile
+    $stmt = $pdo->prepare("
+        SELECT u.username, u.address, p.contactNumber
+        FROM users u
+        JOIN user_profile p ON u.id = p.user_id
+        WHERE u.id = ?
+    ");
+    $stmt->execute([$user_id]);
+    $profile = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$type = $conn->real_escape_string($data["type"]);
-$full_name = isset($data["full_name"]) ? $conn->real_escape_string($data["full_name"]) : "";
-$contact_number = $conn->real_escape_string($data["contact_number"]);
-$location = $conn->real_escape_string($data["location"]);
-$notes = isset($data["notes"]) ? $conn->real_escape_string($data["notes"]) : "";
+    if (
+        !$profile ||
+        empty($profile["username"]) ||
+        empty($profile["address"]) ||
+        empty($profile["contactNumber"])
+    ) {
+        echo json_encode(["success" => false, "error" => "missing_profile"]);
+        exit;
+    }
 
-$sql = "INSERT INTO emergency_reports (user_id, type, full_name, contact_number, location, notes)
-        VALUES ('$user_id', '$type', '$full_name', '$contact_number', '$location', '$notes')";
+    $insert = $pdo->prepare("
+        INSERT INTO emergencies (user_id, username, type, location, full_name, contact_number, status, date_reported)
+        VALUES (:user_id, :username, :type, :location, :full_name, :contact_number, 'Ongoing', NOW())
+    ");
 
-if ($conn->query($sql) === TRUE) {
+    $insert->execute([
+        ":user_id" => $user_id,
+        ":username" => $profile["username"],
+        ":type" => $type,
+        ":location" => $profile["address"],
+        ":full_name" => $profile["username"], // Using username as display name
+        ":contact_number" => $profile["contactNumber"]
+    ]);
+
     echo json_encode(["success" => true]);
-} else {
-    echo json_encode(["error" => $conn->error]);
-}
 
-$conn->close();
-?>
+} catch (PDOException $e) {
+    echo json_encode(["success" => false, "error" => "Database error: " . $e->getMessage()]);
+}

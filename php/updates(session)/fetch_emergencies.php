@@ -6,7 +6,7 @@ header("Access-Control-Allow-Credentials: true");
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "";
+$dbname = "sampol";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
@@ -15,11 +15,11 @@ if ($conn->connect_error) {
 }
 
 $sql = "SELECT id, full_name AS name, 
-               DATE_FORMAT(created_at, '%m-%d-%Y') AS date, 
-               TIME_FORMAT(created_at, '%h:%i %p') AS time, 
-               type, location, notes, status 
-        FROM emergency_reports 
-        ORDER BY created_at DESC";
+               DATE_FORMAT(date_reported, '%m-%d-%Y') AS date, 
+               TIME_FORMAT(date_reported, '%h:%i %p') AS time, 
+               type, location, contact_number, status 
+        FROM emergencies 
+        ORDER BY date_reported DESC";
 
 $result = $conn->query($sql);
 
