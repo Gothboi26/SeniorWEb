@@ -1,3 +1,11 @@
+/* General Styles */
+body {
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+}
+
 /* Table container */
 .table-container {
   padding: 20px;
@@ -6,10 +14,9 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin: 20px auto;
   max-width: 100%;
-  overflow-x: auto; /* Allow horizontal scroll on smaller screens */
+  overflow-x: auto;
 }
 
-/* Header container */
 .header-container {
   display: flex;
   align-items: center;
@@ -17,7 +24,6 @@
   margin-bottom: 20px;
 }
 
-/* Sort dropdown button */
 .sort-dropdown {
   padding: 10px 15px;
   font-size: 14px;
@@ -26,30 +32,22 @@
   margin-left: 10px;
   background-color: #C31C1C;
   color: white;
-  border: none; 
+  border: none;
   outline: none;
   appearance: none;
 }
 
-/* To ensure the dropdown arrow is white */
-.sort-dropdown::-ms-expand {
-  display: none;
-}
-
 .sort-dropdown option {
-  background-color: white; /* Makes dropdown options white */
-  color: black; /* Text color inside the dropdown */
+  background-color: white;
+  color: black;
 }
 
-/* Left-align the heading */
 .left-aligned {
   text-align: left;
-  font-family: "Roboto", sans-serif;
   font-size: 1.5rem;
   color: #333;
 }
 
-/* Table styles */
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -80,53 +78,74 @@
   border-bottom: none;
 }
 
-/* Time text */
 .time-text {
-  color: #008000; /* Green for time */
+  color: #008000;
   font-weight: bold;
 }
 
-/* Media Queries for Responsiveness */
-
-/* Medium screens (tablets) */
 @media (max-width: 768px) {
   .table-container {
-    width: 100%; /* Ensure the table container spans full width */
+    width: 100%;
     padding: 10px;
   }
-
   .table {
     font-size: 12px;
   }
-
   .table th,
   .table td {
     padding: 10px;
   }
 }
 
-/* Small screens (mobile devices) */
 @media (max-width: 480px) {
   .table-container {
     padding: 5px;
   }
-
   .table {
-    font-size: 10px; /* Adjust font size for smaller screens */
+    font-size: 10px;
   }
-
   .table th,
   .table td {
     padding: 8px;
   }
-
   .action-icons {
-    flex-direction: column; /* Stack action buttons vertically */
+    flex-direction: column;
     gap: 5px;
   }
-
-  /* Ensure the table is scrollable horizontally */
   .table-container {
     overflow-x: auto;
   }
+}
+
+.popup-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #ff9800;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 2000;
+  animation: fadeInSlide 0.4s ease-out;
+}
+
+@keyframes fadeInSlide {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.table td.status-active {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.table td.status-ongoing {
+  background-color: #cce5ff;
+  color: #004085;
+}
+
+.table td.status-resolved {
+  background-color: #d4edda;
+  color: #155724;
 }
