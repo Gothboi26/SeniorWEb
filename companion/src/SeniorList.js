@@ -9,13 +9,13 @@ const SeniorList = () => {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
+    barangay_id: "",
+    group_chapter: "",
+    email_address: "",
     age: "",
     sex: "",
     address: "",
-    health_issues: [], // now an array
-    email_address: "",
-    barangay_id: "",
-    group_chapter: ""
+    health_issues: []
   });
 
   const healthIssueOptions = [
@@ -60,31 +60,36 @@ const SeniorList = () => {
     const {
       username,
       password,
+      barangay_id,
+      group_chapter,
+      email_address,
       age,
       sex,
       address,
-      health_issues,
-      email_address,
-      barangay_id,
-      group_chapter
+      health_issues
     } = formData;
 
     if (
-      !username || !password || !age || !sex || !address ||
-      health_issues.length === 0 || !email_address || !barangay_id || !group_chapter
+      !username || !password || !barangay_id || !group_chapter ||
+      !email_address || !age || !sex || !address || health_issues.length === 0
     ) {
       alert("All fields are required!");
       return;
     }
 
-    if (!/^\d{1,5}$/.test(barangay_id)) {
-      alert("Barangay ID must be a number with up to 5 digits.");
+    if (!/^\d{5}$/.test(barangay_id)) {
+      alert("Barangay ID must be exactly 5 digits.");
+      return;
+    }
+
+    if (parseInt(age) < 60) {
+      alert("Age must be 60 or older.");
       return;
     }
 
     const payload = {
       ...formData,
-      health_issue: health_issues.join(",") // send as comma-separated string
+      health_issue: health_issues.join(",")
     };
 
     try {
@@ -102,13 +107,13 @@ const SeniorList = () => {
         setFormData({
           username: "",
           password: "",
+          barangay_id: "",
+          group_chapter: "",
+          email_address: "",
           age: "",
           sex: "",
           address: "",
-          health_issues: [],
-          email_address: "",
-          barangay_id: "",
-          group_chapter: ""
+          health_issues: []
         });
       } else {
         alert(result.message);
@@ -167,53 +172,34 @@ const SeniorList = () => {
         <div className="modal-overlay">
           <div className="modal">
             <h2>Add Senior</h2>
-            <input type="text" name="username" placeholder="Username" value={formData.username} onChange={handleInputChange} />
-            <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleInputChange} />
-            <input type="email" name="email_address" placeholder="Email Address" value={formData.email_address} onChange={handleInputChange} />
-            <input type="number" name="age" placeholder="Age" value={formData.age} onChange={handleInputChange} />
-            <select name="sex" value={formData.sex} onChange={handleInputChange}>
-              <option value="">Select Sex</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </select>
-            <input type="text" name="address" placeholder="Address" value={formData.address} onChange={handleInputChange} />
 
-            {/* Multi-select health issues with custom entry */}
-            <label>Health Issues (max 3)</label>
-            <div className="selected-tags">
-              {formData.health_issues.map((issue, index) => (
-                <span key={index} className="tag">
-                  {issue}
-                  <button type="button" onClick={() =>
-                    setFormData({
-                      ...formData,
-                      health_issues: formData.health_issues.filter((_, i) => i !== index)
-                    })
-                  }>×</button>
-                </span>
-              ))}
-            </div>
-
-            <select onChange={(e) => {
-              const value = e.target.value;
-              if (
-                value &&
-                !formData.health_issues.includes(value) &&
-                formData.health_issues.length < 3
-              ) {
-                setFormData({ ...formData, health_issues: [...formData.health_issues, value] });
-              }
-            }}>
-              <option value="">Select Health Issue</option>
-              {healthIssueOptions.map((opt, i) => (
-                <option key={i} value={opt}>{opt}</option>
-              ))}
-            </select>
-
-           
-
-            <input type="text" name="barangay_id" placeholder="Barangay ID (max 5 digits)" value={formData.barangay_id} onChange={handleInputChange} maxLength="5" />
-            <select name="group_chapter" value={formData.group_chapter} onChange={handleInputChange}>
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              value={formData.username}
+              onChange={handleInputChange}
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleInputChange}
+            />
+            <input
+              type="text"
+              name="barangay_id"
+              placeholder="Barangay ID (5 digits)"
+              value={formData.barangay_id}
+              onChange={handleInputChange}
+              maxLength="5"
+            />
+            <select
+              name="group_chapter"
+              value={formData.group_chapter}
+              onChange={handleInputChange}
+            >
               <option value="">Select Barangay Chapter</option>
               <option value="NONE">NONE</option>
               <option value="TAMARAW">TAMARAW</option>
@@ -231,6 +217,79 @@ const SeniorList = () => {
               <option value="SITIO SANTOLAN">SITIO SANTOLAN</option>
               <option value="DE GULA/PEREZ">DE GULA/PEREZ</option>
               <option value="ANGELES SENIOR CITIZENS ALLIANCE">ANGELES SENIOR CITIZENS ALLIANCE</option>
+            </select>
+
+            <input
+              type="email"
+              name="email_address"
+              placeholder="Email Address"
+              value={formData.email_address}
+              onChange={handleInputChange}
+            />
+            <input
+              type="number"
+              name="age"
+              placeholder="Age (60+)"
+              value={formData.age}
+              onChange={handleInputChange}
+            />
+            <select
+              name="sex"
+              value={formData.sex}
+              onChange={handleInputChange}
+            >
+              <option value="">Select Sex</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+            <input
+              type="text"
+              name="address"
+              placeholder="Address"
+              value={formData.address}
+              onChange={handleInputChange}
+            />
+
+            <label>Health Issues (max 3)</label>
+            <div className="selected-tags">
+              {formData.health_issues.map((issue, index) => (
+                <span key={index} className="tag">
+                  {issue}
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setFormData({
+                        ...formData,
+                        health_issues: formData.health_issues.filter((_, i) => i !== index)
+                      })
+                    }
+                  >
+                    ×
+                  </button>
+                </span>
+              ))}
+            </div>
+            <select
+              onChange={(e) => {
+                const value = e.target.value;
+                if (
+                  value &&
+                  !formData.health_issues.includes(value) &&
+                  formData.health_issues.length < 3
+                ) {
+                  setFormData({
+                    ...formData,
+                    health_issues: [...formData.health_issues, value]
+                  });
+                }
+              }}
+            >
+              <option value="">Select Health Issue</option>
+              {healthIssueOptions.map((opt, i) => (
+                <option key={i} value={opt}>
+                  {opt}
+                </option>
+              ))}
             </select>
 
             <div className="modal-buttons">
