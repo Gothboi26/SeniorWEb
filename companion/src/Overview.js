@@ -36,7 +36,7 @@ const Overview = () => {
   }, [appointments]);
 
   const fetchAppointmentsData = useCallback(() => {
-    fetch("https://companion.up.railway.app/appointments.php", {
+    fetch("http://localhost/php/appointments.php", {
       credentials: "include", // Ensures session cookies are sent
     })
       .then((response) => response.json())
@@ -96,7 +96,7 @@ const [ageDistribution, setAgeDistribution] = useState({
 const [totalPatients, setTotalPatients] = useState(0);
 
 const fetchAgeDistribution = useCallback(() => {
-  fetch("https://companion.up.railway.app/get_users.php")
+  fetch("http://localhost/php/get_users.php")
     .then((response) => response.json())
     .then((data) => {
       if (data.status === "success") {
@@ -184,7 +184,7 @@ const getChartData = () => ({
     const confirmDelete = window.confirm("Are you sure you want to delete this appointment?");
     if (!confirmDelete) return;
 
-    fetch(`https://companion.up.railway.app/appointments.php?id=${appointmentId}`, {
+    fetch(`http://localhost/php/appointments.php?id=${appointmentId}`, {
       method: "DELETE",
     })
       .then((response) => response.json())
@@ -203,7 +203,7 @@ const getChartData = () => ({
     if (isSaving) return;
 
     setIsSaving(true);
-    fetch("https://companion.up.railway.app/appointments.php", {
+    fetch("http://localhost/php/appointments.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
