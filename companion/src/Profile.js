@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import "./Profile.css";
 
 const Profile = () => {
   const [role, setRole] = useState(null);
@@ -45,7 +46,6 @@ const Profile = () => {
 
           setProfile((prev) => ({ ...prev, ...updatedProfile }));
 
-          // Dynamically check if complete
           const requiredFields = [
             updatedProfile.firstName,
             updatedProfile.lastName,
@@ -272,13 +272,20 @@ const Profile = () => {
 
           <div>
             <label>Civil Status:</label>
-            <input
-              type="text"
+            <select
               name="civilStatus"
               value={profile.civilStatus}
               onChange={handleChange}
-              readOnly={readOnlyMode}
-            />
+              disabled={readOnlyMode}
+               className="form-input"
+            >
+              <option value="">-- Select Status --</option>
+              <option value="Single">Single</option>
+              <option value="Married">Married</option>
+              <option value="Widowed">Widowed</option>
+              <option value="Separated">Separated</option>
+              <option value="Divorced">Divorced</option>
+            </select>
           </div>
         </div>
 

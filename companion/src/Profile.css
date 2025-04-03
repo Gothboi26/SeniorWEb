@@ -219,9 +219,7 @@ input[name="groupChapter"]:focus {
   }
 }
 
-/* Address Container */
-.address-container {
-}
+
 
 /* Age, Sex, Bday, Civil Status Container */
 .personal-info-container {
@@ -395,4 +393,12 @@ input[name="groupChapter"]:focus {
   background: #163b7a;
   transform: translateY(-2px);
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+.form-input {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
 }
