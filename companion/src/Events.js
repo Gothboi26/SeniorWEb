@@ -3,20 +3,21 @@ import Modal from "react-modal";
 import "./Events.css";
 
 const Events = () => {
-  const [dateTime, setDateTime] = useState(new Date()); // Combined date and time state
+  const [dateTime, setDateTime] = useState(new Date());
   const [events, setEvents] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [eventTitle, setEventTitle] = useState("");
   const [eventDescription, setEventDescription] = useState("");
+  const [organizer, setOrganizer] = useState("");
+  const [location, setLocation] = useState("");
   const [loading, setLoading] = useState(false);
   const [editingEventId, setEditingEventId] = useState(null);
-  const [sortOrder, setSortOrder] = useState("asc"); // New state for sorting
-  const [showAllEvents, setShowAllEvents] = useState(false); // State to show all events or events for specific date
-  const [filterDate, setFilterDate] = useState(""); // New state to handle filtered date
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [showAllEvents, setShowAllEvents] = useState(false);
+  const [filterDate, setFilterDate] = useState("");
 
-  // Fetch events (either for the selected date or all events)
   useEffect(() => {
-    const formattedDate = filterDate || dateTime.toISOString().split("T")[0]; // Use filterDate if provided, otherwise use dateTime
+    const formattedDate = filterDate || dateTime.toISOString().split("T")[0];
     const url = `http://localhost/php/get_events.php?date=${
       showAllEvents ? "" : formattedDate
     }&sortOrder=${sortOrder}`;
@@ -25,7 +26,7 @@ const Events = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.status === "success" && Array.isArray(data.events)) {
-          setEvents(data.events); // Ensure data.events is an array
+          setEvents(data.events);
         } else {
           console.error(
             "Failed to load events:",
@@ -37,42 +38,44 @@ const Events = () => {
         console.error("Error:", error);
         alert("An error occurred while loading events.");
       });
-  }, [dateTime, sortOrder, showAllEvents, filterDate]); // Add filterDate as a dependency to refetch events when it changes
+  }, [dateTime, sortOrder, showAllEvents, filterDate]);
 
-  // Open modal for adding new event or editing existing one
   const openModal = (event = null) => {
     setModalIsOpen(true);
     if (event) {
       setEventTitle(event.event_title);
       setEventDescription(event.event_description);
+      setOrganizer(event.organizer || "");
+      setLocation(event.location || "");
       setDateTime(new Date(event.date_time));
       setEditingEventId(event.id);
     } else {
       setEventTitle("");
       setEventDescription("");
+      setOrganizer("");
+      setLocation("");
       setDateTime(new Date());
       setEditingEventId(null);
     }
   };
 
-  // Close modal
   const closeModal = () => {
     setModalIsOpen(false);
     setEventTitle("");
     setEventDescription("");
+    setOrganizer("");
+    setLocation("");
     setEditingEventId(null);
   };
 
-  // Validate inputs
   const validateInputs = () => {
-    if (!eventTitle || !eventDescription || !dateTime) {
+    if (!eventTitle || !eventDescription || !dateTime || !organizer || !location) {
       alert("Please fill out all fields.");
       return false;
     }
     return true;
   };
 
-  // Save event
   const saveEvent = () => {
     if (!validateInputs()) return;
 
@@ -82,8 +85,11 @@ const Events = () => {
       .toISOString()
       .slice(0, 19)
       .replace("T", " ");
+
     const newEvent = {
       id: editingEventId,
+      organizer,
+      location,
       date_time: formattedDateTime,
       event_title: eventTitle,
       event_description: eventDescription,
@@ -121,11 +127,10 @@ const Events = () => {
       });
   };
 
-  // Delete event
   const deleteEvent = (id) => {
     if (window.confirm("Are you sure you want to delete this event?")) {
       setLoading(true);
-      fetch(`http://localhost/php/delete_events.php?id=${id}`, {
+      fetch(`http://localhost/php/get_events.php?id=${id}`, {
         method: "POST",
       })
         .then((response) => response.json())
@@ -147,17 +152,16 @@ const Events = () => {
     }
   };
 
-  // Function to format date into a more readable format (e.g., "Monday, January 1, 2025")
   const formatDate = (date) => {
     return new Intl.DateTimeFormat("en-US", {
-      weekday: "long", // "Monday"
-      year: "numeric", // "2025"
-      month: "long", // "January"
-      day: "numeric", // "1"
-      hour: "2-digit", // "2"
-      minute: "2-digit", // "30"
-      second: "2-digit", // "45"
-      hour12: true, // Use 12-hour clock (AM/PM)
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: true,
     }).format(new Date(date));
   };
 
@@ -199,6 +203,8 @@ const Events = () => {
           <thead>
             <tr>
               <th>Event Title</th>
+              <th>Organizer</th>
+              <th>Location</th>
               <th>Date and Time</th>
               <th>Description</th>
               <th>Action</th>
@@ -209,6 +215,8 @@ const Events = () => {
               events.map((event) => (
                 <tr key={event.id}>
                   <td>{event.event_title}</td>
+                  <td>{event.organizer}</td>
+                  <td>{event.location}</td>
                   <td>{formatDate(event.date_time)}</td>
                   <td>{event.event_description}</td>
                   <td>
@@ -229,7 +237,7 @@ const Events = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="4" className="no-events">
+                <td colSpan="6" className="no-events">
                   No events available
                 </td>
               </tr>
@@ -245,6 +253,18 @@ const Events = () => {
           placeholder="Event Title"
           value={eventTitle}
           onChange={(e) => setEventTitle(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Organizer"
+          value={organizer}
+          onChange={(e) => setOrganizer(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Location"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
         />
         <input
           type="datetime-local"
