@@ -17,7 +17,7 @@ const Events = () => {
   // Fetch events (either for the selected date or all events)
   useEffect(() => {
     const formattedDate = filterDate || dateTime.toISOString().split("T")[0]; // Use filterDate if provided, otherwise use dateTime
-    const url = `http://localhost/php/get_events.php?date=${
+    const url = `https://companion.up.railway.app/get_events.php?date=${
       showAllEvents ? "" : formattedDate
     }&sortOrder=${sortOrder}`;
 
@@ -89,7 +89,7 @@ const Events = () => {
       event_description: eventDescription,
     };
 
-    fetch("http://localhost/php/add_events.php", {
+    fetch("https://companion.up.railway.app/add_events.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -125,7 +125,7 @@ const Events = () => {
   const deleteEvent = (id) => {
     if (window.confirm("Are you sure you want to delete this event?")) {
       setLoading(true);
-      fetch(`http://localhost/php/delete_events.php?id=${id}`, {
+      fetch(`https://companion.up.railway.app/delete_events.php?id=${id}`, {
         method: "POST",
       })
         .then((response) => response.json())

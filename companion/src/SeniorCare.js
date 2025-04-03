@@ -63,7 +63,7 @@ const SeniorCare = ({ role, handleLogout }) => {
   useEffect(() => {
     const fetchReservedSlots = async () => {
       try {
-        const response = await fetch("http://localhost/php/appointments.php", {
+        const response = await fetch("https://companion.up.railway.app/appointments.php", {
           method: "GET",
           credentials: "include",
         });
@@ -109,7 +109,7 @@ const SeniorCare = ({ role, handleLogout }) => {
     };
 
     try {
-      const response = await fetch("http://localhost/php/appointments.php", {
+      const response = await fetch("https://companion.up.railway.app/appointments.php", {
         method: "POST",
         credentials: "include",
         headers: {
