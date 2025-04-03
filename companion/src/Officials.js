@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import "./OfficialsHomepage.css";
-import boy from "./assets/boy.png";
-import girl from "./assets/girl.png";
+import kap from "./assets/officials/KAP-RIZALINO.JPG";
+import rica from "./assets/officials/KAG-RICA.JPG";
+import susan from "./assets/officials/KAG-SUSAN.JPG";
+import zell from "./assets/officials/KAG-ZELL.JPG";
+import beltran from "./assets/officials/KAG-MOISES.JPG";
+import bogie from "./assets/officials/KAG-BOGIE.JPG";
+import ellaine from "./assets/officials/KAG-ELLAINE.JPG";
+import edgardo from "./assets/officials/KAG-EDGARDO.JPG";
+import shennel from "./assets/officials/KAG-SHENNEL.JPG";
 import leftarrow from "./assets/redleft.png";
 import rightarrow from "./assets/redright.png";
 
@@ -12,14 +19,15 @@ class Officials extends Component {
       index: 0,
     };
     this.officials = [
-      { name: "Ferrer, Rizalino", position: "Punong Barangay", img: boy },
-      { name: "Matos, Rica", position: "Kagawad", img: girl },
-      { name: "De Gula, Susan", position: "Kagawad", img: girl },
-      { name: "Dela Cruz, Zella", position: "Kagawad", img: girl },
-      { name: "Moises, Beltran", position: "Kagawad", img: boy },
-      { name: "Bernardino, Bogie", position: "Kagawad", img: boy },
-      { name: "Edgardo, Dizon", position: "Kagawad", img: boy },
-      { name: "Colibao, Shennel", position: "Kagawad", img: girl },
+      { name: "Ferrer, Rizalino", position: "Punong Barangay", img: kap },
+      { name: "Matos, Rica", position: "Kagawad", img: rica },
+      { name: "De Gula, Susan", position: "Kagawad", img: susan },
+      { name: "Dela Cruz, Zella", position: "Kagawad", img: zell },
+      { name: "Moises, Beltran", position: "Kagawad", img: beltran },
+      { name: "Bernardino, Bogie", position: "Kagawad", img: bogie },
+      { name: "Manalaysay, Ellaine", position: "Kagawad", img: ellaine },
+      { name: "Edgardo, Dizon", position: "Kagawad", img: edgardo },
+      { name: "Colibao, Shennel", position: "Kagawad", img: shennel },
     ];
     this.intervalRef = null;
   }

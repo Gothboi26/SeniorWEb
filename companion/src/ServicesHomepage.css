@@ -81,7 +81,7 @@
 .Service-Name {
   font-size: 3rem;
   font-weight: 600;
-  color: #C31C1C;
+  color: #c31c1c;
   display: flex; /* Use flexbox for horizontal alignment */
   align-items: center; /* Vertically aligns text and icon */
   gap: 7.5rem; /* Adds space between the text and the arrow */
@@ -103,7 +103,7 @@
 }
 
 .Service-Book-Button {
-  background-color: #C31C1C;
+  background-color: #c31c1c;
   color: white;
   border: none;
   border-radius: 40px;
@@ -132,5 +132,106 @@
   to {
     opacity: 1;
     transform: translateX(0);
+  }
+}
+/* Tablet (max-width: 768px) */
+@media (max-width: 768px) {
+  .Service-Section {
+    padding: 1.5rem;
+    margin-bottom: 5%;
+  }
+
+  .Service-Subheader {
+    font-size: 1.8rem;
+    margin-left: 10%;
+    width: 80%;
+    padding: 6px;
+  }
+
+  .Service-Title {
+    font-size: 2.5rem;
+    margin-top: 40px;
+  }
+
+  .Service-Content {
+    flex-direction: column;
+    gap: 3rem;
+    text-align: center;
+  }
+
+  .Service-Image img {
+    width: 80%;
+    height: auto;
+  }
+
+  .Service-Details {
+    max-width: 90%;
+    text-align: center;
+  }
+
+  .Service-Name {
+    font-size: 2.5rem;
+    gap: 3rem;
+    justify-content: center;
+  }
+
+  .Service-Description {
+    font-size: 1.6rem;
+  }
+
+  .Service-Book-Button {
+    font-size: 1.5rem;
+    margin-left: 10%;
+    width: 80%;
+    padding: 5px;
+  }
+}
+
+/* Mobile (max-width: 480px) */
+@media (max-width: 480px) {
+  .Service-Section {
+    padding: 1rem;
+    margin-bottom: 7%;
+  }
+
+  .Service-Subheader {
+    font-size: 1.5rem;
+    margin-left: 5%;
+    width: 90%;
+    padding: 5px;
+  }
+
+  .Service-Title {
+    font-size: 2rem;
+    margin-top: 30px;
+  }
+
+  .Service-Content {
+    flex-direction: column;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .Service-Image img {
+    width: 80%;
+    height: auto;
+  }
+
+  .Service-Name {
+    font-size: 2rem;
+    gap: 2rem;
+    justify-content: center;
+  }
+
+  .Service-Description {
+    font-size: 1.2rem;
+    margin: 12px 1px;
+  }
+
+  .Service-Book-Button {
+    font-size: 1.3rem;
+    margin-left: 0%;
+    width: 60%;
+    padding: 5px;
   }
 }

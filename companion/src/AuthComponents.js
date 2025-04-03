@@ -37,7 +37,7 @@ function Login({ setRole }) {
 
   return (
     <div className="form-container">
-      <h2>Login</h2>
+      <h2>LOGIN</h2>
       <label htmlFor="username">Username</label>
       <input
         type="text"
@@ -124,11 +124,7 @@ function Register() {
       />
 
       <label htmlFor="role">Select Role</label>
-      <select
-        id="role"
-        value={role}
-        onChange={(e) => setRole(e.target.value)}
-      >
+      <select id="role" value={role} onChange={(e) => setRole(e.target.value)}>
         <option value="client">Client</option>
         <option value="admin">Admin</option>
       </select>

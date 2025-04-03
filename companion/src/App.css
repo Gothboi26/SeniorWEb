@@ -180,3 +180,104 @@
 .forgot-password:hover {
   color: #1f1785;
 }
+/* Tablet (max-width: 768px) */
+@media (max-width: 768px) {
+  .date-time-container {
+    font-size: 18px;
+    margin-right: 20px;
+  }
+
+  .logo-container {
+    flex-direction: column;
+    height: auto;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .logo-container h1 {
+    font-size: 24px;
+    margin: 10px 0;
+  }
+
+  .app-logo-container {
+    position: static;
+    transform: none;
+    margin-top: 10px;
+  }
+
+  .app-logo {
+    width: 100px;
+  }
+
+  .login-container {
+    margin: 30px 15px;
+    padding: 15px;
+  }
+
+  .login-container h1 {
+    font-size: 2rem;
+  }
+
+  .login-container p {
+    margin: 0 40px;
+    font-size: 16px;
+  }
+
+  .login-container input[type="text"],
+  .login-container input[type="password"],
+  .login-container button {
+    width: 70%;
+    font-size: 16px;
+  }
+  .form-container {
+    margin: 0px 10px 0px 10px;
+  }
+}
+
+/* Mobile (max-width: 480px) */
+@media (max-width: 480px) {
+  .date-time-container {
+    font-size: 16px;
+    margin-right: 10px;
+  }
+
+  .logo-container h1 {
+    font-size: 20px;
+    text-align: center;
+    margin-left: 0;
+  }
+
+  .app-logo {
+    width: 80px;
+  }
+
+  .login-container {
+    margin: 20px 10px;
+    padding: 10px;
+  }
+
+  .login-container h1 {
+    font-size: 1.8rem;
+  }
+
+  .login-container p {
+    margin: 0 20px;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .login-container input[type="text"],
+  .login-container input[type="password"],
+  .login-container button {
+    width: 90%;
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .form-container label,
+  .forgot-password {
+    width: 90%;
+    font-size: 14px;
+    text-align: center;
+  }
+}

@@ -216,10 +216,20 @@ body {
     height: 28px;
   }
   .prev {
-    left: 30px;
+    display: none;
   }
   .next {
-    right: 30px;
+    display: none;
+  }
+  .Officials-Title {
+    font-size: 2rem;
+  }
+  .Officials-Subheader {
+    font-size: 1.8rem;
+    width: 100%;
+    margin-left: 0%;
+    padding: 5px;
+    border-radius: 15px;
   }
 }
 
@@ -235,9 +245,19 @@ body {
     height: 24px;
   }
   .prev {
-    left: 40px;
+    display: none;
   }
   .next {
-    right: 40px;
+    display: none;
+  }
+  .Officials-Title {
+    font-size: 2rem;
+  }
+  .Officials-Subheader {
+    font-size: 1.5rem;
+    width: 100%;
+    margin-left: 0%;
+    padding: 5px;
+    border-radius: 15px;
   }
 }

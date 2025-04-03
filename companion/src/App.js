@@ -91,14 +91,15 @@ function App() {
 
                   <div className="login-container">
                     <h1>
-                      Welcome to Barangay General Tiburcio De Leon Senior Care Portal
+                      Welcome to Barangay General Tiburcio De Leon Senior Care
+                      Portal
                     </h1>
                     <p className="description">
                       This platform is designed to make health services more
-                      accessible and convenient for everyone. Here, you can
-                      manage patient records, schedule appointments, and send
-                      inquiries directly to our health center. Your health and
-                      well-being are our priority!
+                      accessible and convenient for all resident seniors. Here,
+                      you can manage your records, schedule appointments, and
+                      send inquiries directly to our health center. Your health
+                      and well-being are our priority.
                     </p>
                     <Login setRole={handleLogin} />
                   </div>
@@ -110,9 +111,7 @@ function App() {
                 </>
               )}
             </main>
-            {role === "client" && (
-              <Footer role={role} />
-            )}
+            {role === "client" && <Footer role={role} />}
           </>
         )}
     </div>
