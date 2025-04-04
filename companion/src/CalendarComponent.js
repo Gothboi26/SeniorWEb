@@ -92,7 +92,7 @@ const RectangleSection = ({ role }) => {
 
     try {
       const response = await fetch(
-        `companionbackend-production.up.railway.app/get_events.php?date=${formattedDate}`
+        `https://companionbackend-production.up.railway.app/get_events.php?date=${formattedDate}`
       );
       const data = await response.json();
       setEvents(data.events || []); // Ensure events is always an array

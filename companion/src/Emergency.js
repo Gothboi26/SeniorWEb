@@ -52,7 +52,7 @@ const Emergency = ({ role, handleLogout }) => {
     };
 
     try {
-      const response = await fetch("companionbackend-production.up.railway.app/submit_emergency.php", {
+      const response = await fetch("https://companionbackend-production.up.railway.app/submit_emergency.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
