@@ -43,7 +43,7 @@ const SeniorCare = ({ role, handleLogout }) => {
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
-        const response = await fetch("https://companionbackend-production.up.railway.app/appointments.php", {
+        const response = await fetch("companionbackend-production.up.railway.app/appointments.php", {
           method: "GET",
           credentials: "include",
         });
@@ -118,7 +118,7 @@ const SeniorCare = ({ role, handleLogout }) => {
     };
 
     try {
-      const response = await fetch("https://companionbackend-production.up.railway.app/appointments.php", {
+      const response = await fetch("companionbackend-production.up.railway.app/appointments.php", {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
