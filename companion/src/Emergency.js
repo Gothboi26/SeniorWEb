@@ -67,65 +67,72 @@ const Emergency = ({ role, handleLogout }) => {
   return (
     <div className="emergency-container">
       <Navbar role={role} handleLogout={handleLogout} />
-
       <div className="emergency-content">
-        <h1 className="emergency-title">Emergency Services</h1>
-        <p className="emergency-description">
-          <strong>Paalala:</strong> I-click ang button ng emergency na kailangan mo. Ang iyong profile data ay awtomatikong gagamitin.
-        </p>
-
-        <div className="buttons-container">
-          {emergencyOptions.map(({ type, icon }) => (
-            <button
-              key={type}
-              className="emergency-button"
-              onClick={() => handleEmergencyClick(type)}
-            >
-              <img src={icon} alt={type} className="emergency-icon" />
-              <span>{type}</span>
-            </button>
-          ))}
+        <div className="emergency-title-container">
+          <h1 className="emergency-title">Emergency Services</h1>
         </div>
+          
+        <div className="emergency-details-container">
+          <div className="emergency-description">
+            <p className="emergency-desc-title">
+              <strong>Paalala:</strong> I-click ang button ng emergency na kailangan mo. Ang iyong profile data ay awtomatikong gagamitin.
+            </p>
+          </div>
+          
 
-        {successMessage && (
-          <div className="emergency-popup">
-            <div className="emergency-popup-inner">
-              <button className="close-popup" onClick={() => setSuccessMessage("")}>×</button>
-              <p className="success-message">{successMessage}</p>
+            <div className="buttons-container">
+              {emergencyOptions.map(({ type, icon }) => (
+                <button
+                  key={type}
+                  className="emergency-button"
+                  onClick={() => handleEmergencyClick(type)}
+                >
+                  <img src={icon} alt={type} className="emergency-icon" />
+                  <span>{type}</span>
+                </button>
+              ))}
+            </div>
+
+            {successMessage && (
+            <div className="emergency-popup">
+              <div className="emergency-popup-inner">
+                <button className="close-popup" onClick={() => setSuccessMessage("")}>×</button>
+                <p className="success-message">{successMessage}</p>
+              </div>
+            </div>
+          )}
+
+          <div className="hotlines-container">
+            <div className="hotlines">
+              <p className="hotlines-title">Emergency Hotlines</p>
+              <table className="contacts-table">
+                <thead>
+                  <tr><th>Service</th><th>Number</th></tr>
+                </thead>
+                <tbody>
+                  {emergencyHotlines.map((h, i) => (
+                    <tr key={i}><td>{h.name}</td><td>{h.number}</td></tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="contacts">
+              <p className="contacts-title">Emergency Contacts</p>
+              <table className="contacts-table">
+                <thead>
+                  <tr><th>Contact</th><th>Number</th></tr>
+                </thead>
+                <tbody>
+                  {emergencyContacts.map((c, i) => (
+                    <tr key={i}><td>{c.name}</td><td>{c.number}</td></tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
-        )}
-
-        <div className="hotlines-container">
-          <div className="hotlines">
-            <p className="hotlines-title">Emergency Hotlines</p>
-            <table className="contacts-table">
-              <thead>
-                <tr><th>Service</th><th>Number</th></tr>
-              </thead>
-              <tbody>
-                {emergencyHotlines.map((h, i) => (
-                  <tr key={i}><td>{h.name}</td><td>{h.number}</td></tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          <div className="contacts">
-            <p className="contacts-title">Emergency Contacts</p>
-            <table className="contacts-table">
-              <thead>
-                <tr><th>Contact</th><th>Number</th></tr>
-              </thead>
-              <tbody>
-                {emergencyContacts.map((c, i) => (
-                  <tr key={i}><td>{c.name}</td><td>{c.number}</td></tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
         </div>
-
+        
         <BackToHome role={role} />
         <Footer role={role} />
       </div>

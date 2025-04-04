@@ -150,9 +150,7 @@ const RectangleSection = ({ role }) => {
                     />
                   </div>
                   <p>
-                    Seniors can book appointments for priority check-ups and
-                    health services, reducing wait times and ensuring timely
-                    care.
+                  Seniors can schedule priority check-ups and health services for faster and more efficient care.
                   </p>
                   <button className="senior-care-button">
                     <span className="senior-care-button-text">Appointment</span>
