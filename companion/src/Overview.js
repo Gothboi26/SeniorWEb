@@ -231,11 +231,12 @@ const getChartData = () => ({
     <div className="overview-container">
       <div className="summary-cards">
         <div className="card total-patients">
-          <h3>Total Number of Seniors</h3>
+          <h3>Total of Registered Seniors</h3>
           <p className="count">{totalPatients}</p>
         </div>
         <div className="card card-light">
-          <h3>Total Appointments</h3>
+          <h3>Seniors per Chapter</h3>
+            <p className="count">500</p>
             {Object.keys(appointmentsByService).length > 0 ? (
               <Pie data={getPieChartData()} />
             ) : (
@@ -243,15 +244,15 @@ const getChartData = () => ({
             )}
         </div>
     
-        <div className="card card-light">
-          <h3>Seniors per Chapter</h3>
-          <p className="count">500</p>
+        <div className="appointment-summary">
+          <h3>Total Number of Appointments</h3>
+          
         </div>
       </div>
 
       <div className="statistics-section">
         <div className="statistics">
-          <h3>Patient's Statistics</h3>
+          <h3>Summary of Total Registered Seniors</h3>
           
           {/* Bar Chart */}
           <div className="stats-chart">
@@ -259,7 +260,7 @@ const getChartData = () => ({
           </div>
         </div>
 
-        <div className="card card-light">
+        <div className="age-summary">
           <h3>Senior Age Group</h3>
           <Bar data={getChartData()} options={chartOptions} />
         </div>

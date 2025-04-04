@@ -29,7 +29,8 @@ import emergency from "./assets/emergency.png"; // For Emergency Services logo
 import chat from "./assets/chat.png"; // For Chat Assistance logo
 import doctor from "./assets/doctor.png";
 import arrow from "./assets/arrow.png";
-import Senior from "./assets/senior.png";
+import senior from "./assets/senior.png";
+import chats from "./assets/chatinq.png";
 
 Modal.setAppElement("#root");
 // Array of Health Services
@@ -371,7 +372,7 @@ function CalendarComponent() {
               className="sidebar1-item"
             >
               <img
-                src="/assets/senior.png"
+                src={senior}
                 alt="Senior"
                 className="sidebar1-logo-img"
               />
@@ -415,7 +416,7 @@ function CalendarComponent() {
               className="sidebar1-item"
             >
               <img
-                src="/icons/chat.png"
+                src={chats}
                 alt="Logo"
                 className="sidebar1-logo-img"
               />
