@@ -14,7 +14,7 @@ const Appointments = () => {
 
   const fetchAppointments = async () => {
     try {
-      const response = await fetch("http://localhost/php/get_appointment.php", {
+      const response = await fetch("companionbackend-production.up.railway.app/get_appointment.php", {
         credentials: "include",
       });
       const data = await response.json();
@@ -32,7 +32,7 @@ const Appointments = () => {
 
   const updateStatus = async (appointmentId, status) => {
     try {
-      const response = await fetch("http://localhost/php/get_appointment.php", {
+      const response = await fetch("companionbackend-production.up.railway.app/get_appointment.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -53,7 +53,7 @@ const Appointments = () => {
 
   const deleteAppointment = async (appointmentId) => {
     try {
-      const response = await fetch("http://localhost/php/get_appointment.php", {
+      const response = await fetch("companionbackend-production.up.railway.app/get_appointment.php", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -72,7 +72,7 @@ const Appointments = () => {
 
   const saveEdit = async () => {
     try {
-      const response = await fetch("http://localhost/php/get_appointment.php", {
+      const response = await fetch("companionbackend-production.up.railway.app/get_appointment.php", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

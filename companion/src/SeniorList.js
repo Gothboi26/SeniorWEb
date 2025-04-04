@@ -32,7 +32,7 @@ const SeniorList = () => {
   useEffect(() => {
     const fetchPatients = async () => {
       try {
-        const response = await fetch("http://localhost/php/get_users.php");
+        const response = await fetch("companionbackend-production.up.railway.app/get_users.php");
         if (!response.ok) throw new Error("Failed to fetch data");
         const result = await response.json();
         if (result.status === "success") {
@@ -97,7 +97,7 @@ const SeniorList = () => {
     };
 
     try {
-      const response = await fetch("http://localhost/php/register.php", {
+      const response = await fetch("companionbackend-production.up.railway.app/register.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
@@ -141,7 +141,7 @@ const SeniorList = () => {
     };
 
     try {
-      const response = await fetch("http://localhost/php/update_user.php", {
+      const response = await fetch("companionbackend-production.up.railway.app/update_user.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
@@ -168,7 +168,7 @@ const SeniorList = () => {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
 
     try {
-      const response = await fetch("http://localhost/php/delete_user.php", {
+      const response = await fetch("companionbackend-production.up.railway.app/delete_user.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id })
