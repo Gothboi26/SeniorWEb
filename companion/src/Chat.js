@@ -7,16 +7,46 @@ function Chat({ role, handleLogout }) {
   const [ws, setWs] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  const [username, setUsername] = useState("ClientUser"); // Replace with dynamic username if needed
+  const [username, setUsername] = useState("");
 
   const faqs = [
-    { question: "What are your operating hours?", answer: "Our operating hours are from 8:00 AM to 5:00 PM, Monday to Friday." },
-    { question: "How can I book an appointment?", answer: "You can book an appointment through our website or by calling our hotline." },
-    { question: "What services do you offer?", answer: "We offer a variety of services including general check-ups, consultations, and more." },
+    {
+      question: "What are your operating hours?",
+      answer: "Our operating hours are from 8:00 AM to 5:00 PM, Monday to Friday.",
+    },
+    {
+      question: "How can I book an appointment?",
+      answer: "You can book an appointment through our website or by calling our hotline.",
+    },
+    {
+      question: "What services do you offer?",
+      answer: "We offer a variety of services including general check-ups, consultations, and more.",
+    },
   ];
 
+  // Step 1: Fetch the username from the PHP session
   useEffect(() => {
+    fetch("http://localhost/php/get_username.php", {
+      method: "GET",
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.username) {
+          setUsername(data.username);
+        } else {
+          console.warn("No username found in session.");
+        }
+      })
+      .catch((err) => console.error("Error fetching username:", err));
+  }, []);
+
+  // Step 2: Connect to WebSocket when username is ready
+  useEffect(() => {
+    if (!username) return;
+
     const socket = new WebSocket("ws://localhost:8080");
+
     socket.onopen = () => {
       socket.send(
         JSON.stringify({
@@ -27,39 +57,37 @@ function Chat({ role, handleLogout }) {
     };
 
     socket.onmessage = (event) => {
-      const messageData = JSON.parse(event.data);
-      setMessages((prevMessages) => [...prevMessages, messageData]);
+      const data = JSON.parse(event.data);
+      setMessages((prev) => [...prev, data]);
     };
 
     setWs(socket);
-
     return () => socket.close();
   }, [username]);
 
+  // Handle sending a message
   const handleSendMessage = () => {
-    if (ws && ws.readyState === WebSocket.OPEN) {
-      const message = { from: username, to: "admin", content: newMessage };
-      ws.send(JSON.stringify({ type: "message", ...message }));
-      setNewMessage("");
-      setMessages((prevMessages) => [...prevMessages, message]);
-    } else {
-      console.warn("WebSocket is not open yet. Please try again.");
-    }
+    const trimmedMessage = newMessage.trim();
+    if (!trimmedMessage || !ws || ws.readyState !== WebSocket.OPEN) return;
+
+    const message = {
+      type: "message",
+      from: username,
+      to: "admin",
+      content: trimmedMessage,
+    };
+
+    ws.send(JSON.stringify(message));
+    setNewMessage("");
   };
 
+  // Handle FAQ selection
   const handleFAQClick = (faq) => {
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      { from: "bot", content: faq.answer },
-    ]);
+    setMessages((prev) => [...prev, { from: "bot", content: faq.answer }]);
   };
 
+  // Handle "Talk to Admin"
   const handleTalkToAdmin = () => {
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      { from: "bot", content: "Connecting you to an admin..." },
-    ]);
-
     if (ws && ws.readyState === WebSocket.OPEN) {
       ws.send(
         JSON.stringify({
@@ -67,27 +95,31 @@ function Chat({ role, handleLogout }) {
           from: username,
         })
       );
-    } else {
-      console.warn("WebSocket is not open yet. Please try again.");
+      setMessages((prev) => [
+        ...prev,
+        { from: "bot", content: "Connecting you to an admin..." },
+      ]);
     }
   };
 
   return (
     <div>
       <Navbar role={role} handleLogout={handleLogout} />
+
       <div className="chat-assistance">
         <div className="chat-header-container">
           <h1 className="chat-title">Chat Assistance</h1>
         </div>
+
         <div className="chat-details-container">
+          {/* Notice */}
           <div className="chat-description">
             <p className="chat-desc-title">
-              <strong>Paalala: </strong>
-              Ang Chat Assistance ay idinisenyo upang magbigay ng agarang kasagutan sa inyong mga katanungan.
+              <strong>Paalala:</strong> Ang Chat Assistance ay idinisenyo upang magbigay ng agarang kasagutan sa inyong mga katanungan.
             </p>
           </div>
 
-          {/* FAQ Section */}
+          {/* FAQs */}
           <div className="faq-section">
             <h3>Frequently Asked Questions</h3>
             <ul>
@@ -109,7 +141,7 @@ function Chat({ role, handleLogout }) {
                 <div
                   key={index}
                   className={`chat-bubble ${
-                    message.from === username ? "user" : "bot"
+                    message.from === username ? "user" : message.from === "bot" ? "bot" : "admin"
                   }`}
                 >
                   <strong>{message.from}:</strong> {message.content}
@@ -117,23 +149,23 @@ function Chat({ role, handleLogout }) {
               ))}
             </div>
 
+            {/* Chat Input */}
             <div className="chat-input-container">
-              <div className="chat-input">
-                <input
-                  type="text"
-                  value={newMessage}
-                  onChange={(e) => setNewMessage(e.target.value)}
-                  placeholder="Type your message..."
-                  className="chat-input-text"
-                />
-                <button onClick={handleSendMessage} className="chat-send-button">
-                  Send
-                </button>
-              </div>
+              <input
+                type="text"
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+                placeholder="Type your message..."
+                className="chat-input-text"
+              />
+              <button onClick={handleSendMessage} className="chat-send-button">
+                Send
+              </button>
             </div>
           </div>
         </div>
       </div>
+
       <Footer role={role} />
     </div>
   );

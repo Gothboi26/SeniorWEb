@@ -1,33 +1,65 @@
 const WebSocket = require("ws");
 
-const server = new WebSocket.Server({ port: 8080 });
+const wss = new WebSocket.Server({ port: 8080 });
+const clients = {}; // { username: WebSocket }
 
-const clients = new Map();
+wss.on("connection", (ws) => {
+  let username = null;
 
-server.on("connection", (ws) => {
   ws.on("message", (message) => {
-    const parsedMessage = JSON.parse(message);
-    const { type, content, from, to } = parsedMessage;
+    try {
+      const data = JSON.parse(message);
 
-    if (type === "register") {
-      clients.set(content.role, ws);
-    } else if (type === "message") {
-      const recipientSocket = clients.get(to);
-      if (recipientSocket) {
-        recipientSocket.send(JSON.stringify({ from, content }));
+      // 1. Register user (client or admin)
+      if (data.type === "register") {
+        username = data.content.username;
+        clients[username] = ws;
+        console.log(`${username} connected`);
+        return;
       }
-    } else if (type === "notify-admin") {
-      // Notify the admin when a client requests to talk
-      const adminSocket = clients.get("admin");
-      if (adminSocket) {
-        adminSocket.send(
-          JSON.stringify({
-            type: "notification",
-            from,
-            content: "A client has requested to talk to you.",
-          })
-        );
+
+      // 2. Handle chat message
+      if (data.type === "message") {
+        const { from, to, content } = data;
+        const payload = JSON.stringify({ type: "message", from, to, content });
+
+        // Send to recipient
+        if (clients[to] && clients[to].readyState === WebSocket.OPEN) {
+          clients[to].send(payload);
+        }
+
+        // Echo back to sender
+        if (clients[from] && clients[from].readyState === WebSocket.OPEN) {
+          clients[from].send(payload);
+        }
+        return;
       }
+
+      // 3. Notify admin
+      if (data.type === "notify-admin") {
+        const adminSocket = clients["admin"];
+        if (adminSocket && adminSocket.readyState === WebSocket.OPEN) {
+          adminSocket.send(
+            JSON.stringify({
+              type: "notification",
+              from: data.from,
+              content: "A client has requested to talk to you.",
+            })
+          );
+        }
+        return;
+      }
+    } catch (err) {
+      console.error("Invalid WebSocket message:", err);
+    }
+  });
+
+  ws.on("close", () => {
+    if (username && clients[username]) {
+      delete clients[username];
+      console.log(`${username} disconnected`);
     }
   });
 });
+
+console.log("🟢 WebSocket server running on ws://localhost:8080");
