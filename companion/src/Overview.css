@@ -21,7 +21,7 @@
 .card {
   flex: 1;
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 20px;
   text-align: center;
 }
 
@@ -44,6 +44,7 @@
   text-align: center;
   height: auto; /* Adjust height if needed */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
 }
 
 .card-light canvas {
@@ -97,11 +98,11 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
   border: 1px solid #ddd;
-  background-color: #C31C1C;
+  background-color: #fff;
 }
 
 .appointment-summary h3 {
-  color: #FFFFFF;
+  color: #888;
 
 }
 
@@ -118,6 +119,8 @@
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  border: 1px solid #ddd;
 }
 
 .statistics h3 {
@@ -158,6 +161,8 @@
   text-align: center;
   height: auto;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+  border-radius: 20px;
 }
 
 .appointments {

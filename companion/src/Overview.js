@@ -42,11 +42,15 @@ const Overview = () => {
       .then((data) => {
         console.log("Fetched Data:", data); // Debugging
   
-        if (data.status === "success" && Array.isArray(data.data)) {
+        if (Array.isArray(data)) {
+          // Case: original backend just returns the raw array
+          setAppointments(data);
+        } else if (data.status === "success" && Array.isArray(data.data)) {
+          // Case: if later backend returns wrapped response
           setAppointments(data.data);
         } else {
           console.error("Unexpected API response format:", data);
-          setAppointments([]); // Ensure it's an empty array to prevent errors
+          setAppointments([]);
         }
         setLoading(false);
       })
@@ -55,6 +59,7 @@ const Overview = () => {
         setLoading(false);
       });
   }, []);
+  
   
 
   useEffect(() => {
@@ -266,6 +271,43 @@ const getChaptersPieChartData = () => ({
   ],
 });
 
+const [appointmentStatusData, setAppointmentStatusData] = useState({});
+
+useEffect(() => {
+  const statusCounts = {
+    Approved: 0,
+    Rejected: 0,
+    Pending: 0,
+  };
+
+  appointments.forEach((appointment) => {
+    const rawStatus = appointment.status?.trim();
+    if (rawStatus === "approved") {
+      statusCounts.Approved++;
+    } else if (rawStatus === "rejected") {
+      statusCounts.Rejected++;
+    } else {
+      statusCounts.Pending++;
+    }
+  });
+
+  setAppointmentStatusData(statusCounts);
+}, [appointments]);
+
+
+const getAppointmentStatusPieChartData = () => ({
+  labels: Object.keys(appointmentStatusData),
+  datasets: [
+    {
+      data: Object.values(appointmentStatusData),
+      backgroundColor: [
+        "#f44336", "#2196f3", "#4caf50", "#ff9800", "#9c27b0", "#00bcd4",
+        "#8bc34a", "#ffeb3b", "#795548", "#607d8b",
+      ],
+    },
+  ],
+});
+
   return (
     <div className="overview-container">
       <div className="summary-cards">
@@ -284,10 +326,24 @@ const getChaptersPieChartData = () => ({
           )}
         </div>
 
-    
-        <div className="appointment-summary">
-          <h3>Total Number of Appointments</h3>
-          
+        <div className="card card-light appointment-summary">
+        <h3>Total Appointments by Status</h3>
+          {Object.keys(appointmentStatusData).length > 0 ? (
+            <Pie data={getAppointmentStatusPieChartData()} options={{
+              responsive: true,
+              plugins: {
+                title: {
+                  display: true,
+                  text: "Appointment Status Distribution"
+                },
+                legend: {
+                  position: 'bottom',
+                },
+              },
+            }} />
+          ) : (
+            <p className="no-appointments">No appointment data available.</p>
+          )}
         </div>
       </div>
 
