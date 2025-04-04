@@ -18,7 +18,7 @@ const Events = () => {
 
   useEffect(() => {
     const formattedDate = filterDate || dateTime.toISOString().split("T")[0];
-    const url = `companionbackend-production.up.railway.app/get_events.php?date=${
+    const url = `http://localhost/php/get_events.php?date=${
       showAllEvents ? "" : formattedDate
     }&sortOrder=${sortOrder}`;
 
@@ -95,7 +95,7 @@ const Events = () => {
       event_description: eventDescription,
     };
 
-    fetch("companionbackend-production.up.railway.app/add_events.php", {
+    fetch("http://localhost/php/add_events.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -130,7 +130,7 @@ const Events = () => {
   const deleteEvent = (id) => {
     if (window.confirm("Are you sure you want to delete this event?")) {
       setLoading(true);
-      fetch(`companionbackend-production.up.railway.app/get_events.php?id=${id}`, {
+      fetch(`http://localhost/php/get_events.php?id=${id}`, {
         method: "POST",
       })
         .then((response) => response.json())
