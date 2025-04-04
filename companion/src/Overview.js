@@ -2,11 +2,11 @@ import React, { useEffect, useState, useCallback } from "react";
 import "./Overview.css";
 import editIcon from "./assets/edit.png";
 import deleteIcon from "./assets/delete.png";
-import { Bar, Pie } from "react-chartjs-2";
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend } from "chart.js";
+import { Bar, Pie, Line } from "react-chartjs-2";
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend, LineElement, PointElement } from "chart.js";
 
 // Register Chart.js components
-ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, LineElement, PointElement, Title, Tooltip, Legend);
 
 
 const Overview = () => {
@@ -100,15 +100,12 @@ const [ageDistribution, setAgeDistribution] = useState({
 });
 
 
-const [totalPatients, setTotalPatients] = useState(0);
-
 const fetchAgeDistribution = useCallback(() => {
   fetch("http://localhost/php/get_users.php")
     .then((response) => response.json())
     .then((data) => {
       if (data.status === "success") {
         const ageData = { "60-70": 0, "71-80": 0, "81-90": 0, "91-100": 0, "101-110": 0, "111-120": 0, "121-130": 0 };
-        setTotalPatients(data.data.length); // Count total patients
 
         data.data.forEach((user) => {
           const age = parseInt(user.age, 10);
@@ -134,7 +131,7 @@ useEffect(() => {
   fetchAgeDistribution();
 }, [fetchAgeDistribution]);
 
-const maxYValue = Math.max(...Object.values(ageDistribution)) + 2; // Add extra line above highest bar
+const maxYValue = Math.max(...Object.values(ageDistribution)) + 1; // Add extra line above highest bar
 
 const chartOptions = {
   responsive: true,
@@ -308,25 +305,37 @@ const getAppointmentStatusPieChartData = () => ({
   ],
 });
 
+/*Appointment Per Service - Line Graph */
+
+const [appointmentsPerService, setAppointmentsPerService] = useState({});
+
+useEffect(() => {
+  const serviceCounts = {};
+  appointments.forEach((appointment) => {
+    const service = appointment.service?.trim() || "Unknown";
+    serviceCounts[service] = (serviceCounts[service] || 0) + 1;
+  });
+  setAppointmentsPerService(serviceCounts);
+}, [appointments]);
+
+const getLineChartData = () => ({
+  labels: Object.keys(appointmentsPerService),
+  datasets: [
+    {
+      label: "Appointments per Service",
+      data: Object.values(appointmentsPerService),
+      fill: false,
+      borderColor: "#3e95cd",
+      tension: 0.2,
+    },
+  ],
+});
+
   return (
     <div className="overview-container">
       <div className="summary-cards">
-        
-        <div className="card total-patients">
-          <h3>Total of Registered Seniors</h3>
-          <p className="count">{totalPatients}</p>
-        </div>
-        
-        <div className="card card-light">
-          <h3>Seniors per Chapter</h3>
-          {Object.keys(chapters).length > 0 ? (
-            <Pie data={getChaptersPieChartData()} options={pieChartOptions} />
-          ) : (
-            <p className="no-appointments">No chapter data available.</p>
-          )}
-        </div>
 
-        <div className="card card-light appointment-summary">
+      <div className="card card-light appointment-summary">
         <h3>Total Appointments by Status</h3>
           {Object.keys(appointmentStatusData).length > 0 ? (
             <Pie data={getAppointmentStatusPieChartData()} options={{
@@ -343,6 +352,54 @@ const getAppointmentStatusPieChartData = () => ({
             }} />
           ) : (
             <p className="no-appointments">No appointment data available.</p>
+          )}
+        </div>
+        
+        <div className="card card-light">
+            <h3>Total Appointments per Service</h3>
+            <div className="chart-padding">
+            {Object.keys(appointmentsPerService).length > 0 ? (
+              <Line 
+              data={getLineChartData()} 
+              options={{
+                responsive: true,
+                plugins: {
+                  legend: { position: "bottom" },
+                  title: {
+                    display: true,
+                    text: "Appointments per Service",
+                  },
+                },
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                    suggestedMax: Math.max(...Object.values(appointmentsPerService)) + 1.5,
+                    title: {
+                      display: true,
+                      text: "Total Appointments"
+                    }
+                  },
+                  x: {
+                    title: {
+                      display: true,
+                      text: "Service Name"
+                    }
+                  }
+                }
+              }} 
+            />            
+            ) : (
+              <p className="no-appointments">No appointment data available.</p>
+            )}
+            </div>
+          </div>
+        
+        <div className="card card-light">
+          <h3>Seniors per Chapter</h3>
+          {Object.keys(chapters).length > 0 ? (
+            <Pie data={getChaptersPieChartData()} options={pieChartOptions} />
+          ) : (
+            <p className="no-appointments">No chapter data available.</p>
           )}
         </div>
       </div>

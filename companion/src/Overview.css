@@ -16,8 +16,6 @@
   gap: 40px;
 }
 
-
-
 .card {
   flex: 1;
   padding: 20px;
@@ -36,6 +34,11 @@
   background-color: #fff;
   color: #888;
 }
+
+.chart-padding {
+  margin-top: 80px;
+}
+
 
 .card.card-light {
   display: flex;
@@ -71,21 +74,6 @@
   padding: 10px;
 }
 
-.total-patients {
-  border: 1px solid #ddd;
-  background-color: #201885;
-  color: white;
-  border: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.total-patients .count {
-  font-size: 2rem;
-  font-weight: bold;
-  margin: 10px 0;
-  padding: 10px;
-  color: rgb(255, 255, 255);
-}
 
 /* Appointment Summary */
 .appointment-summary {
@@ -146,8 +134,15 @@
 .stats-chart canvas {
   width: 100%; 
   height: 100%;
-  padding: 10px;
+  padding: 20px;
 }
+
+.card-light canvas {
+  max-width: 100%;
+  height: auto;
+  min-height: 250px;
+}
+
 
 .age-summary canvas{
   padding: 20px;
@@ -163,6 +158,7 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border: 1px solid #ddd;
   border-radius: 20px;
+  padding: 20px;
 }
 
 .appointments {
