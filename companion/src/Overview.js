@@ -17,6 +17,10 @@ const Overview = () => {
   const [currentAppointment, setCurrentAppointment] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [userRegistrationView, setUserRegistrationView] = useState("month");
+  const [userRegistrationData, setUserRegistrationData] = useState({});
+
+
 
   const formatLocalDate = (date) => {
     const localDate = new Date(date);
@@ -224,20 +228,23 @@ const fetchChapterDistribution = useCallback(() => {
     .then((data) => {
       if (data.status === "success") {
         const chapterData = {};
-        
-        // Count number of seniors in each chapter
+
+        // ✅ Only include users with valid group_chapter
         data.data.forEach((user) => {
-          const chapter = user.group_chapter || "Unknown"; // Handle missing chapter
-          chapterData[chapter] = (chapterData[chapter] || 0) + 1;
+          const chapter = user.group_chapter;
+          if (chapter && chapter.trim() !== "") {
+            chapterData[chapter] = (chapterData[chapter] || 0) + 1;
+          }
         });
 
-        setChapters(chapterData); // Save chapter data for pie chart
+        setChapters(chapterData);
       } else {
         console.error("Failed to fetch users:", data.message);
       }
     })
     .catch((error) => console.error("Error fetching user data:", error));
 }, []);
+
 
 useEffect(() => {
   fetchChapterDistribution(); // Fetch chapter data when component mounts
@@ -298,15 +305,13 @@ const getAppointmentStatusPieChartData = () => ({
     {
       data: Object.values(appointmentStatusData),
       backgroundColor: [
-        "#f44336", "#2196f3", "#4caf50", "#ff9800", "#9c27b0", "#00bcd4",
-        "#8bc34a", "#ffeb3b", "#795548", "#607d8b",
+        "#4caf50", "#f44336", "#2196f3",
       ],
     },
   ],
 });
 
 /*Appointment Per Service - Line Graph */
-
 const [appointmentsPerService, setAppointmentsPerService] = useState({});
 
 useEffect(() => {
@@ -331,6 +336,64 @@ const getLineChartData = () => ({
   ],
 });
 
+const fetchRegisteredUsersData = useCallback((viewType) => {
+  fetch("http://localhost/php/get_users.php")
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.status === "success") {
+        const counts = {};
+
+        data.data.forEach((user) => {
+          if (user.role === "admin") return; // ✅ Skip admin accounts
+
+          const createdAt = new Date(user.created_at);
+          let key;
+
+
+          if (viewType === "month") {
+            key = createdAt.toLocaleString("en-US", {
+              month: "long",
+              year: "numeric",
+            }); // e.g. "April 2024"
+          } else if (viewType === "year") {
+            key = createdAt.getFullYear().toString(); // "2024"
+          }
+
+          counts[key] = (counts[key] || 0) + 1;
+        });
+
+        const sortedCounts = Object.fromEntries(
+          Object.entries(counts).sort(([a], [b]) => new Date("1 " + a) - new Date("1 " + b))
+        );
+
+        setUserRegistrationData(sortedCounts);
+      } else {
+        console.error("Failed to fetch users:", data.message);
+      }
+    })
+    .catch((err) => console.error("Error:", err));
+}, []);
+
+
+useEffect(() => {
+  fetchRegisteredUsersData(userRegistrationView);
+}, [fetchRegisteredUsersData, userRegistrationView]);
+
+  const getRegisteredUsersLineChartData = () => ({
+  labels: Object.keys(userRegistrationData),
+  datasets: [
+    {
+      label: "Registered Seniors",
+      data: Object.values(userRegistrationData),
+      fill: false,
+      borderColor: "#C31C1C",
+      tension: 0.2,
+    },
+  ],
+});
+
+
+  
   return (
     <div className="overview-container">
       <div className="summary-cards">
@@ -389,7 +452,7 @@ const getLineChartData = () => ({
               }} 
             />            
             ) : (
-              <p className="no-appointments">No appointment data available.</p>
+              <p className="no-appointments">No appointment data available .</p>
             )}
             </div>
           </div>
@@ -408,9 +471,53 @@ const getLineChartData = () => ({
         
         <div className="statistics">
           <h3>Summary of Total Registered Seniors</h3>
-          <div className="stats-chart">
-          <Bar data={getChartData()} options={chartOptions} />
+          <div className="view-buttons">
+            <button
+              className={userRegistrationView === "month" ? "active" : ""}
+              onClick={() => setUserRegistrationView("month")}
+            >
+              Month
+            </button>
+            <button
+              className={userRegistrationView === "year" ? "active" : ""}
+              onClick={() => setUserRegistrationView("year")}
+            >
+              Year
+            </button>
           </div>
+
+          {Object.keys(userRegistrationData).length > 0 ? (
+            <Line
+              data={getRegisteredUsersLineChartData()}
+              options={{
+                responsive: true,
+                plugins: {
+                  legend: { position: "bottom" },
+                  title: {
+                    display: true,
+                    text: `Total Registered Seniors Per ${userRegistrationView[0].toUpperCase() + userRegistrationView.slice(1)}`,
+                  },
+                },
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                    title: {
+                      display: true,
+                      text: "Number of Registrations",
+                    },
+                  },
+                  x: {
+                    title: {
+                      display: true,
+                      text: userRegistrationView === "week" ? "Week" : userRegistrationView === "year" ? "Year" : "Month",
+                    },
+                  },
+                },
+              }}
+            />
+          ) : (
+            <p>No registration data available.</p>
+          )}
         </div>
 
         <div className="age-summary">

@@ -7,7 +7,7 @@ header("Access-Control-Allow-Headers: Content-Type");
 $host = "localhost";
 $username = "root";
 $password = "";
-$database = "sampol";
+$database = "";
 
 $conn = new mysqli($host, $username, $password, $database);
 
@@ -20,7 +20,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $user_id = intval($_GET['id']);
 
     // Include role in the single user query too
-    $stmt = $conn->prepare("SELECT id, username, password, age, sex, address, health_issue, email_address, barangay_id, group_chapter, role FROM users WHERE id = ?");
+    $stmt = $conn->prepare("SELECT id, username, password, age, sex, address, health_issue, email_address, barangay_id, group_chapter, role, created_at FROM users WHERE id = ?");
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -34,7 +34,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $stmt->close();
 } else {
     // ✅ Add role to the SELECT statement
-    $sql = "SELECT id, username, age, sex, address, health_issue, email_address, barangay_id, group_chapter, role FROM users";
+    $sql = "SELECT id, username, age, sex, address, health_issue, email_address, barangay_id, group_chapter, role, created_at FROM users";
     $result = $conn->query($sql);
 
     if ($result && $result->num_rows > 0) {
