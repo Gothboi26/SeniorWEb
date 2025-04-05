@@ -114,7 +114,7 @@ const SeniorCare = ({ role, handleLogout }) => {
       service: selectedService,
       date: selectedDate,
       time: selectedTime,
-      status: "Pending Approval",
+      status: "pending",
     };
 
     try {
@@ -207,8 +207,8 @@ const SeniorCare = ({ role, handleLogout }) => {
 
         {modalContent === "viewReservedSlot" && (
           <>
-            <h3>Upcoming Appointments</h3>
-            {upcomingAppointments.length > 0 ? (
+            <h3>Pending Appointments</h3>
+            {upcomingAppointments.filter(slot => slot.status === "pending").length > 0 ? (
               <table className="appointments-table">
                 <thead>
                   <tr>
@@ -219,7 +219,31 @@ const SeniorCare = ({ role, handleLogout }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {upcomingAppointments.map((slot, i) => (
+                  {upcomingAppointments.filter(slot => slot.status === "pending").map((slot, i) => (
+                    <tr key={i}>
+                      <td>{slot.service}</td>
+                      <td>{slot.date}</td>
+                      <td>{slot.time}</td>
+                      <td>{slot.status}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : <p>No pending appointments.</p>}
+
+            <h3 style={{ marginTop: "20px" }}>Upcoming Appointments</h3>
+            {upcomingAppointments.filter(slot => slot.status !== "pending").length > 0 ? (
+              <table className="appointments-table">
+                <thead>
+                  <tr>
+                    <th>Service</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {upcomingAppointments.filter(slot => slot.status !== "pending").map((slot, i) => (
                     <tr key={i}>
                       <td>{slot.service}</td>
                       <td>{slot.date}</td>
