@@ -270,7 +270,7 @@ const SeniorList = () => {
               <option value="POLICARPIO">POLICARPIO</option>
               <option value="VICTORIA">VICTORIA</option>
               <option value="BAHAY PARI">BAHAY PARI</option>
-              <option value="RMS1">RMS</option>
+              <option value="RMS">RMS</option>
               <option value="SANTIAGO">SANTIAGO</option>
               <option value="SITIO SANTOLAN">SITIO SANTOLAN</option>
               <option value="DE GULA/PEREZ">DE GULA/PEREZ</option>

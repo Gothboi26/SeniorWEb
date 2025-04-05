@@ -125,6 +125,32 @@
   margin: auto;
 }
 
+.view-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem; /* adds space between Month and Year buttons */
+  margin: 1rem;
+}
+
+.view-buttons button {
+  background-color: #c31c1c;
+  color: white;
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.view-buttons button:hover {
+  background-color: #a41616;
+}
+
+.view-buttons button.active {
+  background-color: #7e1212;
+}
+
 .age-summary h3{
   margin-left: 10px;
   color: #000;
@@ -218,16 +244,6 @@
   text-align: center;
 }
 
-/* General content styles */
-.content {
-  flex: 1;
-  padding: 20px;
-  overflow-y: auto;
-  background-color: aliceblue;
-  border-radius: 20px;
-  height: 88vh;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
 
 /* Table container styles */
 .patients-table-container {
