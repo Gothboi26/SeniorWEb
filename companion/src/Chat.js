@@ -12,15 +12,18 @@ function Chat({ role, handleLogout }) {
   const faqs = [
     {
       question: "What are your operating hours?",
-      answer: "Our operating hours are from 8:00 AM to 5:00 PM, Monday to Friday.",
+      answer:
+        "Our operating hours are from 8:00 AM to 5:00 PM, Monday to Friday.",
     },
     {
       question: "How can I book an appointment?",
-      answer: "You can book an appointment through our website or by calling our hotline.",
+      answer:
+        "You can book an appointment through our website or by calling our hotline.",
     },
     {
       question: "What services do you offer?",
-      answer: "We offer a variety of services including general check-ups, consultations, and more.",
+      answer:
+        "We offer a variety of services including general check-ups, consultations, and more.",
     },
   ];
 
@@ -83,7 +86,11 @@ function Chat({ role, handleLogout }) {
 
   // Handle FAQ selection
   const handleFAQClick = (faq) => {
-    setMessages((prev) => [...prev, { from: "bot", content: faq.answer }]);
+    setMessages((prev) => [
+      ...prev,
+      { from: username, content: faq.question },
+      { from: "bot", content: faq.answer },
+    ]);
   };
 
   // Handle "Talk to Admin"
@@ -115,24 +122,27 @@ function Chat({ role, handleLogout }) {
           {/* Notice */}
           <div className="chat-description">
             <p className="chat-desc-title">
-              <strong>Paalala:</strong> Ang Chat Assistance ay idinisenyo upang magbigay ng agarang kasagutan sa inyong mga katanungan.
+              <strong>Paalala:</strong> Ang Chat Assistance ay idinisenyo upang
+              magbigay ng agarang kasagutan sa inyong mga katanungan.
             </p>
           </div>
 
           {/* FAQs */}
-          <div className="faq-section">
-            <h3>Frequently Asked Questions</h3>
-            <ul>
-              {faqs.map((faq, index) => (
-                <li key={index}>
-                  <button onClick={() => handleFAQClick(faq)}>{faq.question}</button>
-                </li>
-              ))}
-            </ul>
-            <button onClick={handleTalkToAdmin} className="talk-to-admin-button">
-              Talk to Admin
-            </button>
-          </div>
+          <ul className="faq-list">
+            {faqs.map((faq, index) => (
+              <li key={index}>
+                <button
+                  className="faq-button"
+                  onClick={() => handleFAQClick(faq)}
+                >
+                  {faq.question}
+                </button>
+              </li>
+            ))}
+          </ul>
+          <button onClick={handleTalkToAdmin} className="talk-to-admin-button">
+            Talk to Admin
+          </button>
 
           {/* Chat Window */}
           <div className="chat-window-container">
@@ -141,7 +151,11 @@ function Chat({ role, handleLogout }) {
                 <div
                   key={index}
                   className={`chat-bubble ${
-                    message.from === username ? "user" : message.from === "bot" ? "bot" : "admin"
+                    message.from === username
+                      ? "user"
+                      : message.from === "bot"
+                      ? "bot"
+                      : "admin"
                   }`}
                 >
                   <strong>{message.from}:</strong> {message.content}

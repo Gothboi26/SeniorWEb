@@ -33,9 +33,9 @@ html {
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("./assets/valenzuelabg.jpg") no-repeat center center;
+  background: url("./assets/valenzuelabghd.jpg") no-repeat center center;
   background-size: cover;
-  filter: blur(3px);
+  /*filter: blur(3px);*/
   opacity: 1;
   z-index: 0;
 }
@@ -55,12 +55,9 @@ html {
 .home-header {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 5px;
-  flex: 1;
-  margin: 135px;
-  margin-bottom: 200px;
-  margin-right: 20%;
+  flex: 1 1;
 }
 
 .home-title {
@@ -77,44 +74,12 @@ html {
 .home-description {
   font-size: 2rem;
   margin-bottom: 48px;
-  text-align: left;
+  text-align: center;
   margin-top: 55px;
   margin-right: 60px;
   font-weight: 400;
   color: #fcfcfc;
   text-shadow: 0px 0px 55px #000;
-}
-
-.explore-button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #d60000;
-  color: white;
-  border: none;
-  border-radius: 20px;
-  font-size: 1rem;
-  cursor: pointer;
-  font-family: "Roboto", sans-serif;
-  width: 200px;
-}
-
-.explore-button:hover {
-  background-color: #800000;
-}
-
-/* Facebook Section */
-.facebook-box {
-  background-color: #f1f1f1;
-  padding: 20px;
-  border-radius: 20px;
-  width: 100%;
-  max-width: 520px;
-}
-
-.facebook-page {
-  display: flex;
-  justify-content: center;
-  border-radius: 20px;
 }
 
 h3 {
@@ -188,7 +153,7 @@ h3 {
 
 .event-item {
   background-color: #fff;
-  border-left: 10px solid #C31C1C;
+  border-left: 10px solid #c31c1c;
   padding: 16px 20px;
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
@@ -218,7 +183,7 @@ h3 {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  
+
   color: #555;
 }
 

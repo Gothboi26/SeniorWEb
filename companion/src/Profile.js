@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import BackToHome from "./BackToHome";
 import "./Profile.css";
 
 const Profile = () => {
@@ -126,7 +127,9 @@ const Profile = () => {
           setReadOnlyMode(true);
           localStorage.setItem("profileSaved", "true");
         } else {
-          alert("Profile saved, but you can still complete the remaining required info.");
+          alert(
+            "Profile saved, but you can still complete the remaining required info."
+          );
         }
       })
       .catch((err) => console.error("Error saving profile:", err));
@@ -240,12 +243,7 @@ const Profile = () => {
 
         <div className="address-container">
           <label>Address:</label>
-          <input
-            type="text"
-            name="address"
-            value={profile.address}
-            readOnly
-          />
+          <input type="text" name="address" value={profile.address} readOnly />
         </div>
 
         <div className="personal-info-container">
@@ -277,7 +275,7 @@ const Profile = () => {
               value={profile.civilStatus}
               onChange={handleChange}
               disabled={readOnlyMode}
-               className="form-input"
+              className="form-input"
             >
               <option value="">-- Select Status --</option>
               <option value="Single">Single</option>
@@ -334,7 +332,7 @@ const Profile = () => {
               Save
             </button>
           )}
-          <button className="back-button">Back to Home</button>
+          <BackToHome role={role} />
         </div>
       </div>
 

@@ -27,7 +27,6 @@ body {
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Added drop shadow */
 }
 
-
 /* Profile Title */
 .profile-title {
   display: flex;
@@ -44,7 +43,6 @@ body {
   margin: 0; /* Removes extra spacing */
   text-align: center; /* Center text within the element */
 }
-
 
 /* Profile Form */
 .profile-form {
@@ -121,28 +119,6 @@ body {
   box-shadow: 0px 0px 6px rgba(76, 175, 80, 0.5);
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .image-name-container {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .profile-image-section {
-    margin-bottom: 20px;
-  }
-
-  .profile-fields {
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-
-  .name-group {
-    min-width: 100%; /* Make input groups full width on smaller screens */
-  }
-}
-
-
 /* Label and Text Fields */
 .profile-details-container label {
   font-weight: bold;
@@ -159,16 +135,6 @@ body {
   width: 100%;
   margin-bottom: 20px;
 }
-
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .input-group {
-    min-width: 100%;
-  }
-}
-
-
 
 /* Barangay ID & Charter */
 .barangay-info-container {
@@ -211,16 +177,6 @@ input[name="groupChapter"]:focus {
   box-shadow: 0px 0px 6px rgba(76, 175, 80, 0.5);
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  input[name="barangayID"],
-  input[name="groupChapter"] {
-    width: 100%; /* Makes it full width on smaller screens */
-  }
-}
-
-
-
 /* Age, Sex, Bday, Civil Status Container */
 .personal-info-container {
   display: flex;
@@ -252,17 +208,6 @@ input[name="groupChapter"]:focus {
   outline: none;
   border-color: #4caf50;
   box-shadow: 0px 0px 6px rgba(76, 175, 80, 0.5);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .personal-info-container {
-    flex-direction: column; /* Stack elements vertically on smaller screens */
-  }
-
-  .personal-info-container div {
-    width: 100%; /* Full width on smaller screens */
-  }
 }
 
 /* Emergency Contact Person */
@@ -297,35 +242,27 @@ input[name="groupChapter"]:focus {
   box-shadow: 0px 0px 6px rgba(76, 175, 80, 0.5);
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .emergency-contact-container {
-    flex-direction: column; /* Stack elements vertically on smaller screens */
-  }
-
-  .emergency-contact-container div {
-    width: 100%; /* Full width on smaller screens */
-  }
-}
-
 /* Buttons */
 .profile-details-container .upload-button {
   margin-top: 8px;
   padding: 10px 20px;
   font-size: 18px;
   font-weight: 400;
-  background: #ED2030; /* Blue gradient */
+  background: #ed2030; /* Blue gradient */
   color: white;
   border: none;
   border-radius: 20px;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
 }
 
 .profile-details-container .upload-button:hover {
-  background: linear-gradient(135deg, #1976D2, #0d47a1); /* Darker blue on hover */
+  background: linear-gradient(
+    135deg,
+    #1976d2,
+    #0d47a1
+  ); /* Darker blue on hover */
   transform: translateY(-2px);
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }
@@ -337,7 +274,8 @@ input[name="groupChapter"]:focus {
   margin-top: 20px;
 }
 
-.save-button, .back-button {
+.save-button,
+.back-button {
   padding: 12px 24px;
   font-size: 18px;
   font-weight: 400;
@@ -357,7 +295,7 @@ input[name="groupChapter"]:focus {
 
 /* Save Button - Blue */
 .submit-button {
-  background: #ED2030;
+  background: #ed2030;
   color: white;
   padding: 12px 24px;
   font-size: 18px;
@@ -370,14 +308,14 @@ input[name="groupChapter"]:focus {
 }
 
 .submit-button:hover {
-  background: #ED2030;
+  background: #ed2030;
   transform: translateY(-2px);
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }
 
 /* Back Button - Red */
 .back-button {
-  background: #1A4798;
+  background: #1a4798;
   color: white;
   padding: 12px 24px;
   font-size: 18px;
@@ -401,4 +339,225 @@ input[name="groupChapter"]:focus {
   border: 1px solid #ccc;
   border-radius: 6px;
   box-sizing: border-box;
+}
+/* Media Queries for Responsiveness */
+
+/* Max-width 768px */
+@media (max-width: 768px) {
+  /* Profile Form */
+  .profile-form {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  /* Profile Title */
+  .profile-title h1 {
+    font-size: 1.8rem;
+    margin: 5px 0;
+  }
+
+  /* Profile Image Section - Move Profile on Top of First Name */
+  .profile-image-section {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Profile Fields */
+  .profile-fields {
+    gap: 10px;
+    justify-content: center; /* Center fields */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Profile Details */
+  .profile-details-container {
+    margin: 1rem 0;
+  }
+
+  /* Image and Name Container */
+  .image-name-container {
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 12px;
+  }
+
+  /* Move Profile Image and Name Above Fields */
+  .image-name-container {
+    order: -1; /* Move the image and name section to the top */
+  }
+
+  /* Barangay Info */
+  .barangay-info-container {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .barangay-info-container div {
+    min-width: 100%;
+  }
+
+  /* Personal Info */
+  .personal-info-container {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .personal-info-container div {
+    min-width: 100%;
+  }
+
+  /* Emergency Contact */
+  .emergency-contact-container {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .emergency-contact-container div {
+    min-width: 100%;
+  }
+
+  /* Centering the Labels and Input Fields */
+  .profile-details-container label,
+  .profile-details-container input {
+    text-align: center;
+    width: 100%; /* Full width for inputs */
+  }
+
+  /* Buttons */
+  .save-button,
+  .back-button,
+  .submit-button {
+    font-size: 14px;
+    padding: 6px 12px;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  /* Profile Image */
+  .profile-image {
+    width: 100px;
+    height: 100px;
+  }
+
+  /* File Input */
+  .file-input {
+    width: 100%;
+  }
+}
+
+/* Max-width 480px */
+@media (max-width: 480px) {
+  /* Profile Form */
+  .profile-form {
+    padding: 8px;
+    gap: 8px;
+  }
+
+  /* Profile Title */
+  .profile-title h1 {
+    font-size: 1.5rem;
+    margin: 4px 0;
+  }
+
+  /* Profile Image Section - Move Profile on Top of First Name */
+  .profile-image-section {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Profile Fields */
+  .profile-fields {
+    gap: 8px;
+    justify-content: center; /* Center fields */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Profile Details */
+  .profile-details-container {
+    margin: 0.8rem 0;
+  }
+
+  /* Image and Name Container */
+  .image-name-container {
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+
+  /* Move Profile Image and Name Above Fields */
+  .image-name-container {
+    order: -1; /* Move the image and name section to the top */
+  }
+
+  /* Barangay Info */
+  .barangay-info-container {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .barangay-info-container div {
+    min-width: 100%;
+  }
+
+  /* Personal Info */
+  .personal-info-container {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .personal-info-container div {
+    min-width: 100%;
+  }
+
+  /* Emergency Contact */
+  .emergency-contact-container {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .emergency-contact-container div {
+    min-width: 100%;
+  }
+
+  /* Centering the Labels and Input Fields */
+  .profile-details-container label,
+  .profile-details-container input {
+    text-align: center;
+    width: 100%; /* Full width for inputs */
+  }
+
+  /* Buttons */
+  .save-button,
+  .back-button,
+  .submit-button {
+    font-size: 12px;
+    padding: 5px 10px;
+    width: 100%;
+    margin-bottom: 8px;
+  }
+
+  /* Profile Image */
+  .profile-image {
+    width: 80px;
+    height: 80px;
+  }
+
+  /* File Input */
+  .file-input {
+    width: 100%;
+  }
 }

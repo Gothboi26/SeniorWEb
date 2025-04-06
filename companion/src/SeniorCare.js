@@ -33,8 +33,16 @@ const SeniorCare = ({ role, handleLogout }) => {
   ];
 
   const times = {
-    "Health Check-up": ["9:00 AM - 10:00 AM", "1:00 PM - 2:00 PM", "3:00 PM - 4:00 PM"],
-    "Free Medicine": ["10:00 AM - 12:00 PM", "1:00 PM - 3:00 PM", "4:00 PM - 5:00 PM"],
+    "Health Check-up": [
+      "9:00 AM - 10:00 AM",
+      "1:00 PM - 2:00 PM",
+      "3:00 PM - 4:00 PM",
+    ],
+    "Free Medicine": [
+      "10:00 AM - 12:00 PM",
+      "1:00 PM - 3:00 PM",
+      "4:00 PM - 5:00 PM",
+    ],
     Massage: ["11:00 AM - 12:00 PM", "2:30 PM - 3:30 PM", "4:00 PM - 5:00 PM"],
     "Dental Check-up": ["9:30 AM - 11:30 AM", "1:00 PM - 4:30 PM"],
     "Eye Check-up": ["9:30 AM - 11:30 AM", "1:30 PM - 4:30 PM"],
@@ -147,48 +155,121 @@ const SeniorCare = ({ role, handleLogout }) => {
 
       <div className="senior-details-container">
         <p className="senior-title-p">
-          Mga Hakbang sa Pag-book ng Appointment Gamit ang Aplikasyon para sa Serbisyong Pangkalusugan at Iba Pa para sa mga Nakatatanda
+          Mga Hakbang sa Pag-book ng Appointment Gamit ang Aplikasyon para sa
+          Serbisyong Pangkalusugan at Iba Pa para sa mga Nakatatanda
         </p>
-        <ol className="instruction-list">
-          <li><strong>Piliin ang Serbisyo</strong>: Hanapin ang serbisyong kailangan.</li>
-          <li><strong>Pumili ng Araw at Oras</strong>: Pumili ng available schedule.</li>
-          <li><strong>Kumpirmahin</strong>: Pindutin ang "Confirm Reservation".</li>
-          <li><strong>Tandaan</strong>: Tanggapin ang confirmation message.</li>
-          <li><strong>Dumating sa Oras</strong>: Maging maagap sa appointment.</li>
-        </ol>
-        <p className="senior-paalala"><strong>Paalala:</strong> May prayoridad sa clinic ang may appointment.</p>
+        <div className="instruction-container">
+          <div className="instruction-desc">
+            <ol className="instruction-list">
+              <li>
+                <strong>Piliin ang Serbisyong Kailangan:</strong>
+                <p>
+                  Hanapin ang mga serbisyong pangkalusugan tulad ng health
+                  check-up, masahe, libreng gamot, dental check-up, o eye
+                  check-up. Pindutin ang serbisyong nais n'yo i-book.
+                </p>
+              </li>
+              <li>
+                <strong>Pumili ng Araw at Oras ng Appointment:</strong>
+                <p>
+                  Pagkatapos piliin ang serbisyo, lilitaw ang kalendaryo o
+                  listahan ng mga available na oras. Pumili ng petsa at oras na
+                  pinakakomportable para sa inyo.
+                </p>
+              </li>
+              <li>
+                <strong>Kumpirmahin ang Appointment:</strong>
+                <p>
+                  Kapag nakapili na ng araw at oras, pindutin ang "Kumpirmahin"
+                  o "Book Appointment". Lalabas ang detalye ng inyong
+                  appointment.
+                </p>
+              </li>
+              <li>
+                <strong>Tandaan ang Detalye:</strong>
+                <p>
+                  Tingnan ang confirmation message. Tandaan ang petsa at oras.
+                </p>
+              </li>
+              <li>
+                <strong>Dumating sa Takdang Oras:</strong>
+                <p>Siguraduhing dumating 10-15 minuto bago ang schedule.</p>
+              </li>
+            </ol>
+          </div>
+        </div>
+
+        <div className="senior-paalala">
+          <p className="senior-p">
+            <strong>Paalala: </strong>Sa pamamagitan ng pag-book ng appointment,
+            kayo ay bibigyan ng prayoridad sa clinic o health center.
+          </p>
+        </div>
       </div>
 
       {role === "client" && (
         <div className="button-wrapper">
-          <div className="button-container">
-            <button className="secondary-button" onClick={() => openModal("reserveSlot")}>Reserve a Slot</button>
-            <button className="secondary-button" onClick={() => openModal("viewReservedSlot")}>View Reserved Slots</button>
+          <div className="reserve-button-container">
+            <button
+              className="secondary-button"
+              onClick={() => openModal("reserveSlot")}
+            >
+              Reserve a Slot
+            </button>
+            <button
+              className="secondary-button"
+              onClick={() => openModal("viewReservedSlot")}
+            >
+              View Reserved Slots
+            </button>
           </div>
         </div>
       )}
 
       <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="modal">
-        <h2>{modalContent === "reserveSlot" ? "Reserve a Slot" : "Your Appointments"}</h2>
+        <h2>
+          {modalContent === "reserveSlot"
+            ? "Reserve a Slot"
+            : "Your Appointments"}
+        </h2>
 
         {modalContent === "reserveSlot" && (
           <>
             <label>Choose a service:</label>
-            <select value={selectedService} onChange={handleServiceChange} className="input-field">
+            <select
+              value={selectedService}
+              onChange={handleServiceChange}
+              className="input-field"
+            >
               <option value="">Select a service</option>
               {services.map((service, idx) => (
-                <option key={idx} value={service}>{service}</option>
+                <option key={idx} value={service}>
+                  {service}
+                </option>
               ))}
             </select>
 
             <label>Choose a date:</label>
-            <input type="date" value={selectedDate} onChange={handleDateChange} className="input-field" disabled={!selectedService} />
+            <input
+              type="date"
+              value={selectedDate}
+              onChange={handleDateChange}
+              className="input-field"
+              disabled={!selectedService}
+            />
 
             <label>Choose a time:</label>
-            <select value={selectedTime} onChange={(e) => setSelectedTime(e.target.value)} className="input-field" disabled={!selectedDate}>
+            <select
+              value={selectedTime}
+              onChange={(e) => setSelectedTime(e.target.value)}
+              className="input-field"
+              disabled={!selectedDate}
+            >
               <option value="">Select a time</option>
               {availableTimes.map((time, idx) => (
-                <option key={idx} value={time}>{time}</option>
+                <option key={idx} value={time}>
+                  {time}
+                </option>
               ))}
             </select>
 
@@ -200,7 +281,12 @@ const SeniorCare = ({ role, handleLogout }) => {
               >
                 Confirm Reservation
               </button>
-              <button onClick={closeModal} className="secondary-button gray-button">Close</button>
+              <button
+                onClick={closeModal}
+                className="secondary-button gray-button"
+              >
+                Close
+              </button>
             </div>
           </>
         )}
@@ -208,7 +294,8 @@ const SeniorCare = ({ role, handleLogout }) => {
         {modalContent === "viewReservedSlot" && (
           <>
             <h3>Pending Appointments</h3>
-            {upcomingAppointments.filter(slot => slot.status === "pending").length > 0 ? (
+            {upcomingAppointments.filter((slot) => slot.status === "pending")
+              .length > 0 ? (
               <table className="appointments-table">
                 <thead>
                   <tr>
@@ -219,20 +306,25 @@ const SeniorCare = ({ role, handleLogout }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {upcomingAppointments.filter(slot => slot.status === "pending").map((slot, i) => (
-                    <tr key={i}>
-                      <td>{slot.service}</td>
-                      <td>{slot.date}</td>
-                      <td>{slot.time}</td>
-                      <td>{slot.status}</td>
-                    </tr>
-                  ))}
+                  {upcomingAppointments
+                    .filter((slot) => slot.status === "pending")
+                    .map((slot, i) => (
+                      <tr key={i}>
+                        <td>{slot.service}</td>
+                        <td>{slot.date}</td>
+                        <td>{slot.time}</td>
+                        <td>{slot.status}</td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
-            ) : <p>No pending appointments.</p>}
+            ) : (
+              <p>No pending appointments.</p>
+            )}
 
             <h3 style={{ marginTop: "20px" }}>Upcoming Appointments</h3>
-            {upcomingAppointments.filter(slot => slot.status !== "pending").length > 0 ? (
+            {upcomingAppointments.filter((slot) => slot.status !== "pending")
+              .length > 0 ? (
               <table className="appointments-table">
                 <thead>
                   <tr>
@@ -243,17 +335,21 @@ const SeniorCare = ({ role, handleLogout }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {upcomingAppointments.filter(slot => slot.status !== "pending").map((slot, i) => (
-                    <tr key={i}>
-                      <td>{slot.service}</td>
-                      <td>{slot.date}</td>
-                      <td>{slot.time}</td>
-                      <td>{slot.status}</td>
-                    </tr>
-                  ))}
+                  {upcomingAppointments
+                    .filter((slot) => slot.status !== "pending")
+                    .map((slot, i) => (
+                      <tr key={i}>
+                        <td>{slot.service}</td>
+                        <td>{slot.date}</td>
+                        <td>{slot.time}</td>
+                        <td>{slot.status}</td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
-            ) : <p>No upcoming appointments.</p>}
+            ) : (
+              <p>No upcoming appointments.</p>
+            )}
 
             <h3 style={{ marginTop: "20px" }}>Past Appointments</h3>
             {pastAppointments.length > 0 ? (
@@ -277,7 +373,9 @@ const SeniorCare = ({ role, handleLogout }) => {
                   ))}
                 </tbody>
               </table>
-            ) : <p>No past appointments.</p>}
+            ) : (
+              <p>No past appointments.</p>
+            )}
           </>
         )}
       </Modal>

@@ -12,14 +12,17 @@
   width: 100%;
   font-family: "roboto", "sans-serif";
 }
+
 /* Main Navbar Styles */
 .Navbar {
   display: flex;
   font-size: 1.2em;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  padding: 55px 50px;
+  height: 70px;
+  width: 100%;
   background-color: #ffffff;
-  padding: 20px 50px 10px 50px;
   box-shadow: 0px 5px 5px #cccccb;
   position: sticky;
   top: 0;
@@ -29,7 +32,7 @@
 .Navbar-logo-container {
   display: flex;
   align-items: center;
-  position: absolute;
+  position: relative;
   left: 50px;
 }
 
@@ -43,15 +46,6 @@
   font-size: 1.4em;
   font-weight: bold;
   color: #d60000;
-}
-
-.Navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 55px 50px;
-  height: 70px;
-  width: 100%;
 }
 
 /* Center the main navigation links */
@@ -134,7 +128,7 @@
 }
 
 .profile-link {
-  background-color: #C31C1C;
+  background-color: #c31c1c;
   color: white;
   border: none;
 }
@@ -146,32 +140,36 @@
 /* Logout Button - White with Red Border */
 .logout-link {
   background-color: white;
-  color: #C31C1C;
-  border: 2px solid #C31C1C;
+  color: #c31c1c;
+  border: 2px solid #c31c1c;
   border-radius: 40px;
   font-weight: 600;
 }
 
 .logout-link:hover {
-  background-color: #C31C1C;
+  background-color: #c31c1c;
   color: white;
 }
 
 /* Sidebar Styling */
+/* Sidebar Styling */
 .Sidebar {
   position: fixed;
-  right: -250px;
+  right: 0; /* Keep the sidebar aligned to the right side of the screen */
   top: 0;
   height: 100%;
   width: 250px;
-  background-color: #ecf7fb;
+  background-color: #ffffff;
   padding-top: 60px;
-  transition: right 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
   z-index: 1000;
+  transform: translateX(
+    100%
+  ); /* Initially hide sidebar by moving it off-screen */
 }
 
 .Sidebar.open {
-  right: 0;
+  transform: translateX(0); /* Slide the sidebar in */
 }
 
 .Sidebar-links {
@@ -196,6 +194,24 @@
   background-color: #aaa9a9;
   border-radius: 4px;
 }
+/* Style for logout button to match sidebar links */
+.logout-button {
+  background: none;
+  border: none;
+  color: #444343;
+  font-weight: 700;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-family: inherit;
+  font-size: 1.2rem;
+}
+
+.logout-button:hover {
+  background-color: #aaa9a9;
+  border-radius: 4px;
+}
 
 /* Hamburger Menu */
 .Navbar-hamburger {
@@ -213,6 +229,47 @@
   background-color: #800000;
   height: 3px;
   width: 100%;
+}
+/* Dropdown Menu Styles */
+.Navbar-links li.dropdown {
+  position: relative;
+}
+
+.Navbar-links li.dropdown .dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%; /* Position below the parent item */
+  left: 0;
+  background-color: white;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  min-width: 280px;
+  border-radius: 8px;
+  padding: 10px 0;
+}
+
+.Navbar-links li.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu li {
+  list-style: none;
+}
+
+.dropdown-menu li a {
+  display: block;
+  padding: 10px 30px;
+  color: #1f1785;
+  text-decoration: none;
+  font-size: 25px;
+  font-family: "Roboto", sans-serif;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-menu li a:hover {
+  background-color: #f2f2f2;
+  color: #d60000;
+  border-radius: 4px;
 }
 
 @media (max-width: 768px) {
@@ -254,13 +311,5 @@
   .Sidebar-links a {
     width: 100%;
     text-align: left;
-  }
-
-  .Sidebar {
-    right: -250px;
-  }
-
-  .Sidebar.open {
-    right: 328p;
   }
 }

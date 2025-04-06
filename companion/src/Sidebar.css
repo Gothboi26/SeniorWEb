@@ -1,6 +1,6 @@
 .admin-layout {
   display: flex;
-  background-color: #FBFBFB;
+  background-color: #fbfbfb;
 }
 
 /* Sidebar styles */
@@ -22,14 +22,14 @@
   font-family: "Roboto", sans-serif;
   font-size: 1.8rem;
   font-weight: bold;
-  color: #C31C1C;
+  color: #c31c1c;
   text-align: left;
 }
 
 .sidebar {
   width: 400px;
   background-color: #ffffff;
-  color: #1E1E1E;
+  color: #1e1e1e;
   padding: 50px;
   display: flex;
   flex-direction: column;
@@ -78,7 +78,7 @@
   flex: 1;
   padding: 40px;
   overflow-y: auto;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border-radius: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -125,9 +125,9 @@
 }
 
 .sidebar1-logo-img {
-  width: 45px; 
-  height: auto; 
-  margin-right: 10px; 
+  width: 45px;
+  height: auto;
+  margin-right: 10px;
 }
 
 .header1 {
@@ -142,8 +142,8 @@
   padding: 10px 20px;
   font-size: 1.2rem;
   background-color: white;
-  color: #C31C1C;
-  border: 2px solid #C31C1C;
+  color: #c31c1c;
+  border: 2px solid #c31c1c;
   border-radius: 40px;
   font-weight: 600;
   cursor: pointer;
@@ -153,6 +153,6 @@
 }
 
 .logout-link-admin:hover {
-  background-color: #C31C1C;
+  background-color: #c31c1c;
   color: white;
 }

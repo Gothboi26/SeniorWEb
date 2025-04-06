@@ -13,7 +13,7 @@ import "./Emergency.css";
 import "./Chat.css";
 import "./SeniorCare.css";
 import "./Profile.css";
-import "./ChoicesHomepage.css";  // Make sure ito ang last na import
+import "./ChoicesHomepage.css"; // Make sure ito ang last na import
 import Overview from "./Overview";
 import SeniorList from "./SeniorList";
 import Appointments from "./Appointments";
@@ -150,7 +150,8 @@ const RectangleSection = ({ role }) => {
                     />
                   </div>
                   <p>
-                  Seniors can schedule priority check-ups and health services for faster and more efficient care.
+                    Seniors can schedule priority check-ups and health services
+                    for faster and more efficient care.
                   </p>
                   <button className="senior-care-button">
                     <span className="senior-care-button-text">Appointment</span>
@@ -256,65 +257,71 @@ const RectangleSection = ({ role }) => {
       </div>
 
       <div className="Events">
-  <div className="Events-Header">
-    <p className="Events-Subheader">ACTIVITIES</p>
-    <h1 className="Events-Title">Calendar of Activities</h1>
-  </div>
-
-  <div className="events-container">
-    <Calendar
-      onChange={onDateChange}
-      value={date}
-      locale="en-US"
-      tileClassName={tileClassName}
-    />
-
-    <div className="events-list">
-      <h3 className="Events-listheader">Events on {date.toDateString()}</h3>
-
-      {events && events.length > 0 ? (
-        <div className="event-list-container">
-          {events.map((event) => (
-            <div key={event.id} className="event-item">
-              <h4 className="event-title">
-                📝 <strong>Event Title:</strong> {event.event_title || "Untitled Event"}
-              </h4>
-
-              <p className="event-description">
-                📄 <strong>Event Description:</strong>{" "}
-                {event.event_description || "No description available."}
-              </p>
-
-              <div className="event-meta">
-                <span className="location">{event.location || "Location not specified"}</span>
-                <span className="organizer">{event.organizer || "Organizer unknown"}</span>
-                <span className="datetime">
-                  {event.date_time
-                    ? new Date(event.date_time).toLocaleString("en-US", {
-                        month: "long",
-                        day: "numeric",
-                        year: "numeric",
-                        hour: "numeric",
-                        minute: "2-digit",
-                        hour12: true,
-                      })
-                    : "Time not available"}
-                </span>
-              </div>
-            </div>
-          ))}
+        <div className="Events-Header">
+          <p className="Events-Subheader">ACTIVITIES</p>
+          <h1 className="Events-Title">Calendar of Activities</h1>
         </div>
-      ) : (
-        <p>No events for this date. You can still click on other dates.</p>
-      )}
-    </div>
-  </div>
-</div>
 
+        <div className="events-container">
+          <Calendar
+            onChange={onDateChange}
+            value={date}
+            locale="en-US"
+            tileClassName={tileClassName}
+          />
 
-      
-      <Officials ></Officials>
-      
+          <div className="events-list">
+            <h3 className="Events-listheader">
+              Events on {date.toDateString()}
+            </h3>
+
+            {events && events.length > 0 ? (
+              <div className="event-list-container">
+                {events.map((event) => (
+                  <div key={event.id} className="event-item">
+                    <h4 className="event-title">
+                      📝 <strong>Event Title:</strong>{" "}
+                      {event.event_title || "Untitled Event"}
+                    </h4>
+
+                    <p className="event-description">
+                      📄 <strong>Event Description:</strong>{" "}
+                      {event.event_description || "No description available."}
+                    </p>
+
+                    <div className="event-meta">
+                      <span className="location">
+                        {event.location || "Location not specified"}
+                      </span>
+                      <span className="organizer">
+                        {event.organizer || "Organizer unknown"}
+                      </span>
+                      <span className="datetime">
+                        {event.date_time
+                          ? new Date(event.date_time).toLocaleString("en-US", {
+                              month: "long",
+                              day: "numeric",
+                              year: "numeric",
+                              hour: "numeric",
+                              minute: "2-digit",
+                              hour12: true,
+                            })
+                          : "Time not available"}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p>
+                No events for this date. You can still click on other dates.
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <Officials></Officials>
     </div>
   );
 };
@@ -352,8 +359,6 @@ function CalendarComponent() {
           <hr className="sidebar-divider" />
 
           <ul>
-            
-
             <li
               onClick={() => setSelectedOption("overview")}
               className="sidebar1-item"
@@ -369,11 +374,7 @@ function CalendarComponent() {
               onClick={() => setSelectedOption("seniors")}
               className="sidebar1-item"
             >
-              <img
-                src={senior}
-                alt="Senior"
-                className="sidebar1-logo-img"
-              />
+              <img src={senior} alt="Senior" className="sidebar1-logo-img" />
               Seniors
             </li>
             <li
@@ -413,11 +414,7 @@ function CalendarComponent() {
               onClick={() => setSelectedOption("chat")}
               className="sidebar1-item"
             >
-              <img
-                src={chats}
-                alt="Logo"
-                className="sidebar1-logo-img"
-              />
+              <img src={chats} alt="Logo" className="sidebar1-logo-img" />
               Chat Inquiries
             </li>
           </ul>
@@ -439,9 +436,6 @@ function CalendarComponent() {
               </li>
             </ul>
           </div>
-          
-
-          
         </div>
 
         <div className="main-content">
@@ -475,26 +469,11 @@ function CalendarComponent() {
       <div className="homepage">
         <div className="home-contents">
           <div className="home-header">
-            <h1 className="home-title">Senior Care Services</h1>
+            <h1 className="home-title">Barangay General Tiburcio De Leon</h1>
             <p className="home-description">
               Maalaga at angkop na serbisyo upang matulungan ang nakatatanda na
               mamuhay nang komportable, ligtas, at walang pag-aalinlangan.
             </p>
-          </div>
-
-          <div className="facebook-box">
-            <div className="facebook-page">
-              <iframe
-                src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FBarangay-Gen-T-De-Leon-61550950657692&tabs=timeline&width=500&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
-                title="Barangay Facebook Page"
-                width="500"
-                height="500"
-                style={{ border: "none", overflow: "hidden" }}
-                scrolling="no"
-                frameBorder="0"
-                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-              ></iframe>
-            </div>
           </div>
         </div>
       </div>

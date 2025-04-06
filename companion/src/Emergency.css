@@ -128,7 +128,7 @@ body {
   padding: 10px;
   border-radius: 20px;
   text-align: center;
-  margin-bottom: 20px;
+  margin-top: 20px;
 }
 
 .contacts-table {
@@ -182,8 +182,14 @@ body {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .close-popup {
@@ -258,65 +264,108 @@ body {
   text-align: center;
   border: 1px solid #c3e6cb;
 }
+/* Media Queries for Responsiveness */
 
-/* Responsive Layout */
-@media (max-width: 1024px) {
-  .buttons-container {
-    gap: 20px;
+/* Max-width 768px */
+@media (max-width: 768px) {
+  .emergency-details-container {
+    margin: 20px;
+    padding: 15px;
+  }
+
+  .emergency-title-container h1 {
+    font-size: 1.8rem;
+  }
+
+  .emergency-description {
+    padding: 30px;
+    font-size: 1rem;
   }
 
   .emergency-button {
-    width: 130px;
-    height: 130px;
+    width: 150px;
+    height: 150px;
     font-size: 16px;
+    padding: 15px;
   }
 
   .emergency-icon {
-    width: 60px;
-    height: 60px;
-  }
-}
-
-@media (max-width: 768px) {
-  .emergency-description {
-    padding: 20px;
-    margin: 20px;
-    font-size: 0.95rem;
-  }
-
-  .emergency-button {
-    width: 100%;
-    max-width: 280px;
+    width: 100px;
+    height: 100px;
   }
 
   .buttons-container {
-    flex-direction: column;
-    align-items: center;
     gap: 20px;
   }
 
   .contacts-table th,
   .contacts-table td {
+    padding: 8px;
     font-size: 0.9rem;
-    padding: 10px;
+  }
+
+  .contacts-table {
+    font-size: 0.9rem;
+  }
+
+  .emergency-popup-inner {
+    width: 95%;
   }
 }
 
+/* Max-width 480px */
 @media (max-width: 480px) {
   .emergency-title-container h1 {
     font-size: 1.5rem;
   }
 
-  .hotlines-title,
-  .contacts-title {
-    font-size: 1.2rem;
+  .emergency-description {
+    padding: 20px;
+    font-size: 1rem;
+  }
+
+  .emergency-button {
+    width: 140px;
+    height: 130px;
+    font-size: 16px;
+    gap: 0;
+    padding: 2px;
+  }
+
+  .emergency-icon {
+    width: 70px;
+    height: 70px;
+  }
+
+  .buttons-container {
+    gap: 15px;
+  }
+
+  .contacts-table th,
+  .contacts-table td {
+    padding: 6px;
+    font-size: 1rem;
+  }
+
+  .contacts-table {
+    font-size: 1rem;
   }
 
   .emergency-popup-inner {
-    padding: 20px;
+    width: 90%;
   }
 
-  .success-message {
+  .emergency-form h3 {
+    font-size: 1.4rem;
+  }
+
+  .emergency-form input,
+  .emergency-form select,
+  .emergency-form textarea {
+    font-size: 0.9rem;
+  }
+
+  .emergency-form button {
     font-size: 0.9rem;
   }
 }

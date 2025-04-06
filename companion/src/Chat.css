@@ -74,6 +74,54 @@
   text-align: justify;
 }
 
+/* FAQ Section Styling */
+.faq-section {
+  margin-top: 30px;
+}
+
+.faq-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.faq-button {
+  width: 45%;
+  background-color: #fbfbf6;
+  border: 2px solid #c31c1c;
+  border-radius: 20px;
+  padding: 12px 20px;
+  margin: 10px 0;
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #272927;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.faq-button:hover {
+  background-color: #ffe2cc;
+  border-color: #a10000;
+  transform: scale(1.02);
+}
+
+.talk-to-admin-button {
+  margin-top: 20px;
+  padding: 12px 20px;
+  background-color: #c31c1c;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.talk-to-admin-button:hover {
+  background-color: #a10000;
+}
+
 /* Chat Window Container */
 .chat-window-container {
   padding: 20px 0;
@@ -199,5 +247,8 @@ input[type="text1"]:focus {
   }
   .chat-bubble {
     max-width: 90%;
+  }
+  .faq-button {
+    width: 75%;
   }
 }

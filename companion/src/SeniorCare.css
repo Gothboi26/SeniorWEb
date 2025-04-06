@@ -1,53 +1,138 @@
 /* Main container */
 .senior-care-container {
+  background: #fbfbf6;
+  padding: 0;
+  margin: 0;
+  border-radius: 8px;
   font-family: "Roboto", sans-serif;
-  background-color: #f9f9f9;
-  min-height: 100vh;
-  padding-bottom: 30px;
+  max-width: 100%;
+  color: #333;
 }
-
-/* Title Section */
 .senior-title-container {
-  text-align: center;
-  background-color: #fff;
-  padding: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Added drop shadow */
 }
-
 .senior-title {
   font-size: 2rem;
-  color: #800000;
-  margin: 0;
-}
-
-/* Instruction Section */
-.senior-details-container {
-  max-width: 900px;
-  margin: 30px auto;
-  padding: 25px;
-  background: #fffaf5;
-  border-radius: 16px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-  line-height: 1.6;
-}
-
-.instruction-list {
-  margin-top: 10px;
-  padding-left: 20px;
-  list-style-type: decimal;
-  color: #444;
-}
-
-.instruction-list li {
-  margin-bottom: 10px;
-}
-
-.senior-paalala {
-  margin-top: 20px;
   font-weight: bold;
   color: #b71c1c;
+  margin: 0; /* Removes extra spacing */
+  text-align: center; /* Center text within the element */
+}
+.senior-details-container {
+  padding: 20px;
+  margin: 40px 20rem;
+  background-color: #fbfbf6;
+}
+.senior-title-p {
+  padding: 40px 60px 30px;
+  background-color: #fff8e1;
+  border: 3px solid #c31c1c;
+  border-radius: 40px;
+  line-height: 1.7rem;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+  font-size: 1.4rem;
+  font-weight: 400;
+  text-align: justify;
+  color: #272927;
+  margin-top: 0;
+}
+.instruction-container {
+  margin-top: 40px;
+}
+.instruction-desc {
+  text-align: justify; /* Justifies the text */
+  padding: 0 40px;
+  list-style: none;
+  max-width: 100%; /* Optional: Set a max width for better readability */
+  background-color: #fbfbf6;
+  border-radius: 30px;
+  line-height: 1.7rem;
+}
+.instruction-list li {
+  margin-bottom: 20px;
+  text-align: justify; /* Ensures the content of each list item is justified */
+  position: relative; /* Positioning for the number */
+}
+.instruction-list p {
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: #1e1e1e;
+}
+.instruction-list strong {
+  font-size: 1.4rem; /* Adjust the size as needed */
+  color: #1e1e1e; /* Set your desired font color */
+}
+.instruction-list li::before {
+  position: absolute;
+  left: -30px; /* Position the number to the left of the text */
+  font-weight: bold;
+  color: #800000;
+}
+.senior-p strong {
+  color: #800000; /* Highlight the "Paalala" in maroon */
+  font-weight: bold; /* Emphasize the title */
+}
+.senior-p {
+  font-size: 1.3rem;
+  font-weight: 400;
+  padding: 20px 40px 30px;
+  background-color: #fff8e1;
+  border: 3px solid #c31c1c;
+  border-radius: 30px;
+  line-height: 1.4rem;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+.services-container {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.services-title {
+  font-size: 1.5rem;
+  color: #800000; /* Dark red color for title */
+}
+
+.services {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.services-item {
+  background-color: #fff; /* White background for each service card */
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+  max-width: 300px;
+  text-align: center; /* Center content inside each service item */
+}
+
+.services-item h3 {
+  font-size: 1.2rem;
+  color: #800000; /* Dark red color for service titles */
+}
+
+.services-item p {
+  color: #444; /* Dark grey text for the description */
+  font-size: 1rem;
+}
+
+/* Optional: Image styling for the service images */
+.service-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
 /* Button Wrapper & Container */
 .button-wrapper {
   max-width: 800px;
@@ -55,12 +140,11 @@
   text-align: center;
 }
 
-.button-container {
+.reserve-button-container {
   display: flex;
   justify-content: center;
-  gap: 15px;
-  flex-wrap: wrap;
-  margin: 30px 0;
+  width: 100%;
+  margin-top: 20px;
 }
 
 /* Buttons */
@@ -164,102 +248,140 @@
   background-color: #f9f9f9;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .senior-title {
-    font-size: 1.6rem;
-  }
-
+/* -------- Responsive for Tablets (max-width: 768px) -------- */
+@media screen and (max-width: 768px) {
   .senior-details-container {
-    padding: 20px;
-    margin: 20px 10px;
+    margin: 40px 2rem;
+    padding: 16px;
   }
 
-  .instruction-list {
-    padding-left: 15px;
+  .senior-title {
+    font-size: 1.7rem;
   }
 
-  .button-container {
+  .senior-title-p,
+  .senior-paalala,
+  .senior-p {
+    padding: 30px 30px 20px;
+    font-size: 1.2rem;
+  }
+
+  .instruction-desc {
+    padding: 0 20px;
+  }
+
+  .instruction-list p,
+  .senior-p {
+    font-size: 1.1rem;
+  }
+
+  .instruction-list strong {
+    font-size: 1.2rem;
+  }
+
+  .services {
     flex-direction: column;
+    align-items: center;
+  }
+
+  .services-item {
+    max-width: 90%;
+  }
+
+  .modal {
+    max-width: 90%;
+    padding: 20px;
+  }
+
+  .secondary-button {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+  }
+
+  .appointments-table th,
+  .appointments-table td {
+    font-size: 0.85rem;
+    padding: 10px;
+  }
+  .reserve-button-container {
+    flex-direction: column;
+    align-items: center;
     gap: 10px;
+    margin-bottom: 10px;
   }
 
   .secondary-button {
     width: 100%;
     max-width: 300px;
   }
+}
+
+/* -------- Responsive for Mobile (max-width: 480px) -------- */
+@media screen and (max-width: 480px) {
+  .senior-title-container {
+    height: auto;
+    padding: 10px;
+  }
+
+  .senior-title {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .senior-details-container {
+    margin: 20px 1rem;
+    padding: 10px;
+  }
+
+  .senior-title-p,
+  .senior-paalala,
+  .senior-p {
+    padding: 20px;
+    font-size: 1.05rem;
+  }
+
+  .instruction-desc {
+    padding: 0 16px;
+  }
+
+  .instruction-list p,
+  .instruction-list strong {
+    font-size: 1rem;
+  }
+
+  .services-item {
+    width: 100%;
+    padding: 10px;
+  }
 
   .modal {
-    width: 90%;
-    padding: 20px;
+    max-width: 95%;
+    padding: 16px;
+  }
+
+  .secondary-button {
+    width: 100%;
+    min-width: unset;
+    font-size: 0.9rem;
+  }
+
+  .appointments-table {
+    font-size: 0.8rem;
   }
 
   .appointments-table th,
   .appointments-table td {
     padding: 8px;
-    font-size: 0.9rem;
   }
-}
-
-@media (max-width: 480px) {
-  .senior-title {
-    font-size: 1.4rem;
-  }
-
-  .modal h2 {
-    font-size: 1.2rem;
+  .reserve-button-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
   }
 
-  .input-field {
-    font-size: 0.95rem;
+  .secondary-button {
+    width: 100%;
+    max-width: 260px;
   }
-
-  .appointments-table {
-    font-size: 0.85rem;
-  }
-}
-/* Appointments Table (Red Themed) */
-.appointments-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 15px;
-  font-size: 0.95rem;
-  background-color: #fff;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  border: 2px solid #b71c1c;
-}
-
-.appointments-table th,
-.appointments-table td {
-  padding: 12px;
-  text-align: center;
-  border: 1px solid #e0b4b4;
-}
-
-.appointments-table th {
-  background-color: #b71c1c;
-  color: white;
-  font-weight: 600;
-}
-
-.appointments-table td {
-  color: #800000;
-}
-
-.appointments-table tr:nth-child(even) {
-  background-color: #fff5f5;
-}
-/* Fix modal section headings */
-.modal h2,
-.modal h3 {
-  color: #b71c1c; /* Maroon / Red */
-  text-align: center;
-  margin-bottom: 15px;
-}
-
-/* Optional: Increase spacing between tables */
-.modal h3 {
-  margin-top: 30px;
 }
