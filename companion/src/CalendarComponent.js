@@ -446,12 +446,9 @@ function CalendarComponent() {
 
         <div className="main-content">
           <div className="header1">
-            <div className="greeting">
-              <h1>Dashboard</h1>
-            </div>
-          <div className="logout-admin">
-            <button className="logout-link" onClick={handleLogout}>Logout</button>
-          </div>
+            <button className="logout-link-admin" onClick={handleLogout}>
+              Logout
+            </button>
           </div>
 
           <div className="content">
