@@ -5,11 +5,13 @@ const Appointments = () => {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [statusMessage, setStatusMessage] = useState("");
-  const [editing, setEditing] = useState(null);
   const [activeTab, setActiveTab] = useState("pending");
+  const [remarksInput, setRemarksInput] = useState({});
 
   useEffect(() => {
     fetchAppointments();
+    window.addEventListener("slotsUpdated", fetchAppointments);
+    return () => window.removeEventListener("slotsUpdated", fetchAppointments);
   }, []);
 
   const fetchAppointments = async () => {
@@ -31,19 +33,37 @@ const Appointments = () => {
   };
 
   const updateStatus = async (appointmentId, status) => {
+    const appointment = appointments.find((a) => a.id === appointmentId);
+    const remark = remarksInput[appointmentId] || "";
+
     try {
       const response = await fetch("http://localhost/php/get_appointment.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ appointment_id: appointmentId, status }),
+        body: JSON.stringify({
+          appointment_id: appointmentId,
+          status,
+          remarks: remark,
+          service: appointment?.service,
+          date: appointment?.date,
+          time: appointment?.time,
+          adjust_slot: status === "approved"
+        }),
       });
+
       const result = await response.json();
       if (result.success) {
         setAppointments((prev) =>
-          prev.map((a) => (a.id === appointmentId ? { ...a, status } : a))
+          prev.map((a) =>
+            a.id === appointmentId ? { ...a, status, remarks: remark } : a
+          )
         );
         setStatusMessage("Status updated successfully.");
+        setRemarksInput((prev) => ({ ...prev, [appointmentId]: "" }));
+
+        // Notify ServicesTab to update slots
+        window.dispatchEvent(new Event("slotsUpdated"));
       }
     } catch (error) {
       console.error("Error updating status:", error);
@@ -51,45 +71,26 @@ const Appointments = () => {
     }
   };
 
-  const deleteAppointment = async (appointmentId) => {
-    try {
-      const response = await fetch("http://localhost/php/get_appointment.php", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ appointment_id: appointmentId }),
-      });
-      const result = await response.json();
-      if (result.success) {
-        setAppointments((prev) => prev.filter((a) => a.id !== appointmentId));
-        setStatusMessage("Appointment deleted successfully.");
-      }
-    } catch (error) {
-      console.error("Delete failed:", error);
-      setStatusMessage("Failed to delete appointment.");
-    }
+  const formatDateReadable = (dateStr) => {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    });
   };
 
-  const saveEdit = async () => {
-    try {
-      const response = await fetch("http://localhost/php/get_appointment.php", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify(editing),
-      });
-      const result = await response.json();
-      if (result.success) {
-        setAppointments((prev) =>
-          prev.map((a) => (a.id === editing.appointment_id ? { ...a, ...editing } : a))
-        );
-        setStatusMessage("Appointment updated successfully.");
-        setEditing(null);
-      }
-    } catch (error) {
-      console.error("Update error:", error);
-      setStatusMessage("Failed to update appointment.");
-    }
+  const formatTimeAMPM = (timeStr) => {
+    const [h, m] = timeStr.split(":").map(Number);
+    const date = new Date();
+    date.setHours(h);
+    date.setMinutes(m);
+    return date.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true
+    });
   };
 
   const filteredAppointments = appointments.filter(
@@ -101,7 +102,7 @@ const Appointments = () => {
       <div className="admin-appoint-header">
         <h2>Appointment Management</h2>
         <div className="appoint-tabs">
-          {["pending", "approved", "rejected"].map((tab) => (
+          {["pending", "approved", "reject"].map((tab) => (
             <button
               key={tab}
               className={`tab-button ${activeTab === tab ? "active" : ""}`}
@@ -111,11 +112,7 @@ const Appointments = () => {
             </button>
           ))}
         </div>
-
       </div>
-      
-
-      
 
       {statusMessage && <div className="status-message">{statusMessage}</div>}
 
@@ -130,67 +127,54 @@ const Appointments = () => {
               <th>Date</th>
               <th>Time</th>
               <th>Status</th>
-              <th>Actions</th>
+              <th>Remarks</th>
+              {activeTab === "pending" && <th>Actions</th>}
             </tr>
           </thead>
           <tbody>
             {filteredAppointments.map((app) => (
               <tr key={app.id}>
                 <td>{app.username}</td>
-                <td>
-                  {editing?.appointment_id === app.id ? (
-                    <input
-                      value={editing.service}
-                      onChange={(e) => setEditing({ ...editing, service: e.target.value })}
-                    />
-                  ) : (
-                    app.service
-                  )}
-                </td>
-                <td>
-                  {editing?.appointment_id === app.id ? (
-                    <input
-                      type="date"
-                      value={editing.date}
-                      onChange={(e) => setEditing({ ...editing, date: e.target.value })}
-                    />
-                  ) : (
-                    app.date
-                  )}
-                </td>
-                <td>
-                  {editing?.appointment_id === app.id ? (
-                    <input
-                      value={editing.time}
-                      onChange={(e) => setEditing({ ...editing, time: e.target.value })}
-                    />
-                  ) : (
-                    app.time
-                  )}
-                </td>
+                <td>{app.service}</td>
+                <td>{formatDateReadable(app.date)}</td>
+                <td>{formatTimeAMPM(app.time)}</td>
                 <td>
                   <span className={`status ${app.status}`}>{app.status}</span>
                 </td>
-                <td className="action-icons">
-                  {activeTab === "pending" ? (
-                    <>
-                      <button
-                        className="approve-button"
-                        onClick={() => updateStatus(app.id, "approved")}
-                      >
-                        ✔
-                      </button>
-                      <button
-                        className="reject-button"
-                        onClick={() => updateStatus(app.id, "rejected")}
-                      >
-                        ✖
-                      </button>
-                    </>
+                <td>
+                  {app.status === "pending" ? (
+                    <input
+                      type="text"
+                      className="remarks-input"
+                      placeholder="Enter remarks..."
+                      value={remarksInput[app.id] || ""}
+                      onChange={(e) =>
+                        setRemarksInput((prev) => ({
+                          ...prev,
+                          [app.id]: e.target.value,
+                        }))
+                      }
+                    />
                   ) : (
-                    <span className="no-actions">—</span>
+                    app.remarks || "-"
                   )}
                 </td>
+                {activeTab === "pending" && (
+                  <td className="action-icons">
+                    <button
+                      className="approve-button"
+                      onClick={() => updateStatus(app.id, "approved")}
+                    >
+                      ✔
+                    </button>
+                    <button
+                      className="reject-button"
+                      onClick={() => updateStatus(app.id, "reject")}
+                    >
+                      ✖
+                    </button>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>
@@ -201,4 +185,3 @@ const Appointments = () => {
 };
 
 export default Appointments;
-  
