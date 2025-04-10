@@ -1,18 +1,20 @@
 /* General Styling for Calendar & Events List */
 .react-calendar,
 .events-list {
-  width: 700px; /* Set a fixed width */
-  height: 550px; /* Ensure same height */
+  flex: 1 1 100%;
+  max-width: 600px;
+  min-width: 300px;
+  min-height: 500px;
   background: white;
   border: none;
   font-family: "Roboto", sans-serif;
   font-weight: 600;
   line-height: 1.6em;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-  border-radius: 20px;
-  padding: 50px;
-  font-size: 22px;
-  overflow: hidden; /* Prevents unwanted scroll */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 24px;
+  padding: 30px;
+  font-size: 20px;
+  overflow: hidden;
 }
 
 /* Calendar Navigation */
@@ -24,6 +26,7 @@
   font-size: 18px;
   font-weight: 600;
   color: #333;
+  margin-bottom: 10px;
 }
 
 .react-calendar__navigation button {
@@ -33,6 +36,7 @@
   color: #666;
   cursor: pointer;
   font-weight: 600;
+  padding: 0 10px;
 }
 
 .react-calendar__navigation button:hover {
@@ -51,10 +55,9 @@
   text-align: center;
   font-size: 1em;
   font-weight: 600;
-  position: relative;
-  transition: 0.2s ease-in-out;
   border-radius: 4px;
-  font-family: "Roboto", "sans-serif";
+  font-family: "Roboto", sans-serif;
+  transition: background-color 0.2s ease-in-out;
 }
 
 .react-calendar__tile:enabled:hover {
@@ -73,91 +76,107 @@
   background: #1087ff;
 }
 
-/* Events Header */
+/* Highlighted Dates */
+.highlight-event {
+  background-color: #1f1785 !important;
+  color: white !important;
+  border-radius: 50%;
+  font-weight: bold;
+}
+
+/* Events Section Header */
 .Events-Header {
   margin-bottom: 2rem;
+  text-align: center;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .Events-Subheader {
-  color: #fcfcfc;
+  color: #ffffff;
   background-color: #201885;
   font-family: "Roboto", sans-serif;
   border-radius: 25px;
   font-size: 2rem;
   font-weight: 600;
-  margin-left: 14%;
-  padding: 8px;
-  text-align: center;
-  width: 75%;
+  padding: 8px 30px;
+  display: inline-block;
+  margin-bottom: 10px;
 }
 
 .Events-Title {
   font-family: "Roboto", sans-serif;
   font-size: 3rem;
   font-weight: 600;
-  margin-top: 50px;
+  margin-top: 20px;
+  color: #1e1e1e;
 }
 
-/* Events Container */
+/* Events Container Layout */
 .events-container {
   display: flex;
-  gap: 50px;
+  flex-wrap: wrap;
+  gap: 40px;
   justify-content: center;
   align-items: flex-start;
-  flex-wrap: nowrap;
-  margin-top: 3%;
   width: 100%;
-  margin-bottom: 3%;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
+/* Events List */
 .events-list h3 {
   color: #1e1e1e;
   font-size: 2rem;
-  font-family: "Roboto", "sans-serif";
+  font-family: "Roboto", sans-serif;
   font-weight: 600;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
-.events-list ul {
-  padding: 0;
-  list-style: none;
-}
-
-.events-list li {
-  margin-bottom: 10px;
-  font-size: 16px;
-  word-wrap: break-word;
-  color: #1e1e1e;
-}
-
-.events-list li strong {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
-  color: #1e1e1e;
-}
 .events-list p {
-  color: #1e1e1e;
-  font-size: 1.8rem;
+  color: #888;
+  font-size: 1.6rem;
   font-weight: 400;
-  padding: 30px 10px;
-  list-style-type: disc;
+  padding: 40px 20px;
+  text-align: center;
+  font-style: italic;
 }
 
-.events-list li span {
-  display: block;
-  font-style: italic;
-  margin-top: 5px;
-  line-height: 1.5;
-  max-height: 50px;
-  overflow-y: auto;
+/* Event Item */
+.event-item {
+  background: #f9f9f9;
+  border-left: 5px solid #201885;
+  margin-bottom: 20px;
+  padding: 20px 25px;
+  border-radius: 15px;
+  font-size: 1.1rem;
 }
-/* Tablet (max-width: 768px) */
+
+.event-item h4,
+.event-item p {
+  margin-bottom: 10px;
+  color: #1e1e1e;
+}
+
+.event-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-style: italic;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+/* Responsive: Tablet */
 @media screen and (max-width: 768px) {
   .react-calendar,
   .events-list {
-    width: 90%; /* Adjust width for better fit */
-    height: auto; /* Allow flexibility */
-    padding: 30px; /* Reduce padding */
+    width: 90%;
+    padding: 25px;
     font-size: 18px;
   }
 
@@ -168,101 +187,78 @@
   }
 
   .Events-Title {
-    font-size: 2.5rem; /* Slightly smaller title */
-    text-align: center;
+    font-size: 2.5rem;
   }
 
   .Events-Subheader {
     font-size: 1.5rem;
-    margin-left: 10%;
-    width: 80%;
-    padding: 5px;
+    padding: 6px 20px;
   }
 
   .react-calendar__tile {
-    padding: 10px;
-    font-size: 0.9em;
+    padding: 12px;
+    font-size: 0.95em;
   }
 
   .events-list h3 {
     font-size: 1.8rem;
-    text-align: center;
   }
 
   .events-list p {
-    font-size: 1.5rem;
-    padding: 20px;
+    font-size: 1.4rem;
+    padding: 30px 15px;
   }
 
-  .react-calendar__navigation {
-    font-size: 16px;
-  }
-
-  .react-calendar__navigation button {
-    font-size: 20px;
+  .event-item {
+    font-size: 1rem;
+    padding: 15px;
   }
 }
 
-/* Mobile (max-width: 480px) */
+/* Responsive: Mobile */
 @media screen and (max-width: 480px) {
   .react-calendar,
   .events-list {
-    width: 83%;
-    padding: 7px;
-    font-size: 19px;
-    border-radius: 10px;
-  }
-
-  .events-container {
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+    border-radius: 12px;
   }
 
   .Events-Title {
     font-size: 2rem;
-    text-align: center;
     margin-top: 30px;
   }
 
   .Events-Subheader {
-    font-size: 1.5rem;
-    margin-left: 1%;
-    width: 100%;
-    padding: 5px;
+    font-size: 1.3rem;
+    padding: 5px 15px;
   }
 
   .react-calendar__tile {
-    padding: 8px;
-    font-size: 0.8em;
+    padding: 10px;
+    font-size: 0.85em;
   }
 
   .events-list h3 {
-    font-size: 1.4rem;
-    text-align: center;
+    font-size: 1.5rem;
   }
 
   .events-list p {
     font-size: 1.3rem;
-    padding: 15px;
-    text-align: center;
+    padding: 20px;
   }
 
-  .react-calendar__navigation {
-    font-size: 14px;
+  .event-item {
+    font-size: 0.95rem;
+    padding: 12px;
   }
 
-  .react-calendar__navigation button {
-    font-size: 18px;
-    padding: 0px;
+  .event-meta {
+    font-size: 0.9rem;
   }
 
-  .events-list li {
-    font-size: 14px;
-    text-align: center;
-  }
-  /* Events Header */
   .Events-Header {
-    margin-bottom: 0;
+    margin-bottom: 1rem;
   }
 }
