@@ -31,7 +31,11 @@ const Emergency = ({ role, handleLogout }) => {
   ];
 
   const handleEmergencyClick = async (type) => {
-    console.log("Sending emergency type:", type);
+    const confirmSend = window.confirm(
+      `Are you sure you want to report a ${type} emergency?\nYour information will be sent automatically.`
+    );
+
+    if (!confirmSend) return;
 
     try {
       const res = await fetch("http://localhost/php/submit_emergency.php", {
@@ -53,7 +57,7 @@ const Emergency = ({ role, handleLogout }) => {
           "❌ Your profile is incomplete. Would you like to complete it now?"
         );
         if (goToProfile) {
-          window.location.href = "/profile"; // or use navigate("/profile") if using React Router
+          window.location.href = "/profile";
         }
       } else {
         alert("❌ Error: " + (data.error || "Submission failed."));
@@ -71,29 +75,28 @@ const Emergency = ({ role, handleLogout }) => {
         <div className="emergency-title-container">
           <h1 className="emergency-title">Emergency Services</h1>
         </div>
-          
+
         <div className="emergency-details-container">
           <div className="emergency-description">
             <p className="emergency-desc-title">
               <strong>Paalala:</strong> I-click ang button ng emergency na kailangan mo. Ang iyong profile data ay awtomatikong gagamitin.
             </p>
           </div>
-          
 
-            <div className="buttons-container">
-              {emergencyOptions.map(({ type, icon }) => (
-                <button
-                  key={type}
-                  className="emergency-button"
-                  onClick={() => handleEmergencyClick(type)}
-                >
-                  <img src={icon} alt={type} className="emergency-icon" />
-                  <span>{type}</span>
-                </button>
-              ))}
-            </div>
+          <div className="buttons-container">
+            {emergencyOptions.map(({ type, icon }) => (
+              <button
+                key={type}
+                className="emergency-button"
+                onClick={() => handleEmergencyClick(type)}
+              >
+                <img src={icon} alt={type} className="emergency-icon" />
+                <span>{type}</span>
+              </button>
+            ))}
+          </div>
 
-            {successMessage && (
+          {successMessage && (
             <div className="emergency-popup">
               <div className="emergency-popup-inner">
                 <button className="close-popup" onClick={() => setSuccessMessage("")}>×</button>
@@ -132,7 +135,7 @@ const Emergency = ({ role, handleLogout }) => {
             </div>
           </div>
         </div>
-        
+
         <BackToHome role={role} />
         <Footer role={role} />
       </div>
