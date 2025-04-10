@@ -12,7 +12,7 @@ const EmergenciesAdmin = () => {
   const audioRef = useRef(null);
 
   useEffect(() => {
-    audioRef.current = new Audio("/emergency.mp3");
+    audioRef.current = new Audio("/sos.mp3");
     audioRef.current.loop = true;
   }, []);
 
