@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+// ✅ Fixed ServicesTab.jsx to correctly fetch, display, update, and delete slots
+import React, { useState, useEffect } from "react";
 import "./ServicesTab.css";
 
 const ServicesTab = () => {
-  // Mock data for services, available times, and maximum slots
   const servicesList = [
     "Health Check-up",
     "Free Medicine",
@@ -19,96 +19,209 @@ const ServicesTab = () => {
     "Eye Check-up": ["10:30 AM", "1:30 PM", "4:30 PM"],
   };
 
-  const initialMaxSlots = {
-    "Health Check-up": 5,
-    "Free Medicine": 5,
-    "Massage Therapy": 3,
-    "Dental Check-up": 4,
-    "Eye Check-up": 3,
-  };
+  const [services, setServices] = useState([]);
+  const [maxSlots, setMaxSlots] = useState({});
+  const [newService, setNewService] = useState({ id: null, name: "", date: "", time: "" });
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingIndex, setEditingIndex] = useState(null);
 
-  const [services, setServices] = useState([]); // Dynamically added services
-  const [maxSlots, setMaxSlots] = useState({ ...initialMaxSlots }); // Editable maximum slots
-  const [newService, setNewService] = useState({
-    name: "",
-    date: "",
-    time: "",
-  });
+  useEffect(() => {
+    const fetchSlots = () => {
+      fetch("http://localhost/php/get_service_slots.php", {
+        method: "GET",
+        credentials: "include",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          const normalized = data.map((item) => ({
+            id: item.id,
+            name: item.service_name,
+            date: item.date,
+            time: item.time,
+            max_slots: item.max_slots,
+          }));
+          const sorted = normalized.sort((a, b) =>
+            new Date(`${a.date} ${a.time}`) - new Date(`${b.date} ${b.time}`)
+          );
+          setServices(sorted);
 
-  const handleAdd = () => {
-    const { name, date, time } = newService;
-    if (name && date && time) {
-      setServices([...services, newService]);
-      setNewService({ name: "", date: "", time: "" });
-    }
-  };
+          const updatedSlots = {};
+          sorted.forEach((slot) => {
+            updatedSlots[slot.name] = slot.max_slots;
+          });
+          setMaxSlots(updatedSlots);
+        })
+        .catch((err) => {
+          console.error("Failed to fetch service slots:", err);
+        });
+    };
 
-  const handleRemove = (indexToRemove) => {
-    setServices(services.filter((_, index) => index !== indexToRemove));
-  };
+    fetchSlots();
+    window.addEventListener("slotsUpdated", fetchSlots);
+    return () => window.removeEventListener("slotsUpdated", fetchSlots);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewService({ ...newService, [name]: value });
-
-    // Reset time if the service is changed
     if (name === "name") {
       setNewService((prev) => ({ ...prev, time: "" }));
     }
   };
 
   const handleMaxSlotChange = (e) => {
-    const { value } = e.target;
-    const newMaxSlots = parseInt(value, 10) || 0;
-
+    const value = parseInt(e.target.value, 10) || 0;
     if (newService.name) {
-      setMaxSlots({ ...maxSlots, [newService.name]: newMaxSlots });
+      setMaxSlots({ ...maxSlots, [newService.name]: value });
     }
+  };
+
+  const handleAddOrUpdate = () => {
+    const { name, date, time, id } = newService;
+    const maxSlot = maxSlots[name];
+    const formattedTime = convertTo24Hour(time);
+
+    if (!name || !date || !time || maxSlot < 1) {
+      alert("Please fill out all fields properly.");
+      return;
+    }
+
+    const isDuplicate = services.some(
+      (s, i) =>
+        s.name === name &&
+        s.date === date &&
+        s.time === formattedTime &&
+        (!isEditing || s.id !== id)
+    );
+
+    if (isDuplicate) {
+      alert("This service already exists for the selected date and time.");
+      return;
+    }
+
+    const entry = { id, name, date, time: formattedTime };
+
+    fetch("http://localhost/php/save_service_slot.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({
+        id,
+        name,
+        date,
+        time: formattedTime,
+        maxSlot,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        let updated = [...services];
+        if (data.status === "success") {
+          if (isEditing) {
+            updated[editingIndex] = entry;
+            alert("Service successfully updated!");
+          } else {
+            entry.id = data.id;
+            updated.push(entry);
+            alert("Service successfully added!");
+          }
+          updated.sort((a, b) => new Date(`${a.date} ${a.time}`) - new Date(`${b.date} ${b.time}`));
+          setServices(updated);
+          resetForm();
+        } else if (data.status === "duplicate") {
+          alert("This slot already exists.");
+        } else {
+          alert("Save failed: " + data.message);
+        }
+      })
+      .catch((err) => {
+        console.error("Error saving service:", err);
+        alert("Network error.");
+      });
+  };
+
+  const handleRemove = async (index) => {
+    const target = services[index];
+    const res = await fetch("http://localhost/php/delete_service_slot.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ id: target.id }),
+    });
+
+    const result = await res.json();
+
+    if (result.status === "success") {
+      const filtered = services.filter((_, i) => i !== index);
+      filtered.sort((a, b) => new Date(`${a.date} ${a.time}`) - new Date(`${b.date} ${b.time}`));
+      setServices(filtered);
+      alert("Service successfully deleted!");
+    } else {
+      alert("Failed to delete.");
+    }
+  };
+
+  const handleEdit = (index) => {
+    const target = services[index];
+    setNewService({
+      id: target.id,
+      name: target.name,
+      date: target.date,
+      time: formatToAmPm(target.time),
+    });
+    setIsEditing(true);
+    setEditingIndex(index);
+  };
+
+  const resetForm = () => {
+    setNewService({ id: null, name: "", date: "", time: "" });
+    setIsEditing(false);
+    setEditingIndex(null);
+  };
+
+  const convertTo24Hour = (timeStr) => {
+    const [hourMin, meridian] = timeStr.split(" ");
+    const [hoursStr, minutesStr] = hourMin.split(":");
+    let hours = parseInt(hoursStr);
+    const minutes = minutesStr;
+    if (meridian === "PM" && hours !== 12) hours += 12;
+    if (meridian === "AM" && hours === 12) hours = 0;
+    return `${hours.toString().padStart(2, "0")}:${minutes}:00`;
+  };
+
+  const formatToAmPm = (mysqlTime) => {
+    const [hourStr, minuteStr] = mysqlTime.split(":");
+    let hour = parseInt(hourStr);
+    const minute = minuteStr;
+    const ampm = hour >= 12 ? "PM" : "AM";
+    hour = hour % 12 || 12;
+    return `${hour}:${minute} ${ampm}`;
   };
 
   return (
     <div className="services-tab">
-      <h4>Add/Remove Services</h4>
+      <h4>{isEditing ? "Edit Service" : "Add/Remove Services"}</h4>
       <div className="service-form">
         <label>
           Choose a Service:
           <select name="name" value={newService.name} onChange={handleChange}>
-            <option value="" disabled>
-              Select a service
-            </option>
-            {servicesList.map((service, index) => (
-              <option key={index} value={service}>
-                {service}
-              </option>
+            <option value="" disabled>Select a service</option>
+            {servicesList.map((service, i) => (
+              <option key={i} value={service}>{service}</option>
             ))}
           </select>
         </label>
         <label>
           Choose a date:
-          <input
-            type="date"
-            name="date"
-            value={newService.date}
-            onChange={handleChange}
-          />
+          <input type="date" name="date" value={newService.date} onChange={handleChange} />
         </label>
         <label>
           Choose a time:
-          <select
-            name="time"
-            value={newService.time}
-            onChange={handleChange}
-            disabled={!newService.name}
-          >
-            <option value="" disabled>
-              Select a time
-            </option>
-            {newService.name &&
-              times[newService.name]?.map((time, index) => (
-                <option key={index} value={time}>
-                  {time}
-                </option>
-              ))}
+          <select name="time" value={newService.time} onChange={handleChange} disabled={!newService.name}>
+            <option value="" disabled>Select a time</option>
+            {newService.name && times[newService.name]?.map((time, i) => (
+              <option key={i} value={time}>{time}</option>
+            ))}
           </select>
         </label>
         <label>
@@ -116,7 +229,6 @@ const ServicesTab = () => {
           <input
             type="number"
             min="1"
-            name="maxSlots"
             value={newService.name ? maxSlots[newService.name] : ""}
             onChange={handleMaxSlotChange}
             disabled={!newService.name}
@@ -124,14 +236,20 @@ const ServicesTab = () => {
         </label>
         <div className="buttons">
           <button
-            onClick={handleAdd}
+            onClick={handleAddOrUpdate}
             className="add-btn"
             disabled={!newService.name || !newService.date || !newService.time}
           >
-            Add
+            {isEditing ? "Save Changes" : "Add"}
           </button>
+          {isEditing && (
+            <button className="cancel-btn" onClick={resetForm}>
+              Cancel
+            </button>
+          )}
         </div>
       </div>
+
       <h5>Currently Active Services:</h5>
       <table className="services-table">
         <thead>
@@ -145,19 +263,15 @@ const ServicesTab = () => {
         </thead>
         <tbody>
           {services.length > 0 ? (
-            services.map((service, index) => (
-              <tr key={index}>
+            services.map((service, i) => (
+              <tr key={service.id}>
                 <td>{service.name}</td>
                 <td>{service.date}</td>
-                <td>{service.time}</td>
-                <td>{maxSlots[service.name]}</td>
+                <td>{formatToAmPm(service.time)}</td>
+                <td>{service.max_slots}</td>
                 <td>
-                  <button
-                    className="remove-btn"
-                    onClick={() => handleRemove(index)}
-                  >
-                    Remove
-                  </button>
+                  <button className="edit-btn" onClick={() => handleEdit(i)}>Edit</button>
+                  <button className="remove-btn" onClick={() => handleRemove(i)}>Remove</button>
                 </td>
               </tr>
             ))
