@@ -3,11 +3,18 @@ import "./EmergenciesAdmin.css";
 
 const EmergenciesAdmin = () => {
   const [data, setData] = useState([]);
-  const [sortConfig, setSortConfig] = useState(null);
-  const [popupMessage, setPopupMessage] = useState("");
+  const [unacknowledgedEmergencies, setUnacknowledgedEmergencies] = useState([]);
+  const [acknowledgedIds, setAcknowledgedIds] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [sortConfig, setSortConfig] = useState(null);
   const [loadingStatusIndex, setLoadingStatusIndex] = useState(null);
   const previousDataRef = useRef([]);
+  const audioRef = useRef(null);
+
+  useEffect(() => {
+    audioRef.current = new Audio("/emergency.mp3");
+    audioRef.current.loop = true;
+  }, []);
 
   useEffect(() => {
     const fetchEmergencies = async () => {
@@ -17,12 +24,22 @@ const EmergenciesAdmin = () => {
         });
         const result = await response.json();
 
-        const previousData = previousDataRef.current;
+        const ongoingUnacknowledged = result.filter(
+          (e) => e.status === "Ongoing" && !acknowledgedIds.includes(e.id)
+        );
 
-        if (previousData.length > 0 && result.length > previousData.length) {
-          const newCount = result.length - previousData.length;
-          setPopupMessage(`🔔 ${newCount} new emergency report${newCount > 1 ? "s" : ""} received!`);
-          setTimeout(() => setPopupMessage(""), 4000);
+        if (ongoingUnacknowledged.length > 0) {
+          setUnacknowledgedEmergencies(ongoingUnacknowledged);
+
+          if (audioRef.current && audioRef.current.paused) {
+            audioRef.current.play().catch(err => console.error("Audio play error", err));
+          }
+        } else {
+          setUnacknowledgedEmergencies([]);
+          if (audioRef.current && !audioRef.current.paused) {
+            audioRef.current.pause();
+            audioRef.current.currentTime = 0;
+          }
         }
 
         previousDataRef.current = result;
@@ -35,14 +52,27 @@ const EmergenciesAdmin = () => {
     fetchEmergencies();
     const interval = setInterval(fetchEmergencies, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [acknowledgedIds]);
+
+  const acknowledgeSingle = (id) => {
+    setAcknowledgedIds((prev) => [...prev, id]);
+    setUnacknowledgedEmergencies((prev) => prev.filter((e) => e.id !== id));
+
+    if (unacknowledgedEmergencies.length === 1) {
+      if (audioRef.current && !audioRef.current.paused) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
+    }
+  };
 
   const filteredData = data.filter((item) =>
     item.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     item.type?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     item.status?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     item.location?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    item.contact_number?.toLowerCase().includes(searchTerm.toLowerCase())
+    item.contact_number?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.emergency_contact_name?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const sortedData = [...filteredData];
@@ -67,7 +97,7 @@ const EmergenciesAdmin = () => {
     const currentStatus = data[index].status;
     if (newStatus === currentStatus) return;
 
-    const confirmChange = window.confirm(`Are you sure you want to change status to '${newStatus}'?`);
+    const confirmChange = window.confirm(`Change status to '${newStatus}'?`);
     if (!confirmChange) return;
 
     setLoadingStatusIndex(index);
@@ -95,12 +125,12 @@ const EmergenciesAdmin = () => {
       <div className="header-container">
         <h2 className="emergency-left">Emergencies</h2>
         <div className="filter-right">
-          <input className="filter-sort"
+          <input
+            className="filter-sort"
             type="text"
-            placeholder="Search by name, type, status, location, or contact"
+            placeholder="Search anything..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            style={{ padding: "8px", borderRadius: "5px", border: "1px solid #ccc" }}
           />
           <select className="sort-dropdown" onChange={handleDropdownChange}>
             <option value="name:ascending">Sort by Name (A-Z)</option>
@@ -113,11 +143,28 @@ const EmergenciesAdmin = () => {
         </div>
       </div>
 
-      {popupMessage && (
-        <div className="popup-notification">
-          <p>{popupMessage}</p>
+      {/* 🔥 Multiple emergency popups */}
+      {unacknowledgedEmergencies.map((item) => (
+        <div key={item.id} className="popup-emergency">
+          <strong>🚨 Emergency Alert!</strong>
+          <p><b>Name:</b> {item.name}</p>
+          <p><b>Type:</b> {item.type}</p>
+          <p><b>Location:</b> {item.location}</p>
+          <p><b>User #:</b> {item.contact_number}</p>
+          <button onClick={() => acknowledgeSingle(item.id)} style={{
+            marginTop: "10px",
+            background: "white",
+            color: "#c31c1c",
+            padding: "6px 14px",
+            border: "none",
+            borderRadius: "6px",
+            fontWeight: "bold",
+            cursor: "pointer"
+          }}>
+            Acknowledge
+          </button>
         </div>
-      )}
+      ))}
 
       <table className="table">
         <thead>
@@ -127,7 +174,9 @@ const EmergenciesAdmin = () => {
             <th>Time</th>
             <th>Type</th>
             <th>Location</th>
-            <th>Contact Number</th>
+            <th>User #</th>
+            <th>Emergency Contact</th>
+            <th>Contact #</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
@@ -142,16 +191,20 @@ const EmergenciesAdmin = () => {
                 <td>{item.type}</td>
                 <td>{item.location}</td>
                 <td>{item.contact_number}</td>
+                <td>{item.emergency_contact_name}</td>
+                <td>{item.emergency_contact_number}</td>
                 <td className={`status-${item.status.toLowerCase()}`}>{item.status}</td>
                 <td>
-                  {loadingStatusIndex === index ? (
+                  {item.status === "Resolved" ? (
+                    <span style={{ fontStyle: "italic", color: "#666" }}>—</span>
+                  ) : loadingStatusIndex === index ? (
                     <span className="loading-text">Updating...</span>
                   ) : (
-                    <select className="status-action"
+                    <select
+                      className="status-action"
                       value={item.status}
                       onChange={(e) => handleStatusChange(index, e.target.value)}
                     >
-                      <option value="Active">Active</option>
                       <option value="Ongoing">Ongoing</option>
                       <option value="Resolved">Resolved</option>
                     </select>
@@ -161,7 +214,7 @@ const EmergenciesAdmin = () => {
             ))
           ) : (
             <tr>
-              <td colSpan={8}>No emergency reports found.</td>
+              <td colSpan={10}>No emergency reports found.</td>
             </tr>
           )}
         </tbody>
