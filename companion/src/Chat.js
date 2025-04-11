@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import "./Chat.css";
@@ -8,6 +8,7 @@ function Chat({ role, handleLogout }) {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [username, setUsername] = useState("");
+  const messagesEndRef = useRef(null);
 
   const faqs = [
     {
@@ -108,6 +109,11 @@ function Chat({ role, handleLogout }) {
       ]);
     }
   };
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
 
   return (
     <div>
@@ -145,8 +151,8 @@ function Chat({ role, handleLogout }) {
           </button>
 
           {/* Chat Window */}
-          <div className="chat-window-container">
-            <div className="chat-window-box">
+          <div className="chat-window-box">
+            <div className="chat-messages">
               {messages.map((message, index) => (
                 <div
                   key={index}
@@ -161,9 +167,11 @@ function Chat({ role, handleLogout }) {
                   <strong>{message.from}:</strong> {message.content}
                 </div>
               ))}
+              {/* Scroll to bottom marker */}
+              <div ref={messagesEndRef} />
             </div>
 
-            {/* Chat Input */}
+            {/* Chat Input inside chat window, pinned at the bottom */}
             <div className="chat-input-container">
               <input
                 type="text"

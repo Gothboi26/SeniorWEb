@@ -322,8 +322,8 @@ const Profile = () => {
           </div>
         </div>
 
-        <div className="temp-buttons">
-          {!readOnlyMode && (
+        {!readOnlyMode && (
+          <div className="save-button-wrapper">
             <button
               type="submit"
               onClick={handleSubmit}
@@ -331,7 +331,11 @@ const Profile = () => {
             >
               Save
             </button>
-          )}
+          </div>
+        )}
+
+        {/* Back to Home */}
+        <div className="temp-buttons">
           <BackToHome role={role} />
         </div>
       </div>

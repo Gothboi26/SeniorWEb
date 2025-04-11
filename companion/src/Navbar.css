@@ -152,7 +152,10 @@
 }
 
 /* Sidebar Styling */
-/* Sidebar Styling */
+/* Hide sidebar by default on larger screens */
+.BodySlideContainer {
+  display: none;
+}
 .Sidebar {
   position: fixed;
   right: 0; /* Keep the sidebar aligned to the right side of the screen */
@@ -163,9 +166,7 @@
   padding-top: 60px;
   transition: transform 0.3s ease-in-out;
   z-index: 1000;
-  transform: translateX(
-    100%
-  ); /* Initially hide sidebar by moving it off-screen */
+  transform: translateX(100%);
 }
 
 .Sidebar.open {
@@ -180,6 +181,7 @@
 .Sidebar-links li {
   padding: 10px;
   text-align: center;
+  border: 3px solid #f1f1f1;
 }
 
 .Sidebar-links a {
@@ -311,5 +313,36 @@
   .Sidebar-links a {
     width: 100%;
     text-align: left;
+  }
+  .BodySlideContainer {
+    display: block;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 250px;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: -3px 0 10px rgba(0, 0, 0, 0.2);
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1500;
+  }
+
+  .BodySlideContainer.open {
+    transform: translateX(0);
+  }
+
+  .BodySlideContent {
+    padding-top: 60px;
+  }
+
+  .close-slide {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    font-size: 30px;
+    border: none;
+    cursor: pointer;
   }
 }

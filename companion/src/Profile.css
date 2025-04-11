@@ -248,7 +248,7 @@ input[name="groupChapter"]:focus {
   padding: 10px 20px;
   font-size: 18px;
   font-weight: 400;
-  background: #ed2030; /* Blue gradient */
+  background: #c31c1c;
   color: white;
   border: none;
   border-radius: 20px;
@@ -274,8 +274,7 @@ input[name="groupChapter"]:focus {
   margin-top: 20px;
 }
 
-.save-button,
-.back-button {
+.save-button {
   padding: 12px 24px;
   font-size: 18px;
   font-weight: 400;
@@ -285,53 +284,40 @@ input[name="groupChapter"]:focus {
   transition: all 0.3s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+.save-button-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
 
 .temp-buttons {
   display: flex;
   justify-content: space-between; /* Align Save and Back on opposite sides */
-  margin-top: 20px;
   width: 100%; /* Ensure the container takes full width */
 }
 
-/* Save Button - Blue */
+/* Save Button */
 .submit-button {
-  background: #ed2030;
+  background-color: #c31c1c;
+  font-size: 1.4rem;
   color: white;
-  padding: 12px 24px;
-  font-size: 18px;
-  font-weight: 400;
+  margin-top: 40px;
+  height: 49px;
+  width: 180px;
+  font-weight: 500;
   border: none;
-  border-radius: 20px;
+  border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .submit-button:hover {
-  background: #ed2030;
+  background: #a52a2a;
   transform: translateY(-2px);
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Back Button - Red */
-.back-button {
-  background: #1a4798;
-  color: white;
-  padding: 12px 24px;
-  font-size: 18px;
-  font-weight: 600;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.back-button:hover {
-  background: #163b7a;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-}
 .form-input {
   width: 100%;
   padding: 8px 12px;
@@ -430,16 +416,6 @@ input[name="groupChapter"]:focus {
     width: 100%; /* Full width for inputs */
   }
 
-  /* Buttons */
-  .save-button,
-  .back-button,
-  .submit-button {
-    font-size: 14px;
-    padding: 6px 12px;
-    width: 100%;
-    margin-bottom: 10px;
-  }
-
   /* Profile Image */
   .profile-image {
     width: 100px;
@@ -449,6 +425,24 @@ input[name="groupChapter"]:focus {
   /* File Input */
   .file-input {
     width: 100%;
+  }
+  /* Buttons */
+  .temp-buttons {
+    display: flex;
+    flex-direction: column; /* Save on top, Back below */
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .save-button,
+  .submit-button {
+    font-size: 19px;
+    padding: 1px 3px;
+    width: 50%;
+    margin: 0;
+    justify-content: center;
+    margin-bottom: 8px;
   }
 }
 
@@ -470,7 +464,7 @@ input[name="groupChapter"]:focus {
   .profile-image-section {
     width: 80px;
     height: 80px;
-    margin-bottom: 8px;
+    margin-top: 55px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -541,15 +535,23 @@ input[name="groupChapter"]:focus {
   }
 
   /* Buttons */
-  .save-button,
-  .back-button,
-  .submit-button {
-    font-size: 12px;
-    padding: 5px 10px;
+  .temp-buttons {
+    display: flex;
+    flex-direction: column; /* Save on top, Back below */
+    align-items: center;
     width: 100%;
-    margin-bottom: 8px;
+    margin-top: 20px;
   }
 
+  .save-button,
+  .submit-button {
+    font-size: 19px;
+    padding: 1px 3px;
+    width: 50%;
+    margin: 0;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
   /* Profile Image */
   .profile-image {
     width: 80px;

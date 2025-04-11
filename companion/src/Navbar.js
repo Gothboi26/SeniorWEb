@@ -4,9 +4,9 @@ import "./Navbar.css";
 import logo from "./assets/logo.png";
 
 function Navbar({ role }) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
-  const navigate = useNavigate(); // ← Needed for redirect
+  const [isSlideOpen, setIsSlideOpen] = useState(false); // 👈 added for slide toggle
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -24,64 +24,50 @@ function Navbar({ role }) {
 
   const formattedTime = currentTime.toLocaleTimeString();
 
-  // 🚨 If not client, don't show navbar
   if (role !== "client") return null;
 
-  // ✅ Logout function inside Navbar
   const handleLogout = () => {
     localStorage.removeItem("role");
-    navigate("/"); // Redirect to login page
+    navigate("/");
   };
 
   return (
     <>
       {/* Top Header */}
-      <div className={`TopHeader ${isSidebarOpen ? "hide-topheader" : ""}`}>
+      <div className="TopHeader">
         <span className="TopHeader-date">{formattedDate}</span>
         <span className="TopHeader-time">{formattedTime}</span>
       </div>
 
-      {/* Main Navbar */}
-      <nav className={`Navbar ${isSidebarOpen ? "hide-navbar" : ""}`}>
-        <div className="Navbar-logo-container">
-          <img src={logo} alt="Logo" />
-        </div>
-
-        {/* Hamburger for mobile */}
-        <div
-          className="Navbar-hamburger"
-          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-        >
-          <div className="Navbar-hamburger-icon"></div>
-          <div className="Navbar-hamburger-icon"></div>
-          <div className="Navbar-hamburger-icon"></div>
-        </div>
-
-        {/* Sidebar for mobile */}
-        <div className={`Sidebar ${isSidebarOpen ? "open" : ""}`}>
+      {/* ✅ Body Slide Container */}
+      <div className={`BodySlideContainer ${isSlideOpen ? "open" : ""}`}>
+        <button className="close-slide" onClick={() => setIsSlideOpen(false)}>
+          ×
+        </button>
+        <div className="BodySlideContent">
           <ul className="Sidebar-links">
             <li>
-              <Link to="/" onClick={() => setIsSidebarOpen(false)}>
+              <Link to="/" onClick={() => setIsSlideOpen(false)}>
                 Home
               </Link>
             </li>
             <li>
-              <Link to="/senior-care" onClick={() => setIsSidebarOpen(false)}>
+              <Link to="/senior-care" onClick={() => setIsSlideOpen(false)}>
                 Senior Care
               </Link>
             </li>
             <li>
-              <Link to="/emergency" onClick={() => setIsSidebarOpen(false)}>
+              <Link to="/emergency" onClick={() => setIsSlideOpen(false)}>
                 Emergency Contacts
               </Link>
             </li>
             <li>
-              <Link to="/chat" onClick={() => setIsSidebarOpen(false)}>
+              <Link to="/chat" onClick={() => setIsSlideOpen(false)}>
                 Chat Assistance
               </Link>
             </li>
             <li>
-              <Link to="/profile" onClick={() => setIsSidebarOpen(false)}>
+              <Link to="/profile" onClick={() => setIsSlideOpen(false)}>
                 Profile
               </Link>
             </li>
@@ -92,10 +78,25 @@ function Navbar({ role }) {
             </li>
           </ul>
         </div>
+      </div>
+
+      {/* Main Navbar */}
+      <nav className="Navbar">
+        <div className="Navbar-logo-container">
+          <img src={logo} alt="Logo" />
+        </div>
+
+        {/* ✅ Hamburger Menu */}
+        <div className="Navbar-hamburger" onClick={() => setIsSlideOpen(true)}>
+          <div className="Navbar-hamburger-icon"></div>
+          <div className="Navbar-hamburger-icon"></div>
+          <div className="Navbar-hamburger-icon"></div>
+        </div>
 
         {/* Main Nav Links */}
         <div className="Navbar-links-container">
           <ul className="Navbar-links">
+            {/* ...existing nav links... */}
             <li>
               <Link to="/" className="Navbar-links-b">
                 Home
