@@ -256,12 +256,13 @@ const SeniorList = () => {
             <input name="barangay_id" placeholder="Barangay ID (5 digits)" value={formData.barangay_id} onChange={handleInputChange} maxLength="5" />
             <select name="group_chapter" value={formData.group_chapter} onChange={handleInputChange}>
               <option value="">Select Chapter</option>
+              <option value="NONE">NONE</option>
               <option value="TAMARAW">TAMARAW</option>
               <option value="GUMAMELA">GUMAMELA</option>
               <option value="AZICATE">AZICATE</option>
               <option value="FISCA">FISCA</option>
               <option value="EL GRANDE">EL GRANDE</option>
-              <option value="TANADA">TANADA</option>
+              <option value="TAÑADA">TANADA</option>
               <option value="UPPER TIBANGAN">UPPER TIBANGAN</option>
               <option value="POLICARPIO">POLICARPIO</option>
               <option value="VICTORIA">VICTORIA</option>
