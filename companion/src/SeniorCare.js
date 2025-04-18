@@ -1,5 +1,4 @@
-// ✅ Revised SeniorCare.jsx with correct service mapping and slot handling
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Modal from "react-modal";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
@@ -21,9 +20,14 @@ const formatTimeAMPM = (timeStr) => {
   return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
 };
 
+const getDateOnly = (d) => {
+  const tzOffset = d.getTimezoneOffset() * 60000;
+  return new Date(d.getTime() - tzOffset).toISOString().split("T")[0];
+};
+
 const SeniorCare = ({ role, handleLogout }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [modalContent, setModalContent] = useState("");
+  const [modalContent, setModalContent] = useState("upcoming");
   const [selectedService, setSelectedService] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [availableTimes, setAvailableTimes] = useState([]);
@@ -31,6 +35,8 @@ const SeniorCare = ({ role, handleLogout }) => {
   const [serviceSlots, setServiceSlots] = useState([]);
   const [pastAppointments, setPastAppointments] = useState([]);
   const [upcomingAppointments, setUpcomingAppointments] = useState([]);
+  const [showNotification, setShowNotification] = useState(false);
+  const notificationShownRef = useRef(false);
 
   const services = [
     "Health Check-up",
@@ -41,30 +47,44 @@ const SeniorCare = ({ role, handleLogout }) => {
   ];
 
   useEffect(() => {
-    fetch("http://localhost/php/get_service_slots.php", {
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((data) => setServiceSlots(data))
-      .catch((err) => console.error("Failed to load slots", err));
-
-    const fetchAppointments = async () => {
+    const fetchAllData = async () => {
       try {
         const res = await fetch("http://localhost/php/appointments.php", {
           method: "GET",
           credentials: "include",
         });
         const data = await res.json();
-        const today = new Date().toISOString().split("T")[0];
+        const today = getDateOnly(new Date());
+
         setUpcomingAppointments(data.filter((a) => a.date >= today));
         setPastAppointments(data.filter((a) => a.date < today));
+
+        const slotRes = await fetch("http://localhost/php/get_service_slots.php", {
+          credentials: "include",
+        });
+        const slotData = await slotRes.json();
+        setServiceSlots(slotData);
       } catch (err) {
-        console.error("Error loading appointments:", err);
+        console.error("Error reloading data:", err);
       }
     };
 
-    if (role === "client") fetchAppointments();
+    if (role === "client") {
+      fetchAllData();
+      const interval = setInterval(fetchAllData, 10000);
+      return () => clearInterval(interval);
+    }
   }, [role]);
+
+  useEffect(() => {
+    if (!notificationShownRef.current) {
+      const approved = upcomingAppointments.find((a) => a.status.toLowerCase() === "approved");
+      if (approved) {
+        setShowNotification(true);
+        notificationShownRef.current = true;
+      }
+    }
+  }, [upcomingAppointments]);
 
   const openModal = (type) => {
     setModalContent(type);
@@ -73,7 +93,7 @@ const SeniorCare = ({ role, handleLogout }) => {
 
   const closeModal = () => {
     setModalIsOpen(false);
-    setModalContent("");
+    setModalContent("upcoming");
     setSelectedService("");
     setSelectedDate("");
     setSelectedTime("");
@@ -84,15 +104,21 @@ const SeniorCare = ({ role, handleLogout }) => {
   };
 
   const getTimesForServiceAndDate = (service, date) => {
+    const normalizeTime = (t) => t.slice(0, 5); // e.g. "13:00:00" → "13:00"
+
     return serviceSlots
       .filter(slot => slot.service_name === service && slot.date === date)
       .map(slot => {
-        const used = upcomingAppointments.filter(
-          appt => appt.service === service && appt.date === date && appt.time === slot.time && appt.status.toLowerCase() === "approved"
+        const approvedCount = upcomingAppointments.filter(
+          a => a.service === service &&
+               a.date === date &&
+               normalizeTime(a.time) === normalizeTime(slot.time) &&
+               a.status.toLowerCase() === "approved"
         ).length;
-        const remaining = slot.max_slots - used;
+
+        const remaining = slot.max_slots - approvedCount;
         return { time: slot.time, remaining };
-      });
+      }).filter(slot => slot.remaining > 0);
   };
 
   const handleServiceChange = (e) => {
@@ -104,12 +130,15 @@ const SeniorCare = ({ role, handleLogout }) => {
   };
 
   const handleCalendarSelect = (dateObj) => {
-    const formatted = dateObj.toISOString().split("T")[0];
+    const formatted = getDateOnly(dateObj);
     const validDates = getValidDatesForService(selectedService);
-    if (!validDates.includes(formatted)) {
+    const today = getDateOnly(new Date());
+
+    if (!validDates.includes(formatted) || formatted < today) {
       alert("No available slots on this date.");
       return;
     }
+
     setSelectedDate(formatted);
     setAvailableTimes(getTimesForServiceAndDate(selectedService, formatted));
     setSelectedTime("");
@@ -184,28 +213,28 @@ const SeniorCare = ({ role, handleLogout }) => {
         <div className="instruction-container">
           <div className="instruction-desc">
             <ol className="instruction-list">
-              <li><strong>Piliin ang Serbisyong Kailangan:</strong><p>Hanapin ang mga serbisyong pangkalusugan tulad ng health check-up, masahe, libreng gamot, dental check-up, o eye check-up. Pindutin ang serbisyong nais n'yo i-book.</p></li>
-              <li><strong>Pumili ng Araw at Oras ng Appointment:</strong><p>Pagkatapos piliin ang serbisyo, lilitaw ang kalendaryo o listahan ng mga available na oras. <strong>Ang mga petsang may serbisyo ay makikita sa date picker.</strong></p></li>
-              <li><strong>Kumpirmahin ang Appointment:</strong><p>Kapag nakapili na ng araw at oras, pindutin ang "Kumpirmahin" o "Book Appointment". Lalabas ang detalye ng inyong appointment.</p></li>
-              <li><strong>Tandaan ang Detalye:</strong><p>Tingnan ang confirmation message. Tandaan ang petsa at oras.</p></li>
-              <li><strong>Dumating sa Takdang Oras:</strong><p>Siguraduhing dumating 10-15 minuto bago ang schedule.</p></li>
+              <li><strong>Piliin ang Serbisyo</strong></li>
+              <li><strong>Pumili ng Araw at Oras</strong></li>
+              <li><strong>Kumpirmahin</strong></li>
+              <li><strong>Tandaan ang Detalye</strong></li>
+              <li><strong>Dumating sa Takdang Oras</strong></li>
             </ol>
           </div>
         </div>
         <div className="senior-paalala">
-          <p className="senior-p"><strong>Paalala: </strong>Sa pamamagitan ng pag-book ng appointment, kayo ay bibigyan ng prayoridad sa clinic o health center.</p>
+          <p className="senior-p"><strong>Paalala:</strong> Kayo ay bibigyan ng prayoridad sa clinic.</p>
         </div>
       </div>
 
       <div className="button-wrapper">
         <button className="secondary-button" onClick={() => openModal("reserveSlot")}>Reserve a Slot</button>
-        <button className="secondary-button" onClick={() => openModal("viewReservedSlot")}>View Reserved Slots</button>
+        <button className="secondary-button" onClick={() => openModal("upcoming")}>View Reserved Slots</button>
       </div>
 
       <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="modal">
         <h2>{modalContent === "reserveSlot" ? "Reserve a Slot" : "Your Appointments"}</h2>
 
-        {modalContent === "reserveSlot" && (
+        {modalContent === "reserveSlot" ? (
           <>
             <label>Choose a service:</label>
             <select value={selectedService} onChange={handleServiceChange} className="input-field">
@@ -222,11 +251,12 @@ const SeniorCare = ({ role, handleLogout }) => {
                   onClickDay={handleCalendarSelect}
                   value={selectedDate ? new Date(selectedDate) : null}
                   tileDisabled={({ date }) => {
-                    const formatted = date.toISOString().split("T")[0];
-                    return !getValidDatesForService(selectedService).includes(formatted);
+                    const formatted = getDateOnly(date);
+                    const today = getDateOnly(new Date());
+                    return formatted < today || !getValidDatesForService(selectedService).includes(formatted);
                   }}
                   tileClassName={({ date }) => {
-                    const formatted = date.toISOString().split("T")[0];
+                    const formatted = getDateOnly(date);
                     return getValidDatesForService(selectedService).includes(formatted)
                       ? "highlighted"
                       : null;
@@ -245,7 +275,9 @@ const SeniorCare = ({ role, handleLogout }) => {
                 >
                   <option value="">Select a time</option>
                   {availableTimes.map((t, i) => (
-                    <option key={i} value={t.time}>{formatTimeAMPM(t.time)} ({t.remaining} slots left)</option>
+                    <option key={i} value={t.time}>
+                      {formatTimeAMPM(t.time)} ({t.remaining} slot{t.remaining > 1 ? "s" : ""} left)
+                    </option>
                   ))}
                 </select>
               </>
@@ -258,27 +290,59 @@ const SeniorCare = ({ role, handleLogout }) => {
               <button className="secondary-button gray-button" onClick={closeModal}>Close</button>
             </div>
           </>
-        )}
-
-        {modalContent === "viewReservedSlot" && (
+        ) : (
           <>
-            <h3>Pending Appointments</h3>
-            {upcomingAppointments.filter((a) => a.status === "pending").length > 0
-              ? renderAppointmentsTable(upcomingAppointments.filter((a) => a.status === "pending"))
-              : <p>No pending appointments.</p>}
+            <div className="tab-buttons">
+              <button onClick={() => setModalContent("pending")} className={modalContent === "pending" ? "active-tab" : ""}>Pending</button>
+              <button onClick={() => setModalContent("upcoming")} className={modalContent === "upcoming" ? "active-tab" : ""}>Upcoming</button>
+              <button onClick={() => setModalContent("past")} className={modalContent === "past" ? "active-tab" : ""}>Past</button>
+            </div>
 
-            <h3 style={{ marginTop: "20px" }}>Upcoming Appointments</h3>
-            {upcomingAppointments.filter((a) => a.status !== "pending").length > 0
-              ? renderAppointmentsTable(upcomingAppointments.filter((a) => a.status !== "pending"), true)
-              : <p>No upcoming approved/rejected appointments.</p>}
-
-            <h3 style={{ marginTop: "20px" }}>Past Appointments</h3>
-            {pastAppointments.length > 0
-              ? renderAppointmentsTable(pastAppointments, true)
-              : <p>No past appointments.</p>}
+            {modalContent === "pending" && (
+              <>
+                <h3>Pending Appointments</h3>
+                {renderAppointmentsTable(upcomingAppointments.filter((a) => a.status.toLowerCase() === "pending"))}
+              </>
+            )}
+            {modalContent === "upcoming" && (
+              <>
+                <h3>Upcoming Appointments</h3>
+                {renderAppointmentsTable(upcomingAppointments.filter((a) => a.status.toLowerCase() !== "pending"), true)}
+              </>
+            )}
+            {modalContent === "past" && (
+              <>
+                <h3>Past Appointments (Last 3 Days)</h3>
+                <div className="view-log-list">
+                  {pastAppointments.filter((a) => {
+                    const apptDate = new Date(a.date);
+                    const threeDaysAgo = new Date();
+                    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+                    return apptDate >= threeDaysAgo;
+                  }).map((a, i) => (
+                    <div className="log-item" key={i}>
+                      <p><strong>Service:</strong> {a.service}</p>
+                      <p><strong>Date:</strong> {formatDateToReadable(a.date)}</p>
+                      <p><strong>Time:</strong> {formatTimeAMPM(a.time)}</p>
+                      <p><strong>Status:</strong> {a.status}</p>
+                      <p><strong>Remarks:</strong> {a.remarks || "-"}</p>
+                      <hr />
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
           </>
         )}
       </Modal>
+
+      {showNotification && (
+        <div className="toast-notification">
+          <p>🔔 Naaprubahan na ang iyong appointment! Tingnan ang "View Reserved Slots".</p>
+          <button onClick={() => setShowNotification(false)}>OK</button>
+        </div>
+      )}
+
       <BackToHome role={role} />
       <Footer role={role} />
     </div>
