@@ -1,23 +1,46 @@
 import React, { useState, useEffect } from "react";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
+import MapSelector from "./MapSelector"; // ⬅️ import updated map selector
 import "./SeniorList.css";
 
 const SeniorList = () => {
   const [patients, setPatients] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [showMap, setShowMap] = useState(false);
   const [editingId, setEditingId] = useState(null);
+  const [step, setStep] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterChapter, setFilterChapter] = useState("");
+
   const [formData, setFormData] = useState({
     username: "",
     password: "",
     barangay_id: "",
     group_chapter: "",
     email_address: "",
-    number: "", // phone number
+    number: "",
     age: "",
     sex: "",
     address: "",
-    health_issues: [],
+    health_issue: "",
+    first_name: "",
+    middle_name: "",
+    last_name: "",
+    extension: "N/A",
+    birthday: "",
+    civil_status: "",
+    emergency_contact_person: "",
+    emergency_contact_number: "",
+    emergency_contact_relationship: ""
   });
 
+  const extensionOptions = ["N/A", "Jr.", "Sr.", "II", "III", "IV"];
+  const chapterOptions = [
+    "NONE", "TAMARAW", "GUMAMELA", "AZICATE", "FISCA", "EL GRANDE", "TANADA",
+    "UPPER TIBANGAN", "POLICARPIO", "VICTORIA", "BAHAY PARI", "RMS",
+    "SANTIAGO", "SITIO SANTOLAN", "DE GULA/PEREZ", "ANGELES SENIOR CITIZENS ALLIANCE"
+  ];
   const healthIssueOptions = [
     "Heart Disease", "Arthritis", "Diabetes", "Dementia/Alzheimer's Disease",
     "Cancer", "COPD", "Osteoporosis"
@@ -26,16 +49,15 @@ const SeniorList = () => {
   useEffect(() => {
     const fetchPatients = async () => {
       try {
-        const response = await fetch("http://localhost/php/get_users.php");
-        const result = await response.json();
-        if (result.status === "success") {
-          const clientsOnly = result.data.filter(user => user.role === "client");
-          setPatients(clientsOnly);
+        const res = await fetch("http://localhost/php/get_users.php");
+        const data = await res.json();
+        if (data.status === "success") {
+          setPatients(data.data.filter(user => user.role === "client"));
         } else {
-          alert(result.message);
+          alert(data.message);
         }
-      } catch (error) {
-        console.error("Error fetching patients:", error);
+      } catch (err) {
+        console.error(err);
       }
     };
     fetchPatients();
@@ -43,140 +65,110 @@ const SeniorList = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    if (name === "barangay_id") {
-      if (/^\d{0,5}$/.test(value)) {
-        setFormData({ ...formData, [name]: value });
-      }
-    } else if (name === "number") {
-      if (/^\d{0,11}$/.test(value)) {
-        setFormData({ ...formData, [name]: value });
-      }
-    } else {
-      setFormData({ ...formData, [name]: value });
+    if ((name === "barangay_id" || name === "number" || name === "emergency_contact_number") && !/^\d*$/.test(value)) return;
+
+    if (name === "birthday") {
+      const today = new Date();
+      const bday = new Date(value);
+      let age = today.getFullYear() - bday.getFullYear();
+      const m = today.getMonth() - bday.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < bday.getDate())) age--;
+      setFormData(prev => ({ ...prev, birthday: value, age: age < 0 ? "" : age.toString() }));
+      return;
     }
+
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const validateForm = () => {
+    const requiredFields = Object.keys(formData).filter(k => k !== "extension" && (!editingId ? true : k !== "password"));
+    for (let field of requiredFields) {
+      if (!formData[field] || formData[field].trim() === "") {
+        alert(`"${field.replace(/_/g, " ")}" is required.`);
+        return false;
+      }
+    }
+    if (formData.barangay_id.length !== 5) {
+      alert("Barangay ID must be exactly 5 digits.");
+      return false;
+    }
+    if (formData.number.length !== 11 || formData.emergency_contact_number.length !== 11) {
+      alert("Contact numbers must be exactly 11 digits.");
+      return false;
+    }
+    if (parseInt(formData.age) < 60) {
+      alert("Age must be 60 or older.");
+      return false;
+    }
+    return true;
   };
 
   const handleAddSenior = async () => {
-    const {
-      username, password, barangay_id, group_chapter,
-      email_address, number, age, sex, address, health_issues
-    } = formData;
-
-    if (
-      !username || !password || !barangay_id || !group_chapter ||
-      !email_address || !number || !age || !sex || !address || health_issues.length === 0
-    ) {
-      alert("All fields are required!");
-      return;
-    }
-
-    if (!/^\d{5}$/.test(barangay_id)) {
-      alert("Barangay ID must be exactly 5 digits.");
-      return;
-    }
-
-    if (!/^\d{11}$/.test(number)) {
-      alert("Phone number must be exactly 11 digits.");
-      return;
-    }
-
-    if (parseInt(age) < 60) {
-      alert("Age must be 60 or older.");
-      return;
-    }
-
-    const payload = {
-      ...formData,
-      health_issue: health_issues.join(",")
-    };
-
+    if (!validateForm()) return;
     try {
-      const response = await fetch("http://localhost/php/register.php", {
+      const res = await fetch("http://localhost/php/register.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(formData)
       });
-
-      const result = await response.json();
+      const result = await res.json();
       if (result.status === "success") {
-        alert("Senior added successfully");
-        setPatients([...patients, { ...payload, role: "client" }]);
-        setShowModal(false);
+        alert("Senior added successfully.");
+        setPatients([...patients, { ...formData, role: "client" }]);
         resetForm();
-      } else {
-        alert(result.message);
-      }
-    } catch (error) {
-      console.error("Error adding senior:", error);
+        setShowModal(false);
+        setStep(1);
+      } else alert(result.message);
+    } catch (err) {
+      console.error(err);
     }
   };
 
-  const handleEdit = (patient) => {
-    setFormData({
-      username: patient.username,
-      password: "",
-      barangay_id: patient.barangay_id,
-      group_chapter: patient.group_chapter,
-      email_address: patient.email_address,
-      number: patient.number || "",
-      age: patient.age,
-      sex: patient.sex,
-      address: patient.address,
-      health_issues: patient.health_issue?.split(",") || []
-    });
-    setEditingId(patient.id);
+  const handleEdit = (data) => {
+    setFormData({ ...data, password: "" });
+    setEditingId(data.id);
+    setStep(1);
     setShowModal(true);
   };
 
   const handleUpdateSenior = async () => {
-    const payload = {
-      ...formData,
-      health_issue: formData.health_issues.join(","),
-      id: editingId
-    };
-
+    if (!validateForm()) return;
+    const payload = { ...formData, id: editingId };
     try {
-      const response = await fetch("http://localhost/php/update_user.php", {
+      const res = await fetch("http://localhost/php/update_user.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
       });
-
-      const result = await response.json();
+      const result = await res.json();
       if (result.status === "success") {
-        alert("Senior updated successfully");
-        setPatients(prev =>
-          prev.map(p => (p.id === editingId ? { ...payload, role: "client" } : p))
-        );
+        alert("Senior updated successfully.");
+        setPatients(prev => prev.map(p => p.id === editingId ? { ...payload, role: "client" } : p));
         setShowModal(false);
-        setEditingId(null);
         resetForm();
-      } else {
-        alert(result.message);
-      }
-    } catch (error) {
-      console.error("Error updating senior:", error);
+        setEditingId(null);
+        setStep(1);
+      } else alert(result.message);
+    } catch (err) {
+      console.error(err);
     }
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this user?")) return;
+    if (!window.confirm("Delete this user?")) return;
     try {
-      const response = await fetch("http://localhost/php/delete_user.php", {
+      const res = await fetch("http://localhost/php/delete_user.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id })
       });
-
-      const result = await response.json();
+      const result = await res.json();
       if (result.status === "success") {
         setPatients(prev => prev.filter(p => p.id !== id));
-        alert("Deleted successfully");
-      } else {
-        alert(result.message);
-      }
-    } catch (error) {
-      console.error("Error deleting senior:", error);
+        alert("Deleted successfully.");
+      } else alert(result.message);
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -191,53 +183,90 @@ const SeniorList = () => {
       age: "",
       sex: "",
       address: "",
-      health_issues: [],
+      health_issue: "",
+      first_name: "",
+      middle_name: "",
+      last_name: "",
+      extension: "N/A",
+      birthday: "",
+      civil_status: "",
+      emergency_contact_person: "",
+      emergency_contact_number: "",
+      emergency_contact_relationship: ""
     });
   };
+
+  const handleExportExcel = () => {
+    const filtered = filteredPatients();
+    const worksheet = XLSX.utils.json_to_sheet(filtered);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Seniors");
+    const data = new Blob([XLSX.write(workbook, { bookType: "xlsx", type: "array" })], { type: "application/octet-stream" });
+    saveAs(data, "seniors.xlsx");
+  };
+
+  const filteredPatients = () =>
+    patients.filter(p =>
+      (!filterChapter || p.group_chapter === filterChapter) &&
+      Object.values(p).some(val =>
+        val?.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    );
 
   return (
     <div className="senior-list-container">
       <div className="table-header">
         <h2>All Clients</h2>
-        <button className="add-senior-button" onClick={() => {
-          setShowModal(true);
-          setEditingId(null);
-          resetForm();
-        }}>
-          Add Senior
-        </button>
+        <button className="add-senior-button" onClick={() => { resetForm(); setEditingId(null); setShowModal(true); }}>Add Senior</button>
+      </div>
+
+      <div className="filter-bar">
+        <input type="text" placeholder="Search seniors..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="search-input" />
+        <select value={filterChapter} onChange={(e) => setFilterChapter(e.target.value)} className="chapter-filter">
+          <option value="">All Chapters</option>
+          {chapterOptions.map((chapter, idx) => <option key={idx} value={chapter}>{chapter}</option>)}
+        </select>
+        <button onClick={handleExportExcel}>Export Excel</button>
       </div>
 
       <table className="table">
         <thead>
           <tr>
             <th>Username</th>
+            <th>Full Name</th>
             <th>Barangay ID</th>
             <th>Chapter</th>
             <th>Email</th>
-            <th>Number (Phone)</th>
+            <th>Phone</th>
+            <th>Birthday</th>
             <th>Age</th>
             <th>Sex</th>
+            <th>Civil Status</th>
             <th>Address</th>
-            <th>Health Issues</th>
+            <th>Health Issue</th>
+            <th>Emergency Contact</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {patients.map((patient, index) => (
-            <tr key={index}>
-              <td>{patient.username}</td>
-              <td>{patient.barangay_id}</td>
-              <td>{patient.group_chapter}</td>
-              <td>{patient.email_address}</td>
-              <td>{patient.number}</td>
-              <td>{patient.age}</td>
-              <td>{patient.sex}</td>
-              <td>{patient.address}</td>
-              <td>{patient.health_issue?.split(",").join(", ")}</td>
-              <td className="action-icons">
-                <button className="edit-button" onClick={() => handleEdit(patient)}>Edit</button>
-                <button className="delete-button" onClick={() => handleDelete(patient.id)}>Delete</button>
+          {filteredPatients().map((p, i) => (
+            <tr key={i}>
+              <td>{p.username}</td>
+              <td>{[p.first_name, p.middle_name, p.last_name, p.extension].filter(Boolean).join(" ")}</td>
+              <td>{p.barangay_id}</td>
+              <td>{p.group_chapter}</td>
+              <td>{p.email_address}</td>
+              <td>{p.number}</td>
+              <td>{p.birthday}</td>
+              <td>{p.age}</td>
+              <td>{p.sex}</td>
+              <td>{p.civil_status}</td>
+              <td>{p.address}</td>
+              <td>{p.health_issue}</td>
+              <td>{p.emergency_contact_person} ({p.emergency_contact_relationship}) - {p.emergency_contact_number}</td>
+              <td>
+                <button onClick={() => handleEdit(p)} className="edit-button">Edit</button>
+                <button onClick={() => handleDelete(p.id)} className="delete-button">Delete</button>
               </td>
             </tr>
           ))}
@@ -247,80 +276,76 @@ const SeniorList = () => {
       {showModal && (
         <div className="senior-modal-overlay">
           <div className="senior-modal">
-            <h2>{editingId ? "Edit Senior" : "Add Senior"}</h2>
-
-            <input name="username" placeholder="Username" value={formData.username} onChange={handleInputChange} />
-            {!editingId && (
-              <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleInputChange} />
+            {step === 1 ? (
+              <>
+                <h2>Step 1: Personal Information</h2>
+                <input name="username" placeholder="Username" value={formData.username} onChange={handleInputChange} />
+                {!editingId && <input name="password" type="password" placeholder="Password" value={formData.password} onChange={handleInputChange} />}
+                <input name="first_name" placeholder="First Name" value={formData.first_name} onChange={handleInputChange} />
+                <input name="middle_name" placeholder="Middle Name" value={formData.middle_name} onChange={handleInputChange} />
+                <input name="last_name" placeholder="Last Name" value={formData.last_name} onChange={handleInputChange} />
+                <select name="extension" value={formData.extension} onChange={handleInputChange}>
+                  {extensionOptions.map((ext, i) => <option key={i} value={ext}>{ext}</option>)}
+                </select>
+                <input type="date" name="birthday" value={formData.birthday} onChange={handleInputChange} />
+                <input name="age" value={formData.age} readOnly style={{ backgroundColor: "#f0f0f0" }} />
+                <select name="civil_status" value={formData.civil_status} onChange={handleInputChange}>
+                  <option value="">Select Civil Status</option>
+                  <option>Single</option>
+                  <option>Married</option>
+                  <option>Widowed</option>
+                  <option>Separated</option>
+                </select>
+                <div className="senior-modal-buttons">
+                  <button onClick={() => setShowModal(false)}>Cancel</button>
+                  <button onClick={() => setStep(2)}>Next</button>
+                </div>
+              </>
+            ) : (
+              <>
+                <h2>Step 2: Contact & Emergency Info</h2>
+                <input name="barangay_id" placeholder="Barangay ID" value={formData.barangay_id} onChange={handleInputChange} />
+                <select name="group_chapter" value={formData.group_chapter} onChange={handleInputChange}>
+                  <option value="">Select Chapter</option>
+                  {chapterOptions.map((chapter, i) => <option key={i} value={chapter}>{chapter}</option>)}
+                </select>
+                <input type="email" name="email_address" placeholder="Email" value={formData.email_address} onChange={handleInputChange} />
+                <input name="number" placeholder="Phone Number" value={formData.number} onChange={handleInputChange} />
+                <select name="sex" value={formData.sex} onChange={handleInputChange}>
+                  <option value="">Select Sex</option>
+                  <option>Male</option>
+                  <option>Female</option>
+                </select>
+                <input name="address" placeholder="Click to select address" value={formData.address} onClick={() => setShowMap(true)} readOnly style={{ cursor: "pointer", backgroundColor: "#f9f9f9" }} />
+                <button onClick={() => setShowMap(true)}>📍 Select Location on Map</button>
+                <input name="emergency_contact_person" placeholder="Emergency Contact Person" value={formData.emergency_contact_person} onChange={handleInputChange} />
+                <input name="emergency_contact_number" placeholder="Emergency Contact Number" value={formData.emergency_contact_number} onChange={handleInputChange} />
+                <input name="emergency_contact_relationship" placeholder="Relationship" value={formData.emergency_contact_relationship} onChange={handleInputChange} />
+                <select name="health_issue" value={formData.health_issue} onChange={handleInputChange}>
+                  <option value="">Select Health Issue</option>
+                  {healthIssueOptions.map((h, i) => <option key={i} value={h}>{h}</option>)}
+                </select>
+                <div className="senior-modal-buttons">
+                  <button onClick={() => setStep(1)}>Back</button>
+                  {editingId ? <button onClick={handleUpdateSenior}>Update</button> : <button onClick={handleAddSenior}>Submit</button>}
+                </div>
+              </>
             )}
-            <input name="barangay_id" placeholder="Barangay ID (5 digits)" value={formData.barangay_id} onChange={handleInputChange} maxLength="5" />
-            <select name="group_chapter" value={formData.group_chapter} onChange={handleInputChange}>
-              <option value="">Select Chapter</option>
-              <option value="NONE">NONE</option>
-              <option value="TAMARAW">TAMARAW</option>
-              <option value="GUMAMELA">GUMAMELA</option>
-              <option value="AZICATE">AZICATE</option>
-              <option value="FISCA">FISCA</option>
-              <option value="EL GRANDE">EL GRANDE</option>
-              <option value="TAÑADA">TANADA</option>
-              <option value="UPPER TIBANGAN">UPPER TIBANGAN</option>
-              <option value="POLICARPIO">POLICARPIO</option>
-              <option value="VICTORIA">VICTORIA</option>
-              <option value="BAHAY PARI">BAHAY PARI</option>
-              <option value="RMS">RMS</option>
-              <option value="SANTIAGO">SANTIAGO</option>
-              <option value="SITIO SANTOLAN">SITIO SANTOLAN</option>
-              <option value="DE GULA/PEREZ">DE GULA/PEREZ</option>
-              <option value="ANGELES SENIOR CITIZENS ALLIANCE">ANGELES SENIOR CITIZENS ALLIANCE</option>
-            </select>
-            <input type="email" name="email_address" placeholder="Email Address" value={formData.email_address} onChange={handleInputChange} />
-            <input type="text" name="number" placeholder="Phone (11 digits)" value={formData.number} onChange={handleInputChange} maxLength="11" />
-            <input type="number" name="age" placeholder="Age (60+)" value={formData.age} onChange={handleInputChange} />
-            <select name="sex" value={formData.sex} onChange={handleInputChange}>
-              <option value="">Select Sex</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </select>
-            <input name="address" placeholder="Address" value={formData.address} onChange={handleInputChange} />
-
-            <label>Health Issues (max 3)</label>
-            <div className="selected-tags">
-              {formData.health_issues.map((issue, i) => (
-                <span key={i} className="tag">
-                  {issue}
-                  <button onClick={() => {
-                    const updated = [...formData.health_issues];
-                    updated.splice(i, 1);
-                    setFormData({ ...formData, health_issues: updated });
-                  }}>×</button>
-                </span>
-              ))}
-            </div>
-            <select onChange={(e) => {
-              const val = e.target.value;
-              if (val && !formData.health_issues.includes(val) && formData.health_issues.length < 3) {
-                setFormData({ ...formData, health_issues: [...formData.health_issues, val] });
-              }
-            }}>
-              <option value="">Select Health Issue</option>
-              {healthIssueOptions.map((issue, i) => (
-                <option key={i} value={issue}>{issue}</option>
-              ))}
-            </select>
-
-            <div className="senior-modal-buttons">
-              {editingId ? (
-                <button onClick={handleUpdateSenior}>Update</button>
-              ) : (
-                <button onClick={handleAddSenior}>Submit</button>
-              )}
-              <button onClick={() => {
-                setShowModal(false);
-                resetForm();
-              }}>Cancel</button>
-            </div>
           </div>
         </div>
+      )}
+
+      {showMap && (
+        <MapSelector
+          onClose={() => setShowMap(false)}
+          onSelect={(coords) => {
+            setFormData(prev => ({
+              ...prev,
+              address: coords.address || `Lat: ${coords.lat}, Lng: ${coords.lng}`
+            }));
+            setShowMap(false);
+          }}
+        />
       )}
     </div>
   );
