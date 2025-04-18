@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Emergency.css";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
@@ -9,7 +9,8 @@ import firetruck from "./assets/firetruck.png";
 import family from "./assets/family.png";
 
 const Emergency = ({ role, handleLogout }) => {
-  const [successMessage, setSuccessMessage] = useState("");
+  const [toast, setToast] = useState({ message: "", visible: false });
+  const lastStatus = useRef(null);
 
   const emergencyOptions = [
     { type: "Police", icon: police },
@@ -30,11 +31,14 @@ const Emergency = ({ role, handleLogout }) => {
     { name: "Neighborhood Watch", number: "0916-456-7890" },
   ];
 
+  const showToast = (message) => {
+    setToast({ message, visible: true });
+  };
+
   const handleEmergencyClick = async (type) => {
     const confirmSend = window.confirm(
       `Are you sure you want to report a ${type} emergency?\nYour information will be sent automatically.`
     );
-
     if (!confirmSend) return;
 
     try {
@@ -50,23 +54,66 @@ const Emergency = ({ role, handleLogout }) => {
       const data = await res.json();
 
       if (data.success) {
-        setSuccessMessage(`✅ ${type} emergency submitted successfully.`);
-        setTimeout(() => setSuccessMessage(""), 4000);
+        const statusText = data.status || "Pending";
+        lastStatus.current = statusText;
+        showToast(`✅ ${type} emergency reported. Status: ${statusText}`);
       } else if (data.error === "missing_profile") {
         const goToProfile = window.confirm(
           "❌ Your profile is incomplete. Would you like to complete it now?"
         );
-        if (goToProfile) {
-          window.location.href = "/profile";
-        }
+        if (goToProfile) window.location.href = "/profile";
       } else {
-        alert("❌ Error: " + (data.error || "Submission failed."));
+        showToast(`❌ Error: ${data.error || "Submission failed."}`);
       }
     } catch (error) {
       console.error("Submission error:", error);
-      alert("❌ Network or backend error.");
+      showToast("❌ Network or backend error.");
     }
   };
+
+  useEffect(() => {
+    const fetchStatus = async () => {
+      try {
+        const res = await fetch("http://localhost/php/get_latest_emergency_status.php", {
+          method: "GET",
+          credentials: "include",
+        });
+        const data = await res.json();
+
+        if (data.success && data.status) {
+          if (!lastStatus.current) {
+            lastStatus.current = data.status;
+          } else if (data.status !== lastStatus.current) {
+            let message = "";
+            switch (data.status) {
+              case "Pending":
+                message = "✅ Emergency submitted. Status: Pending";
+                break;
+              case "On the way":
+                message = "🚑 Emergency team is on the way!";
+                break;
+              case "Arrived":
+                message = "🆘 Help has arrived!";
+                break;
+              case "Resolved":
+                message = "✔️ Emergency has been resolved.";
+                break;
+              default:
+                message = `ℹ️ Status updated to: ${data.status}`;
+            }
+            showToast(message);
+            lastStatus.current = data.status;
+          }
+        }
+      } catch (err) {
+        console.error("Error fetching status:", err);
+      }
+    };
+
+    fetchStatus();
+    const interval = setInterval(fetchStatus, 4000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="emergency-container">
@@ -96,12 +143,15 @@ const Emergency = ({ role, handleLogout }) => {
             ))}
           </div>
 
-          {successMessage && (
-            <div className="emergency-popup">
-              <div className="emergency-popup-inner">
-                <button className="close-popup" onClick={() => setSuccessMessage("")}>×</button>
-                <p className="success-message">{successMessage}</p>
-              </div>
+          {toast.visible && (
+            <div className="toast-notification">
+              <p>{toast.message}</p>
+              <button
+                className="toast-close-btn"
+                onClick={() => setToast({ message: "", visible: false })}
+              >
+                OK
+              </button>
             </div>
           )}
 
