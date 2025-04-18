@@ -83,3 +83,59 @@ h5 {
   background-color: #f2f2f2;
   font-weight: bold;
 }
+/* 🔁 Filter + Logs right aligned */
+.filter-logs-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.filter-dropdown {
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  min-width: 180px;
+}
+
+.view-logs-button {
+  background-color: #800000;
+  color: white;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.view-logs-button:hover {
+  background-color: #a00000;
+}
+
+/* 🧾 View Logs List Styling */
+.log-list {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-top: 10px;
+}
+
+.log-entry {
+  margin-bottom: 16px;
+}
+
+.log-entry p {
+  margin: 4px 0;
+  color: #444;
+}
+
+.log-entry hr {
+  margin-top: 10px;
+  border: 0;
+  border-top: 1px solid #ccc;
+}
