@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./Setting.css";
 import AccountTab from "./AccountTab";
 import ServicesTab from "./ServicesTab";
-import NotificationsTab from "./NotificationsTab";
 
 const Setting = () => {
   const [activeTab, setActiveTab] = useState("Account");
@@ -23,18 +22,13 @@ const Setting = () => {
           >
             Services
           </li>
-          <li
-            className={activeTab === "Notifications" ? "active" : ""}
-            onClick={() => setActiveTab("Notifications")}
-          >
-            Notifications
-          </li>
+          
         </ul>
       </div>
       <div className="setting-content">
         {activeTab === "Account" && <AccountTab />}
         {activeTab === "Services" && <ServicesTab />}
-        {activeTab === "Notifications" && <NotificationsTab />}
+       
       </div>
     </div>
   );
