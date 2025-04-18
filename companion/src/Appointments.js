@@ -10,9 +10,21 @@ const Appointments = () => {
 
   useEffect(() => {
     fetchAppointments();
+
     window.addEventListener("slotsUpdated", fetchAppointments);
-    return () => window.removeEventListener("slotsUpdated", fetchAppointments);
+    window.addEventListener("storage", handleStorageSync);
+
+    return () => {
+      window.removeEventListener("slotsUpdated", fetchAppointments);
+      window.removeEventListener("storage", handleStorageSync);
+    };
   }, []);
+
+  const handleStorageSync = (e) => {
+    if (e.key === "slotsUpdatedAt") {
+      fetchAppointments();
+    }
+  };
 
   const fetchAppointments = async () => {
     try {
@@ -62,8 +74,9 @@ const Appointments = () => {
         setStatusMessage("Status updated successfully.");
         setRemarksInput((prev) => ({ ...prev, [appointmentId]: "" }));
 
-        // Notify ServicesTab to update slots
+        // Trigger real-time slot sync
         window.dispatchEvent(new Event("slotsUpdated"));
+        localStorage.setItem("slotsUpdatedAt", Date.now());
       }
     } catch (error) {
       console.error("Error updating status:", error);
