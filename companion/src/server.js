@@ -12,9 +12,16 @@ wss.on("connection", (ws) => {
 
       // 1. Register user (client or admin)
       if (data.type === "register") {
+        if (!data.content || !data.content.username) {
+          console.warn("⚠️ Connection rejected: no username provided.");
+          ws.send(JSON.stringify({ type: "error", content: "Username required for registration." }));
+          ws.close(); // Optional: force disconnect
+          return;
+        }
+
         username = data.content.username;
         clients[username] = ws;
-        console.log(`${username} connected`);
+        console.log(`[✅ Connected] ${username} (${data.content.role}) connected`);
         return;
       }
 
@@ -46,18 +53,20 @@ wss.on("connection", (ws) => {
               content: "A client has requested to talk to you.",
             })
           );
+        } else {
+          console.warn("⚠️ No admin connected to notify.");
         }
         return;
       }
     } catch (err) {
-      console.error("Invalid WebSocket message:", err);
+      console.error("❌ Invalid WebSocket message:", err.message);
     }
   });
 
   ws.on("close", () => {
     if (username && clients[username]) {
       delete clients[username];
-      console.log(`${username} disconnected`);
+      console.log(`[❌ Disconnected] ${username} disconnected`);
     }
   });
 });
