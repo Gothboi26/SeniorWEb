@@ -6,7 +6,6 @@ import "./Profile.css";
 
 const Profile = () => {
   const [role, setRole] = useState(null);
-  const [readOnlyMode, setReadOnlyMode] = useState(false);
   const [profile, setProfile] = useState({
     firstName: "",
     middleName: "",
@@ -37,46 +36,32 @@ const Profile = () => {
       .then((data) => {
         if (!data.error) {
           const updatedProfile = {
-            ...data,
-            barangayID: data.barangay_id || "",
-            groupChapter: data.group_chapter || "",
+            firstName: data.first_name || "",
+            middleName: data.middle_name || "",
+            lastName: data.last_name || "",
+            extensionName: data.extension || "",
+            birthday: data.birthday || "",
             age: data.age || "",
             sex: data.sex || "",
+            civilStatus: data.civil_status || "",
+            barangayID: data.barangay_id || "",
+            groupChapter: data.group_chapter || "",
+            emergencyContactPerson: data.emergency_contact_person || "",
+            contactNumber: data.emergency_contact_number || "",
+            relationship: data.emergency_contact_relationship || "",
             address: data.address || "",
+            profilePicture: data.profile_picture || null,
           };
 
-          setProfile((prev) => ({ ...prev, ...updatedProfile }));
-
-          const requiredFields = [
-            updatedProfile.firstName,
-            updatedProfile.lastName,
-            updatedProfile.birthday,
-            updatedProfile.civilStatus,
-            updatedProfile.emergencyContactPerson,
-            updatedProfile.contactNumber,
-            updatedProfile.relationship,
-          ];
-          const isComplete = requiredFields.every(
-            (field) => field && field.trim() !== ""
-          );
-
-          const isSaved = localStorage.getItem("profileSaved") === "true";
-          setReadOnlyMode(isSaved && isComplete);
+          setProfile(updatedProfile);
         }
       })
       .catch((err) => console.error("Error fetching profile:", err));
   }, []);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    if (!readOnlyMode) {
-      setProfile({ ...profile, [name]: value });
-    }
-  };
-
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    if (!readOnlyMode && file) {
+    if (file && !profile.profilePicture) {
       setProfile({ ...profile, profilePicture: file });
     }
   };
@@ -92,8 +77,6 @@ const Profile = () => {
         sendProfile(formData);
       };
       reader.readAsDataURL(profile.profilePicture);
-    } else {
-      sendProfile(formData);
     }
   };
 
@@ -104,33 +87,15 @@ const Profile = () => {
         "Content-Type": "application/json",
       },
       credentials: "include",
-      body: JSON.stringify(data),
+      body: JSON.stringify({ profilePicture: data.profilePicture }),
     })
       .then((res) => res.json())
       .then((resData) => {
-        alert(resData.message || "Profile saved!");
-
-        const requiredFields = [
-          profile.firstName,
-          profile.lastName,
-          profile.birthday,
-          profile.civilStatus,
-          profile.emergencyContactPerson,
-          profile.contactNumber,
-          profile.relationship,
-        ];
-        const isComplete = requiredFields.every(
-          (field) => field && field.trim() !== ""
-        );
-
-        if (isComplete) {
-          setReadOnlyMode(true);
-          localStorage.setItem("profileSaved", "true");
-        } else {
-          alert(
-            "Profile saved, but you can still complete the remaining required info."
-          );
-        }
+        alert(resData.message || "Profile picture uploaded!");
+        setProfile((prev) => ({
+          ...prev,
+          profilePicture: data.profilePicture,
+        }));
       })
       .catch((err) => console.error("Error saving profile:", err));
   };
@@ -141,11 +106,6 @@ const Profile = () => {
 
       <div className="profile-title-container">
         <h1 className="profile-title">Profile Page</h1>
-        {readOnlyMode && (
-          <p className="readonly-note">
-            Your profile has been saved and is now locked.
-          </p>
-        )}
       </div>
 
       <div className="profile-details-container">
@@ -162,7 +122,7 @@ const Profile = () => {
               alt="Profile"
               className="profile-image"
             />
-            {!readOnlyMode && (
+            {!profile.profilePicture && (
               <>
                 <input
                   type="file"
@@ -180,42 +140,18 @@ const Profile = () => {
           <div className="profile-fields">
             <div className="name-group">
               <label>First Name:</label>
-              <input
-                type="text"
-                name="firstName"
-                value={profile.firstName}
-                onChange={handleChange}
-                readOnly={readOnlyMode}
-              />
+              <input type="text" name="firstName" value={profile.firstName} readOnly />
 
               <label>Middle Name:</label>
-              <input
-                type="text"
-                name="middleName"
-                value={profile.middleName}
-                onChange={handleChange}
-                readOnly={readOnlyMode}
-              />
+              <input type="text" name="middleName" value={profile.middleName} readOnly />
             </div>
 
             <div className="name-group">
               <label>Last Name:</label>
-              <input
-                type="text"
-                name="lastName"
-                value={profile.lastName}
-                onChange={handleChange}
-                readOnly={readOnlyMode}
-              />
+              <input type="text" name="lastName" value={profile.lastName} readOnly />
 
               <label>Extension Name:</label>
-              <input
-                type="text"
-                name="extensionName"
-                value={profile.extensionName}
-                onChange={handleChange}
-                readOnly={readOnlyMode}
-              />
+              <input type="text" name="extensionName" value={profile.extensionName} readOnly />
             </div>
           </div>
         </div>
@@ -223,21 +159,11 @@ const Profile = () => {
         <div className="barangay-info-container">
           <div>
             <label>Barangay ID Number:</label>
-            <input
-              type="text"
-              name="barangayID"
-              value={profile.barangayID}
-              readOnly
-            />
+            <input type="text" name="barangayID" value={profile.barangayID} readOnly />
           </div>
           <div>
             <label>Group Chapter:</label>
-            <input
-              type="text"
-              name="groupChapter"
-              value={profile.groupChapter}
-              readOnly
-            />
+            <input type="text" name="groupChapter" value={profile.groupChapter} readOnly />
           </div>
         </div>
 
@@ -259,31 +185,12 @@ const Profile = () => {
 
           <div>
             <label>Birthday:</label>
-            <input
-              type="date"
-              name="birthday"
-              value={profile.birthday}
-              onChange={handleChange}
-              readOnly={readOnlyMode}
-            />
+            <input type="date" name="birthday" value={profile.birthday} readOnly />
           </div>
 
           <div>
             <label>Civil Status:</label>
-            <select
-              name="civilStatus"
-              value={profile.civilStatus}
-              onChange={handleChange}
-              disabled={readOnlyMode}
-              className="form-input"
-            >
-              <option value="">-- Select Status --</option>
-              <option value="Single">Single</option>
-              <option value="Married">Married</option>
-              <option value="Widowed">Widowed</option>
-              <option value="Separated">Separated</option>
-              <option value="Divorced">Divorced</option>
-            </select>
+            <input type="text" name="civilStatus" value={profile.civilStatus} readOnly />
           </div>
         </div>
 
@@ -294,47 +201,30 @@ const Profile = () => {
               type="text"
               name="emergencyContactPerson"
               value={profile.emergencyContactPerson}
-              onChange={handleChange}
-              readOnly={readOnlyMode}
+              readOnly
             />
           </div>
 
           <div>
             <label>Relationship:</label>
-            <input
-              type="text"
-              name="relationship"
-              value={profile.relationship}
-              onChange={handleChange}
-              readOnly={readOnlyMode}
-            />
+            <input type="text" name="relationship" value={profile.relationship} readOnly />
           </div>
 
           <div>
             <label>Contact Number:</label>
-            <input
-              type="text"
-              name="contactNumber"
-              value={profile.contactNumber}
-              onChange={handleChange}
-              readOnly={readOnlyMode}
-            />
+            <input type="text" name="contactNumber" value={profile.contactNumber} readOnly />
           </div>
         </div>
 
-        {!readOnlyMode && (
-          <div className="save-button-wrapper">
-            <button
-              type="submit"
-              onClick={handleSubmit}
-              className="submit-button"
-            >
-              Save
-            </button>
-          </div>
-        )}
+        {profile.profilePicture && typeof profile.profilePicture !== "string" && (
+  <div className="save-button-wrapper">
+    <button type="submit" onClick={handleSubmit} className="submit-button">
+      Save
+    </button>
+  </div>
+)}
 
-        {/* Back to Home */}
+
         <div className="temp-buttons">
           <BackToHome role={role} />
         </div>
