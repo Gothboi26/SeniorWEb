@@ -24,12 +24,14 @@ const EmergenciesAdmin = () => {
         });
         const result = await response.json();
 
-        const ongoingUnacknowledged = result.filter(
-          (e) => e.status === "Ongoing" && !acknowledgedIds.includes(e.id)
+        const newAlerts = result.filter(
+          (e) =>
+            (e.status === "Pending" || e.status === "On the way") &&
+            !acknowledgedIds.includes(e.id)
         );
 
-        if (ongoingUnacknowledged.length > 0) {
-          setUnacknowledgedEmergencies(ongoingUnacknowledged);
+        if (newAlerts.length > 0) {
+          setUnacknowledgedEmergencies(newAlerts);
 
           if (audioRef.current && audioRef.current.paused) {
             audioRef.current.play().catch(err => console.error("Audio play error", err));
@@ -143,24 +145,16 @@ const EmergenciesAdmin = () => {
         </div>
       </div>
 
-      {/* 🔥 Multiple emergency popups */}
+      {/* 🚨 Popup Alerts for New Emergencies */}
       {unacknowledgedEmergencies.map((item) => (
         <div key={item.id} className="popup-emergency">
           <strong>🚨 Emergency Alert!</strong>
           <p><b>Name:</b> {item.name}</p>
           <p><b>Type:</b> {item.type}</p>
+          <p><b>Status:</b> <span className={`status-${item.status.toLowerCase().replace(/\s/g, '-')}`}>{item.status}</span></p>
           <p><b>Location:</b> {item.location}</p>
           <p><b>User #:</b> {item.contact_number}</p>
-          <button onClick={() => acknowledgeSingle(item.id)} style={{
-            marginTop: "10px",
-            background: "white",
-            color: "#c31c1c",
-            padding: "6px 14px",
-            border: "none",
-            borderRadius: "6px",
-            fontWeight: "bold",
-            cursor: "pointer"
-          }}>
+          <button onClick={() => acknowledgeSingle(item.id)} className="acknowledge-btn">
             Acknowledge
           </button>
         </div>
@@ -193,7 +187,7 @@ const EmergenciesAdmin = () => {
                 <td>{item.contact_number}</td>
                 <td>{item.emergency_contact_name}</td>
                 <td>{item.emergency_contact_number}</td>
-                <td className={`status-${item.status.toLowerCase()}`}>{item.status}</td>
+                <td className={`status-${item.status.toLowerCase().replace(/\s/g, '-')}`}>{item.status}</td>
                 <td>
                   {item.status === "Resolved" ? (
                     <span style={{ fontStyle: "italic", color: "#666" }}>—</span>
@@ -205,7 +199,9 @@ const EmergenciesAdmin = () => {
                       value={item.status}
                       onChange={(e) => handleStatusChange(index, e.target.value)}
                     >
-                      <option value="Ongoing">Ongoing</option>
+                      <option value="Pending">Pending</option>
+                      <option value="On the way">On the way</option>
+                      <option value="Arrived">Arrived</option>
                       <option value="Resolved">Resolved</option>
                     </select>
                   )}
