@@ -63,3 +63,58 @@
 .map-container {
   flex: 1;
 }
+.toast-notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-left: 6px solid maroon;
+  padding: 16px 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.toast-notification .location-name {
+  font-size: 14px;
+  font-weight: bold;
+  color: #444;
+  margin-top: 4px;
+}
+
+.toast-notification button {
+  background: maroon;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 14px;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.toast-notification button:hover {
+  background: #a10000;
+}
+
+.toast-notification div:last-child {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.route-instructions {
+  margin-top: 10px;
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 14px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  max-height: 200px;
+  overflow-y: auto;
+}

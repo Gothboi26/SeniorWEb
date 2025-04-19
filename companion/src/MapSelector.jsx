@@ -1,34 +1,95 @@
-import React, { useState, useRef } from "react";
-import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
+import React, { useState, useEffect, useRef } from "react";
+import { MapContainer, TileLayer, Marker, useMapEvents, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import "leaflet-routing-machine";
+import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import "./MapSelector.css";
+import logo from "./assets/logo.png"; // your barangay logo
 
-// 📍 Custom maroon marker icon
 const customIcon = new L.Icon({
   iconUrl: "/icons/marker-maroon.png",
   iconSize: [38, 38],
   iconAnchor: [19, 38],
   popupAnchor: [0, -38],
-  shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png"
+  shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
 });
 
-// 🗺️ Bounding box for Valenzuela
 const valenzuelaBounds = [
-  [14.6500, 120.9000], // Southwest
-  [14.7700, 121.0300], // Northeast
+  [14.6500, 120.9000],
+  [14.7700, 121.0300],
 ];
 
-const MapSelector = ({ onClose, onSelect }) => {
+const barangayHallCoords = [14.6861, 120.9955];
+
+const Routing = ({ destination }) => {
+  const map = useMap();
+  const routingRef = useRef(null);
+
+  useEffect(() => {
+    if (!destination) return;
+
+    // Remove existing route
+    if (routingRef.current) {
+      try {
+        routingRef.current.getPlan().setWaypoints([]);
+        map.removeControl(routingRef.current);
+      } catch (err) {
+        console.warn("Error removing old route:", err);
+      }
+      routingRef.current = null;
+    }
+
+    const control = L.Routing.control({
+      waypoints: [
+        L.latLng(barangayHallCoords),
+        L.latLng(destination),
+      ],
+      lineOptions: {
+        styles: [{ color: "maroon", weight: 6 }],
+      },
+      showAlternatives: false,
+      addWaypoints: false,
+      draggableWaypoints: false,
+      routeWhileDragging: false,
+      fitSelectedRoutes: true,
+      createMarker: () => null,
+    }).addTo(map);
+
+    routingRef.current = control;
+
+    return () => {
+      try {
+        if (routingRef.current) map.removeControl(routingRef.current);
+      } catch (err) {
+        console.warn("Cleanup failed:", err);
+      }
+      routingRef.current = null;
+    };
+  }, [destination, map]);
+
+  return null;
+};
+
+const MapSelector = ({ onClose, onSelect, initialPosition = null }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [markerPosition, setMarkerPosition] = useState(null);
+  const [pendingSelection, setPendingSelection] = useState(null);
   const mapRef = useRef(null);
 
+  useEffect(() => {
+    if (initialPosition) setMarkerPosition([initialPosition.lat, initialPosition.lng]);
+  }, [initialPosition]);
+
+  useEffect(() => {
+    if (initialPosition && mapRef.current) {
+      mapRef.current.setView([initialPosition.lat, initialPosition.lng], 17);
+    }
+  }, [markerPosition, initialPosition]);
+
   const tryGeocode = async (query) => {
-    const res = await fetch(
-      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1&countrycodes=ph`
-    );
+    const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1&countrycodes=ph`);
     return await res.json();
   };
 
@@ -38,13 +99,13 @@ const MapSelector = ({ onClose, onSelect }) => {
 
     const cleaned = query
       .replace(/St\./gi, "Street")
-      .replace(/\d{4,}/g, "") // remove zip
-      .replace(/[^a-zA-Z0-9\s,]/g, "") // remove special chars
+      .replace(/\d{4,}/g, "")
+      .replace(/[^a-zA-Z0-9\s,]/g, "")
       .trim();
 
     const baseQuery = cleaned.split(",")[0];
-    let fullQuery = `${cleaned} Valenzuela City`;
-    let fallbackQuery = `${baseQuery} Barangay General Tiburcio De Leon, Valenzuela City`;
+    const fullQuery = `${cleaned} Valenzuela City`;
+    const fallbackQuery = `${baseQuery} Barangay General Tiburcio De Leon, Valenzuela City`;
 
     try {
       let result = await tryGeocode(fullQuery);
@@ -53,18 +114,18 @@ const MapSelector = ({ onClose, onSelect }) => {
 
       setSuggestions(result);
     } catch (err) {
-      console.error("Search failed:", err);
-      alert("Search failed. Check your internet connection.");
+      console.error("Geocode error:", err);
+      alert("Search failed. Please check internet.");
     }
   };
 
-  const selectLocation = (lat, lng, display_name) => {
-    const newPos = [lat, lng];
-    setMarkerPosition(newPos);
-    setSearchQuery(display_name);
+  const selectLocation = (lat, lng, address) => {
+    const pos = [lat, lng];
+    setMarkerPosition(pos);
+    setSearchQuery(address);
     setSuggestions([]);
-    mapRef.current?.flyTo(newPos, 17);
-    onSelect({ lat, lng, address: display_name });
+    mapRef.current?.flyTo(pos, 17);
+    setPendingSelection({ lat, lng, address });
   };
 
   const handleSuggestionClick = (place) => {
@@ -74,11 +135,14 @@ const MapSelector = ({ onClose, onSelect }) => {
   const handleMarkerDrag = (e) => {
     const { lat, lng } = e.target.getLatLng();
     setMarkerPosition([lat, lng]);
+
     fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`)
       .then(res => res.json())
       .then(data => {
         if (data?.address?.city === "Valenzuela") {
-          onSelect({ lat, lng, address: data.display_name });
+          setPendingSelection({ lat, lng, address: data.display_name });
+        } else {
+          alert("Only Valenzuela locations allowed.");
         }
       });
   };
@@ -93,35 +157,54 @@ const MapSelector = ({ onClose, onSelect }) => {
             if (data?.address?.city === "Valenzuela") {
               selectLocation(lat, lng, data.display_name);
             } else {
-              alert("Please select a location within Valenzuela.");
+              alert("Only Valenzuela locations allowed.");
             }
           })
           .catch(err => {
-            console.error("Map click error", err);
-            alert("Map click failed.");
+            console.error("Map click failed:", err);
+            alert("Click error.");
           });
-      }
+      },
     });
     return null;
+  };
+
+  const handleConfirm = () => {
+    if (pendingSelection) {
+      onSelect(pendingSelection);
+      setPendingSelection(null);
+    }
+  };
+
+  const handleCancel = () => {
+    setPendingSelection(null);
+    setMarkerPosition(null);
   };
 
   return (
     <div className="map-modal-overlay">
       <div className="map-modal">
-        <button className="close-map-btn" onClick={onClose}>×</button>
+        <div className="map-modal-header">
+          <h3>Emergency Location</h3>
+          <button className="close-map-btn" onClick={onClose}>×</button>
+        </div>
 
-        <input
-          className="search-bar"
-          type="text"
-          placeholder="Search address in Valenzuela"
-          value={searchQuery}
-          onChange={(e) => handleSearch(e.target.value)}
-        />
+        {!initialPosition && (
+          <input
+            className="search-bar"
+            type="text"
+            placeholder="Search in Valenzuela"
+            value={searchQuery}
+            onChange={(e) => handleSearch(e.target.value)}
+          />
+        )}
 
         {suggestions.length > 0 && (
           <ul className="search-results">
             {suggestions.map((s, i) => (
-              <li key={i} onClick={() => handleSuggestionClick(s)}>{s.display_name}</li>
+              <li key={i} onClick={() => handleSuggestionClick(s)}>
+                {s.display_name}
+              </li>
             ))}
           </ul>
         )}
@@ -139,17 +222,47 @@ const MapSelector = ({ onClose, onSelect }) => {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               attribution="&copy; OpenStreetMap contributors"
             />
-            <MapClickHandler />
+            {!initialPosition && <MapClickHandler />}
+
+            {/* Barangay Hall marker */}
+            <Marker position={barangayHallCoords}>
+              <Popup>
+                <div style={{ textAlign: "center" }}>
+                  <h4>Barangay Tiburcio De Leon Hall</h4>
+                  <img src={logo} alt="Barangay Hall" style={{ width: "100%", maxWidth: "200px", borderRadius: "8px" }} />
+                </div>
+              </Popup>
+            </Marker>
+
+            {/* Destination marker */}
             {markerPosition && (
-              <Marker
-                position={markerPosition}
-                icon={customIcon}
-                draggable
-                eventHandlers={{ dragend: handleMarkerDrag }}
-              />
+              <>
+                <Marker
+                  position={markerPosition}
+                  icon={customIcon}
+                  draggable={!initialPosition}
+                  eventHandlers={!initialPosition ? { dragend: handleMarkerDrag } : {}}
+                >
+                  <Popup>{pendingSelection?.address || "Selected Location"}</Popup>
+                </Marker>
+                <Routing destination={markerPosition} />
+              </>
             )}
           </MapContainer>
         </div>
+
+        {pendingSelection && (
+          <div className="toast-notification">
+            <div>
+              <strong>📍 Use this location?</strong>
+              <div className="location-name">{pendingSelection.address}</div>
+            </div>
+            <div>
+              <button onClick={handleConfirm}>✅ Confirm</button>
+              <button onClick={handleCancel}>❌ Cancel</button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
