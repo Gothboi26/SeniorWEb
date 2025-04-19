@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import MapSelector from "./MapSelector";
 import "./EmergenciesAdmin.css";
 
 const EmergenciesAdmin = () => {
@@ -8,12 +9,15 @@ const EmergenciesAdmin = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortConfig, setSortConfig] = useState(null);
   const [loadingStatusIndex, setLoadingStatusIndex] = useState(null);
-  const previousDataRef = useRef([]);
+  const [mapModalVisible, setMapModalVisible] = useState(false);
+  const [mapCoords, setMapCoords] = useState({ lat: null, lng: null, address: "" });
+
   const audioRef = useRef(null);
+  const audioTimeoutRef = useRef(null);
 
   useEffect(() => {
     audioRef.current = new Audio("/sos.mp3");
-    audioRef.current.loop = true;
+    audioRef.current.loop = false;
   }, []);
 
   useEffect(() => {
@@ -30,22 +34,23 @@ const EmergenciesAdmin = () => {
             !acknowledgedIds.includes(e.id)
         );
 
-        if (newAlerts.length > 0) {
-          setUnacknowledgedEmergencies(newAlerts);
+        setData(result);
+        setUnacknowledgedEmergencies(newAlerts);
 
+        if (newAlerts.length > 0) {
           if (audioRef.current && audioRef.current.paused) {
             audioRef.current.play().catch(err => console.error("Audio play error", err));
+            // ⏱️ Stop after 5 seconds
+            audioTimeoutRef.current = setTimeout(() => {
+              if (audioRef.current && !audioRef.current.paused) {
+                audioRef.current.pause();
+                audioRef.current.currentTime = 0;
+              }
+            }, 5000);
           }
         } else {
-          setUnacknowledgedEmergencies([]);
-          if (audioRef.current && !audioRef.current.paused) {
-            audioRef.current.pause();
-            audioRef.current.currentTime = 0;
-          }
+          stopSound();
         }
-
-        previousDataRef.current = result;
-        setData(result);
       } catch (error) {
         console.error("Error fetching emergencies:", error);
       }
@@ -56,16 +61,20 @@ const EmergenciesAdmin = () => {
     return () => clearInterval(interval);
   }, [acknowledgedIds]);
 
+  const stopSound = () => {
+    if (audioRef.current && !audioRef.current.paused) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+    if (audioTimeoutRef.current) {
+      clearTimeout(audioTimeoutRef.current);
+    }
+  };
+
   const acknowledgeSingle = (id) => {
     setAcknowledgedIds((prev) => [...prev, id]);
     setUnacknowledgedEmergencies((prev) => prev.filter((e) => e.id !== id));
-
-    if (unacknowledgedEmergencies.length === 1) {
-      if (audioRef.current && !audioRef.current.paused) {
-        audioRef.current.pause();
-        audioRef.current.currentTime = 0;
-      }
-    }
+    stopSound();
   };
 
   const filteredData = data.filter((item) =>
@@ -103,7 +112,6 @@ const EmergenciesAdmin = () => {
     if (!confirmChange) return;
 
     setLoadingStatusIndex(index);
-
     const updatedData = [...data];
     updatedData[index].status = newStatus;
     setData(updatedData);
@@ -119,6 +127,34 @@ const EmergenciesAdmin = () => {
       console.error("Failed to update status", err);
     } finally {
       setLoadingStatusIndex(null);
+    }
+  };
+
+  const openMap = async (item) => {
+    if (item.latitude && item.longitude) {
+      setMapCoords({
+        lat: parseFloat(item.latitude),
+        lng: parseFloat(item.longitude),
+        address: item.location || ""
+      });
+      setMapModalVisible(true);
+    } else {
+      try {
+        const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(item.location)}&limit=1&countrycodes=ph`);
+        const result = await response.json();
+        if (result.length > 0) {
+          setMapCoords({
+            lat: parseFloat(result[0].lat),
+            lng: parseFloat(result[0].lon),
+            address: result[0].display_name
+          });
+          setMapModalVisible(true);
+        } else {
+          alert("Location not found.");
+        }
+      } catch (err) {
+        console.error("Geocode error", err);
+      }
     }
   };
 
@@ -145,7 +181,6 @@ const EmergenciesAdmin = () => {
         </div>
       </div>
 
-      {/* 🚨 Popup Alerts for New Emergencies */}
       {unacknowledgedEmergencies.map((item) => (
         <div key={item.id} className="popup-emergency">
           <strong>🚨 Emergency Alert!</strong>
@@ -183,7 +218,15 @@ const EmergenciesAdmin = () => {
                 <td>{item.date}</td>
                 <td>{item.time}</td>
                 <td>{item.type}</td>
-                <td>{item.location}</td>
+                <td>
+                  <span
+                    className="map-link"
+                    style={{ color: "#b02a37", cursor: "pointer", textDecoration: "underline" }}
+                    onClick={() => openMap(item)}
+                  >
+                    {item.location}
+                  </span>
+                </td>
                 <td>{item.contact_number}</td>
                 <td>{item.emergency_contact_name}</td>
                 <td>{item.emergency_contact_number}</td>
@@ -215,6 +258,14 @@ const EmergenciesAdmin = () => {
           )}
         </tbody>
       </table>
+
+      {mapModalVisible && mapCoords.lat && mapCoords.lng && (
+        <MapSelector
+          onClose={() => setMapModalVisible(false)}
+          initialPosition={mapCoords}
+          onSelect={() => {}}
+        />
+      )}
     </div>
   );
 };
