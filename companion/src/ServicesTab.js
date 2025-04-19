@@ -41,7 +41,7 @@ const ServicesTab = () => {
             maxSlot: parseInt(item.max_slots),
           }));
           const sorted = normalized.sort((a, b) =>
-            new Date(`${a.date} ${a.time}`) - new Date(`${b.date} ${b.time}`)
+            new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`)
           );
           setServices(sorted);
         })
@@ -105,7 +105,7 @@ const ServicesTab = () => {
             updated.push(entry);
             alert("Service successfully added!");
           }
-          updated.sort((a, b) => new Date(`${a.date} ${a.time}`) - new Date(`${b.date} ${b.time}`));
+          updated.sort((a, b) => new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`));
           setServices(updated);
           resetForm();
           window.dispatchEvent(new Event("slotsUpdated"));
@@ -132,7 +132,7 @@ const ServicesTab = () => {
 
     if (result.status === "success") {
       const filtered = services.filter((_, i) => i !== index);
-      filtered.sort((a, b) => new Date(`${a.date} ${a.time}`) - new Date(`${b.date} ${b.time}`));
+      filtered.sort((a, b) => new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`));
       setServices(filtered);
       alert("Service successfully deleted!");
       window.dispatchEvent(new Event("slotsUpdated"));
@@ -179,8 +179,18 @@ const ServicesTab = () => {
     return `${hour}:${minute} ${ampm}`;
   };
 
-  const filteredServices = filter === "All" ? services : services.filter((s) => s.name === filter);
-  const pastServices = services.filter((s) => new Date(`${s.date} ${s.time}`) < new Date());
+  // Date comparison logic (new)
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+  const pastServices = services.filter((s) => {
+    const slotDate = new Date(`${s.date}T00:00:00`);
+    return slotDate < today;
+  });
+
+  const filteredServices = filter === "All"
+    ? services.filter((s) => new Date(`${s.date}T00:00:00`) >= today)
+    : services.filter((s) => s.name === filter && new Date(`${s.date}T00:00:00`) >= today);
 
   return (
     <div className="services-tab">

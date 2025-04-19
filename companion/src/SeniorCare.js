@@ -104,19 +104,23 @@ const SeniorCare = ({ role, handleLogout }) => {
   };
 
   const getTimesForServiceAndDate = (service, date) => {
-    const normalizeTime = (t) => t.slice(0, 5); // e.g. "13:00:00" → "13:00"
+    const normalizeTime = (t) => t.split(":").slice(0, 2).join(":");
 
     return serviceSlots
       .filter(slot => slot.service_name === service && slot.date === date)
       .map(slot => {
-        const approvedCount = upcomingAppointments.filter(
-          a => a.service === service &&
-               a.date === date &&
-               normalizeTime(a.time) === normalizeTime(slot.time) &&
-               a.status.toLowerCase() === "approved"
-        ).length;
+        const slotTime = normalizeTime(slot.time);
+        const activeCount = upcomingAppointments.filter(a => {
+          const apptTime = normalizeTime(a.time);
+          return (
+            a.service === service &&
+            a.date === date &&
+            apptTime === slotTime &&
+            a.status.toLowerCase() !== "rejected"
+          );
+        }).length;
 
-        const remaining = slot.max_slots - approvedCount;
+        const remaining = slot.max_slots - activeCount;
         return { time: slot.time, remaining };
       }).filter(slot => slot.remaining > 0);
   };
