@@ -33,20 +33,21 @@ const Emergency = ({ role, handleLogout }) => {
 
   const showToast = (message) => {
     setToast({ message, visible: true });
+    setTimeout(() => {
+      setToast({ message: "", visible: false });
+    }, 7000);
   };
 
   const handleEmergencyClick = async (type) => {
     const confirmSend = window.confirm(
-      `Are you sure you want to report a ${type} emergency?\nYour information will be sent automatically.`
+      `Are you sure you want to report a ${type} emergency?\nYour profile information will be sent automatically.`
     );
     if (!confirmSend) return;
 
     try {
       const res = await fetch("http://localhost/php/submit_emergency.php", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         credentials: "include",
         body: JSON.stringify({ type }),
       });
@@ -67,7 +68,7 @@ const Emergency = ({ role, handleLogout }) => {
       }
     } catch (error) {
       console.error("Submission error:", error);
-      showToast("❌ Network or backend error.");
+      showToast("❌ Network or server error occurred.");
     }
   };
 
@@ -106,7 +107,7 @@ const Emergency = ({ role, handleLogout }) => {
           }
         }
       } catch (err) {
-        console.error("Error fetching status:", err);
+        console.error("Status fetch error:", err);
       }
     };
 
