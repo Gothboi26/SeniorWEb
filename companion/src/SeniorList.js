@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
-import MapSelector from "./MapSelector"; // ⬅️ import updated map selector
+import MapSelector from "./MapSelector";
 import "./SeniorList.css";
 
 const SeniorList = () => {
@@ -23,6 +23,8 @@ const SeniorList = () => {
     age: "",
     sex: "",
     address: "",
+    lat: "",
+    lng: "",
     health_issue: "",
     first_name: "",
     middle_name: "",
@@ -35,37 +37,25 @@ const SeniorList = () => {
     emergency_contact_relationship: ""
   });
 
-  const extensionOptions = ["N/A", "Jr.", "Sr.", "II", "III", "IV"];
   const chapterOptions = [
     "NONE", "TAMARAW", "GUMAMELA", "AZICATE", "FISCA", "EL GRANDE", "TANADA",
     "UPPER TIBANGAN", "POLICARPIO", "VICTORIA", "BAHAY PARI", "RMS",
     "SANTIAGO", "SITIO SANTOLAN", "DE GULA/PEREZ", "ANGELES SENIOR CITIZENS ALLIANCE"
   ];
+
+  const extensionOptions = ["N/A", "Jr.", "Sr.", "II", "III", "IV"];
   const healthIssueOptions = [
     "Heart Disease", "Arthritis", "Diabetes", "Dementia/Alzheimer's Disease",
     "Cancer", "COPD", "Osteoporosis"
   ];
 
-  useEffect(() => {
-    const fetchPatients = async () => {
-      try {
-        const res = await fetch("http://localhost/php/get_users.php");
-        const data = await res.json();
-        if (data.status === "success") {
-          setPatients(data.data.filter(user => user.role === "client"));
-        } else {
-          alert(data.message);
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchPatients();
-  }, []);
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    if ((name === "barangay_id" || name === "number" || name === "emergency_contact_number") && !/^\d*$/.test(value)) return;
+
+    if ((name === "barangay_id" || name === "number" || name === "emergency_contact_number") && !/^[0-9]*$/.test(value)) return;
+
+    if (name === "barangay_id" && value.length > 5) return;
+    if ((name === "number" || name === "emergency_contact_number") && value.length > 11) return;
 
     if (name === "birthday") {
       const today = new Date();
@@ -81,13 +71,31 @@ const SeniorList = () => {
   };
 
   const validateForm = () => {
-    const requiredFields = Object.keys(formData).filter(k => k !== "extension" && (!editingId ? true : k !== "password"));
+    const requiredFields = [
+      "username", "number", "age", "sex", "address", "lat", "lng", "health_issue",
+      "email_address", "barangay_id", "group_chapter", "first_name", "last_name",
+      "birthday", "civil_status", "emergency_contact_person", "emergency_contact_number",
+      "emergency_contact_relationship"
+    ];
+  
+    // Only require password if adding a new user (not editing)
+    if (!editingId) {
+      requiredFields.push("password");
+    }
+  
     for (let field of requiredFields) {
-      if (!formData[field] || formData[field].trim() === "") {
+      const value = formData[field];
+      if (typeof value === 'string') {
+        if (value.trim() === "") {
+          alert(`"${field.replace(/_/g, " ")}" is required.`);
+          return false;
+        }
+      } else if (value === null || value === undefined) {
         alert(`"${field.replace(/_/g, " ")}" is required.`);
         return false;
       }
     }
+  
     if (formData.barangay_id.length !== 5) {
       alert("Barangay ID must be exactly 5 digits.");
       return false;
@@ -100,9 +108,10 @@ const SeniorList = () => {
       alert("Age must be 60 or older.");
       return false;
     }
+  
     return true;
   };
-
+  
   const handleAddSenior = async () => {
     if (!validateForm()) return;
     try {
@@ -122,13 +131,6 @@ const SeniorList = () => {
     } catch (err) {
       console.error(err);
     }
-  };
-
-  const handleEdit = (data) => {
-    setFormData({ ...data, password: "" });
-    setEditingId(data.id);
-    setStep(1);
-    setShowModal(true);
   };
 
   const handleUpdateSenior = async () => {
@@ -152,6 +154,13 @@ const SeniorList = () => {
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const handleEdit = (data) => {
+    setFormData({ ...data, password: "" });
+    setEditingId(data.id);
+    setStep(1);
+    setShowModal(true);
   };
 
   const handleDelete = async (id) => {
@@ -183,6 +192,8 @@ const SeniorList = () => {
       age: "",
       sex: "",
       address: "",
+      lat: "",
+      lng: "",
       health_issue: "",
       first_name: "",
       middle_name: "",
@@ -196,14 +207,22 @@ const SeniorList = () => {
     });
   };
 
-  const handleExportExcel = () => {
-    const filtered = filteredPatients();
-    const worksheet = XLSX.utils.json_to_sheet(filtered);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Seniors");
-    const data = new Blob([XLSX.write(workbook, { bookType: "xlsx", type: "array" })], { type: "application/octet-stream" });
-    saveAs(data, "seniors.xlsx");
-  };
+  useEffect(() => {
+    const fetchPatients = async () => {
+      try {
+        const res = await fetch("http://localhost/php/get_users.php");
+        const data = await res.json();
+        if (data.status === "success") {
+          setPatients(data.data.filter(user => user.role === "client"));
+        } else {
+          alert(data.message);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchPatients();
+  }, []);
 
   const filteredPatients = () =>
     patients.filter(p =>
@@ -213,13 +232,21 @@ const SeniorList = () => {
       )
     );
 
+  const handleExportExcel = () => {
+    const filtered = filteredPatients();
+    const worksheet = XLSX.utils.json_to_sheet(filtered);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Seniors");
+    const data = new Blob([XLSX.write(workbook, { bookType: "xlsx", type: "array" })], { type: "application/octet-stream" });
+    saveAs(data, "seniors.xlsx");
+  };
+
   return (
     <div className="senior-list-container">
       <div className="table-header">
         <h2>All Clients</h2>
         <button className="add-senior-button" onClick={() => { resetForm(); setEditingId(null); setShowModal(true); }}>Add Senior</button>
       </div>
-
       <div className="filter-bar">
         <input type="text" placeholder="Search seniors..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="search-input" />
         <select value={filterChapter} onChange={(e) => setFilterChapter(e.target.value)} className="chapter-filter">
@@ -228,7 +255,6 @@ const SeniorList = () => {
         </select>
         <button onClick={handleExportExcel}>Export Excel</button>
       </div>
-
       <table className="table">
         <thead>
           <tr>
@@ -243,6 +269,7 @@ const SeniorList = () => {
             <th>Sex</th>
             <th>Civil Status</th>
             <th>Address</th>
+            
             <th>Health Issue</th>
             <th>Emergency Contact</th>
             <th>Action</th>
@@ -262,6 +289,7 @@ const SeniorList = () => {
               <td>{p.sex}</td>
               <td>{p.civil_status}</td>
               <td>{p.address}</td>
+              
               <td>{p.health_issue}</td>
               <td>{p.emergency_contact_person} ({p.emergency_contact_relationship}) - {p.emergency_contact_number}</td>
               <td>
@@ -341,7 +369,9 @@ const SeniorList = () => {
           onSelect={(coords) => {
             setFormData(prev => ({
               ...prev,
-              address: coords.address || `Lat: ${coords.lat}, Lng: ${coords.lng}`
+              address: coords.address || `Lat: ${coords.lat}, Lng: ${coords.lng}`,
+              lat: coords.lat,
+              lng: coords.lng
             }));
             setShowMap(false);
           }}
