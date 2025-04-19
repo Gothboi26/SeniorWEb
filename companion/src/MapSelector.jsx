@@ -1,23 +1,32 @@
 import React, { useState, useEffect, useRef } from "react";
-import { MapContainer, TileLayer, Marker, useMapEvents, Popup, useMap } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  useMapEvents,
+  Popup,
+  useMap
+} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "leaflet-routing-machine";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import "./MapSelector.css";
-import logo from "./assets/logo.png"; // your barangay logo
+import logo from "./assets/logo.png";
 
+// 📍 Custom icon
 const customIcon = new L.Icon({
-  iconUrl: "/icons/marker-maroon.png",
+  iconUrl: "/icons/marker.png",
   iconSize: [38, 38],
   iconAnchor: [19, 38],
   popupAnchor: [0, -38],
-  shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
+  shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png"
 });
 
+// 📍 Bounds for Valenzuela
 const valenzuelaBounds = [
   [14.6500, 120.9000],
-  [14.7700, 121.0300],
+  [14.7700, 121.0300]
 ];
 
 const barangayHallCoords = [14.6861, 120.9955];
@@ -29,38 +38,46 @@ const Routing = ({ destination }) => {
   useEffect(() => {
     if (!destination) return;
 
-    // Remove existing route
+    // ✅ Remove existing route
     if (routingRef.current) {
       try {
-        routingRef.current.getPlan().setWaypoints([]);
-        map.removeControl(routingRef.current);
+        if (routingRef.current.getPlan) {
+          routingRef.current.getPlan().setWaypoints([]);
+        }
+        if (map.hasLayer(routingRef.current)) {
+          map.removeControl(routingRef.current);
+        }
       } catch (err) {
         console.warn("Error removing old route:", err);
       }
       routingRef.current = null;
     }
 
+    // ✅ Remove stray routing panels from DOM
+    document.querySelectorAll(".leaflet-routing-container").forEach(el => el.remove());
+
+    // ✅ Add new route
     const control = L.Routing.control({
-      waypoints: [
-        L.latLng(barangayHallCoords),
-        L.latLng(destination),
-      ],
+      waypoints: [L.latLng(barangayHallCoords), L.latLng(destination)],
       lineOptions: {
-        styles: [{ color: "maroon", weight: 6 }],
+        styles: [{ color: "maroon", weight: 6 }]
       },
       showAlternatives: false,
       addWaypoints: false,
       draggableWaypoints: false,
       routeWhileDragging: false,
       fitSelectedRoutes: true,
-      createMarker: () => null,
+      createMarker: () => null
     }).addTo(map);
 
     routingRef.current = control;
 
+    // ✅ Cleanup
     return () => {
       try {
-        if (routingRef.current) map.removeControl(routingRef.current);
+        if (routingRef.current && map.hasLayer(routingRef.current)) {
+          map.removeControl(routingRef.current);
+        }
       } catch (err) {
         console.warn("Cleanup failed:", err);
       }
@@ -76,17 +93,25 @@ const MapSelector = ({ onClose, onSelect, initialPosition = null }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [markerPosition, setMarkerPosition] = useState(null);
   const [pendingSelection, setPendingSelection] = useState(null);
+  const [selectedAddress, setSelectedAddress] = useState(""); // ✅ always store latest address
   const mapRef = useRef(null);
 
   useEffect(() => {
-    if (initialPosition) setMarkerPosition([initialPosition.lat, initialPosition.lng]);
+    if (initialPosition) {
+      setMarkerPosition([initialPosition.lat, initialPosition.lng]);
+      setSelectedAddress(initialPosition.address || "Selected Location");
+    }
   }, [initialPosition]);
 
   useEffect(() => {
-    if (initialPosition && mapRef.current) {
-      mapRef.current.setView([initialPosition.lat, initialPosition.lng], 17);
+    if (mapRef.current) {
+      if (markerPosition) {
+        mapRef.current.setView(markerPosition, 17);
+      } else {
+        mapRef.current.setView(barangayHallCoords, 17);
+      }
     }
-  }, [markerPosition, initialPosition]);
+  }, [markerPosition]);
 
   const tryGeocode = async (query) => {
     const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1&countrycodes=ph`);
@@ -126,6 +151,7 @@ const MapSelector = ({ onClose, onSelect, initialPosition = null }) => {
     setSuggestions([]);
     mapRef.current?.flyTo(pos, 17);
     setPendingSelection({ lat, lng, address });
+    setSelectedAddress(address); // ✅ store it for popup
   };
 
   const handleSuggestionClick = (place) => {
@@ -141,6 +167,7 @@ const MapSelector = ({ onClose, onSelect, initialPosition = null }) => {
       .then(data => {
         if (data?.address?.city === "Valenzuela") {
           setPendingSelection({ lat, lng, address: data.display_name });
+          setSelectedAddress(data.display_name);
         } else {
           alert("Only Valenzuela locations allowed.");
         }
@@ -164,7 +191,7 @@ const MapSelector = ({ onClose, onSelect, initialPosition = null }) => {
             console.error("Map click failed:", err);
             alert("Click error.");
           });
-      },
+      }
     });
     return null;
   };
@@ -179,6 +206,7 @@ const MapSelector = ({ onClose, onSelect, initialPosition = null }) => {
   const handleCancel = () => {
     setPendingSelection(null);
     setMarkerPosition(null);
+    setSelectedAddress("");
   };
 
   return (
@@ -211,30 +239,39 @@ const MapSelector = ({ onClose, onSelect, initialPosition = null }) => {
 
         <div className="map-container">
           <MapContainer
-            center={[14.7000, 120.9500]}
-            zoom={15}
+            center={barangayHallCoords}
+            zoom={17}
             style={{ height: "100%", width: "100%" }}
             maxBounds={valenzuelaBounds}
             maxBoundsViscosity={1.0}
-            whenCreated={(mapInstance) => { mapRef.current = mapInstance; }}
+            whenCreated={(mapInstance) => {
+              mapRef.current = mapInstance;
+            }}
           >
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               attribution="&copy; OpenStreetMap contributors"
             />
+
             {!initialPosition && <MapClickHandler />}
 
-            {/* Barangay Hall marker */}
             <Marker position={barangayHallCoords}>
               <Popup>
                 <div style={{ textAlign: "center" }}>
                   <h4>Barangay Tiburcio De Leon Hall</h4>
-                  <img src={logo} alt="Barangay Hall" style={{ width: "100%", maxWidth: "200px", borderRadius: "8px" }} />
+                  <img
+                    src={logo}
+                    alt="Barangay Hall"
+                    style={{
+                      width: "100%",
+                      maxWidth: "200px",
+                      borderRadius: "8px"
+                    }}
+                  />
                 </div>
               </Popup>
             </Marker>
 
-            {/* Destination marker */}
             {markerPosition && (
               <>
                 <Marker
@@ -243,7 +280,7 @@ const MapSelector = ({ onClose, onSelect, initialPosition = null }) => {
                   draggable={!initialPosition}
                   eventHandlers={!initialPosition ? { dragend: handleMarkerDrag } : {}}
                 >
-                  <Popup>{pendingSelection?.address || "Selected Location"}</Popup>
+                  <Popup>{pendingSelection?.address || selectedAddress || "Selected Location"}</Popup>
                 </Marker>
                 <Routing destination={markerPosition} />
               </>
