@@ -15,21 +15,7 @@
   opacity: 0.9;
 }
 
-/* Add Event Button */
-.add-event-button {
-  background-color: #C31C1C;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  font-family: "Roboto", sans-serif;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
+/* Save/Cancel Buttons */
 .save-button,
 .cancel-button {
   padding: 10px 20px;
@@ -69,7 +55,7 @@
   overflow-x: auto;
 }
 
-/* Header + Filter Layout (Synchronized with Emergencies Style) */
+/* Header + Filter Layout */
 .events-header {
   display: flex;
   flex-wrap: wrap;
@@ -86,7 +72,7 @@
   margin-bottom: 10px;
 }
 
-/* Search and Sort Section */
+/* Controls */
 .events-controls {
   display: flex;
   flex-wrap: wrap;
@@ -97,64 +83,33 @@
   margin-bottom: 20px;
 }
 
-.events-search {
-  flex-grow: 1;
-  min-width: 250px;
+/* View Logs button override */
+.events-button:nth-child(2) {
+  background-color: #800000; /* darker maroon */
 }
 
-.events-search input {
+.events-button:nth-child(2):hover {
+  background-color: #5c0000;
+}
+
+/* Sort Dropdown */
+.sort-select {
+  background-color: #c31c1c;
+  color: white;
   padding: 10px 20px;
-  font-size: 14px;
-  border-radius: 20px;
-  border: 1px solid #ccc;
-  outline: none;
-  width: 100%;
-  transition: border 0.3s ease;
-  font-family: "Roboto", sans-serif;
-}
-
-.events-search input:focus {
-  border-color: #c31c1c;
-}
-
-.events-sort-group {
-  display: flex;
-  gap: 15px;
-  flex-wrap: wrap;
-}
-
-.events-sort-group select,
-.events-sort-group button {
-  padding: 10px 20px;
-  font-size: 14px;
   border-radius: 20px;
   border: none;
   font-weight: 500;
-  font-family: "Roboto", sans-serif;
   cursor: pointer;
+  font-family: "Roboto", sans-serif;
 }
 
-.events-sort-group select {
-  background-color: #c31c1c;
-  color: white;
-}
-
-.events-sort-group select option {
+.sort-select option {
   background-color: white;
   color: black;
 }
 
-.events-sort-group button {
-  background-color: #800000;
-  color: white;
-  transition: background-color 0.3s ease;
-}
-
-.events-sort-group button:hover {
-  background-color: #5c0000;
-}
-
-/* Events Table */
+/* Table */
 .events-table {
   width: 100%;
   border-collapse: collapse;
@@ -181,9 +136,11 @@
   color: #888;
 }
 
-/* Buttons inside the Table */
-.actions- {
-  gap: 100px;
+/* Actions inside table */
+.action-icons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }
 
 .edit-button {
@@ -192,7 +149,7 @@
   border: 2px solid #5CB338;
   border-radius: 40px;
   font-weight: 600;
-  padding: 10px 20px;
+  padding: 8px 16px;
 }
 
 .delete-button {
@@ -201,12 +158,12 @@
   border: 2px solid #C31C1C;
   border-radius: 40px;
   font-weight: 600;
-  padding: 10px 20px;
+  padding: 8px 16px;
 }
 
 .edit-button:hover,
 .delete-button:hover {
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
 /* Modal */
@@ -223,23 +180,25 @@
   animation: fadeIn 0.3s ease-in-out;
 }
 
-.events-modal input {
+.events-modal input,
+.events-modal textarea {
   border-radius: 20px;
   font-size: 1rem;
-  padding: 5px 10px;
+  padding: 10px 15px;
   border: 1px solid #ccc;
   width: 100%;
   box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
 }
 
+/* Modal Title */
 .event-modal-text {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.event-modal-text h2 {
-  font-size: 1rem;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #333;
 }
 
 /* Center Modal */
@@ -261,7 +220,7 @@
   }
 }
 
-/* Badge and Label */
+/* Section Label */
 .events-section-label {
   margin: 10px 0;
   font-size: 1.1rem;
@@ -269,6 +228,7 @@
   color: #C31C1C;
 }
 
+/* Expired Badge */
 .badge-warning {
   background-color: #f0ad4e;
   color: white;
@@ -278,7 +238,40 @@
   font-size: 0.75rem;
 }
 
-/* Responsive Styles */
+/* Toast Notification */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #4caf50;
+  color: white;
+  padding: 15px 25px;
+  border-radius: 8px;
+  font-size: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  z-index: 9999;
+  animation: fadeInOut 3s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+/* Responsive */
 @media screen and (max-width: 768px) {
   .events-admin-container {
     padding: 10px;
@@ -294,14 +287,8 @@
     align-items: stretch;
   }
 
-  .events-sort-group {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .events-search input,
-  .events-sort-group select,
-  .events-sort-group button {
+  .sort-select,
+  .events-button {
     width: 100%;
   }
 
@@ -312,7 +299,7 @@
   }
 
   .events-modal {
-    padding: 15px;
+    padding: 20px;
   }
 
   .events-modal input,

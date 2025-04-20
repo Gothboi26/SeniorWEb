@@ -58,12 +58,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Handle GET request to fetch events
 $date = isset($_GET['date']) ? $_GET['date'] : '';
 $sortOrder = isset($_GET['sortOrder']) && strtolower($_GET['sortOrder']) === 'desc' ? 'DESC' : 'ASC';
+$fromToday = isset($_GET['from_today']) && $_GET['from_today'] == 1;
+$showLogs = isset($_GET['logs']) && $_GET['logs'] === 'past';
 
-if (!empty($date)) {
+if ($fromToday) {
+    // ✅ Fetch all today and future events
+    $now = date("Y-m-d H:i:s");
+    $sql = "SELECT * FROM events WHERE date_time >= ? ORDER BY date_time $sortOrder";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $now);
+} elseif ($showLogs) {
+    // ✅ Fetch past events
+    $now = date("Y-m-d H:i:s");
+    $sql = "SELECT * FROM events WHERE date_time < ? ORDER BY date_time $sortOrder";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $now);
+} elseif (!empty($date)) {
+    // ✅ Your original per-day filter
     $sql = "SELECT * FROM events WHERE DATE(date_time) = ? ORDER BY date_time $sortOrder";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $date);
 } else {
+    // ✅ Your original full fetch fallback
     $sql = "SELECT * FROM events ORDER BY date_time $sortOrder";
     $stmt = $conn->prepare($sql);
 }

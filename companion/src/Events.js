@@ -3,28 +3,24 @@ import Modal from "react-modal";
 import "./Events.css";
 
 const Events = () => {
-  const [dateTime, setDateTime] = useState(new Date());
   const [events, setEvents] = useState([]);
+  const [filteredEvents, setFilteredEvents] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [eventTitle, setEventTitle] = useState("");
   const [eventDescription, setEventDescription] = useState("");
   const [organizer, setOrganizer] = useState("");
   const [location, setLocation] = useState("");
+  const [dateTime, setDateTime] = useState(new Date());
   const [loading, setLoading] = useState(false);
   const [editingEventId, setEditingEventId] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
-  const [filterDate, setFilterDate] = useState("");
   const [showLogs, setShowLogs] = useState(false);
+  const [toast, setToast] = useState({ message: "", visible: false });
 
   useEffect(() => {
-    const formattedDate = filterDate || dateTime.toISOString().split("T")[0];
     let url = `http://localhost/php/get_events.php?sortOrder=${sortOrder}`;
-
-    if (showLogs) {
-      url += `&logs=past`;
-    } else {
-      url += `&date=${formattedDate}`;
-    }
+    url += showLogs ? `&logs=past` : `&from_today=1`;
 
     fetch(url)
       .then((response) => response.json())
@@ -39,7 +35,17 @@ const Events = () => {
         console.error("Error:", error);
         alert("An error occurred while loading events.");
       });
-  }, [dateTime, sortOrder, filterDate, showLogs]);
+  }, [sortOrder, showLogs]);
+
+  useEffect(() => {
+    const filtered = events.filter((event) =>
+      [event.event_title, event.organizer, event.location, event.event_description]
+        .join(" ")
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase())
+    );
+    setFilteredEvents(filtered);
+  }, [searchTerm, events]);
 
   const openModal = (event = null) => {
     setModalIsOpen(true);
@@ -71,6 +77,11 @@ const Events = () => {
 
   const validateInputs = () => {
     return eventTitle && eventDescription && dateTime && organizer && location;
+  };
+
+  const showToast = (message) => {
+    setToast({ message, visible: true });
+    setTimeout(() => setToast({ message: "", visible: false }), 3000);
   };
 
   const saveEvent = () => {
@@ -108,6 +119,7 @@ const Events = () => {
               : [...prevEvents, { ...newEvent, id: data.id }]
           );
           closeModal();
+          showToast(editingEventId ? "Event updated successfully!" : "Event added successfully!");
         } else {
           alert("Failed to save event: " + data.message);
         }
@@ -132,6 +144,7 @@ const Events = () => {
         .then((data) => {
           if (data.status === "success") {
             setEvents((prevEvents) => prevEvents.filter((event) => event.id !== id));
+            showToast("Event deleted successfully!");
           } else {
             alert("Failed to delete event: " + data.message);
           }
@@ -163,25 +176,17 @@ const Events = () => {
         <h2>Events</h2>
         <div className="events-controls">
           <button className="events-button" onClick={() => openModal()}>
-            ➕ Add Event
+            Add Event
           </button>
-          <div className="filters-group" style={{ marginLeft: "auto", display: "flex", gap: "10px" }}>
-            <button
-              className="events-button"
-              onClick={() => {
-                setShowLogs((prev) => !prev);
-                setFilterDate("");
-              }}
-            >
-              {showLogs ? "⬅ Back to Events" : "📁 View Logs"}
-            </button>
+          <div className="events-search" style={{ minWidth: "250px", flexGrow: 1 }}>
             <input
-              type="date"
-              value={filterDate}
-              onChange={(e) => setFilterDate(e.target.value)}
-              className="filter-date-container"
-              disabled={showLogs}
+              type="text"
+              placeholder="Search events..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
+          </div>
+          <div className="filters-group" style={{ display: "flex", gap: "10px" }}>
             <select
               onChange={(e) => setSortOrder(e.target.value)}
               value={sortOrder}
@@ -190,12 +195,18 @@ const Events = () => {
               <option value="asc">⬆ Ascending</option>
               <option value="desc">⬇ Descending</option>
             </select>
+            <button
+              className="events-button"
+              onClick={() => setShowLogs((prev) => !prev)}
+            >
+              {showLogs ? "Back to Events" : "View Logs"}
+            </button>
           </div>
         </div>
       </div>
 
       <h3 className="events-section-label">
-        {showLogs ? "📁 Past Event Logs" : "📅 Upcoming and Today’s Events"}
+        {showLogs ? "Past Event Logs" : "Upcoming and Today’s Events"}
       </h3>
 
       <div className="events-table-container">
@@ -211,8 +222,8 @@ const Events = () => {
             </tr>
           </thead>
           <tbody>
-            {events.length > 0 ? (
-              events.map((event) => (
+            {filteredEvents.length > 0 ? (
+              filteredEvents.map((event) => (
                 <tr key={event.id}>
                   <td>{event.event_title}</td>
                   <td>{event.organizer}</td>
@@ -287,6 +298,12 @@ const Events = () => {
           Cancel
         </button>
       </Modal>
+
+      {toast.visible && (
+        <div className="toast">
+          {toast.message}
+        </div>
+      )}
     </div>
   );
 };
