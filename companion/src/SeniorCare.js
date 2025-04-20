@@ -217,61 +217,76 @@ const SeniorCare = ({ role, handleLogout }) => {
         <div className="instruction-container">
           <div className="instruction-desc">
             <ol className="instruction-list">
-              <li><strong>Piliin ang Serbisyo</strong></li>
-              <li><strong>Pumili ng Araw at Oras</strong></li>
-              <li><strong>Kumpirmahin</strong></li>
-              <li><strong>Tandaan ang Detalye</strong></li>
-              <li><strong>Dumating sa Takdang Oras</strong></li>
+              <li><strong>Piliin ang Serbisyo</strong>
+                <p>Hanapin ang mga serbisyong pangkalusugan tulad ng health check-up, masahe, libreng gamot, dental check-up, o eye check-up. Pindutin ang serbisyong nais n'yo i-book. </p>
+              </li>
+              <li><strong>Pumili ng Araw at Oras</strong>
+                <p>Pagkatapos piliin ang serbisyo, lilitaw ang kalendaryo o listahan ng mga available na oras. Pumili ng petsa at oras na pinakakomportable para sa inyo. </p>
+              </li>
+              <li><strong>Kumpirmahin</strong>
+                <p>Kapag nakapili na ng araw at oras, pindutin ang "Kumpirmahin" o "Book Appointment" na button. Lalabas ang detalye ng inyong appointment, kasama ang petsa, oras, at lokasyon ng serbisyong napili. </p>
+              </li>
+              <li><strong>Tandaan ang Detalye</strong>
+                <p>Tingnan ang confirmation message o text na ipadadala ng app. Tandaan ang petsa at oras ng inyong appointment. </p>
+              </li>
+              <li><strong>Dumating sa Takdang Oras</strong>
+              <p>Siguraduhing dumating sa tamang oras o 10-15 minuto bago ang schedule upang maayos ang proseso ng inyong pagbisita. </p>
+              </li>
             </ol>
           </div>
         </div>
         <div className="senior-paalala">
-          <p className="senior-p"><strong>Paalala:</strong> Kayo ay bibigyan ng prayoridad sa clinic.</p>
+          <p className="senior-p"><strong>Paalala: </strong>Sa pamamagitan ng maingat na pagtatakda ng iskedyul, kayo ay bibigyan ng prayoridad sa klinika o sentrong pangkalusugan. Hindi na ninyo kailangang maghintay nang matagal sapagkat may itinakdang oras para sa inyong konsultasyon.</p>
         </div>
+
+        <div className="button-wrapper">
+          <button className="reserve-button" onClick={() => openModal("reserveSlot")}>Itakda ang Oras</button>
+          <button className="view-button" onClick={() => openModal("upcoming")}>Tingnan ang Tinakdang Oras</button>
+        </div>
+
       </div>
 
-      <div className="button-wrapper">
-        <button className="secondary-button" onClick={() => openModal("reserveSlot")}>Reserve a Slot</button>
-        <button className="secondary-button" onClick={() => openModal("upcoming")}>View Reserved Slots</button>
-      </div>
+      
 
       <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="modal">
-        <h2>{modalContent === "reserveSlot" ? "Reserve a Slot" : "Your Appointments"}</h2>
+        <h2>{modalContent === "reserveSlot" ? "Magtakda ng Araw at Oras" : "Ang Iyong Schedule"}</h2>
 
         {modalContent === "reserveSlot" ? (
           <>
-            <label>Choose a service:</label>
+            <label>Piliin ang Serbisyo:</label>
             <select value={selectedService} onChange={handleServiceChange} className="input-field">
               <option value="">Select a service</option>
               {services.map((s, i) => (
                 <option key={i} value={s}>{s}</option>
               ))}
             </select>
-
+            
             {selectedService && (
               <>
-                <label>Choose a date:</label>
-                <Calendar
-                  onClickDay={handleCalendarSelect}
-                  value={selectedDate ? new Date(selectedDate) : null}
-                  tileDisabled={({ date }) => {
-                    const formatted = getDateOnly(date);
-                    const today = getDateOnly(new Date());
-                    return formatted < today || !getValidDatesForService(selectedService).includes(formatted);
-                  }}
-                  tileClassName={({ date }) => {
-                    const formatted = getDateOnly(date);
-                    return getValidDatesForService(selectedService).includes(formatted)
-                      ? "highlighted"
-                      : null;
-                  }}
-                />
+                <label>Piliin ang Araw:</label>
+                <div className="calendar-styles"> 
+                  <Calendar
+                    onClickDay={handleCalendarSelect}
+                    value={selectedDate ? new Date(selectedDate) : null}
+                    tileDisabled={({ date }) => {
+                      const formatted = getDateOnly(date);
+                      const today = getDateOnly(new Date());
+                      return formatted < today || !getValidDatesForService(selectedService).includes(formatted);
+                    }}
+                    tileClassName={({ date }) => {
+                      const formatted = getDateOnly(date);
+                      return getValidDatesForService(selectedService).includes(formatted)
+                        ? "highlighted"
+                        : null;
+                    }}
+                  />
+                </div>                
               </>
             )}
 
             {availableTimes.length > 0 && (
               <>
-                <label>Choose a time:</label>
+                <label>Piliin ang Oras:</label>
                 <select
                   value={selectedTime}
                   onChange={(e) => setSelectedTime(e.target.value)}
@@ -288,8 +303,8 @@ const SeniorCare = ({ role, handleLogout }) => {
             )}
 
             <div className="modal-buttons">
-              <button className="secondary-button" disabled={!selectedService || !selectedDate || !selectedTime} onClick={handleReservation}>
-                Confirm Reservation
+              <button className="confirm-button" disabled={!selectedService || !selectedDate || !selectedTime} onClick={handleReservation}>
+                Confirm
               </button>
               <button className="secondary-button gray-button" onClick={closeModal}>Close</button>
             </div>
@@ -305,19 +320,16 @@ const SeniorCare = ({ role, handleLogout }) => {
 
             {modalContent === "pending" && (
               <>
-                <h3>Pending Appointments</h3>
                 {renderAppointmentsTable(upcomingAppointments.filter((a) => a.status.toLowerCase() === "pending"))}
               </>
             )}
             {modalContent === "upcoming" && (
               <>
-                <h3>Upcoming Appointments</h3>
                 {renderAppointmentsTable(upcomingAppointments.filter((a) => a.status.toLowerCase() === "approved"), true)}
               </>
             )}
             {modalContent === "past" && (
               <>
-                <h3>Past Appointments (Last 3 Days)</h3>
                 <div className="view-log-list">
                   {pastAppointments.filter((a) => {
                     const apptDate = new Date(a.date);
@@ -330,7 +342,7 @@ const SeniorCare = ({ role, handleLogout }) => {
                       <p><strong>Date:</strong> {formatDateToReadable(a.date)}</p>
                       <p><strong>Time:</strong> {formatTimeAMPM(a.time)}</p>
                       <p><strong>Status:</strong> {a.status}</p>
-                      <p><strong>Remarks:</strong> {a.remarks || "-"}</p>
+                      <p><strong>Remarks:</strong> {a.remarks || "N/A"}</p>
                       <hr />
                     </div>
                   ))}
@@ -348,7 +360,7 @@ const SeniorCare = ({ role, handleLogout }) => {
       </Modal>
 
       {showNotification && (
-        <div className="toast-notification">
+        <div className="paalala-toast">
           <p>🔔 Naaprubahan na ang iyong appointment! Tingnan ang "View Reserved Slots".</p>
           <button onClick={() => setShowNotification(false)}>OK</button>
         </div>

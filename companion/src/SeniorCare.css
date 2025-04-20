@@ -89,90 +89,166 @@
   border-radius: 30px;
   line-height: 1.4rem;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  text-align: justify;
 }
 
 .senior-p strong {
-  color: #800000;
+  color: #C31C1C;
   font-weight: bold;
 }
 
-/* Button wrapper */
+/* Button wrapper 
 .button-wrapper {
   max-width: 800px;
   margin: 0 auto;
   text-align: center;
 }
+*/
+.button-wrapper {
+  margin-top: 4vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px; 
+}
 
 /* Buttons */
-.secondary-button {
-  background-color: #800000;
+.reserve-button, 
+.view-button {
   color: #fff;
   border: none;
-  padding: 12px 24px;
-  border-radius: 10px;
-  font-size: 1rem;
+  padding: 15px 30px;
+  border-radius: 40px;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.35rem;
   cursor: pointer;
   transition: background 0.3s ease;
-  min-width: 180px;
+  width: 100%;
+  max-width: 400px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+  margin: 8px; 
 }
 
-.secondary-button:hover {
-  background-color: #a00000;
+.reserve-button {
+  background-color: #3aa856;
+  border: 3px solid #34974d;
 }
 
-.gray-button {
-  background-color: #ccc;
-  color: #333;
+.view-button {
+  background-color: #074799;
+  border: 3px solid #063b80;
 }
 
-.gray-button:hover {
-  background-color: #bbb;
+.reserve-button:hover {
+  background-color: #34974d;
+}
+
+.view-button:hover {
+  background-color: #063b80;
 }
 
 /* Modal Layout */
 .modal {
   background: white;
-  padding: 30px;
+  padding: 35px;
+  min-width: 55vh;
   max-width: 600px;
   margin: auto;
   border-radius: 16px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
   overflow-y: auto;
+  min-height: 30vh;
   max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
 }
 
 .modal h2 {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-size: 1.5rem;
   text-align: center;
-  color: #800000;
+  color: #C31C1C;
   margin-bottom: 20px;
+}
+
+.modal label {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-size: 1.3rem;
+  margin: 10px 5px;
 }
 
 /* Input Field */
 .input-field {
   display: block;
   width: 100%;
-  padding: 12px;
+  padding: 12px 15px;
   margin: 10px 0 20px;
   border-radius: 8px;
   border: 1px solid #ccc;
-  font-size: 1rem;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.3rem;
   box-sizing: border-box;
 }
 
 .input-field:focus {
-  border-color: #800000;
+  border-color: #C31C1C;
   outline: none;
   box-shadow: 0 0 0 2px rgba(128, 0, 0, 0.1);
 }
+
+/* Calendar in Modal */
+.calendar-styles {
+  justify-items: center;
+  margin: 15px 0;
+}
+
 
 /* Modal Buttons */
 .modal-buttons {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 12px;
   margin-top: 20px;
-  flex-wrap: wrap;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.confirm-button,
+.secondary-button {
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 40px;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.35rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  flex: 1 1 45%;            /* Responsive width inside flex */
+  max-width: 150px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+  margin: 8px;
+  box-sizing: border-box;
+}
+
+.confirm-button {
+  background-color: #D60000; /* or your #074799 if you prefer */
+}
+
+.confirm-button:disabled {
+  background-color: #C31C1C;
+  cursor: not-allowed;
+}
+
+.secondary-button.gray-button {
+  background-color: #3aa856;
+}
+
+.secondary-button.gray-button:hover {
+  background-color: #34974d;
 }
 
 /* Appointments Table */
@@ -195,7 +271,7 @@
 }
 
 .appointments-table th {
-  background-color: #800000;
+  background-color: #C31C1C;
   color: white;
   font-weight: 600;
 }
@@ -204,15 +280,15 @@
   background-color: #f9f9f9;
 }
 
-/* ✅ Past Appointments View Log Card */
+/* Past Appointments View Log Card */
 .view-log-list {
   margin-top: 20px;
 }
 
 .log-item {
-  background-color: #fdf3f3;
-  border-left: 5px solid #b71c1c;
-  padding: 15px 20px;
+  background-color: #fef6f6d6;
+  border-left: 5px solid #C31C1C;
+  padding: 15px 30px;
   margin-bottom: 16px;
   border-radius: 12px;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
@@ -220,7 +296,7 @@
 
 .log-item p {
   margin: 6px 0;
-  font-size: 0.95rem;
+  font-size: 1.3rem;
   color: #333;
 }
 
@@ -231,9 +307,9 @@
   margin-top: 12px;
 }
 
-/* 🔴 Calendar Highlight Styling */
+/* Calendar Highlight Styling */
 .highlighted {
-  background-color: #800000 !important;
+  background-color: #C31C1C !important;
   color: white !important;
   font-weight: bold;
   border-radius: 8px;
@@ -245,16 +321,17 @@
   justify-content: center;
   margin-top: 10px;
   margin-bottom: 20px;
-  gap: 10px;
+  gap: 15px;
   flex-wrap: wrap;
 }
 
 .tab-buttons button {
   background-color: #f2f2f2;
   border: 1px solid #ccc;
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-size: 1rem;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.3rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
@@ -264,41 +341,44 @@
 }
 
 .tab-buttons .active-tab {
-  background-color: #800000;
+  background-color: #C31C1C;
   color: white;
-  border-color: #800000;
+  border-color: #C31C1C;
 }
+
+
 
 /* ✅ Tagalog Toast Notification */
 .paalala-toast {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #800000;
-  color: white;
-  padding: 16px 20px;
-  border-radius: 12px;
+  bottom: 30px;
+  right: 30px;
+  background-color: #FFFFFF;
+  color: #1E1E1E;
+  padding: 10px 20px;
+  border-radius: 15px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
   font-weight: 500;
   z-index: 9999;
-  max-width: 340px;
-  font-size: 1rem;
+  max-width: 300vh;
+  font-size: 1.3rem;
+  font-family: "Roboto", sans-serif;
   display: flex;
   justify-content: space-between;
   align-items: center;
   animation: slideIn 0.3s ease-out;
+  gap: 15px;
 }
 
 .paalala-toast button {
-  margin-left: 12px;
   background: white;
-  color: #800000;
+  color: #C31C1C;
   border: none;
-  padding: 6px 12px;
   border-radius: 6px;
   cursor: pointer;
-  font-weight: 600;
-  font-size: 0.9rem;
+  font-weight: bolder;
+  font-size: 1.3rem;
+  font-family: "Roboto", sans-serif;
 }
 
 .paalala-toast button:hover {
@@ -353,7 +433,8 @@
     padding: 16px;
   }
 
-  .secondary-button {
+  .reserve-button, 
+  .view-button {
     width: 100%;
     min-width: unset;
     font-size: 0.9rem;
@@ -411,9 +492,9 @@
     padding: 24px;
   }
 
-  .secondary-button {
+  .reserve-button, .view-button {
     padding: 10px 22px;
-    font-size: 0.95rem;
+    font-size: 1rem;
   }
 
   .appointments-table th,
