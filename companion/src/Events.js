@@ -13,14 +13,18 @@ const Events = () => {
   const [loading, setLoading] = useState(false);
   const [editingEventId, setEditingEventId] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
-  const [showAllEvents, setShowAllEvents] = useState(false);
   const [filterDate, setFilterDate] = useState("");
+  const [showLogs, setShowLogs] = useState(false);
 
   useEffect(() => {
     const formattedDate = filterDate || dateTime.toISOString().split("T")[0];
-    const url = `http://localhost/php/get_events.php?date=${
-      showAllEvents ? "" : formattedDate
-    }&sortOrder=${sortOrder}`;
+    let url = `http://localhost/php/get_events.php?sortOrder=${sortOrder}`;
+
+    if (showLogs) {
+      url += `&logs=past`;
+    } else {
+      url += `&date=${formattedDate}`;
+    }
 
     fetch(url)
       .then((response) => response.json())
@@ -28,17 +32,14 @@ const Events = () => {
         if (data.status === "success" && Array.isArray(data.events)) {
           setEvents(data.events);
         } else {
-          console.error(
-            "Failed to load events:",
-            data.message || "No events found"
-          );
+          setEvents([]);
         }
       })
       .catch((error) => {
         console.error("Error:", error);
         alert("An error occurred while loading events.");
       });
-  }, [dateTime, sortOrder, showAllEvents, filterDate]);
+  }, [dateTime, sortOrder, filterDate, showLogs]);
 
   const openModal = (event = null) => {
     setModalIsOpen(true);
@@ -69,22 +70,18 @@ const Events = () => {
   };
 
   const validateInputs = () => {
-    if (!eventTitle || !eventDescription || !dateTime || !organizer || !location) {
-      alert("Please fill out all fields.");
-      return false;
-    }
-    return true;
+    return eventTitle && eventDescription && dateTime && organizer && location;
   };
 
   const saveEvent = () => {
-    if (!validateInputs()) return;
+    if (!validateInputs()) {
+      alert("Please fill out all fields.");
+      return;
+    }
 
     setLoading(true);
 
-    const formattedDateTime = dateTime
-      .toISOString()
-      .slice(0, 19)
-      .replace("T", " ");
+    const formattedDateTime = dateTime.toISOString().slice(0, 19).replace("T", " ");
 
     const newEvent = {
       id: editingEventId,
@@ -97,9 +94,7 @@ const Events = () => {
 
     fetch("http://localhost/php/add_events.php", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newEvent),
     })
       .then((response) => response.json())
@@ -108,9 +103,7 @@ const Events = () => {
           setEvents((prevEvents) =>
             editingEventId
               ? prevEvents.map((event) =>
-                  event.id === editingEventId
-                    ? { ...newEvent, id: data.id }
-                    : event
+                  event.id === editingEventId ? { ...newEvent, id: data.id } : event
                 )
               : [...prevEvents, { ...newEvent, id: data.id }]
           );
@@ -130,15 +123,15 @@ const Events = () => {
   const deleteEvent = (id) => {
     if (window.confirm("Are you sure you want to delete this event?")) {
       setLoading(true);
-      fetch(`http://localhost/php/get_events.php?id=${id}`, {
+      fetch(`http://localhost/php/delete_event.php`, {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
       })
         .then((response) => response.json())
         .then((data) => {
           if (data.status === "success") {
-            setEvents((prevEvents) =>
-              prevEvents.filter((event) => event.id !== id)
-            );
+            setEvents((prevEvents) => prevEvents.filter((event) => event.id !== id));
           } else {
             alert("Failed to delete event: " + data.message);
           }
@@ -160,7 +153,6 @@ const Events = () => {
       day: "numeric",
       hour: "2-digit",
       minute: "2-digit",
-      second: "2-digit",
       hour12: true,
     }).format(new Date(date));
   };
@@ -171,32 +163,40 @@ const Events = () => {
         <h2>Events</h2>
         <div className="events-controls">
           <button className="events-button" onClick={() => openModal()}>
-            Add Event
+            ➕ Add Event
           </button>
-          <div className="filters">
-            <input className="filter-date-container"
+          <div className="filters-group" style={{ marginLeft: "auto", display: "flex", gap: "10px" }}>
+            <button
+              className="events-button"
+              onClick={() => {
+                setShowLogs((prev) => !prev);
+                setFilterDate("");
+              }}
+            >
+              {showLogs ? "⬅ Back to Events" : "📁 View Logs"}
+            </button>
+            <input
               type="date"
               value={filterDate}
               onChange={(e) => setFilterDate(e.target.value)}
+              className="filter-date-container"
+              disabled={showLogs}
             />
-          </div>
-          <div className="sort-options">
             <select
               onChange={(e) => setSortOrder(e.target.value)}
               value={sortOrder}
+              className="sort-select"
             >
-              <option value="asc">Sort Ascending</option>
-              <option value="desc">Sort Descending</option>
+              <option value="asc">⬆ Ascending</option>
+              <option value="desc">⬇ Descending</option>
             </select>
-            <button
-              className="toggle-events-button"
-              onClick={() => setShowAllEvents((prevState) => !prevState)}
-            >
-              {showAllEvents ? "Show Events for Today" : "Show All Events"}
-            </button>
           </div>
         </div>
       </div>
+
+      <h3 className="events-section-label">
+        {showLogs ? "📁 Past Event Logs" : "📅 Upcoming and Today’s Events"}
+      </h3>
 
       <div className="events-table-container">
         <table className="events-table">
@@ -207,7 +207,7 @@ const Events = () => {
               <th>Location</th>
               <th>Date and Time</th>
               <th>Description</th>
-              <th>Action</th>
+              {!showLogs && <th>Action</th>}
             </tr>
           </thead>
           <tbody>
@@ -217,34 +217,38 @@ const Events = () => {
                   <td>{event.event_title}</td>
                   <td>{event.organizer}</td>
                   <td>{event.location}</td>
-                  <td>{formatDate(event.date_time)}</td>
-                  <td>{event.event_description}</td>
                   <td>
-                    <div className="action-icons">
-                      <button
-                        className="edit-button"
-                        onClick={() => openModal(event)}
-                      >Edit</button>
-                      <button
-                        className="delete-button"
-                        onClick={() => deleteEvent(event.id)}
-                      >Delete</button>
-                    </div>
-                    
+                    {formatDate(event.date_time)}
+                    {!showLogs && new Date(event.date_time) < new Date() && (
+                      <span className="badge-warning">Expired</span>
+                    )}
                   </td>
+                  <td>{event.event_description}</td>
+                  {!showLogs && (
+                    <td>
+                      <div className="action-icons">
+                        <button className="edit-button" onClick={() => openModal(event)}>
+                          Edit
+                        </button>
+                        <button className="delete-button" onClick={() => deleteEvent(event.id)}>
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                  )}
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="6" className="no-events">
-                  No events available
+                <td colSpan={showLogs ? 5 : 6} className="no-events">
+                  {showLogs ? "No logs found" : "No events available"}
                 </td>
               </tr>
             )}
           </tbody>
         </table>
       </div>
-      
+
       <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="events-modal">
         <h2 className="event-modal-text">{editingEventId ? "Edit Event" : "Add Event"}</h2>
         <input

@@ -11,6 +11,7 @@ const EmergenciesAdmin = () => {
   const [loadingStatusIndex, setLoadingStatusIndex] = useState(null);
   const [mapModalVisible, setMapModalVisible] = useState(false);
   const [mapCoords, setMapCoords] = useState({ lat: null, lng: null, address: "" });
+  const [showLogs, setShowLogs] = useState(false);
 
   const audioRef = useRef(null);
   const audioTimeoutRef = useRef(null);
@@ -28,9 +29,20 @@ const EmergenciesAdmin = () => {
         });
         const result = await response.json();
 
+        const isToday = (dateStr) => {
+          const today = new Date();
+          const date = new Date(dateStr);
+          return (
+            date.getFullYear() === today.getFullYear() &&
+            date.getMonth() === today.getMonth() &&
+            date.getDate() === today.getDate()
+          );
+        };
+
         const newAlerts = result.filter(
           (e) =>
             (e.status === "Pending" || e.status === "On the way") &&
+            isToday(e.date) &&
             !acknowledgedIds.includes(e.id)
         );
 
@@ -39,8 +51,7 @@ const EmergenciesAdmin = () => {
 
         if (newAlerts.length > 0) {
           if (audioRef.current && audioRef.current.paused) {
-            audioRef.current.play().catch(err => console.error("Audio play error", err));
-            // ⏱️ Stop after 5 seconds
+            audioRef.current.play().catch((err) => console.error("Audio play error", err));
             audioTimeoutRef.current = setTimeout(() => {
               if (audioRef.current && !audioRef.current.paused) {
                 audioRef.current.pause();
@@ -77,6 +88,14 @@ const EmergenciesAdmin = () => {
     stopSound();
   };
 
+  const isPastDate = (dateString) => {
+    const today = new Date();
+    const emergencyDate = new Date(dateString);
+    emergencyDate.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+    return emergencyDate < today;
+  };
+
   const filteredData = data.filter((item) =>
     item.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     item.type?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -86,7 +105,10 @@ const EmergenciesAdmin = () => {
     item.emergency_contact_name?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const sortedData = [...filteredData];
+  const logsData = filteredData.filter((item) => isPastDate(item.date));
+  const mainData = filteredData.filter((item) => !isPastDate(item.date));
+
+  const sortedData = [...(showLogs ? logsData : mainData)];
   if (sortConfig !== null) {
     sortedData.sort((a, b) => {
       if (a[sortConfig.key] < b[sortConfig.key]) return sortConfig.direction === "ascending" ? -1 : 1;
@@ -105,22 +127,24 @@ const EmergenciesAdmin = () => {
   };
 
   const handleStatusChange = async (index, newStatus) => {
-    const currentStatus = data[index].status;
+    const currentStatus = sortedData[index].status;
     if (newStatus === currentStatus) return;
 
     const confirmChange = window.confirm(`Change status to '${newStatus}'?`);
     if (!confirmChange) return;
 
     setLoadingStatusIndex(index);
+    const updatedItem = sortedData[index];
     const updatedData = [...data];
-    updatedData[index].status = newStatus;
+    const originalIndex = data.findIndex((d) => d.id === updatedItem.id);
+    updatedData[originalIndex].status = newStatus;
     setData(updatedData);
 
     try {
       await fetch("http://localhost/php/update_emergency_status.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: updatedData[index].id, status: newStatus }),
+        body: JSON.stringify({ id: updatedItem.id, status: newStatus }),
         credentials: "include",
       });
     } catch (err) {
@@ -178,6 +202,9 @@ const EmergenciesAdmin = () => {
             <option value="date:descending">Sort by Date (Newest)</option>
             <option value="date:ascending">Sort by Date (Oldest)</option>
           </select>
+          <button className="view-logs-button" onClick={() => setShowLogs((prev) => !prev)}>
+            {showLogs ? "Back to Active" : "View Logs"}
+          </button>
         </div>
       </div>
 
@@ -189,9 +216,7 @@ const EmergenciesAdmin = () => {
           <p><b>Status:</b> <span className={`status-${item.status.toLowerCase().replace(/\s/g, '-')}`}>{item.status}</span></p>
           <p><b>Location:</b> {item.location}</p>
           <p><b>User #:</b> {item.contact_number}</p>
-          <button onClick={() => acknowledgeSingle(item.id)} className="acknowledge-btn">
-            Acknowledge
-          </button>
+          <button onClick={() => acknowledgeSingle(item.id)} className="acknowledge-btn">Acknowledge</button>
         </div>
       ))}
 
@@ -213,7 +238,7 @@ const EmergenciesAdmin = () => {
         <tbody>
           {sortedData.length > 0 ? (
             sortedData.map((item, index) => (
-              <tr key={index}>
+              <tr key={item.id}>
                 <td>{item.name}</td>
                 <td>{item.date}</td>
                 <td>{item.time}</td>
@@ -253,7 +278,7 @@ const EmergenciesAdmin = () => {
             ))
           ) : (
             <tr>
-              <td colSpan={10}>No emergency reports found.</td>
+              <td colSpan={10}>No {showLogs ? "past" : "upcoming"} emergencies found.</td>
             </tr>
           )}
         </tbody>

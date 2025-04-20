@@ -7,9 +7,16 @@ const Appointments = () => {
   const [statusMessage, setStatusMessage] = useState("");
   const [activeTab, setActiveTab] = useState("pending");
   const [remarksInput, setRemarksInput] = useState({});
+  const [showLogs, setShowLogs] = useState(false);
 
   useEffect(() => {
     fetchAppointments();
+
+    const handleStorageSync = (e) => {
+      if (e.key === "slotsUpdatedAt") {
+        fetchAppointments();
+      }
+    };
 
     window.addEventListener("slotsUpdated", fetchAppointments);
     window.addEventListener("storage", handleStorageSync);
@@ -19,12 +26,6 @@ const Appointments = () => {
       window.removeEventListener("storage", handleStorageSync);
     };
   }, []);
-
-  const handleStorageSync = (e) => {
-    if (e.key === "slotsUpdatedAt") {
-      fetchAppointments();
-    }
-  };
 
   const fetchAppointments = async () => {
     try {
@@ -46,7 +47,14 @@ const Appointments = () => {
 
   const updateStatus = async (appointmentId, status) => {
     const appointment = appointments.find((a) => a.id === appointmentId);
-    const remark = remarksInput[appointmentId] || "";
+
+    let remark = remarksInput[appointmentId]?.trim();
+    if (!remark) {
+      remark = status === "approved" ? "Approved by admin" : "Request rejected";
+    }
+
+    const confirmMsg = `Are you sure you want to ${status} this appointment?`;
+    if (!window.confirm(confirmMsg)) return;
 
     try {
       const response = await fetch("http://localhost/php/get_appointment.php", {
@@ -60,7 +68,7 @@ const Appointments = () => {
           service: appointment?.service,
           date: appointment?.date,
           time: appointment?.time,
-          adjust_slot: status === "approved"
+          adjust_slot: status === "approved",
         }),
       });
 
@@ -74,7 +82,6 @@ const Appointments = () => {
         setStatusMessage("Status updated successfully.");
         setRemarksInput((prev) => ({ ...prev, [appointmentId]: "" }));
 
-        // Trigger real-time slot sync
         window.dispatchEvent(new Event("slotsUpdated"));
         localStorage.setItem("slotsUpdatedAt", Date.now());
       }
@@ -90,7 +97,7 @@ const Appointments = () => {
       weekday: "long",
       year: "numeric",
       month: "long",
-      day: "numeric"
+      day: "numeric",
     });
   };
 
@@ -102,13 +109,34 @@ const Appointments = () => {
     return date.toLocaleTimeString("en-US", {
       hour: "numeric",
       minute: "numeric",
-      hour12: true
+      hour12: true,
     });
   };
 
-  const filteredAppointments = appointments.filter(
-    (app) => (app.status || "pending").toLowerCase() === activeTab
-  );
+  const isPastAppointment = (app) => {
+    const today = new Date();
+    const appDate = new Date(app.date);
+    // Remove time portion
+    today.setHours(0, 0, 0, 0);
+    appDate.setHours(0, 0, 0, 0);
+    return appDate < today;
+  };
+
+  const isTodayOrUpcoming = (app) => {
+    const today = new Date();
+    const appDate = new Date(app.date);
+    today.setHours(0, 0, 0, 0);
+    appDate.setHours(0, 0, 0, 0);
+    return appDate >= today;
+  };
+
+  const filteredAppointments = showLogs
+    ? appointments.filter(isPastAppointment)
+    : appointments.filter(
+        (app) =>
+          isTodayOrUpcoming(app) &&
+          (app.status || "pending").toLowerCase() === activeTab
+      );
 
   return (
     <div className="appointment-table-container">
@@ -118,12 +146,21 @@ const Appointments = () => {
           {["pending", "approved", "reject"].map((tab) => (
             <button
               key={tab}
-              className={`tab-button ${activeTab === tab ? "active" : ""}`}
-              onClick={() => setActiveTab(tab)}
+              className={`tab-button ${activeTab === tab && !showLogs ? "active" : ""}`}
+              onClick={() => {
+                setActiveTab(tab);
+                setShowLogs(false);
+              }}
             >
               {tab.charAt(0).toUpperCase() + tab.slice(1)}
             </button>
           ))}
+          <button
+            className={`tab-button ${showLogs ? "active" : ""}`}
+            onClick={() => setShowLogs(true)}
+          >
+            View Logs
+          </button>
         </div>
       </div>
 
@@ -141,7 +178,7 @@ const Appointments = () => {
               <th>Time</th>
               <th>Status</th>
               <th>Remarks</th>
-              {activeTab === "pending" && <th>Actions</th>}
+              {!showLogs && activeTab === "pending" && <th>Actions</th>}
             </tr>
           </thead>
           <tbody>
@@ -155,7 +192,7 @@ const Appointments = () => {
                   <span className={`status ${app.status}`}>{app.status}</span>
                 </td>
                 <td>
-                  {app.status === "pending" ? (
+                  {app.status === "pending" && !showLogs ? (
                     <input
                       type="text"
                       className="remarks-input"
@@ -172,7 +209,7 @@ const Appointments = () => {
                     app.remarks || "-"
                   )}
                 </td>
-                {activeTab === "pending" && (
+                {!showLogs && activeTab === "pending" && (
                   <td className="action-icons">
                     <button
                       className="approve-button"

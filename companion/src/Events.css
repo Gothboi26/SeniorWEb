@@ -11,7 +11,7 @@
   transition: background-color 0.3s ease, opacity 0.3s ease;
 }
 
-events-button:hover {
+.events-button:hover {
   opacity: 0.9;
 }
 
@@ -35,7 +35,7 @@ events-button:hover {
   padding: 10px 20px;
   font-size: 16px;
   border: none;
-  border-radius: 8px; /* Match the same border-radius */
+  border-radius: 20px;
   cursor: pointer;
   transition: background-color 0.3s ease, opacity 0.3s ease;
 }
@@ -43,13 +43,11 @@ events-button:hover {
 .save-button {
   background-color: #34a853;
   color: white;
-  border-radius: 20px;
 }
 
 .cancel-button {
   background-color: #dc3545;
   color: white;
-  border-radius: 20px;
 }
 
 .cancel-button:hover {
@@ -61,23 +59,99 @@ events-button:hover {
   padding: 15px;
   display: flex;
   flex-direction: column;
-  margin: 20px auto;
-  margin-bottom: 15px;
+  margin: 20px auto 15px;
 }
 
 /* Events Table Container */
 .events-table-container {
-    width: 100%;
-    border-radius: 10px;
-    border-collapse: collapse;
+  width: 100%;
+  border-radius: 10px;
+  overflow-x: auto;
 }
-/* Events Controls (Responsive) */
+
+/* Header + Filter Layout (Synchronized with Emergencies Style) */
+.events-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.events-header h2 {
+  font-family: "Roboto", sans-serif;
+  font-size: 1.8rem;
+  color: #1E1E1E;
+  margin-bottom: 10px;
+}
+
+/* Search and Sort Section */
 .events-controls {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
   align-items: center;
-  gap: 20px;
-  justify-content: flex-end; /* Aligns to the right */
+  gap: 15px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.events-search {
+  flex-grow: 1;
+  min-width: 250px;
+}
+
+.events-search input {
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  outline: none;
+  width: 100%;
+  transition: border 0.3s ease;
+  font-family: "Roboto", sans-serif;
+}
+
+.events-search input:focus {
+  border-color: #c31c1c;
+}
+
+.events-sort-group {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.events-sort-group select,
+.events-sort-group button {
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 20px;
+  border: none;
+  font-weight: 500;
+  font-family: "Roboto", sans-serif;
+  cursor: pointer;
+}
+
+.events-sort-group select {
+  background-color: #c31c1c;
+  color: white;
+}
+
+.events-sort-group select option {
+  background-color: white;
+  color: black;
+}
+
+.events-sort-group button {
+  background-color: #800000;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.events-sort-group button:hover {
+  background-color: #5c0000;
 }
 
 /* Events Table */
@@ -87,7 +161,7 @@ events-button:hover {
   background-color: #f9f9f9;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .events-table th,
@@ -112,8 +186,7 @@ events-button:hover {
   gap: 100px;
 }
 
-.edit-button
- {
+.edit-button {
   background-color: #5CB338;
   color: #FFFFFF;
   border: 2px solid #5CB338;
@@ -136,100 +209,13 @@ events-button:hover {
   opacity: 0.7;
 }
 
-/* Header */
-.events-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.events-header h2 {
-  font-family: "Roboto", sans-serif;
-  font-size: 1.8rem;
-  color: #1E1E1E;
-  margin-bottom: 15px;
-}
-
-/* Sort Options */
-.sort-options {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.sort-options select,
-.sort-options button {
-  padding: 9px 20px;
-  font-size: 1rem;
-  border-radius: 5px;
-}
-
-.sort-options select {
-  border: 1px solid #ccc;
-  background-color: #fff;
-  cursor: pointer;
-  border-radius: 20px;
-  padding: 10px 20px;
-}
-
-.sort-options select:focus {
-  outline: none;
-  border-color: #4d90fe;
-}
-
-.sort-options button {
-  background-color: #C31C1C;
-  color: white;
-  border: none;
-  border-radius: 20px;
-  padding: 10px 20px;
-  font-weight: 500
-}
-
-.sort-options button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-/* Toggle Events Button */
-.toggle-events-button {
-  background-color: #2196f3;
-  color: white;
-  padding: 8px 12px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-/* Filters */
-.filters {
-  display: flex;
-  gap: 10px;
-}
-
-.filter-date-container input {
-  padding: 10px 20px;
-}
-
-.filters input {
-  padding: 10px 15px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-}
-
-.filter-date {
-  display: inline-block;
-}
-
-/* Modal Box */
+/* Modal */
 .events-modal {
   background: white;
   padding: 30px 40px;
   border-radius: 10px;
   width: 500px;
-  max-width: 90%; /* Makes it responsive */
+  max-width: 90%;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -237,18 +223,7 @@ events-button:hover {
   animation: fadeIn 0.3s ease-in-out;
 }
 
-.event-modal-text {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  align-items: center;
-}
-
-.event-modal-text h2 {
-  font-size: 1rem;
-}
-
-.events-modal input  {
+.events-modal input {
   border-radius: 20px;
   font-size: 1rem;
   padding: 5px 10px;
@@ -257,14 +232,24 @@ events-button:hover {
   box-sizing: border-box;
 }
 
-/* Centering the Modal Properly */
+.event-modal-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.event-modal-text h2 {
+  font-size: 1rem;
+}
+
+/* Center Modal */
 .ReactModal__Overlay {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* Animation for smooth appearance */
+/* Modal Animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -276,11 +261,21 @@ events-button:hover {
   }
 }
 
+/* Badge and Label */
+.events-section-label {
+  margin: 10px 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #C31C1C;
+}
 
-/* Events Table No Events Message */
-.no-events {
-  text-align: center;
-  color: #888;
+.badge-warning {
+  background-color: #f0ad4e;
+  color: white;
+  padding: 2px 6px;
+  margin-left: 8px;
+  border-radius: 5px;
+  font-size: 0.75rem;
 }
 
 /* Responsive Styles */
@@ -294,67 +289,33 @@ events-button:hover {
     align-items: flex-start;
   }
 
-  .sort-options {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .events-table {
-    font-size: 14px;
-  }
-
-  .events-header h2 {
-    font-size: 1.5rem;
-  }
   .events-controls {
     flex-direction: column;
     align-items: stretch;
-    justify-content: center;
-    width: 100%;
-  }
-  .filters,
-  .sort-options,
-  .add-event-button {
-    width: 100%;
-    text-align: center;
   }
 
-  .sort-options select,
-  .sort-options button,
-  .filters input {
+  .events-sort-group {
+    flex-direction: column;
     width: 100%;
   }
 
-  /* Make buttons and inputs responsive */
-  .events-button,
-  input,
-  select,
-  .save-button,
-  .cancel-button,
-  .toggle-events-button {
+  .events-search input,
+  .events-sort-group select,
+  .events-sort-group button {
     width: 100%;
-    box-sizing: border-box;
   }
 
-  /* Make modal content more responsive */
-  .events-modal {
-    max-width: 100%;
-    padding: 15px;
-  }
-
-  /* Adjust table for mobile view */
   .events-table th,
   .events-table td {
-    font-size: 1rem;
+    font-size: 14px;
     padding: 8px;
   }
 
-  /* Input fields in the modal */
-  .events-modal input,
-  .events-modal textarea {
-    font-size: 14px;
+  .events-modal {
+    padding: 15px;
   }
 
+  .events-modal input,
   .events-modal textarea {
     font-size: 14px;
   }
