@@ -1,613 +1,279 @@
 import React, { useEffect, useState, useCallback } from "react";
+import { Bar, Pie, Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  ArcElement,
+  Title,
+  Tooltip,
+  Legend,
+  LineElement,
+  PointElement,
+} from "chart.js";
+import { useNavigate } from "react-router-dom";
 import "./Overview.css";
 import editIcon from "./assets/edit.png";
 import deleteIcon from "./assets/delete.png";
-import { Bar, Pie, Line } from "react-chartjs-2";
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend, LineElement, PointElement } from "chart.js";
+import bellIcon from "./assets/bell.png";
 
-// Register Chart.js components
-ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, LineElement, PointElement, Title, Tooltip, Legend);
-
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  ArcElement,
+  LineElement,
+  PointElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const Overview = () => {
+  const navigate = useNavigate();
   const [appointments, setAppointments] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [appointmentsByDate, setAppointmentsByDate] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [currentAppointment, setCurrentAppointment] = useState(null);
-  const [isSaving, setIsSaving] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
   const [userRegistrationView, setUserRegistrationView] = useState("month");
   const [userRegistrationData, setUserRegistrationData] = useState({});
+  const [ageDistribution, setAgeDistribution] = useState({});
+  const [chapters, setChapters] = useState({});
+  const [appointmentStatusData, setAppointmentStatusData] = useState({});
+  const [appointmentsPerService, setAppointmentsPerService] = useState({});
+  const [notifications, setNotifications] = useState([]);
+  const [unreadCount, setUnreadCount] = useState(0);
+  const [showNotificationDetails, setShowNotificationDetails] = useState(false);
 
-
-
-  const formatLocalDate = (date) => {
-    const localDate = new Date(date);
-    const year = localDate.getFullYear();
-    const month = String(localDate.getMonth() + 1).padStart(2, "0");
-    const day = String(localDate.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  };
+  const formatDate = (date) => new Date(date).toISOString().split("T")[0];
 
   const filterAppointmentsByDate = useCallback((date) => {
-    const formattedDate = formatLocalDate(date);
-    const filteredAppointments = appointments.filter(
-      (appointment) => appointment.date === formattedDate
-    );
-    setAppointmentsByDate(filteredAppointments);
+    const filtered = appointments.filter((a) => a.date === formatDate(date));
+    setAppointmentsByDate(filtered);
   }, [appointments]);
 
   const fetchAppointmentsData = useCallback(() => {
-    fetch("http://localhost/php/appointments.php", {
-      credentials: "include", // Ensures session cookies are sent
-    })
-      .then((response) => response.json())
+    fetch("http://localhost/php/appointments.php", { credentials: "include" })
+      .then((res) => res.json())
       .then((data) => {
-        console.log("Fetched Data:", data); // Debugging
-  
-        if (Array.isArray(data)) {
-          // Case: original backend just returns the raw array
-          setAppointments(data);
-        } else if (data.status === "success" && Array.isArray(data.data)) {
-          // Case: if later backend returns wrapped response
-          setAppointments(data.data);
-        } else {
-          console.error("Unexpected API response format:", data);
-          setAppointments([]);
-        }
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching appointments:", error);
+        const apps = Array.isArray(data) ? data : data.data || [];
+        setAppointments(apps);
         setLoading(false);
       });
   }, []);
-  
-  
+
+  useEffect(() => { fetchAppointmentsData(); }, [fetchAppointmentsData]);
+  useEffect(() => { if (appointments.length) filterAppointmentsByDate(selectedDate); }, [appointments, selectedDate, filterAppointmentsByDate]);
 
   useEffect(() => {
-    fetchAppointmentsData();
-  }, [fetchAppointmentsData]); // Fetch data once when the component mounts
-
-  useEffect(() => {
-    if (appointments.length > 0) {
-      filterAppointmentsByDate(selectedDate);
-    }
-  }, [selectedDate, appointments, filterAppointmentsByDate]); // Runs when appointments or selectedDate changes
-
-
-  const handlePrevDate = () => {
-    setSelectedDate((prevDate) => {
-      const newDate = new Date(prevDate);
-      newDate.setMonth(newDate.getMonth() - 1);
-      return newDate;
-    });
-  };
-
-  const handleNextDate = () => {
-    setSelectedDate((prevDate) => {
-      const newDate = new Date(prevDate);
-      newDate.setMonth(newDate.getMonth() + 1);
-      return newDate;
-    });
-  };
-  
-const [ageDistribution, setAgeDistribution] = useState({
-  "60-70": 0,
-  "71-80": 0,
-  "81-90": 0,
-  "91-100": 0,
-  "101-110": 0,
-  "111-120": 0,
-  "121-130": 0,
-});
-
-
-const fetchAgeDistribution = useCallback(() => {
-  fetch("http://localhost/php/get_users.php")
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.status === "success") {
-        const ageData = { "60-70": 0, "71-80": 0, "81-90": 0, "91-100": 0, "101-110": 0, "111-120": 0, "121-130": 0 };
-
-        data.data.forEach((user) => {
-          const age = parseInt(user.age, 10);
-          if (age >= 60 && age <= 70) ageData["60-70"]++;
-          else if (age >= 71 && age <= 80) ageData["71-80"]++;
-          else if (age >= 81 && age <= 90) ageData["81-90"]++;
-          else if (age >= 91 && age <= 100) ageData["91-100"]++;
-          else if (age >= 101 && age <= 110) ageData["101-110"]++;
-          else if (age >= 111 && age <= 120) ageData["111-120"]++;
-          else if (age >= 121 && age <= 130) ageData["121-130"]++;
-        });
-
-        setAgeDistribution(ageData);
-      } else {
-        console.error("Failed to fetch users:", data.message);
+    const ws = new WebSocket("ws://localhost:8080");
+    ws.onmessage = (event) => {
+      const msg = JSON.parse(event.data);
+      if (msg.type === "chat" && msg.sender === "client") {
+        const newNotif = { type: "chat", message: "New chat message received", timestamp: new Date().toISOString() };
+        setNotifications((prev) => [newNotif, ...prev]);
+        setUnreadCount((prev) => prev + 1);
       }
-    })
-    .catch((error) => console.error("Error fetching user data:", error));
-}, []);
+    };
+    return () => ws.close();
+  }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetch("http://localhost/php/check_notifications.php")
+        .then((res) => res.json())
+        .then((data) => {
+          const newNotifs = [];
+          if (Array.isArray(data.emergencies)) {
+            data.emergencies.forEach(e =>
+              newNotifs.push({ type: "emergency", ...e, timestamp: e.timestamp || new Date().toISOString() })
+            );
+          }
+          if (Array.isArray(data.appointments)) {
+            data.appointments.forEach(a =>
+              newNotifs.push({ type: "appointment", ...a, timestamp: a.timestamp || new Date().toISOString() })
+            );
+          }
 
-useEffect(() => {
-  fetchAgeDistribution();
-}, [fetchAgeDistribution]);
+          if (newNotifs.length > 0) {
+            newNotifs.sort((a, b) => b.timestamp.localeCompare(a.timestamp));
+            setNotifications((prev) => [...newNotifs, ...prev]);
+            setUnreadCount((prev) => prev + newNotifs.length);
+          }
+        })
+        .catch((err) => console.error("Notification fetch failed", err));
+    }, 10000);
+    return () => clearInterval(interval);
+  }, []);
 
-const maxYValue = Math.max(...Object.values(ageDistribution)) + 1; // Add extra line above highest bar
+  const handleNotificationClick = (item) => {
+    if (item.type === "emergency") navigate("/emergencies");
+    if (item.type === "appointment") navigate("/appointments");
+    setShowNotificationDetails(false);
+  };
 
-const chartOptions = {
-  responsive: true,
-  plugins: {
-    title: { display: true, text: "Age Distribution of Senior Patients" }
-  },
-  indexAxis: 'y',  // This will make the bars horizontal
-  scales: {
-    x: { 
-      title: { display: true, text: "Number of Senior Patients" }, 
-      beginAtZero: true,
-      suggestedMax: maxYValue // Ensures extra space above highest bar
-    },
-    y: { 
-      title: { display: true, text: "Senior Age Group" }
+  const handleEdit = (a) => { setEditMode(true); setCurrentAppointment(a); };
+  const handleDelete = (id) => {
+    if (window.confirm("Delete this appointment?")) {
+      fetch(`http://localhost/php/appointments.php?id=${id}`, { method: "DELETE" })
+        .then((res) => res.json())
+        .then(() => setAppointments((prev) => prev.filter((a) => a.id !== id)));
     }
-  }
-};
-
-const getChartData = () => ({
-  labels: Object.keys(ageDistribution),
-  datasets: [
-    {
-      label: "Number of Senior Patients",
-      data: Object.values(ageDistribution),
-      backgroundColor: "#C31C1C",
-    },
-  ],
-});
-
-  
-  const handleEdit = (appointment) => {
-    setEditMode(true);
-    setCurrentAppointment(appointment);
   };
 
-  const handleDelete = (appointmentId) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this appointment?");
-    if (!confirmDelete) return;
-
-    fetch(`http://localhost/php/appointments.php?id=${appointmentId}`, {
-      method: "DELETE",
-    })
-      .then((response) => response.json())
-      .then(() => {
-        setAppointments((prevAppointments) =>
-          prevAppointments.filter((app) => app.id !== appointmentId)
-        );
-        alert("Appointment deleted successfully.");
-      })
-      .catch((error) => {
-        console.error("Error deleting appointment:", error);
-      });
-  };
-
-  const handleSaveEdit = (updatedAppointment) => {
+  const handleSaveEdit = (updated) => {
     if (isSaving) return;
-
     setIsSaving(true);
     fetch("http://localhost/php/appointments.php", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedAppointment),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updated),
     })
-      .then((response) => response.json())
+      .then((res) => res.json())
       .then((data) => {
-        setAppointments((prevAppointments) =>
-          prevAppointments.map((appointment) =>
-            appointment.id === data.id ? data : appointment
-          )
-        );
+        setAppointments((prev) => prev.map((a) => (a.id === data.id ? data : a)));
         setEditMode(false);
         setCurrentAppointment(null);
-        alert("Appointment updated successfully.");
-      })
-      .catch((error) => {
-        console.error("Error updating appointment:", error);
       })
       .finally(() => setIsSaving(false));
   };
 
-  /*Seniors Per Chapter Pie Chart */
-const [chapters, setChapters] = useState({});
+  const fetchUsers = useCallback(() => {
+    fetch("http://localhost/php/get_users.php")
+      .then((res) => res.json())
+      .then((data) => {
+        const users = data.data || [];
+        const ageDist = {}, chapterDist = {}, reg = {};
+        users.forEach((u) => {
+          const age = parseInt(u.age, 10);
+          const ageGroup = Math.floor(age / 10) * 10;
+          if (age >= 60) ageDist[`${ageGroup}-${ageGroup + 9}`] = (ageDist[`${ageGroup}-${ageGroup + 9}`] || 0) + 1;
+          if (u.group_chapter) chapterDist[u.group_chapter] = (chapterDist[u.group_chapter] || 0) + 1;
 
-const fetchChapterDistribution = useCallback(() => {
-  fetch("http://localhost/php/get_users.php")
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.status === "success") {
-        const chapterData = {};
-
-        // ✅ Only include users with valid group_chapter
-        data.data.forEach((user) => {
-          const chapter = user.group_chapter;
-          if (chapter && chapter.trim() !== "") {
-            chapterData[chapter] = (chapterData[chapter] || 0) + 1;
+          if (u.role !== "admin") {
+            const date = new Date(u.created_at);
+            const key = userRegistrationView === "year" ? date.getFullYear() : date.toLocaleString("en-US", { month: "long", year: "numeric" });
+            reg[key] = (reg[key] || 0) + 1;
           }
         });
+        setAgeDistribution(ageDist);
+        setChapters(chapterDist);
+        setUserRegistrationData(reg);
+      });
+  }, [userRegistrationView]);
 
-        setChapters(chapterData);
-      } else {
-        console.error("Failed to fetch users:", data.message);
-      }
-    })
-    .catch((error) => console.error("Error fetching user data:", error));
-}, []);
+  useEffect(() => { fetchUsers(); }, [fetchUsers]);
 
+  useEffect(() => {
+    const status = { Approved: 0, Rejected: 0, Pending: 0 };
+    const perService = {};
+    appointments.forEach((a) => {
+      const stat = a.status?.toLowerCase();
+      if (stat === "approved") status.Approved++;
+      else if (stat === "reject") status.Rejected++;
+      else status.Pending++;
+      const service = a.service?.trim() || "Unknown";
+      perService[service] = (perService[service] || 0) + 1;
+    });
+    setAppointmentStatusData(status);
+    setAppointmentsPerService(perService);
+  }, [appointments]);
 
-useEffect(() => {
-  fetchChapterDistribution(); // Fetch chapter data when component mounts
-}, [fetchChapterDistribution]);
+  const chartConfig = (labels, data, options) => ({ labels, datasets: [{ data, ...options }] });
 
-const pieChartOptions = {
-  responsive: true,
-  plugins: {
-    title: { display: true, text: "Seniors per Chapter" },
-    legend: {
-      position: 'bottom',  // This moves the legend to the right side
-    },
-  },
-};
-
-
-// Prepare Data for Pie Chart (Seniors per Chapter)
-const getChaptersPieChartData = () => ({
-  labels: Object.keys(chapters),
-  datasets: [
-    {
-      data: Object.values(chapters),
-      backgroundColor: [
-        "#3cb44b", "#9A6324", "#469990", "#a9a9a9", "#bfef45", "#911eb4", "#dcbeff", "#e6194B",
-        "#ffd8b1", "#4363d8", "#aaffc3", "#fffac8", "#f032e6", "#000075", "#800000", 
-      ],
-    },
-  ],
-});
-
-const [appointmentStatusData, setAppointmentStatusData] = useState({});
-
-useEffect(() => {
-  const statusCounts = {
-    Approved: 0,
-    Rejected: 0,
-    Pending: 0,
-  };
-
-  appointments.forEach((appointment) => {
-    const rawStatus = appointment.status?.trim();
-    if (rawStatus === "approved") {
-      statusCounts.Approved++;
-    } else if (rawStatus === "rejected") {
-      statusCounts.Rejected++;
-    } else {
-      statusCounts.Pending++;
-    }
-  });
-
-  setAppointmentStatusData(statusCounts);
-}, [appointments]);
-
-
-const getAppointmentStatusPieChartData = () => ({
-  labels: Object.keys(appointmentStatusData),
-  datasets: [
-    {
-      data: Object.values(appointmentStatusData),
-      backgroundColor: [
-        "#4caf50", "#f44336", "#2196f3",
-      ],
-    },
-  ],
-});
-
-/*Appointment Per Service - Line Graph */
-const [appointmentsPerService, setAppointmentsPerService] = useState({});
-
-useEffect(() => {
-  const serviceCounts = {};
-  appointments.forEach((appointment) => {
-    const service = appointment.service?.trim() || "Unknown";
-    serviceCounts[service] = (serviceCounts[service] || 0) + 1;
-  });
-  setAppointmentsPerService(serviceCounts);
-}, [appointments]);
-
-const getLineChartData = () => ({
-  labels: Object.keys(appointmentsPerService),
-  datasets: [
-    {
-      label: "Appointments per Service",
-      data: Object.values(appointmentsPerService),
-      fill: false,
-      borderColor: "#3e95cd",
-      tension: 0.2,
-    },
-  ],
-});
-
-const fetchRegisteredUsersData = useCallback((viewType) => {
-  fetch("http://localhost/php/get_users.php")
-    .then((res) => res.json())
-    .then((data) => {
-      if (data.status === "success") {
-        const counts = {};
-
-        data.data.forEach((user) => {
-          if (user.role === "admin") return; // ✅ Skip admin accounts
-
-          const createdAt = new Date(user.created_at);
-          let key;
-
-
-          if (viewType === "month") {
-            key = createdAt.toLocaleString("en-US", {
-              month: "long",
-              year: "numeric",
-            }); // e.g. "April 2024"
-          } else if (viewType === "year") {
-            key = createdAt.getFullYear().toString(); // "2024"
-          }
-
-          counts[key] = (counts[key] || 0) + 1;
-        });
-
-        const sortedCounts = Object.fromEntries(
-          Object.entries(counts).sort(([a], [b]) => new Date("1 " + a) - new Date("1 " + b))
-        );
-
-        setUserRegistrationData(sortedCounts);
-      } else {
-        console.error("Failed to fetch users:", data.message);
-      }
-    })
-    .catch((err) => console.error("Error:", err));
-}, []);
-
-
-useEffect(() => {
-  fetchRegisteredUsersData(userRegistrationView);
-}, [fetchRegisteredUsersData, userRegistrationView]);
-
-  const getRegisteredUsersLineChartData = () => ({
-  labels: Object.keys(userRegistrationData),
-  datasets: [
-    {
-      label: "Registered Seniors",
-      data: Object.values(userRegistrationData),
-      fill: false,
-      borderColor: "#C31C1C",
-      tension: 0.2,
-    },
-  ],
-});
-
-
-  
   return (
     <div className="overview-container">
-      <div className="summary-cards">
-
-      <div className="card card-light appointment-summary">
-        <h3>Total Appointments by Status</h3>
-          {Object.keys(appointmentStatusData).length > 0 ? (
-            <Pie data={getAppointmentStatusPieChartData()} options={{
-              responsive: true,
-              plugins: {
-                title: {
-                  display: true,
-                  text: "Appointment Status Distribution"
-                },
-                legend: {
-                  position: 'bottom',
-                },
-              },
-            }} />
-          ) : (
-            <p className="no-appointments">No appointment data available.</p>
-          )}
-        </div>
-        
-        <div className="card card-light">
-            <h3>Total Appointments per Service</h3>
-            <div className="chart-padding">
-            {Object.keys(appointmentsPerService).length > 0 ? (
-              <Line 
-              data={getLineChartData()} 
-              options={{
-                responsive: true,
-                plugins: {
-                  legend: { position: "bottom" },
-                  title: {
-                    display: true,
-                    text: "Appointments per Service",
-                  },
-                },
-                scales: {
-                  y: {
-                    beginAtZero: true,
-                    suggestedMax: Math.max(...Object.values(appointmentsPerService)) + 1.5,
-                    title: {
-                      display: true,
-                      text: "Total Appointments"
-                    }
-                  },
-                  x: {
-                    title: {
-                      display: true,
-                      text: "Service Name"
-                    }
-                  }
-                }
-              }} 
-            />            
-            ) : (
-              <p className="no-appointments">No appointment data available .</p>
-            )}
-            </div>
+      <div className="notification-bell" onClick={() => {
+        setShowNotificationDetails(!showNotificationDetails);
+        setUnreadCount(0); // Just reset counter
+      }}>
+        <img src={bellIcon} alt="Notifications" />
+        {unreadCount > 0 && <span className="notification-count">{unreadCount}</span>}
+        {showNotificationDetails && (
+          <div className="notification-dropdown">
+            {notifications.length === 0 ? <p>No new notifications</p> :
+              notifications.map((item, idx) => (
+                <div key={idx} onClick={() => handleNotificationClick(item)} className="notification-item">
+                  <strong>{item.type === "emergency" ? "🚨 Emergency" : item.type === "appointment" ? "📅 Appointment" : "💬 Chat"}</strong><br />
+                  {item.date && <span>{item.date}</span>}<br />
+                  {item.type === "emergency" && <span>Type: {item.emergency_type}</span>}
+                  {item.type === "appointment" && <span>Service: {item.service}</span>}
+                  {item.type === "chat" && <span>{item.message}</span>}
+                </div>
+              ))
+            }
           </div>
-        
+        )}
+      </div>
+
+      <div className="summary-cards">
+        <div className="card card-light">
+          <h3>Appointments by Status</h3>
+          <Pie data={chartConfig(Object.keys(appointmentStatusData), Object.values(appointmentStatusData), { backgroundColor: ["#4caf50", "#f44336", "#2196f3"] })} />
+        </div>
+        <div className="card card-light">
+          <h3>Appointments per Service</h3>
+          <Line data={chartConfig(Object.keys(appointmentsPerService), Object.values(appointmentsPerService), { label: "Appointments", borderColor: "#3e95cd", fill: false })} />
+        </div>
         <div className="card card-light">
           <h3>Seniors per Chapter</h3>
-          {Object.keys(chapters).length > 0 ? (
-            <Pie data={getChaptersPieChartData()} options={pieChartOptions} />
-          ) : (
-            <p className="no-appointments">No chapter data available.</p>
-          )}
+          <Pie data={chartConfig(Object.keys(chapters), Object.values(chapters), { backgroundColor: ["#3cb44b", "#e6194B", "#4363d8", "#f58231"] })} />
         </div>
       </div>
 
       <div className="statistics-section">
-        
         <div className="statistics">
-          <h3>Summary of Total Registered Seniors</h3>
-          <div className="view-buttons">
-            <button
-              className={userRegistrationView === "month" ? "active" : ""}
-              onClick={() => setUserRegistrationView("month")}
-            >
-              Month
-            </button>
-            <button
-              className={userRegistrationView === "year" ? "active" : ""}
-              onClick={() => setUserRegistrationView("year")}
-            >
-              Year
-            </button>
-          </div>
-
-          {Object.keys(userRegistrationData).length > 0 ? (
-            <Line
-              data={getRegisteredUsersLineChartData()}
-              options={{
-                responsive: true,
-                plugins: {
-                  legend: { position: "bottom" },
-                  title: {
-                    display: true,
-                    text: `Total Registered Seniors Per ${userRegistrationView[0].toUpperCase() + userRegistrationView.slice(1)}`,
-                  },
-                },
-                scales: {
-                  y: {
-                    beginAtZero: true,
-                    title: {
-                      display: true,
-                      text: "Number of Registrations",
-                    },
-                  },
-                  x: {
-                    title: {
-                      display: true,
-                      text: userRegistrationView === "week" ? "Week" : userRegistrationView === "year" ? "Year" : "Month",
-                    },
-                  },
-                },
-              }}
-            />
-          ) : (
-            <p>No registration data available.</p>
-          )}
+          <h3>Registered Seniors</h3>
+          <button onClick={() => setUserRegistrationView("month")}>Month</button>
+          <button onClick={() => setUserRegistrationView("year")}>Year</button>
+          <Line data={chartConfig(Object.keys(userRegistrationData), Object.values(userRegistrationData), { label: "Registrations", borderColor: "#C31C1C", fill: false })} />
         </div>
-
         <div className="age-summary">
           <h3>Senior Age Group</h3>
-          <Bar data={getChartData()} options={chartOptions} />
+          <Bar data={chartConfig(Object.keys(ageDistribution), Object.values(ageDistribution), { backgroundColor: "#C31C1C" })} />
         </div>
-
       </div>
 
+      <div className="appointment-table">
+        <h3>Appointments</h3>
+        <button onClick={() => setSelectedDate(new Date(selectedDate.setMonth(selectedDate.getMonth() - 1)))}>&lt;</button>
+        <span>{selectedDate.toLocaleString("en-US", { month: "long", year: "numeric" })}</span>
+        <button onClick={() => setSelectedDate(new Date(selectedDate.setMonth(selectedDate.getMonth() + 1)))}>&gt;</button>
 
-    <div className="appointment-table">
-      <div className="appointments">
-            <h3>Appointments</h3>
-            <div className="appointment-nav">
-                <button onClick={handlePrevDate}>&lt;</button>
-                <span>
-                  {selectedDate.toLocaleString("en-US", { month: "long", year: "numeric" })}
-                </span>
-                <button onClick={handleNextDate}>&gt;</button>
-            </div>
-              {loading ? (
-                <p>Loading...</p>
-              ) : appointmentsByDate.length === 0 ? (
-                <p>No appointments available.</p>
-              ) : (
-                <ul>
-                  {appointmentsByDate.map((appointment) => (
-                    <li key={appointment.id} className="appointment-item">
-                      <p>{appointment.details}</p>
-                      <img src={editIcon} alt="Edit" onClick={() => setEditMode(true)} />
-                      <img src={deleteIcon} alt="Delete" onClick={() => handleDelete(appointment.id)} />
-                    </li>
-                  ))}
-                </ul>
-              )}
-        </div>
-    </div>        
-      {/* Edit Appointment Modal or Form */}
+        {loading ? <p>Loading...</p> : appointmentsByDate.length === 0 ? <p>No appointments</p> : (
+          <ul>
+            {appointmentsByDate.map((a) => (
+              <li key={a.id} className="appointment-item">
+                <p>{a.details}</p>
+                <img src={editIcon} alt="Edit" onClick={() => handleEdit(a)} />
+                <img src={deleteIcon} alt="Delete" onClick={() => handleDelete(a.id)} />
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
       {editMode && currentAppointment && (
         <div className="edit-modal">
           <h3>Edit Appointment</h3>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleSaveEdit(currentAppointment);
-            }}
-          >
-            <label>Service:</label>
-            <input
-              type="text"
-              value={currentAppointment.service}
-              onChange={(e) =>
-                setCurrentAppointment({
-                  ...currentAppointment,
-                  service: e.target.value,
-                })
-              }
-            />
-            <label>Status:</label>
-            <input
-              type="text"
-              value={currentAppointment.status}
-              onChange={(e) =>
-                setCurrentAppointment({
-                  ...currentAppointment,
-                  status: e.target.value,
-                })
-              }
-            />
-            <label>Time:</label>
-            <input
-              type="text"
-              value={currentAppointment.time}
-              onChange={(e) =>
-                setCurrentAppointment({
-                  ...currentAppointment,
-                  time: e.target.value,
-                })
-              }
-            />
-            <button type="submit" disabled={isSaving}>
-              {isSaving ? "Saving..." : "Save"}
-            </button>
-            <button type="button" onClick={() => setEditMode(false)}>
-              Cancel
-            </button>
+          <form onSubmit={(e) => { e.preventDefault(); handleSaveEdit(currentAppointment); }}>
+            {["service", "status", "time"].map((field) => (
+              <input
+                key={field}
+                type="text"
+                value={currentAppointment[field]}
+                onChange={(e) => setCurrentAppointment({ ...currentAppointment, [field]: e.target.value })}
+              />
+            ))}
+            <button type="submit">{isSaving ? "Saving..." : "Save"}</button>
+            <button onClick={() => setEditMode(false)}>Cancel</button>
           </form>
         </div>
       )}
-
     </div>
   );
 };
