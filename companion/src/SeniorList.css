@@ -1,4 +1,4 @@
-/* General Container */
+/* 📦 General Container */
 .senior-list-container {
   background-color: white;
   padding: 15px;
@@ -6,7 +6,7 @@
   font-family: "Roboto", sans-serif;
 }
 
-/* Header Section */
+/* 🧱 Header Section */
 .table-header {
   display: flex;
   flex-direction: column;
@@ -28,12 +28,42 @@
   color: #1E1E1E;
 }
 
-/* Table Styling */
+/* 🔍 Search + Filter Section */
+.search-filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 12px;
+  width: 100%;
+}
+
+.search-filter-container input[type="text"],
+.search-filter-container select {
+  flex: 1;
+  min-width: 200px;
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+  background-color: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-filter-container input[type="text"]:focus,
+.search-filter-container select:focus {
+  outline: none;
+  border-color: maroon;
+  box-shadow: 0 0 5px rgba(128, 0, 0, 0.4);
+}
+
+/* 📋 Table Styling */
 .table {
   width: 100%;
   border-collapse: collapse;
   font-size: 1rem;
-  min-width: 900px; /* Prevent cramping on mobile */
+  min-width: 900px;
 }
 
 .table th,
@@ -46,14 +76,13 @@
 .table th {
   background-color: #D0CDF6;
   color: #1E1E1E;
-  font-size: 1rem;
 }
 
 .table tr:hover {
   background-color: #f9f9f9;
 }
 
-/* Add Senior Button */
+/* ➕ Add Button */
 .add-senior-button {
   background-color: #C31C1C;
   color: white;
@@ -73,7 +102,7 @@
   transform: scale(1.05);
 }
 
-/* Modal Overlay */
+/* 🧾 Modal Overlay */
 .senior-modal-overlay {
   position: fixed;
   top: 0;
@@ -88,7 +117,7 @@
   padding: 20px;
 }
 
-/* Modal Box */
+/* 🪟 Modal Box */
 .senior-modal {
   background: white;
   padding: 30px 20px;
@@ -110,7 +139,7 @@
   box-sizing: border-box;
 }
 
-/* Modal Buttons */
+/* 🧲 Modal Buttons */
 .senior-modal-buttons {
   display: flex;
   justify-content: center;
@@ -139,7 +168,7 @@
   color: white;
 }
 
-/* Health Issue Tags */
+/* 🏷️ Health Issue Tags */
 .selected-tags {
   display: flex;
   flex-wrap: wrap;
@@ -167,7 +196,7 @@
   cursor: pointer;
 }
 
-/* Action Icons (Edit/Delete buttons) */
+/* ✏️ Action Icons */
 .action-icons {
   display: flex;
   flex-wrap: wrap;
@@ -205,7 +234,7 @@
   transform: scale(1.05);
 }
 
-/* Optional Logout Button */
+/* 🚪 Logout Button */
 .logout-link {
   padding: 10px 20px;
   font-size: 1.2rem;
@@ -216,7 +245,7 @@
   cursor: pointer;
 }
 
-/* Scrollable Table Container (Mobile) */
+/* 📱 Responsive Design */
 @media (max-width: 768px) {
   .senior-list-container {
     padding: 10px;
@@ -237,6 +266,11 @@
   }
 
   .senior-modal-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-filter-container {
     flex-direction: column;
     align-items: stretch;
   }
