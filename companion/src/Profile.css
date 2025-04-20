@@ -34,6 +34,8 @@ body {
   align-items: center;
   width: 100%; /* Ensures full width */
   margin: 20px 0; /* Adds some spacing on top and bottom */
+  color: #C31C1C;
+  font-size: 2rem;
 }
 
 .profile-title.h1 {

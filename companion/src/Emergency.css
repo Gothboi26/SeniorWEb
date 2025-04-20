@@ -373,29 +373,37 @@ body {
   position: fixed;
   bottom: 30px;
   right: 30px;
-  background-color: #333;
-  color: white;
-  padding: 16px 24px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
-  z-index: 999;
+  background-color: #FFFFFF;
+  color: #1E1E1E;
+  padding: 10px 20px;
+  border-radius: 15px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+  font-weight: 500;
+  z-index: 9999;
+  max-width: 300vh;
+  font-size: 1.3rem;
+  font-family: "Roboto", sans-serif;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
+  animation: slideIn 0.3s ease-out;
+  gap: 15px;
 }
 
 .toast-notification button {
-  background: #ff5f5f;
+  background: white;
+  color: #C31C1C;
   border: none;
-  padding: 6px 12px;
-  color: white;
   border-radius: 6px;
-  font-weight: bold;
   cursor: pointer;
+  font-weight: bolder;
+  font-size: 1.3rem;
+  font-family: "Roboto", sans-serif;
 }
 
-
+.toast-notification button:hover {
+  background-color: #f0f0f0;
+}
 
 @keyframes fadeIn {
   from {
