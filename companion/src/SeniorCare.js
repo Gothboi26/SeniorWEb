@@ -351,7 +351,6 @@ const SeniorCare = ({ role, handleLogout }) => {
             )}
             {modalContent === "reject" && (
               <>
-                <h3>Rejected Appointments</h3>
                 {renderAppointmentsTable(upcomingAppointments.filter((a) => a.status.toLowerCase() === "reject"), true)}
               </>
             )}
