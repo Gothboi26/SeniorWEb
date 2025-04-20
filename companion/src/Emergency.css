@@ -27,7 +27,7 @@ body {
 .emergency-title-container h1 {
   font-size: 2rem;
   font-weight: bold;
-  color: #b71c1c;
+  color: #C31C1C;
   margin: 0;
 }
 
@@ -40,7 +40,7 @@ body {
 
 /* Description Section */
 .emergency-description {
-  padding: 40px 60px 30px;
+  padding: 40px 40px 30px;
   background-color: #fff8e1;
   border: 3px solid #c31c1c;
   border-radius: 40px;
@@ -50,7 +50,7 @@ body {
 
 .emergency-desc-title {
   margin-bottom: 20px;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 400;
   text-align: justify;
   color: #272927;
@@ -60,13 +60,13 @@ body {
 .emergency-desc-title strong {
   margin-bottom: 20px;
   font-size: 1.3rem;
-  color: #800000;
+  color: #C31C1C;
   font-weight: bold;
   margin-top: 10px;
 }
 
 .emergency-desc {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   justify-content: left;
   text-align: justify;
 }
@@ -94,7 +94,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-size: 1.4rem;
   font-weight: bold;
   gap: 10px;
   cursor: pointer;
@@ -134,7 +134,7 @@ body {
 .contacts-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 1rem;
+  font-size: 1.3rem;
 }
 
 .contacts-table th,
@@ -199,7 +199,7 @@ body {
   background: none;
   border: none;
   font-size: 24px;
-  color: #800000;
+  color: #C31C1C;
   cursor: pointer;
 }
 
@@ -213,7 +213,7 @@ body {
 .emergency-form h3 {
   text-align: center;
   font-size: 1.6rem;
-  color: #b71c1c;
+  color: #C31C1C;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -238,7 +238,7 @@ body {
 }
 
 .emergency-form button {
-  background-color: #800000;
+  background-color: #C31C1C;
   color: white;
   border: none;
   border-radius: 8px;

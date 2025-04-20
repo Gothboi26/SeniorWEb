@@ -128,9 +128,12 @@ function Chat({ role, handleLogout }) {
           {/* Notice */}
           <div className="chat-description">
             <p className="chat-desc-title">
-              <strong>Paalala:</strong> Ang Chat Assistance ay idinisenyo upang
-              magbigay ng agarang kasagutan sa inyong mga katanungan.
-            </p>
+              <strong>Paalala: </strong>Ang Chat Assistance ay idinisenyo upang magbigay ng agarang kasagutan sa inyong mga katanungan. Layunin nitong maghatid ng malinaw at tiyak na impormasyon upang maging mabilis at maayos ang inyong karanasan.</p>
+            <ul className="chat-desc">
+            <li><strong>Maging malinaw </strong>- Siguraduhing maayos at detalyado ang inyong tanong o concern upang mas madaling maibigay ang tamang sagot.</li>
+            <li><strong>Hintayin ang tugon </strong>- Maghintay nang ilang saglit habang sinusuri ng admin ang inyong mensahe upang maibigay ang naaangkop na kasagutan.</li>
+            <li><strong>Iwasan ang spam </strong>- Iwasang magpadala ng paulit-ulit na mensahe upang hindi maantala ang proseso ng pagbibigay ng tulong.</li>
+            </ul>
           </div>
 
           {/* FAQs */}

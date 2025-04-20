@@ -6,7 +6,7 @@ import BackToHome from "./BackToHome";
 import police from "./assets/police.png";
 import ambulance from "./assets/ambulance.png";
 import firetruck from "./assets/firetruck.png";
-import family from "./assets/family.png";
+/* import family from "./assets/family.png"; */
 
 const Emergency = ({ role, handleLogout }) => {
   const [toast, setToast] = useState({ message: "", visible: false, type: "" });
@@ -15,8 +15,8 @@ const Emergency = ({ role, handleLogout }) => {
   const emergencyOptions = [
     { type: "Police", icon: police },
     { type: "Ambulance", icon: ambulance },
-    { type: "Fire Truck", icon: firetruck },
-    { type: "Family", icon: family },
+    { type: "Fire Truck", icon: firetruck }
+    /* { type: "Family", icon: family }, */
   ];
 
   const emergencyHotlines = [
@@ -135,8 +135,17 @@ const Emergency = ({ role, handleLogout }) => {
         <div className="emergency-details-container">
           <div className="emergency-description">
             <p className="emergency-desc-title">
-              <strong>Paalala:</strong> I-click ang button ng emergency na kailangan mo. Ang iyong profile data ay awtomatikong gagamitin.
+              <strong>Paalala: </strong>
+              Ang Emergency Assistance ay idinisenyo upang magbigay ng mabilis at maaasahang tulong sa oras ng pangangailangan. Layunin nitong maghatid ng malinaw, tiyak, at agarang impormasyon upang matiyak ang tamang aksyon at solusyon sa anumang uri ng emergency.
             </p>
+            <ul className="emergency-desc">
+              <li>Sa oras ng emergency, pindutin ang tamang button para sa nais tawagan:</li>
+              <li>Siguraduhing ibigay ang tamang detalye tulad ng lokasyon, uri ng emergency, at contact number.</li>
+              <li><strong>Pangalan</strong></li>
+              <li><strong>Address</strong></li>
+              <li><strong>Contact Number</strong></li>
+            </ul>
+          
           </div>
 
           <div className="buttons-container">
@@ -178,7 +187,7 @@ const Emergency = ({ role, handleLogout }) => {
                 </tbody>
               </table>
             </div>
-
+            /* 
             <div className="contacts">
               <p className="contacts-title">Emergency Contacts</p>
               <table className="contacts-table">
@@ -193,6 +202,7 @@ const Emergency = ({ role, handleLogout }) => {
               </table>
             </div>
           </div>
+         
         </div>
 
         <BackToHome role={role} />

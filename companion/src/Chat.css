@@ -25,7 +25,7 @@
   text-align: center;
   font-family: "Roboto", sans-serif;
   font-weight: 600;
-  color: #c31c1c;
+  color: #C31C1C;
 }
 
 /*  Chat Details Container */
@@ -39,9 +39,9 @@
 
 /* Chat Description Container */
 .chat-description {
-  padding: 40px 60px 30px;
+  padding: 40px 40px 30px;
   background-color: #fff8e1;
-  border: 3px solid #c31c1c;
+  border: 3px solid #C31C1C;
   border-radius: 40px;
   line-height: 1.7rem;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
@@ -59,7 +59,7 @@
 .chat-desc-title strong {
   margin-bottom: 20px;
   font-size: 1.3rem;
-  color: #800000;
+  color: #C31C1C;
   font-weight: bold;
   margin-top: 10px;
 }
@@ -85,16 +85,15 @@
 }
 
 .faq-button {
-  width: 45%;
-  background-color: #fbfbf6;
-  border: 2px solid #c31c1c;
+  width: 100%;
+  background-color: #C31C1C;
   border-radius: 20px;
   padding: 12px 20px;
   margin: 10px 0;
-  text-align: left;
-  font-size: 1rem;
+  text-align: center;
+  font-size: 1.3rem;
   font-weight: 500;
-  color: #272927;
+  color: #fff;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -102,67 +101,86 @@
 
 .faq-button:hover {
   background-color: #ffe2cc;
-  border-color: #a10000;
+  border-color: #CD1D1D;
   transform: scale(1.02);
 }
 
 .talk-to-admin-button {
   margin-top: 20px;
-  padding: 12px 20px;
-  background-color: #c31c1c;
+  padding: 12px 40px;
+  background-color: #1F1785;
   color: white;
   border: none;
   border-radius: 20px;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .talk-to-admin-button:hover {
-  background-color: #a10000;
+  background-color: #1a1471;
 }
 
 /* Chat Window Container */
 .chat-window-container {
   padding: 20px 0;
 }
+
 .chat-window-box {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: #ffffff;
-  border: 2px solid #0c0c0c;
-  border-radius: 40px;
-  height: 300px;
+  background-color: #FFFFFF;
+  border-radius: 15px;
+  height: 50vh;
+  width: 100%;
+  margin: 30px auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   padding: 10px;
-  margin-top: 10px;
-  overflow: hidden; /* Prevents input from overflowing */
+  overflow: hidden;
 }
 
 /* Chat Input Container */
 .chat-input-container {
   display: flex;
-  align-items: center;
+  padding: 10px;
+  border-top: 1px solid #333;
+  background-color: #F3F4F6;
   gap: 10px;
-  padding-top: 10px;
-  border-top: 1px solid #ccc;
 }
+
 .chat-input {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 10px; /* Reduced gap for a more compact look */
+  gap: 20px; /* Reduced gap for a more compact look */
   width: 100%; /* Ensure it takes full width */
 }
+
 .chat-messages {
   flex: 1;
   overflow-y: auto;
-  padding-right: 10px;
+  padding: 10px;
 }
 
 /* Chat Input Text */
 .chat-input-text {
-  flex: 1; /* Make the input take the remaining space */
+  flex: 1;
+  padding: 10px 15px;
+  background-color: #f3f4f6;
+  color: #1E1E1E;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.3rem;
+  font-style: italic;
+}
+
+.chat-input-text::placeholder {
+  color: #aaa;
+}
+
+.chat-input-text:focus {
+  outline: 2px solid #3b82f6;
 }
 
 input[type="text1"] {
@@ -179,37 +197,46 @@ input[type="text1"] {
 }
 
 input[type="text1"]:focus {
-  border-color: #c31c1c;
+  border-color: #C31C1C;
   box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
 }
 
 .chat-send-button {
-  padding: 10px 20px;
-  border: none;
-  background-color: #c31c1c;
+  background-color: #C31C1C;
   color: white;
+  border: none;
+  padding: 10px 40px;
   border-radius: 20px;
-  width: 10rem;
   cursor: pointer;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.chat-send-button:hover {
+  background-color: #CD1D1D;
 }
 
 .chat-bubble {
-  margin: 5px 0;
-  padding: 10px;
-  border-radius: 10px;
-  max-width: 80%;
+  margin: 8px;
+  padding: 12px 40px;
+  border-radius: 20px;
+  max-width: 75%;
+  font-size: 1.3rem;
+  color: white;
+  word-wrap: break-word;
+  justify-content: left;
 }
 
+/* User Message */
 .user {
-  background-color: #dcf8c6;
+  background-color: #C31C1C;
   align-self: flex-end;
-  margin-left: auto;
 }
 
-.bot {
-  background-color: #f1f1f1;
-  align-self: flex-start;
+.bot,
+.admin {
+  background-color: #1F1785;
 }
 
 /* Responsive Design for Mobile */
