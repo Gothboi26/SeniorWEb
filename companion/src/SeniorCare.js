@@ -33,8 +33,7 @@ const SeniorCare = ({ role, handleLogout }) => {
   const [availableTimes, setAvailableTimes] = useState([]);
   const [selectedTime, setSelectedTime] = useState("");
   const [serviceSlots, setServiceSlots] = useState([]);
-  const [pastAppointments, setPastAppointments] = useState([]);
-  const [upcomingAppointments, setUpcomingAppointments] = useState([]);
+  const [appointments, setAppointments] = useState([]);
   const [showNotification, setShowNotification] = useState(false);
   const notificationShownRef = useRef(false);
 
@@ -46,29 +45,26 @@ const SeniorCare = ({ role, handleLogout }) => {
     "Eye Check-up",
   ];
 
+  const fetchAllData = async () => {
+    try {
+      const res = await fetch("http://localhost/php/appointments.php", {
+        method: "GET",
+        credentials: "include",
+      });
+      const data = await res.json();
+      setAppointments(data);
+
+      const slotRes = await fetch("http://localhost/php/get_service_slots.php", {
+        credentials: "include",
+      });
+      const slotData = await slotRes.json();
+      setServiceSlots(slotData);
+    } catch (err) {
+      console.error("Error reloading data:", err);
+    }
+  };
+
   useEffect(() => {
-    const fetchAllData = async () => {
-      try {
-        const res = await fetch("http://localhost/php/appointments.php", {
-          method: "GET",
-          credentials: "include",
-        });
-        const data = await res.json();
-        const today = getDateOnly(new Date());
-
-        setUpcomingAppointments(data.filter((a) => a.date >= today));
-        setPastAppointments(data.filter((a) => a.date < today));
-
-        const slotRes = await fetch("http://localhost/php/get_service_slots.php", {
-          credentials: "include",
-        });
-        const slotData = await slotRes.json();
-        setServiceSlots(slotData);
-      } catch (err) {
-        console.error("Error reloading data:", err);
-      }
-    };
-
     if (role === "client") {
       fetchAllData();
       const interval = setInterval(fetchAllData, 10000);
@@ -78,13 +74,13 @@ const SeniorCare = ({ role, handleLogout }) => {
 
   useEffect(() => {
     if (!notificationShownRef.current) {
-      const approved = upcomingAppointments.find((a) => a.status.toLowerCase() === "approved");
+      const approved = appointments.find((a) => a.status.toLowerCase() === "approved");
       if (approved) {
         setShowNotification(true);
         notificationShownRef.current = true;
       }
     }
-  }, [upcomingAppointments]);
+  }, [appointments]);
 
   const openModal = (type) => {
     setModalContent(type);
@@ -110,17 +106,17 @@ const SeniorCare = ({ role, handleLogout }) => {
       .filter(slot => slot.service_name === service && slot.date === date)
       .map(slot => {
         const slotTime = normalizeTime(slot.time);
-        const activeCount = upcomingAppointments.filter(a => {
+        const approvedCount = appointments.filter(a => {
           const apptTime = normalizeTime(a.time);
           return (
             a.service === service &&
             a.date === date &&
             apptTime === slotTime &&
-            a.status.toLowerCase() !== "rejected"
+            a.status.toLowerCase() === "approved"
           );
         }).length;
 
-        const remaining = slot.max_slots - activeCount;
+        const remaining = slot.max_slots - approvedCount;
         return { time: slot.time, remaining };
       }).filter(slot => slot.remaining > 0);
   };
@@ -201,6 +197,10 @@ const SeniorCare = ({ role, handleLogout }) => {
       </tbody>
     </table>
   );
+
+  const today = getDateOnly(new Date());
+  const upcomingAppointments = appointments.filter((a) => a.date >= today);
+  const pastAppointments = appointments.filter((a) => a.date < today);
 
   return (
     <div className="senior-care-container">
