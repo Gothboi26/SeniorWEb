@@ -9,7 +9,7 @@ import firetruck from "./assets/firetruck.png";
 import family from "./assets/family.png";
 
 const Emergency = ({ role, handleLogout }) => {
-  const [toast, setToast] = useState({ message: "", visible: false });
+  const [toast, setToast] = useState({ message: "", visible: false, type: "" });
   const lastStatus = useRef(null);
 
   const emergencyOptions = [
@@ -31,10 +31,10 @@ const Emergency = ({ role, handleLogout }) => {
     { name: "Neighborhood Watch", number: "0916-456-7890" },
   ];
 
-  const showToast = (message) => {
-    setToast({ message, visible: true });
+  const showToast = (message, type = "info") => {
+    setToast({ message, visible: true, type });
     setTimeout(() => {
-      setToast({ message: "", visible: false });
+      setToast({ message: "", visible: false, type: "" });
     }, 7000);
   };
 
@@ -57,18 +57,18 @@ const Emergency = ({ role, handleLogout }) => {
       if (data.success) {
         const statusText = data.status || "Pending";
         lastStatus.current = statusText;
-        showToast(`✅ ${type} emergency reported. Status: ${statusText}`);
+        showToast(`✅ ${type} emergency reported. Status: ${statusText}`, "pending");
       } else if (data.error === "missing_profile") {
         const goToProfile = window.confirm(
           "❌ Your profile is incomplete. Would you like to complete it now?"
         );
         if (goToProfile) window.location.href = "/profile";
       } else {
-        showToast(`❌ Error: ${data.error || "Submission failed."}`);
+        showToast(`❌ Error: ${data.error || "Submission failed."}`, "error");
       }
     } catch (error) {
       console.error("Submission error:", error);
-      showToast("❌ Network or server error occurred.");
+      showToast("❌ Network or server error occurred.", "error");
     }
   };
 
@@ -86,23 +86,31 @@ const Emergency = ({ role, handleLogout }) => {
             lastStatus.current = data.status;
           } else if (data.status !== lastStatus.current) {
             let message = "";
+            let toastType = "info";
+
             switch (data.status) {
               case "Pending":
                 message = "✅ Emergency submitted. Status: Pending";
+                toastType = "pending";
                 break;
               case "On the way":
                 message = "🚑 Emergency team is on the way!";
+                toastType = "alert";
                 break;
               case "Arrived":
                 message = "🆘 Help has arrived!";
+                toastType = "arrived";
                 break;
               case "Resolved":
                 message = "✔️ Emergency has been resolved.";
+                toastType = "resolved";
                 break;
               default:
                 message = `ℹ️ Status updated to: ${data.status}`;
+                toastType = "info";
             }
-            showToast(message);
+
+            showToast(message, toastType);
             lastStatus.current = data.status;
           }
         }
@@ -145,11 +153,11 @@ const Emergency = ({ role, handleLogout }) => {
           </div>
 
           {toast.visible && (
-            <div className="toast-notification">
+            <div className={`toast-notification ${toast.type}`}>
               <p>{toast.message}</p>
               <button
                 className="toast-close-btn"
-                onClick={() => setToast({ message: "", visible: false })}
+                onClick={() => setToast({ message: "", visible: false, type: "" })}
               >
                 OK
               </button>
