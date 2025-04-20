@@ -300,6 +300,7 @@ const SeniorCare = ({ role, handleLogout }) => {
               <button onClick={() => setModalContent("pending")} className={modalContent === "pending" ? "active-tab" : ""}>Pending</button>
               <button onClick={() => setModalContent("upcoming")} className={modalContent === "upcoming" ? "active-tab" : ""}>Upcoming</button>
               <button onClick={() => setModalContent("past")} className={modalContent === "past" ? "active-tab" : ""}>Past</button>
+              <button onClick={() => setModalContent("reject")} className={modalContent === "reject" ? "active-tab" : ""}>Rejected</button>
             </div>
 
             {modalContent === "pending" && (
@@ -311,7 +312,7 @@ const SeniorCare = ({ role, handleLogout }) => {
             {modalContent === "upcoming" && (
               <>
                 <h3>Upcoming Appointments</h3>
-                {renderAppointmentsTable(upcomingAppointments.filter((a) => a.status.toLowerCase() !== "pending"), true)}
+                {renderAppointmentsTable(upcomingAppointments.filter((a) => a.status.toLowerCase() === "approved"), true)}
               </>
             )}
             {modalContent === "past" && (
@@ -334,6 +335,12 @@ const SeniorCare = ({ role, handleLogout }) => {
                     </div>
                   ))}
                 </div>
+              </>
+            )}
+            {modalContent === "reject" && (
+              <>
+                <h3>Rejected Appointments</h3>
+                {renderAppointmentsTable(upcomingAppointments.filter((a) => a.status.toLowerCase() === "reject"), true)}
               </>
             )}
           </>

@@ -40,13 +40,26 @@ if ($method === 'GET') {
 
 // POST: Update status and optionally remarks
 if ($method === 'POST' && isset($input['appointment_id'], $input['status'])) {
+    $appointmentId = $input['appointment_id'];
+
+    // Prevent duplicate slot adjustment if already approved
+    $check = $pdo->prepare("SELECT status FROM appointments WHERE id = :id");
+    $check->execute([':id' => $appointmentId]);
+    $currentStatus = strtolower($check->fetchColumn());
+
+    if ($currentStatus === 'approved') {
+        echo json_encode(['success' => true, 'message' => 'Already approved — no duplicate adjustment.']);
+        exit();
+    }
+
+    // Update appointment status and remarks
     $stmt = $pdo->prepare("UPDATE appointments 
                            SET status = :status, remarks = :remarks 
                            WHERE id = :id");
     $stmt->execute([
         ':status' => $input['status'],
         ':remarks' => $input['remarks'] ?? null,
-        ':id' => $input['appointment_id']
+        ':id' => $appointmentId
     ]);
 
     // Adjust slot if approved and requested
@@ -55,7 +68,6 @@ if ($method === 'POST' && isset($input['appointment_id'], $input['status'])) {
         $input['adjust_slot'] === true &&
         strtolower($input['status']) === 'approved'
     ) {
-        // Ensure time format is compatible with the database format (HH:MM:SS)
         $time = date("H:i:s", strtotime($input['time']));
 
         $slotStmt = $pdo->prepare("UPDATE service_slots 
@@ -103,4 +115,3 @@ if ($method === 'DELETE' && isset($input['appointment_id'])) {
 }
 
 echo json_encode(['error' => 'Invalid request']);
-?>
