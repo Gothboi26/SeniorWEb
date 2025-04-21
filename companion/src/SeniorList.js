@@ -34,7 +34,8 @@ const SeniorList = () => {
     civil_status: "",
     emergency_contact_person: "",
     emergency_contact_number: "",
-    emergency_contact_relationship: ""
+    emergency_contact_relationship: "",
+    consentGiven: false, // ✅ Added for frontend-only validation
   });
 
   const chapterOptions = [
@@ -46,14 +47,14 @@ const SeniorList = () => {
   const extensionOptions = ["N/A", "Jr.", "Sr.", "II", "III", "IV"];
   const healthIssueOptions = [
     "Heart Disease", "Arthritis", "Diabetes", "Dementia/Alzheimer's Disease",
-    "Cancer", "COPD", "Osteoporosis"
+     "COPD", "Osteoporosis"
   ];
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
+    const newValue = type === "checkbox" ? checked : value;
 
     if ((name === "barangay_id" || name === "number" || name === "emergency_contact_number") && !/^[0-9]*$/.test(value)) return;
-
     if (name === "barangay_id" && value.length > 5) return;
     if ((name === "number" || name === "emergency_contact_number") && value.length > 11) return;
 
@@ -67,7 +68,7 @@ const SeniorList = () => {
       return;
     }
 
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData(prev => ({ ...prev, [name]: newValue }));
   };
 
   const validateForm = () => {
@@ -77,25 +78,17 @@ const SeniorList = () => {
       "birthday", "civil_status", "emergency_contact_person", "emergency_contact_number",
       "emergency_contact_relationship"
     ];
-  
-    // Only require password if adding a new user (not editing)
-    if (!editingId) {
-      requiredFields.push("password");
-    }
-  
+
+    if (!editingId) requiredFields.push("password");
+
     for (let field of requiredFields) {
       const value = formData[field];
-      if (typeof value === 'string') {
-        if (value.trim() === "") {
-          alert(`"${field.replace(/_/g, " ")}" is required.`);
-          return false;
-        }
-      } else if (value === null || value === undefined) {
+      if (typeof value === 'string' && value.trim() === "") {
         alert(`"${field.replace(/_/g, " ")}" is required.`);
         return false;
       }
     }
-  
+
     if (formData.barangay_id.length !== 5) {
       alert("Barangay ID must be exactly 5 digits.");
       return false;
@@ -108,17 +101,21 @@ const SeniorList = () => {
       alert("Age must be 60 or older.");
       return false;
     }
-  
+    if (!formData.consentGiven) {
+      alert("You must provide consent for data gathering.");
+      return false;
+    }
+
     return true;
   };
-  
+
   const handleAddSenior = async () => {
     if (!validateForm()) return;
     try {
       const res = await fetch("http://localhost/php/register.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData)
+        body: JSON.stringify({ ...formData, consentGiven: undefined })
       });
       const result = await res.json();
       if (result.status === "success") {
@@ -140,7 +137,7 @@ const SeniorList = () => {
       const res = await fetch("http://localhost/php/update_user.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
+        body: JSON.stringify({ ...payload, consentGiven: undefined })
       });
       const result = await res.json();
       if (result.status === "success") {
@@ -157,7 +154,7 @@ const SeniorList = () => {
   };
 
   const handleEdit = (data) => {
-    setFormData({ ...data, password: "" });
+    setFormData({ ...data, password: "", consentGiven: true });
     setEditingId(data.id);
     setStep(1);
     setShowModal(true);
@@ -203,7 +200,8 @@ const SeniorList = () => {
       civil_status: "",
       emergency_contact_person: "",
       emergency_contact_number: "",
-      emergency_contact_relationship: ""
+      emergency_contact_relationship: "",
+      consentGiven: false,
     });
   };
 
@@ -269,7 +267,6 @@ const SeniorList = () => {
             <th>Sex</th>
             <th>Civil Status</th>
             <th>Address</th>
-            
             <th>Health Issue</th>
             <th>Emergency Contact</th>
             <th>Action</th>
@@ -289,7 +286,6 @@ const SeniorList = () => {
               <td>{p.sex}</td>
               <td>{p.civil_status}</td>
               <td>{p.address}</td>
-              
               <td>{p.health_issue}</td>
               <td>{p.emergency_contact_person} ({p.emergency_contact_relationship}) - {p.emergency_contact_number}</td>
               <td>
@@ -353,6 +349,15 @@ const SeniorList = () => {
                   <option value="">Select Health Issue</option>
                   {healthIssueOptions.map((h, i) => <option key={i} value={h}>{h}</option>)}
                 </select>
+                <label style={{ marginTop: "10px", display: "flex", gap: "8px", alignItems: "center" }}>
+                  <input
+                    type="checkbox"
+                    name="consentGiven"
+                    checked={formData.consentGiven}
+                    onChange={handleInputChange}
+                  />
+                  I consent to the use of my personal data for registration and emergency services.
+                </label>
                 <div className="senior-modal-buttons">
                   <button onClick={() => setStep(1)}>Back</button>
                   {editingId ? <button onClick={handleUpdateSenior}>Update</button> : <button onClick={handleAddSenior}>Submit</button>}

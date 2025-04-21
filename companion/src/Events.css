@@ -1,4 +1,4 @@
-/* General button styles for consistency */
+/* General button styles */
 .events-button {
   background-color: #C31C1C;
   color: #ffffff;
@@ -15,7 +15,7 @@
   opacity: 0.9;
 }
 
-/* Save/Cancel Buttons */
+/* Save/Cancel */
 .save-button,
 .cancel-button {
   padding: 10px 20px;
@@ -40,7 +40,7 @@
   background-color: #c82333;
 }
 
-/* Events Container */
+/* Container */
 .events-admin-container {
   padding: 15px;
   display: flex;
@@ -48,14 +48,14 @@
   margin: 20px auto 15px;
 }
 
-/* Events Table Container */
+/* Table wrapper */
 .events-table-container {
   width: 100%;
   border-radius: 10px;
   overflow-x: auto;
 }
 
-/* Header + Filter Layout */
+/* Header title */
 .events-header {
   display: flex;
   flex-wrap: wrap;
@@ -67,34 +67,36 @@
 
 .events-header h2 {
   font-family: "Roboto", sans-serif;
-  font-size: 1.8rem;
-  color: #1E1E1E;
-  margin-bottom: 10px;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #b71c1c;
+  margin: 0;
 }
 
-/* Controls */
+/* Search, sort, log controls */
 .events-controls {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  gap: 15px;
+  gap: 10px;
   width: 100%;
-  margin-bottom: 20px;
+  margin-top: 10px;
 }
 
-/* View Logs button override */
-.events-button:nth-child(2) {
-  background-color: #800000; /* darker maroon */
+.events-controls input[type="text"] {
+  padding: 10px 15px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  font-family: "Roboto", sans-serif;
+  min-width: 200px;
+  flex-grow: 1;
 }
 
-.events-button:nth-child(2):hover {
-  background-color: #5c0000;
-}
-
-/* Sort Dropdown */
+/* Sort dropdown */
 .sort-select {
-  background-color: #c31c1c;
+  background-color: #C31C1C;
   color: white;
   padding: 10px 20px;
   border-radius: 20px;
@@ -109,7 +111,7 @@
   color: black;
 }
 
-/* Table */
+/* Table styles */
 .events-table {
   width: 100%;
   border-collapse: collapse;
@@ -128,7 +130,7 @@
 }
 
 .events-table th {
-  background: #D0CDF6;
+  background-color: #D0CDF6;
 }
 
 .events-table .no-events {
@@ -136,7 +138,15 @@
   color: #888;
 }
 
-/* Actions inside table */
+/* Section Label */
+.events-section-label {
+  margin: 10px 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #C31C1C;
+}
+
+/* Actions */
 .action-icons {
   display: flex;
   justify-content: center;
@@ -145,7 +155,7 @@
 
 .edit-button {
   background-color: #5CB338;
-  color: #FFFFFF;
+  color: white;
   border: 2px solid #5CB338;
   border-radius: 40px;
   font-weight: 600;
@@ -154,7 +164,7 @@
 
 .delete-button {
   background-color: #C31C1C;
-  color: #FFFFFF;
+  color: white;
   border: 2px solid #C31C1C;
   border-radius: 40px;
   font-weight: 600;
@@ -166,7 +176,7 @@
   opacity: 0.8;
 }
 
-/* Modal */
+/* Modal styles */
 .events-modal {
   background: white;
   padding: 30px 40px;
@@ -191,7 +201,7 @@
   font-family: "Roboto", sans-serif;
 }
 
-/* Modal Title */
+/* Modal title */
 .event-modal-text {
   display: flex;
   align-items: center;
@@ -201,14 +211,13 @@
   color: #333;
 }
 
-/* Center Modal */
+/* Modal animation */
 .ReactModal__Overlay {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* Modal Animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -220,25 +229,7 @@
   }
 }
 
-/* Section Label */
-.events-section-label {
-  margin: 10px 0;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #C31C1C;
-}
-
-/* Expired Badge */
-.badge-warning {
-  background-color: #f0ad4e;
-  color: white;
-  padding: 2px 6px;
-  margin-left: 8px;
-  border-radius: 5px;
-  font-size: 0.75rem;
-}
-
-/* Toast Notification */
+/* Toast */
 .toast {
   position: fixed;
   bottom: 30px;
@@ -271,7 +262,17 @@
   }
 }
 
-/* Responsive */
+/* Expired badge */
+.badge-warning {
+  background-color: #f0ad4e;
+  color: white;
+  padding: 2px 6px;
+  margin-left: 8px;
+  border-radius: 5px;
+  font-size: 0.75rem;
+}
+
+/* Responsive layout */
 @media screen and (max-width: 768px) {
   .events-admin-container {
     padding: 10px;
