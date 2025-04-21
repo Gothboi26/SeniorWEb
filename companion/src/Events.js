@@ -175,17 +175,11 @@ const Events = () => {
       <div className="events-header">
         <h2>Events</h2>
         <div className="events-controls">
+          <input  className = "search-event" type="text" placeholder="Search events..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
           <button className="events-button" onClick={() => openModal()}>
             Add Event
           </button>
-          <div className="events-search" style={{ minWidth: "250px", flexGrow: 1 }}>
-            <input
-              type="text"
-              placeholder="Search events..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
+            
           <div className="filters-group" style={{ display: "flex", gap: "10px" }}>
             <select
               onChange={(e) => setSortOrder(e.target.value)}

@@ -2,18 +2,7 @@
 .senior-list-container {
   background-color: white;
   padding: 15px;
-  overflow-x: auto;
   font-family: "Roboto", sans-serif;
-}
-
-/* 🧱 Header Section */
-.table-header {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-bottom: 15px;
 }
 
 @media (min-width: 600px) {
@@ -28,37 +17,75 @@
   color: #1E1E1E;
 }
 
-/* 🔍 Search + Filter Section */
-.search-filter-container {
+/* 🧱 Header Section */
+.table-header {
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
   margin-bottom: 20px;
-  gap: 12px;
   width: 100%;
 }
 
-.search-filter-container input[type="text"],
-.search-filter-container select {
+/* 📋 Title */
+.table-header h2 {
+  font-size: 1.8rem;
+  color: #1E1E1E;
+  margin: 0; /* Remove any weird spacing */
+}
+
+/* Buttons Right */
+/* 🎯 Right side buttons */
+.buttons-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: center;
+}
+
+.filter-bar input[type="text"],
+.filter-bar select {
   flex: 1;
   min-width: 200px;
   padding: 10px 14px;
   border: 1px solid #ccc;
-  border-radius: 10px;
+  border-radius: 20px;
   font-size: 16px;
   background-color: #fff;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
-.search-filter-container input[type="text"]:focus,
-.search-filter-container select:focus {
+.filter-bar input[type="text"]:focus,
+.filter-bar select:focus {
   outline: none;
   border-color: maroon;
   box-shadow: 0 0 5px rgba(128, 0, 0, 0.4);
 }
 
+.export-excel {
+  background-color: #C31C1C;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
 /* 📋 Table Styling */
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -270,7 +297,7 @@
     align-items: stretch;
   }
 
-  .search-filter-container {
+  .filter-bar {
     flex-direction: column;
     align-items: stretch;
   }

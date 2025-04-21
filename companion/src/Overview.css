@@ -63,63 +63,104 @@
   background-color: #f5f5f5;
 }
 
-/* Summary Cards */
+/* 📋 Summary Cards Container */
 .summary-cards {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  gap: 40px;
+  gap: 30px;
+  margin-top: 20px;
 }
 
+/* 📦 Individual Card */
 .card {
   flex: 1;
-  padding: 20px;
-  border-radius: 20px;
+  min-width: 220px;
+  padding: 25px 20px;
+  border-radius: 18px;
+  background: #fff; /* Black card */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
   text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* ✨ Card Hover Animation */
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+}
+
+/* 🖌️ Light Card (For Chart Cards) */
 .card-light {
-  background-color: #fff;
-  color: #000;
-  border: 1px solid #ddd;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #FFF; /* Slightly lighter black */
+  color: #1E1E1E;
+  border: 1px solid #696969;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
 }
 
-.card-light h3 {
-  color: #888;
+/* 🖍️ Title inside card */
+.card h3, .card-light h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #1E1E1E; /* Maroon theme */
 }
 
-.card-light canvas {
-  width: 100% !important;
-  height: auto !important;
-  min-height: 280px;
-  max-height: 320px;
-}
-
+/* 🧮 Number inside card */
 .card .count {
-  font-size: 2rem;
+  font-size: 2.6rem;
   font-weight: bold;
-  margin: 10px;
-  color: #000;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: #ffffff;
   text-align: center;
   padding: 10px;
 }
 
-/* Appointment Summary */
-.appointment-summary {
-  padding: 20px 40px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+/* 📊 Chart Inside Light Card */
+.card-light canvas {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 250px;
+  max-height: 300px;
+  color: #fff;
 }
 
-.appointment-summary h3 {
-  color: #888;
+
+/* Appointment Summary */
+.appointment-summary {
+  padding: 30px 40px;
+  background-color: #1e1e1e; /* Dark background */
+  border-radius: 20px;
+  color: #f1f1f1;
+  text-align: center;
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.3);
+  min-height: 400px;
 }
+
+/* Appointment Header */
+.appointment-summary h3 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #ffce00;
+}
+
+/* Navigation Buttons */
+.appointment-summary button {
+  background: linear-gradient(135deg, #c31c1c, #7e1212);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  margin: 0 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+
 
 /* Statistics Section */
 .statistics-section {
@@ -132,15 +173,15 @@
   flex: 1.5;
   background-color: #fff;
   padding: 20px;
-  border: 1px solid #ddd;
+  border: 1px solid #696969;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
 .statistics h3,
 .age-summary h3 {
-  margin-left: 10px;
+  margin-bottom: 20px;
   color: #000;
   text-align: center;
 }
@@ -152,6 +193,27 @@
   max-height: 500px;
   margin: auto;
   padding: 20px;
+}
+
+.statistics-button {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.statistics button {
+  background-color: #C31C1C;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: inline-flex;
+  align-items: center;
 }
 
 /* View Toggle Buttons */

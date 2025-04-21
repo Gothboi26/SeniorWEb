@@ -58,40 +58,36 @@
 /* Header title */
 .events-header {
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 20px;
+  width: 100%;
 }
 
 .events-header h2 {
-  font-family: "Roboto", sans-serif;
-  font-size: 2rem;
-  font-weight: bold;
-  color: #b71c1c;
+  font-size: 1.8rem;
+  color: #1E1E1E;
   margin: 0;
 }
 
 /* Search, sort, log controls */
 .events-controls {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
   align-items: center;
-  gap: 10px;
-  width: 100%;
-  margin-top: 10px;
+  gap: 15px;
 }
 
 .events-controls input[type="text"] {
-  padding: 10px 15px;
-  border-radius: 20px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  font-family: "Roboto", sans-serif;
+  flex: 1 1;
   min-width: 200px;
-  flex-grow: 1;
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  font-size: 16px;
+  background-color: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Sort dropdown */

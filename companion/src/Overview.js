@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import "./Overview.css";
 import editIcon from "./assets/edit.png";
 import deleteIcon from "./assets/delete.png";
-import bellIcon from "./assets/bell.png";
+import bellIcon from "./assets/notif.png";
 
 ChartJS.register(
   CategoryScale,
@@ -213,11 +213,11 @@ const Overview = () => {
       <div className="summary-cards">
         <div className="card card-light">
           <h3>Appointments by Status</h3>
-          <Pie data={chartConfig(Object.keys(appointmentStatusData), Object.values(appointmentStatusData), { backgroundColor: ["#4caf50", "#f44336", "#2196f3"] })} />
+          <Pie data={chartConfig(Object.keys(appointmentStatusData), Object.values(appointmentStatusData), { backgroundColor: ["#F9ED69", "#6A2C70", "#F08A5D"] })} />
         </div>
         <div className="card card-light">
           <h3>Appointments per Service</h3>
-          <Line data={chartConfig(Object.keys(appointmentsPerService), Object.values(appointmentsPerService), { label: "Appointments", borderColor: "#3e95cd", fill: false })} />
+          <Line data={chartConfig(Object.keys(appointmentsPerService), Object.values(appointmentsPerService), { label: "Appointments", fontColor: "white",  borderColor: "#3e95cd", fill: false })} />
         </div>
         <div className="card card-light">
           <h3>Seniors per Chapter</h3>
@@ -228,8 +228,11 @@ const Overview = () => {
       <div className="statistics-section">
         <div className="statistics">
           <h3>Registered Seniors</h3>
-          <button onClick={() => setUserRegistrationView("month")}>Month</button>
-          <button onClick={() => setUserRegistrationView("year")}>Year</button>
+          <div className="statistics-button">
+            <button onClick={() => setUserRegistrationView("month")}>Month</button>
+            <button onClick={() => setUserRegistrationView("year")}>Year</button>
+          </div>
+          
           <Line data={chartConfig(Object.keys(userRegistrationData), Object.values(userRegistrationData), { label: "Registrations", borderColor: "#C31C1C", fill: false })} />
         </div>
         <div className="age-summary">
@@ -238,24 +241,34 @@ const Overview = () => {
         </div>
       </div>
 
-      <div className="appointment-table">
+      <div className="appointment-summary">
         <h3>Appointments</h3>
-        <button onClick={() => setSelectedDate(new Date(selectedDate.setMonth(selectedDate.getMonth() - 1)))}>&lt;</button>
-        <span>{selectedDate.toLocaleString("en-US", { month: "long", year: "numeric" })}</span>
-        <button onClick={() => setSelectedDate(new Date(selectedDate.setMonth(selectedDate.getMonth() + 1)))}>&gt;</button>
 
-        {loading ? <p>Loading...</p> : appointmentsByDate.length === 0 ? <p>No appointments</p> : (
+        <div className="appointment-nav">
+          <button onClick={() => setSelectedDate(new Date(selectedDate.setMonth(selectedDate.getMonth() - 1)))}>&lt;</button>
+          <span>{selectedDate.toLocaleString("en-US", { month: "long", year: "numeric" })}</span>
+          <button onClick={() => setSelectedDate(new Date(selectedDate.setMonth(selectedDate.getMonth() + 1)))}>&gt;</button>
+        </div>
+
+        {loading ? (
+          <p>Loading...</p>
+        ) : appointmentsByDate.length === 0 ? (
+          <p>No appointments</p>
+        ) : (
           <ul>
             {appointmentsByDate.map((a) => (
               <li key={a.id} className="appointment-item">
                 <p>{a.details}</p>
-                <img src={editIcon} alt="Edit" onClick={() => handleEdit(a)} />
-                <img src={deleteIcon} alt="Delete" onClick={() => handleDelete(a.id)} />
+                <div className="action-icons">
+                  <img src={editIcon} alt="Edit" onClick={() => handleEdit(a)} />
+                  <img src={deleteIcon} alt="Delete" onClick={() => handleDelete(a.id)} />
+                </div>
               </li>
             ))}
           </ul>
         )}
       </div>
+
 
       {editMode && currentAppointment && (
         <div className="edit-modal">

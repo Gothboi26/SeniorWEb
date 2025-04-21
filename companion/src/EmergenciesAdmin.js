@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import MapSelector from "./MapSelector";
 import "./EmergenciesAdmin.css";
+import alert from "./assets/alert.png";
+
 
 const EmergenciesAdmin = () => {
   const [data, setData] = useState([]);
@@ -210,79 +212,87 @@ const EmergenciesAdmin = () => {
 
       {unacknowledgedEmergencies.map((item) => (
         <div key={item.id} className="popup-emergency">
-          <strong>🚨 Emergency Alert!</strong>
-          <p><b>Name:</b> {item.name}</p>
-          <p><b>Type:</b> {item.type}</p>
-          <p><b>Status:</b> <span className={`status-${item.status.toLowerCase().replace(/\s/g, '-')}`}>{item.status}</span></p>
-          <p><b>Location:</b> {item.location}</p>
-          <p><b>User #:</b> {item.contact_number}</p>
-          <button onClick={() => acknowledgeSingle(item.id)} className="acknowledge-btn">Acknowledge</button>
+          <div className="popup-header">
+            <img src={alert} alt="Popup-Logo" className="popup-alert-logo"/>
+            <strong className="alert">Emergency Alert</strong>
+          </div>
+          <div className="popup-details">
+            <p><b>Name:</b> {item.name}</p>
+            <p><b>Type:</b> {item.type}</p>
+            <p><b>Status:</b> <span className={`status-${item.status.toLowerCase().replace(/\s/g, '-')}`}>{item.status}</span></p>
+            <p><b>Location:</b> {item.location}</p>
+            <p><b>User #:</b> {item.contact_number}</p>
+            <button onClick={() => acknowledgeSingle(item.id)} className="acknowledge-btn">Acknowledge</button>
+          </div>
+          
         </div>
       ))}
-
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Type</th>
-            <th>Location</th>
-            <th>User #</th>
-            <th>Emergency Contact</th>
-            <th>Contact #</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sortedData.length > 0 ? (
-            sortedData.map((item, index) => (
-              <tr key={item.id}>
-                <td>{item.name}</td>
-                <td>{item.date}</td>
-                <td>{item.time}</td>
-                <td>{item.type}</td>
-                <td>
-                  <span
-                    className="map-link"
-                    style={{ color: "#b02a37", cursor: "pointer", textDecoration: "underline" }}
-                    onClick={() => openMap(item)}
-                  >
-                    {item.location}
-                  </span>
-                </td>
-                <td>{item.contact_number}</td>
-                <td>{item.emergency_contact_name}</td>
-                <td>{item.emergency_contact_number}</td>
-                <td className={`status-${item.status.toLowerCase().replace(/\s/g, '-')}`}>{item.status}</td>
-                <td>
-                  {item.status === "Resolved" ? (
-                    <span style={{ fontStyle: "italic", color: "#666" }}>—</span>
-                  ) : loadingStatusIndex === index ? (
-                    <span className="loading-text">Updating...</span>
-                  ) : (
-                    <select
-                      className="status-action"
-                      value={item.status}
-                      onChange={(e) => handleStatusChange(index, e.target.value)}
-                    >
-                      <option value="Pending">Pending</option>
-                      <option value="On the way">On the way</option>
-                      <option value="Arrived">Arrived</option>
-                      <option value="Resolved">Resolved</option>
-                    </select>
-                  )}
-                </td>
-              </tr>
-            ))
-          ) : (
+      <div className="table-wrapper"> 
+        <table className="table">
+          <thead>
             <tr>
-              <td colSpan={10}>No {showLogs ? "past" : "upcoming"} emergencies found.</td>
+              <th>Name</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Type</th>
+              <th>Location</th>
+              <th>User #</th>
+              <th>Emergency Contact</th>
+              <th>Contact #</th>
+              <th>Status</th>
+              <th>Action</th>
             </tr>
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {sortedData.length > 0 ? (
+              sortedData.map((item, index) => (
+                <tr key={item.id}>
+                  <td>{item.name}</td>
+                  <td>{item.date}</td>
+                  <td>{item.time}</td>
+                  <td>{item.type}</td>
+                  <td>
+                    <span
+                      className="map-link"
+                      style={{ color: "#b02a37", cursor: "pointer", textDecoration: "underline" }}
+                      onClick={() => openMap(item)}
+                    >
+                      {item.location}
+                    </span>
+                  </td>
+                  <td>{item.contact_number}</td>
+                  <td>{item.emergency_contact_name}</td>
+                  <td>{item.emergency_contact_number}</td>
+                  <td className={`status-${item.status.toLowerCase().replace(/\s/g, '-')}`}>{item.status}</td>
+                  <td>
+                    {item.status === "Resolved" ? (
+                      <span style={{ fontStyle: "italic", color: "#666" }}>—</span>
+                    ) : loadingStatusIndex === index ? (
+                      <span className="loading-text">Updating...</span>
+                    ) : (
+                      <select
+                        className="status-action"
+                        value={item.status}
+                        onChange={(e) => handleStatusChange(index, e.target.value)}
+                      >
+                        <option value="Pending">Pending</option>
+                        <option value="On the way">On the way</option>
+                        <option value="Arrived">Arrived</option>
+                        <option value="Resolved">Resolved</option>
+                      </select>
+                    )}
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={10}>No {showLogs ? "past" : "upcoming"} emergencies found.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+      
 
       {mapModalVisible && mapCoords.lat && mapCoords.lng && (
         <MapSelector

@@ -243,59 +243,69 @@ const SeniorList = () => {
     <div className="senior-list-container">
       <div className="table-header">
         <h2>All Clients</h2>
-        <button className="add-senior-button" onClick={() => { resetForm(); setEditingId(null); setShowModal(true); }}>Add Senior</button>
+        
+        <div className="buttons-right">
+          <div className="filter-bar">
+            <input className="search-input" type="text" placeholder="Search seniors..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+            <select value={filterChapter} onChange={(e) => setFilterChapter(e.target.value)} className="chapter-filter">
+              <option value="">All Chapters</option>
+              {chapterOptions.map((chapter, idx) => <option key={idx} value={chapter}>{chapter}</option>)}
+            </select>
+            
+          </div>
+
+          <button className="add-senior-button" onClick={() => { resetForm(); setEditingId(null); setShowModal(true); }}>Add Senior</button>
+          <button className="export-excel" onClick={handleExportExcel}>Export Excel</button>
+        </div>
+        
       </div>
-      <div className="filter-bar">
-        <input type="text" placeholder="Search seniors..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="search-input" />
-        <select value={filterChapter} onChange={(e) => setFilterChapter(e.target.value)} className="chapter-filter">
-          <option value="">All Chapters</option>
-          {chapterOptions.map((chapter, idx) => <option key={idx} value={chapter}>{chapter}</option>)}
-        </select>
-        <button onClick={handleExportExcel}>Export Excel</button>
-      </div>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Username</th>
-            <th>Full Name</th>
-            <th>Barangay ID</th>
-            <th>Chapter</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Birthday</th>
-            <th>Age</th>
-            <th>Sex</th>
-            <th>Civil Status</th>
-            <th>Address</th>
-            <th>Health Issue</th>
-            <th>Emergency Contact</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredPatients().map((p, i) => (
-            <tr key={i}>
-              <td>{p.username}</td>
-              <td>{[p.first_name, p.middle_name, p.last_name, p.extension].filter(Boolean).join(" ")}</td>
-              <td>{p.barangay_id}</td>
-              <td>{p.group_chapter}</td>
-              <td>{p.email_address}</td>
-              <td>{p.number}</td>
-              <td>{p.birthday}</td>
-              <td>{p.age}</td>
-              <td>{p.sex}</td>
-              <td>{p.civil_status}</td>
-              <td>{p.address}</td>
-              <td>{p.health_issue}</td>
-              <td>{p.emergency_contact_person} ({p.emergency_contact_relationship}) - {p.emergency_contact_number}</td>
-              <td>
-                <button onClick={() => handleEdit(p)} className="edit-button">Edit</button>
-                <button onClick={() => handleDelete(p.id)} className="delete-button">Delete</button>
-              </td>
+      
+      <div className="table-wrapper"> 
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Full Name</th>
+              <th>Barangay ID</th>
+              <th>Chapter</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Birthday</th>
+              <th>Age</th>
+              <th>Sex</th>
+              <th>Civil Status</th>
+              <th>Address</th>
+              <th>Health Issue</th>
+              <th>Emergency Contact</th>
+              <th>Action</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {filteredPatients().map((p, i) => (
+              <tr key={i}>
+                <td>{p.username}</td>
+                <td>{[p.first_name, p.middle_name, p.last_name, p.extension].filter(Boolean).join(" ")}</td>
+                <td>{p.barangay_id}</td>
+                <td>{p.group_chapter}</td>
+                <td>{p.email_address}</td>
+                <td>{p.number}</td>
+                <td>{p.birthday}</td>
+                <td>{p.age}</td>
+                <td>{p.sex}</td>
+                <td>{p.civil_status}</td>
+                <td>{p.address}</td>
+                <td>{p.health_issue}</td>
+                <td>{p.emergency_contact_person} ({p.emergency_contact_relationship}) - {p.emergency_contact_number}</td>
+                <td>
+                  <button onClick={() => handleEdit(p)} className="edit-button">Edit</button>
+                  <button onClick={() => handleDelete(p.id)} className="delete-button">Delete</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      
 
       {showModal && (
         <div className="senior-modal-overlay">

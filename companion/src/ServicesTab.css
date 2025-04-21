@@ -24,13 +24,13 @@ h5 {
 .service-form label {
   display: flex;
   flex-direction: column;
-  font-size: 14px;
+  font-size: 1rem;
 }
 
 .service-form select,
 .service-form input {
   padding: 8px;
-  font-size: 14px;
+  font-size: 1rem;
   margin-top: 5px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -50,7 +50,7 @@ h5 {
 .add-btn,
 .remove-btn {
   padding: 10px 20px;
-  font-size: 14px;
+  font-size: 1rem;
   cursor: pointer;
   border: none;
   border-radius: 5px;
@@ -95,25 +95,25 @@ h5 {
 
 .filter-dropdown {
   padding: 8px 12px;
-  font-size: 14px;
+  font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 6px;
   min-width: 180px;
 }
 
 .view-logs-button {
-  background-color: #800000;
+  background-color: #C31C1C;
   color: white;
   border: none;
-  padding: 8px 18px;
-  border-radius: 6px;
-  font-size: 14px;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .view-logs-button:hover {
-  background-color: #a00000;
+  background-color: #C31C1C;
 }
 
 /* 🧾 View Logs List Styling */

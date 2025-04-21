@@ -30,14 +30,19 @@
   width: 400px;
   background-color: #ffffff;
   color: #1e1e1e;
-  padding: 50px;
+  padding: 50px 30px;
   display: flex;
   flex-direction: column;
-  border-radius: 0 50px 50px 0; /* Only round the right corners */
+  border-radius: 0 50px 50px 0;
   text-align: left;
-  height: auto;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); /* Shadow on the right side */
+  /* height: 100vh;  Full height of viewport */
+  position: fixed; /* <- MAKE IT STICKY */
+  top: 0;
+  left: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  overflow-y: auto; /* Allow scrolling inside sidebar if content overflows */
 }
+
 
 .sidebar ul {
   list-style: none;
@@ -81,6 +86,7 @@
   background-color: #ffffff;
   border-radius: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  min-height: 100vh;
 }
 
 .settings ul li {
@@ -98,8 +104,9 @@
 }
 
 .main-content {
-  width: calc(100% - 250px);
+  margin-left: 400px; /* Same as sidebar width */
   padding: 60px 70px;
+  width: calc(100% - 400px); /* Adjust width properly */
 }
 
 .content-area {
