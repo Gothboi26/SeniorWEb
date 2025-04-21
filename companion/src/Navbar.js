@@ -58,7 +58,7 @@ function Navbar({ role }) {
             </li>
             <li>
               <Link to="/emergency" onClick={() => setIsSlideOpen(false)}>
-                Emergency Contacts
+                Emergency Services
               </Link>
             </li>
             <li>
@@ -146,20 +146,20 @@ function Navbar({ role }) {
             {/* Emergency Contacts Dropdown */}
             <li className="dropdown">
               <Link to="/emergency" className="Navbar-links-b">
-                Emergency Contacts
+                Emergency Services
               </Link>
               <ul className="dropdown-menu">
                 <li>
-                  <Link to="/emergency/police">Police</Link>
+                  <Link to="/emergency">Police</Link>
                 </li>
                 <li>
-                  <Link to="/emergency/ambulance">Ambulance</Link>
+                  <Link to="/emergency">Ambulance</Link>
                 </li>
                 <li>
-                  <Link to="/emergency/firetruck">Firetruck</Link>
+                  <Link to="/emergency">Firetruck</Link>
                 </li>
                 <li>
-                  <Link to="/emergency/family">Family</Link>
+                  <Link to="/emergency">Family</Link>
                 </li>
               </ul>
             </li>
@@ -171,13 +171,13 @@ function Navbar({ role }) {
               </Link>
               <ul className="dropdown-menu">
                 <li>
-                  <Link to="/chat/hours">Operating Hours</Link>
+                  <Link to="/chat">Operating Hours</Link>
                 </li>
                 <li>
-                  <Link to="/chat/services">Services Offered</Link>
+                  <Link to="/chat">Services Offered</Link>
                 </li>
                 <li>
-                  <Link to="/chat/talk-to-admin">Talk to Admin</Link>
+                  <Link to="/chat">Talk to Admin</Link>
                 </li>
               </ul>
             </li>

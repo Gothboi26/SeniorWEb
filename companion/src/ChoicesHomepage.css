@@ -5,11 +5,10 @@
 }
 
 .rectangle21 {
-  margin: 30px;
   display: flex;
   flex-wrap: wrap; /* Allows wrapping on smaller screens */
   align-items: center;
-  padding: 20px;
+  padding: 50px;
   gap: 30px; /* Adds spacing between items */
   width: 100%;
   height: 100%;
@@ -22,7 +21,7 @@
   align-items: center;
   text-align: center;
   border-radius: 40px;
-  height: 425px;
+  height: 450px;
   width: 370px;
   margin: 10px 0;
   background-color: #c31c1c;
@@ -84,6 +83,7 @@
     width: 75% !important;
     background-color: #C31C1C !important;
     color: #fff !important;
+    border: none;
     border-radius: 20px !important;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     cursor: pointer !important;
@@ -182,8 +182,8 @@
   justify-content: space-between; /* Distribute content evenly */
   align-items: center;
   border-radius: 30px;
-  height: 425px;
-  width: 327px;
+  height: 450px;
+  width: 340px;
   background-color: #ffffff;
   color: #1e1e1e;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15); /* Updated shadow for better look */
@@ -217,26 +217,26 @@
 }
 
 .rectangle23.seniorcare p {
-  font-size: 22px;
+  font-size: 1.3rem;
   color: #606060;
   margin: 20px 30px 40px;
-  text-align: left;
+  text-align: justify;
   font-weight: 300;
 }
 
 .rectangle23.emergencyservices p {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   color: #606060;
-  margin: 20px 30px 60px;
-  text-align: left;
+  margin: 20px 30px 40px;
+  text-align: justify;
   font-weight: 300;
 }
 
 .rectangle23.chatassistance p {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   color: #606060;
   margin: 20px 30px 60px;
-  text-align: left;
+  text-align: justify;
   font-weight: 300;
 }
 

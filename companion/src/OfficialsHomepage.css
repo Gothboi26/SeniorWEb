@@ -9,7 +9,7 @@ body {
 /* Section Header */
 .barangay-health-officials {
   text-align: center;
-  padding: 50px;
+  padding: 50px 50px 10vh 50px;
 }
 
 /* Events Header */
@@ -19,15 +19,21 @@ body {
 
 .Officials-Subheader {
   color: #fcfcfc;
-  background-color: #201885;
+  background-color: #1F1785;
   font-family: "Roboto", sans-serif;
-  border-radius: 25px;
   font-size: 2rem;
   font-weight: 700;
-  margin-left: 15%;
-  padding: 8px;
+  border-radius: 25px;
+  padding: 10px 30px;
   text-align: center;
-  width: 71%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 80%;          /* Wider width */
+  max-width: 140vh;    /* Optional: cap it on large screens */
+  margin: 0 auto;      /* Center it horizontally */
 }
 
 .Officials-Title {
@@ -136,29 +142,29 @@ body {
 
 /* Official Position */
 .official-position {
-  font-size: 0.9rem;
-  color: #6c757d;
+  font-size: 1.2rem;
+  color: #565656;
   font-weight: 500;
   margin-bottom: 5px;
   text-align: center;
+  margin-top: 10px;
 }
 
 /* Official Name */
 .official-name {
-  font-size: 1.2rem;
+  font-size: 1.35rem;
   font-weight: bold;
-  color: #4b0082; /* Dark Purple */
-  margin-bottom: 10px;
+  color: #1F1785; /* Dark Purple */
 }
 
 /* Read More Button */
 .read-more {
   display: flex;
   align-items: center;
-  color: #4b0082;
+  color: #1F1785;
   font-weight: bold;
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 1.3rem;
   margin-top: 10px;
 }
 

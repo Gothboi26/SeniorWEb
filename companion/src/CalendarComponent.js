@@ -38,38 +38,32 @@ const services = [
   {
     name: "Health Check Up",
     description:
-      "Health check-ups are routine medical examinations aimed at evaluating overall well-being, identifying potential health issues early, and managing any existing conditions effectively. These assessments often include physical evaluations, diagnostic tests, and consultations to ensure proper preventive care and treatment planning.",
-    image: doctor,
+      "Mahalaga ang regular na pagsusuri ng kalusugan upang matukoy at maagapan ang posibleng sakit. Kasama rito ang pisikal na eksaminasyon, iba't ibang diagnostic tests, at konsultasyon upang masiguro ang tamang pangangalaga. Layunin nito ang maagang pagtuklas ng kondisyon para sa mas mabilis at epektibong paggamot.",
   },
   {
     name: "Medicine",
     description:
-      "Medicine encompasses the diagnosis, treatment, and prevention of diseases through prescribed medications tailored to manage specific health conditions. This involves careful assessment, appropriate drug selection, and patient education to ensure effective outcomes and minimize side effects, promoting overall health and recovery.",
-    image: emergency,
+      "Mahalaga ang gamot sa paggamot at pag-iwas sa sakit. Iniinom ito ayon sa tamang pagsusuri at rekomendasyon ng doktor upang maging epektibo at maiwasan ang side effects. May libreng o murang gamot mula sa gobyerno at ilang organisasyon para sa mga nangangailangan.",
   },
   {
     name: "Eye Check Up",
     description:
-      "Eye checkups are specialized evaluations focused on assessing vision and detecting eyerelated issues, such as refractive errors or diseases like glaucoma. These examinations include vision tests, eye pressure checks, and consultations to ensure optimal eye health and corrective solutions if necessary.",
-    image: chat,
+      "Ang eye check-up ay mahalaga upang masuri ang kalusugan ng mata at matukoy ang mga problema sa paningin gaya ng astigmatism, katarata, o glaucoma. Kasama rito ang pagsusuri sa paningin, pagsukat ng eye pressure, at konsultasyon para sa tamang pangangalaga at solusyon sa mata.",
   },
   {
     name: "Dental Check Up",
     description:
-      "Dental checkups are comprehensive oral health assessments designed to maintain healthy teeth and gums, prevent cavities, and identify dental problems early. These visits typically include cleaning, examinations, and advice on oral hygiene practices to ensure long-term dental care.",
-    image: chat,
+      "Mahalaga ang dental check-up upang mapanatili ang malusog na ngipin at gilagid. Kasama rito ang regular na paglilinis, masusing pagsusuri, at payo sa tamang pangangalaga. Nakakatulong ito sa pag-iwas sa pagkabulok ng ngipin, sakit sa gilagid, at iba pang oral health issues para sa pangmatagalang kalusugan ng bibig.",
   },
   {
     name: "Xray Examination",
     description:
-      "Xray checkups are diagnostic imaging procedures that provide detailed views of bones and internal organs to detect injuries, fractures, or underlying health conditions. This noninvasive process aids in accurate diagnosis and treatment planning for a wide range of medical concerns.",
-    image: chat,
+      "Isang mahalagang diagnostic procedure na gumagamit ng imaging upang masuri ang kondisyon ng buto at mga laman-loob. Nakakatulong ito sa pagtukoy ng bali, pinsala, o anumang sakit na maaaring makaapekto sa kalusugan. Ginagamit ito bilang batayan sa tamang diagnosis at epektibong gamutan.",
   },
   {
     name: "Massage Therapy",
     description:
-      "Massage therapy is a therapeutic practice aimed at relieving muscle tension, reducing stress, and improving circulation through targeted manipulation of soft tissues. This treatment fosters relaxation, alleviates discomfort, and supports physical and mental wellbeing in a holistic manner.",
-    image: chat,
+      "Isang epektibong paraan ng pagpapahinga at pagpapagaan ng tensyon sa kalamnan. Nakakatulong ito sa pagbawas ng stress, pagpapabuti ng daloy ng dugo, at pagpapalakas ng pangkalahatang kaginhawaan ng katawan at isip. Ang regular na masahe ay maaaring makatulong sa pagbawi mula sa pagod at pananatili ng balanse sa kalusugan.",
   },
 ];
 
@@ -126,13 +120,13 @@ const RectangleSection = ({ role }) => {
         <div className="rectangle21">
           {role === "client" && (
             <div className="rectangle23 paalala1">
-              <h2>PAALALA:</h2>
+              <h2>🔔 PAALALA: 🔔</h2>
               <p>
                 Ang doktor ay available lamang sa Barangay General Tiburcio De
-                Leon Health Center tuwing LUNES (Monday) at MIYERKULES
-                (Wednesday) simula 8AM-6PM lamang. <br></br>
+                Leon Health Center tuwing LUNES (Monday) hanggang BIYERNES
+                (Friday) simula 8AM-6PM lamang. <br></br>
                 <br></br>
-                Para sa detalye, makipag-ugnayan sa health center.
+                Para sa ibang mga detalye, maaaring makipag-unayan sa health center.
               </p>
             </div>
           )}
@@ -149,10 +143,7 @@ const RectangleSection = ({ role }) => {
                       className="appoint-logo"
                     />
                   </div>
-                  <p>
-                    Seniors can schedule priority check-ups and health services
-                    for faster and more efficient care.
-                  </p>
+                  <p>Maayos na serbisyong medikal para sa regular na check up sa kalusugan ng mga senior citizens upang mapanatili ang kanilang maayos na kondisyon.</p>
                   <button className="senior-care-button">
                     <span className="senior-care-button-text">Appointment</span>
                   </button>
@@ -187,10 +178,7 @@ const RectangleSection = ({ role }) => {
                   />
                 </div>
 
-                <p>
-                  Easily call an ambulance, police, or notify family during
-                  emergencies with a single tap.
-                </p>
+                <p>Madaling humingi ng tulong sa pulis, ambulansya, o bumbero sa oras ng emergency gamit ang isang pindot sa button.</p>
                 <button className="emergency-services-button">
                   <span className="emergency-services-button-text">
                     Contact List
@@ -208,10 +196,7 @@ const RectangleSection = ({ role }) => {
                   <img src={chat} alt="Chat-Logo" className="chat-logo" />
                 </div>
 
-                <p>
-                  Communicate with barangay officials for support and inquiries
-                  through in-app chat.
-                </p>
+                <p>Direktang pakikipag-usap sa opisyal ng health center para sa suporta, gabay, at pagsagot sa mga katanungan.</p>
                 <button className="chat-assistance-button">
                   <span className="chat-assistance-button-text">Chat</span>
                 </button>
@@ -258,7 +243,10 @@ const RectangleSection = ({ role }) => {
 
       <div className="Events">
         <div className="Events-Header">
-          <p className="Events-Subheader">ACTIVITIES</p>
+          <div className="Events-Subheader">
+            <p className="Events-sub">EVENTS</p>
+          </div>
+          
           <h1 className="Events-Title">Calendar of Activities</h1>
         </div>
 

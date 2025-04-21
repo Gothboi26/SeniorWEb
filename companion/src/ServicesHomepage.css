@@ -1,25 +1,31 @@
 /* ----- Services Section ----- */
 .Service-Section {
   text-align: center;
-  padding: 2rem;
+  padding: 50px 50px 30px 50px;
   margin-bottom: 3%;
 }
 
 .Service-Header {
-  margin-bottom: 2rem;
+  font-family: "Roboto", sans-serif;
 }
 
 .Service-Subheader {
   color: #fcfcfc;
-  background-color: #201885;
-  font-family: "Roboto", sans-serif;
-  border-radius: 25px;
+  background-color: #1F1785;
+  
   font-size: 2rem;
-  font-weight: 600;
-  margin-left: 14%;
-  padding: 8px;
+  font-weight: 700;
+  border-radius: 25px;
+  padding: 10px 30px;
   text-align: center;
-  width: 75%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 80%;          /* Wider width */
+  max-width: 140vh;    /* Optional: cap it on large screens */
+  margin: 0 auto;      /* Center it horizontally */
 }
 
 .Service-Title {
