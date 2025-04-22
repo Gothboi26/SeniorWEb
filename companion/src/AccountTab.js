@@ -15,7 +15,7 @@ const AccountTab = () => {
   const fileInputRef = useRef(null);
 
   useEffect(() => {
-    fetch("http://localhost/php/get_admin_info.php", {
+    fetch("backend-production-0e1f.up.railway.app/get_admin_info.php", {
       method: "GET",
       credentials: "include",
     })
@@ -47,7 +47,7 @@ const AccountTab = () => {
       state,
     };
 
-    fetch("http://localhost/php/update_admin_info.php", {
+    fetch("backend-production-0e1f.up.railway.app/update_admin_info.php", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -75,7 +75,7 @@ const AccountTab = () => {
     const formData = new FormData();
     formData.append("profile_photo", profilePhoto);
 
-    fetch("http://localhost/php/upload_admin_photo.php", {
+    fetch("backend-production-0e1f.up.railway.app/upload_admin_photo.php", {
       method: "POST",
       credentials: "include",
       body: formData,
