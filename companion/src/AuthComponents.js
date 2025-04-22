@@ -6,7 +6,7 @@ function Login({ setRole }) {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch("backend-production-0e1f.up.railway.app/login.php", {
+      const response = await fetch("http://localhost/php/login.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -71,7 +71,7 @@ function Register() {
 
   const handleRegister = async () => {
     try {
-      const response = await fetch("backend-production-0e1f.up.railway.app/register.php", {
+      const response = await fetch("http://localhost/php/register.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
