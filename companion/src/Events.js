@@ -20,13 +20,26 @@ const Events = () => {
 
   useEffect(() => {
     let url = `http://localhost/php/get_events.php?sortOrder=${sortOrder}`;
-    url += showLogs ? `&logs=past` : `&from_today=1`;
+    url += showLogs ? `&logs=past` : ``; // fetch all and filter in frontend
 
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
         if (data.status === "success" && Array.isArray(data.events)) {
-          setEvents(data.events);
+          const filtered = data.events.filter((event) => {
+            const eventDate = new Date(event.date_time);
+            const now = new Date();
+            if (showLogs) {
+              return eventDate < now;
+            } else {
+              // Keep events that are today or future
+              return (
+                eventDate.toDateString() === now.toDateString() ||
+                eventDate > now
+              );
+            }
+          });
+          setEvents(filtered);
         } else {
           setEvents([]);
         }
@@ -91,7 +104,6 @@ const Events = () => {
     }
 
     setLoading(true);
-
     const formattedDateTime = dateTime.toISOString().slice(0, 19).replace("T", " ");
 
     const newEvent = {
@@ -175,11 +187,16 @@ const Events = () => {
       <div className="events-header">
         <h2>Events</h2>
         <div className="events-controls">
-          <input  className = "search-event" type="text" placeholder="Search events..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
+          <input
+            className="search-event"
+            type="text"
+            placeholder="Search events..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
           <button className="events-button" onClick={() => openModal()}>
             Add Event
           </button>
-            
           <div className="filters-group" style={{ display: "flex", gap: "10px" }}>
             <select
               onChange={(e) => setSortOrder(e.target.value)}
@@ -189,10 +206,7 @@ const Events = () => {
               <option value="asc">⬆ Ascending</option>
               <option value="desc">⬇ Descending</option>
             </select>
-            <button
-              className="events-button"
-              onClick={() => setShowLogs((prev) => !prev)}
-            >
+            <button className="events-button" onClick={() => setShowLogs((prev) => !prev)}>
               {showLogs ? "Back to Events" : "View Logs"}
             </button>
           </div>
@@ -293,11 +307,7 @@ const Events = () => {
         </button>
       </Modal>
 
-      {toast.visible && (
-        <div className="toast">
-          {toast.message}
-        </div>
-      )}
+      {toast.visible && <div className="toast">{toast.message}</div>}
     </div>
   );
 };
