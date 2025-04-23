@@ -27,7 +27,7 @@ const ServicesTab = () => {
 
   useEffect(() => {
     const fetchSlots = () => {
-      fetch("https://backend-production-4629.up.railway.app/php/get_service_slots.php", {
+      fetch("http://localhost/php/get_service_slots.php", {
         method: "GET",
         credentials: "include",
       })
@@ -87,7 +87,7 @@ const ServicesTab = () => {
 
     const entry = { id, name, date, time: formattedTime, maxSlot: parseInt(maxSlot) };
 
-    fetch("https://backend-production-4629.up.railway.app/php/save_service_slot.php", {
+    fetch("http://localhost/php/save_service_slot.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -121,7 +121,7 @@ const ServicesTab = () => {
 
   const handleRemove = async (index) => {
     const target = services[index];
-    const res = await fetch("https://backend-production-4629.up.railway.app/php/delete_service_slot.php", {
+    const res = await fetch("http://localhost/php/delete_service_slot.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",

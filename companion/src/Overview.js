@@ -57,7 +57,7 @@ const Overview = () => {
   }, [appointments]);
 
   const fetchAppointmentsData = useCallback(() => {
-    fetch("https://backend-production-4629.up.railway.app/php/appointments.php", { credentials: "include" })
+    fetch("http://localhost/php/appointments.php", { credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
         const apps = Array.isArray(data) ? data : data.data || [];
@@ -84,7 +84,7 @@ const Overview = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      fetch("https://backend-production-4629.up.railway.app/php/check_notifications.php")
+      fetch("http://localhost/php/check_notifications.php")
         .then((res) => res.json())
         .then((data) => {
           const newNotifs = [];
@@ -119,7 +119,7 @@ const Overview = () => {
   const handleEdit = (a) => { setEditMode(true); setCurrentAppointment(a); };
   const handleDelete = (id) => {
     if (window.confirm("Delete this appointment?")) {
-      fetch(`https://backend-production-4629.up.railway.app/php/appointments.php?id=${id}`, { method: "DELETE" })
+      fetch(`http://localhost/php/appointments.php?id=${id}`, { method: "DELETE" })
         .then((res) => res.json())
         .then(() => setAppointments((prev) => prev.filter((a) => a.id !== id)));
     }
@@ -128,7 +128,7 @@ const Overview = () => {
   const handleSaveEdit = (updated) => {
     if (isSaving) return;
     setIsSaving(true);
-    fetch("https://backend-production-4629.up.railway.app/php/appointments.php", {
+    fetch("http://localhost/php/appointments.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updated),
@@ -143,7 +143,7 @@ const Overview = () => {
   };
 
   const fetchUsers = useCallback(() => {
-    fetch("https://backend-production-4629.up.railway.app/php/get_users.php")
+    fetch("http://localhost/php/get_users.php")
       .then((res) => res.json())
       .then((data) => {
         const users = data.data || [];
