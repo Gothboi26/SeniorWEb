@@ -47,14 +47,14 @@ const SeniorCare = ({ role, handleLogout }) => {
 
   const fetchAllData = async () => {
     try {
-      const res = await fetch("http://localhost/php/appointments.php", {
+      const res = await fetch("https://backend-production-4629.up.railway.app/appointments.php", {
         method: "GET",
         credentials: "include",
       });
       const data = await res.json();
       setAppointments(data);
 
-      const slotRes = await fetch("http://localhost/php/get_service_slots.php", {
+      const slotRes = await fetch("https://backend-production-4629.up.railway.app/get_service_slots.php", {
         credentials: "include",
       });
       const slotData = await slotRes.json();
@@ -153,7 +153,7 @@ const SeniorCare = ({ role, handleLogout }) => {
     };
 
     try {
-      const res = await fetch("http://localhost/php/appointments.php", {
+      const res = await fetch("https://backend-production-4629.up.railway.app/appointments.php", {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
