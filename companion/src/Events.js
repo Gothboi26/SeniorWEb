@@ -19,7 +19,7 @@ const Events = () => {
   const [toast, setToast] = useState({ message: "", visible: false });
 
   useEffect(() => {
-    let url = `http://localhost/php/get_events.php?sortOrder=${sortOrder}`;
+    let url = `https://backend-production-4629.up.railway.app/php/get_events.php?sortOrder=${sortOrder}`;
     url += showLogs ? `&logs=past` : ``; // fetch all and filter in frontend
 
     fetch(url)
@@ -115,7 +115,7 @@ const Events = () => {
       event_description: eventDescription,
     };
 
-    fetch("http://localhost/php/add_events.php", {
+    fetch("https://backend-production-4629.up.railway.app/php/add_events.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newEvent),
@@ -147,7 +147,7 @@ const Events = () => {
   const deleteEvent = (id) => {
     if (window.confirm("Are you sure you want to delete this event?")) {
       setLoading(true);
-      fetch(`http://localhost/php/delete_event.php`, {
+      fetch(`https://backend-production-4629.up.railway.app/php/delete_event.php`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id }),
