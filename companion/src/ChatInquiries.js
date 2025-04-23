@@ -66,7 +66,7 @@ const ChatInquiries = () => {
   };
 
   const saveMessageToDatabase = (sender, receiver, content) => {
-    fetch("https://backend-production-4629.up.railway.app/save_message.php", {
+    fetch("http://localhost/php/save_message.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ sender, receiver, content }),
@@ -77,7 +77,7 @@ const ChatInquiries = () => {
     setSelectedUser(user.username);
 
     try {
-      const res = await fetch(`https://backend-production-4629.up.railway.app/get_messages.php?sender=admin&receiver=${user.username}`);
+      const res = await fetch(`http://localhost/php/get_messages.php?sender=admin&receiver=${user.username}`);
       const result = await res.json();
 
       const history = result.messages || [];

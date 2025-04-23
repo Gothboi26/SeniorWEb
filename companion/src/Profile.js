@@ -28,7 +28,7 @@ const Profile = () => {
     const storedRole = localStorage.getItem("role");
     setRole(storedRole);
 
-    fetch("https://backend-production-4629.up.railway.app/fetch_profile.php", {
+    fetch("http://localhost/php/fetch_profile.php", {
       method: "GET",
       credentials: "include",
     })
@@ -81,7 +81,7 @@ const Profile = () => {
   };
 
   const sendProfile = (data) => {
-    fetch("https://backend-production-4629.up.railway.app/save_user_profile.php", {
+    fetch("http://localhost/php/save_user_profile.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

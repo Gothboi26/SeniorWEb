@@ -88,7 +88,7 @@ const RectangleSection = ({ role }) => {
 
     try {
       const response = await fetch(
-        `https://backend-production-4629.up.railway.app/get_events.php?date=${formattedDate}`
+        `http://localhost/php/get_events.php?date=${formattedDate}`
       );
       const data = await response.json();
       setEvents(data.events || []); // Ensure events is always an array

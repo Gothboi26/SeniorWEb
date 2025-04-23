@@ -45,7 +45,7 @@ const Emergency = ({ role, handleLogout }) => {
     if (!confirmSend) return;
 
     try {
-      const res = await fetch("https://backend-production-4629.up.railway.app/submit_emergency.php", {
+      const res = await fetch("http://localhost/php/submit_emergency.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -75,7 +75,7 @@ const Emergency = ({ role, handleLogout }) => {
   useEffect(() => {
     const fetchStatus = async () => {
       try {
-        const res = await fetch("https://backend-production-4629.up.railway.app/get_latest_emergency_status.php", {
+        const res = await fetch("http://localhost/php/get_latest_emergency_status.php", {
           method: "GET",
           credentials: "include",
         });
