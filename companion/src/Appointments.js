@@ -8,6 +8,7 @@ const Appointments = () => {
   const [activeTab, setActiveTab] = useState("pending");
   const [remarksInput, setRemarksInput] = useState({});
   const [showLogs, setShowLogs] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     fetchAppointments();
@@ -47,7 +48,6 @@ const Appointments = () => {
 
   const updateStatus = async (appointmentId, status) => {
     const appointment = appointments.find((a) => a.id === appointmentId);
-
     let remark = remarksInput[appointmentId]?.trim();
     if (!remark) {
       remark = status === "approved" ? "Approved by admin" : "Request rejected";
@@ -81,7 +81,6 @@ const Appointments = () => {
         );
         setStatusMessage("Status updated successfully.");
         setRemarksInput((prev) => ({ ...prev, [appointmentId]: "" }));
-
         window.dispatchEvent(new Event("slotsUpdated"));
         localStorage.setItem("slotsUpdatedAt", Date.now());
       }
@@ -116,7 +115,6 @@ const Appointments = () => {
   const isPastAppointment = (app) => {
     const today = new Date();
     const appDate = new Date(app.date);
-    // Remove time portion
     today.setHours(0, 0, 0, 0);
     appDate.setHours(0, 0, 0, 0);
     return appDate < today;
@@ -138,29 +136,47 @@ const Appointments = () => {
           (app.status || "pending").toLowerCase() === activeTab
       );
 
+  const searchedAppointments = filteredAppointments.filter((app) => {
+    const searchLower = searchTerm.toLowerCase();
+    return (
+      app.fullname?.toLowerCase().includes(searchLower) ||
+      app.service?.toLowerCase().includes(searchLower) ||
+      app.remarks?.toLowerCase().includes(searchLower)
+    );
+  });
+
   return (
     <div className="appointment-table-container">
       <div className="admin-appoint-header">
         <h2>Appointment Management</h2>
-        <div className="appoint-tabs">
-          {["pending", "approved", "reject"].map((tab) => (
+        <div className="appoint-controls">
+          <input
+            type="text"
+            placeholder="Search appointments..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="search-bar"
+          />
+          <div className="appoint-tabs">
+            {["pending", "approved", "reject"].map((tab) => (
+              <button
+                key={tab}
+                className={`tab-button ${activeTab === tab && !showLogs ? "active" : ""}`}
+                onClick={() => {
+                  setActiveTab(tab);
+                  setShowLogs(false);
+                }}
+              >
+                {tab.charAt(0).toUpperCase() + tab.slice(1)}
+              </button>
+            ))}
             <button
-              key={tab}
-              className={`tab-button ${activeTab === tab && !showLogs ? "active" : ""}`}
-              onClick={() => {
-                setActiveTab(tab);
-                setShowLogs(false);
-              }}
+              className={`tab-button ${showLogs ? "active" : ""}`}
+              onClick={() => setShowLogs(true)}
             >
-              {tab.charAt(0).toUpperCase() + tab.slice(1)}
+              View Logs
             </button>
-          ))}
-          <button
-            className={`tab-button ${showLogs ? "active" : ""}`}
-            onClick={() => setShowLogs(true)}
-          >
-            View Logs
-          </button>
+          </div>
         </div>
       </div>
 
@@ -172,7 +188,7 @@ const Appointments = () => {
         <table className="appointment-table">
           <thead>
             <tr>
-              <th>Username</th>
+              <th>Full Name</th>
               <th>Type</th>
               <th>Date</th>
               <th>Time</th>
@@ -182,9 +198,9 @@ const Appointments = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredAppointments.map((app) => (
+            {searchedAppointments.map((app) => (
               <tr key={app.id}>
-                <td>{app.username}</td>
+                <td>{app.fullname}</td>
                 <td>{app.service}</td>
                 <td>{formatDateReadable(app.date)}</td>
                 <td>{formatTimeAMPM(app.time)}</td>

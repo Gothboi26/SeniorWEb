@@ -191,3 +191,12 @@
     overflow-x: auto;
   }
 }
+
+
+.search-bar {
+  padding: 8px 14px;
+  font-size: 14px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  font-family: "Roboto", sans-serif;
+}
