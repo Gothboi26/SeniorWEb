@@ -86,29 +86,27 @@
 
 /* Events Section Header */
 .Events-Header {
-  
   font-family: "Roboto", sans-serif;
 }
 
 .Events-Subheader {
-
-  background-color: #1F1785;
-  border-radius: 25px;
-  text-align: center;
-  align-items: center;
-  width: 80%;             /* Now matches Officials */
-  max-width: 1200px;       /* Use px for consistency */
-  margin: 20px auto;
-  box-sizing: border-box;
+  width: 80%;
 }
 
-.Events-sub  {
-  font-family: "Roboto", sans-serif;
+.Events-sub {
+  color: #fcfcfc;
+  background-color: #1f1785;
   font-size: 2rem;
   font-weight: 700;
-  color: #fcfcfc;
+  border-radius: 25px;
   padding: 10px 30px;
-  
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 140vh;
+  margin-left: 15%;
 }
 
 .Events-Title {
@@ -135,7 +133,7 @@
 
 /* Events List */
 .events-list h3 {
-  color: #C31C1C;
+  color: #c31c1c;
   font-size: 2rem;
   font-family: "Roboto", sans-serif;
   font-weight: 700;
@@ -237,8 +235,18 @@
   }
 
   .Events-Subheader {
-    font-size: 1.3rem;
-    padding: 5px 15px;
+    font-size: 1.5rem;
+    width: 100%;
+    margin: 0;
+    padding: 5px;
+    border-radius: 15px;
+  }
+  .Events-sub {
+    font-size: 1.5rem;
+    width: 100%;
+    margin: 0;
+    padding: 1px;
+    border-radius: 15px;
   }
 
   .react-calendar__tile {

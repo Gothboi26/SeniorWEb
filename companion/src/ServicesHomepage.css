@@ -11,8 +11,8 @@
 
 .Service-Subheader {
   color: #fcfcfc;
-  background-color: #1F1785;
-  
+  background-color: #1f1785;
+
   font-size: 2rem;
   font-weight: 700;
   border-radius: 25px;
@@ -23,9 +23,9 @@
   justify-content: center;
   align-items: center;
 
-  width: 80%;          /* Wider width */
-  max-width: 140vh;    /* Optional: cap it on large screens */
-  margin: 0 auto;      /* Center it horizontally */
+  width: 80%; /* Wider width */
+  max-width: 140vh; /* Optional: cap it on large screens */
+  margin: 0 auto; /* Center it horizontally */
 }
 
 .Service-Title {
@@ -196,7 +196,7 @@
 /* Mobile (max-width: 480px) */
 @media (max-width: 480px) {
   .Service-Section {
-    padding: 1rem;
+    padding: 2rem;
     margin-bottom: 7%;
   }
 
