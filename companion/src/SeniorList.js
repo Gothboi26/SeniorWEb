@@ -15,7 +15,6 @@ const SeniorList = () => {
 
   const [formData, setFormData] = useState({
     username: "",
-    password: "",
     barangay_id: "",
     group_chapter: "",
     email_address: "",
@@ -35,7 +34,6 @@ const SeniorList = () => {
     emergency_contact_person: "",
     emergency_contact_number: "",
     emergency_contact_relationship: "",
-    consentGiven: false, // ✅ Added for frontend-only validation
   });
 
   const chapterOptions = [
@@ -47,12 +45,11 @@ const SeniorList = () => {
   const extensionOptions = ["N/A", "Jr.", "Sr.", "II", "III", "IV"];
   const healthIssueOptions = [
     "Heart Disease", "Arthritis", "Diabetes", "Dementia/Alzheimer's Disease",
-     "COPD", "Osteoporosis"
+    "COPD", "Osteoporosis"
   ];
 
   const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    const newValue = type === "checkbox" ? checked : value;
+    const { name, value } = e.target;
 
     if ((name === "barangay_id" || name === "number" || name === "emergency_contact_number") && !/^[0-9]*$/.test(value)) return;
     if (name === "barangay_id" && value.length > 5) return;
@@ -68,7 +65,7 @@ const SeniorList = () => {
       return;
     }
 
-    setFormData(prev => ({ ...prev, [name]: newValue }));
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const validateForm = () => {
@@ -78,8 +75,6 @@ const SeniorList = () => {
       "birthday", "civil_status", "emergency_contact_person", "emergency_contact_number",
       "emergency_contact_relationship"
     ];
-
-    if (!editingId) requiredFields.push("password");
 
     for (let field of requiredFields) {
       const value = formData[field];
@@ -101,10 +96,6 @@ const SeniorList = () => {
       alert("Age must be 60 or older.");
       return false;
     }
-    if (!formData.consentGiven) {
-      alert("You must provide consent for data gathering.");
-      return false;
-    }
 
     return true;
   };
@@ -115,7 +106,7 @@ const SeniorList = () => {
       const res = await fetch("http://localhost/php/register.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, consentGiven: undefined })
+        body: JSON.stringify({ ...formData, password: "client123" }),
       });
       const result = await res.json();
       if (result.status === "success") {
@@ -137,7 +128,7 @@ const SeniorList = () => {
       const res = await fetch("http://localhost/php/update_user.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...payload, consentGiven: undefined })
+        body: JSON.stringify(payload),
       });
       const result = await res.json();
       if (result.status === "success") {
@@ -154,7 +145,7 @@ const SeniorList = () => {
   };
 
   const handleEdit = (data) => {
-    setFormData({ ...data, password: "", consentGiven: true });
+    setFormData({ ...data });
     setEditingId(data.id);
     setStep(1);
     setShowModal(true);
@@ -181,7 +172,6 @@ const SeniorList = () => {
   const resetForm = () => {
     setFormData({
       username: "",
-      password: "",
       barangay_id: "",
       group_chapter: "",
       email_address: "",
@@ -201,7 +191,6 @@ const SeniorList = () => {
       emergency_contact_person: "",
       emergency_contact_number: "",
       emergency_contact_relationship: "",
-      consentGiven: false,
     });
   };
 
@@ -241,9 +230,9 @@ const SeniorList = () => {
 
   return (
     <div className="senior-list-container">
+      {/* Header and filter */}
       <div className="table-header">
         <h2>All Clients</h2>
-        
         <div className="buttons-right">
           <div className="filter-bar">
             <input className="search-input" type="text" placeholder="Search seniors..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
@@ -251,16 +240,14 @@ const SeniorList = () => {
               <option value="">All Chapters</option>
               {chapterOptions.map((chapter, idx) => <option key={idx} value={chapter}>{chapter}</option>)}
             </select>
-            
           </div>
-
           <button className="add-senior-button" onClick={() => { resetForm(); setEditingId(null); setShowModal(true); }}>Add Senior</button>
           <button className="export-excel" onClick={handleExportExcel}>Export Excel</button>
         </div>
-        
       </div>
-      
-      <div className="table-wrapper"> 
+
+      {/* Table */}
+      <div className="table-wrapper">
         <table className="table">
           <thead>
             <tr>
@@ -305,8 +292,8 @@ const SeniorList = () => {
           </tbody>
         </table>
       </div>
-      
 
+      {/* Modal for Registration Steps */}
       {showModal && (
         <div className="senior-modal-overlay">
           <div className="senior-modal">
@@ -314,7 +301,6 @@ const SeniorList = () => {
               <>
                 <h2>Step 1: Personal Information</h2>
                 <input name="username" placeholder="Username" value={formData.username} onChange={handleInputChange} />
-                {!editingId && <input name="password" type="password" placeholder="Password" value={formData.password} onChange={handleInputChange} />}
                 <input name="first_name" placeholder="First Name" value={formData.first_name} onChange={handleInputChange} />
                 <input name="middle_name" placeholder="Middle Name" value={formData.middle_name} onChange={handleInputChange} />
                 <input name="last_name" placeholder="Last Name" value={formData.last_name} onChange={handleInputChange} />
@@ -359,15 +345,6 @@ const SeniorList = () => {
                   <option value="">Select Health Issue</option>
                   {healthIssueOptions.map((h, i) => <option key={i} value={h}>{h}</option>)}
                 </select>
-                <label style={{ marginTop: "10px", display: "flex", gap: "8px", alignItems: "center" }}>
-                  <input
-                    type="checkbox"
-                    name="consentGiven"
-                    checked={formData.consentGiven}
-                    onChange={handleInputChange}
-                  />
-                  I consent to the use of my personal data for registration and emergency services.
-                </label>
                 <div className="senior-modal-buttons">
                   <button onClick={() => setStep(1)}>Back</button>
                   {editingId ? <button onClick={handleUpdateSenior}>Update</button> : <button onClick={handleAddSenior}>Submit</button>}
@@ -378,6 +355,7 @@ const SeniorList = () => {
         </div>
       )}
 
+      {/* MapSelector modal */}
       {showMap && (
         <MapSelector
           onClose={() => setShowMap(false)}

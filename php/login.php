@@ -1,7 +1,7 @@
 <?php
-session_start(); // Start the session
+session_start();
 
-// ✅ CORS setup for localhost:3000
+// 🔐 Set CORS and content headers
 header("Access-Control-Allow-Origin: http://localhost:3000");
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
@@ -14,42 +14,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
-// ✅ Database Connection
+// ✅ DB Connection
 $conn = new mysqli("localhost", "root", "", "account");
-
 if ($conn->connect_error) {
-    echo json_encode(['status' => 'error', 'message' => 'Connection failed: ' . $conn->connect_error]);
+    echo json_encode(['status' => 'error', 'message' => 'Connection failed']);
     exit();
 }
 
-// ✅ Add default admin if not exists
-$default_username = "admin";
-$default_password = password_hash("admin123", PASSWORD_DEFAULT);
-$default_role = "admin";
-
-$sql = "INSERT IGNORE INTO users (username, password, role) VALUES (?, ?, ?)";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("sss", $default_username, $default_password, $default_role);
-$stmt->execute();
-$stmt->close();
-
-// ✅ Get request data
+// ✅ Parse request
 $data = json_decode(file_get_contents("php://input"), true);
+$username = $data['username'] ?? '';
+$password = $data['password'] ?? '';
 
-if (!isset($data['username']) || !isset($data['password'])) {
-    echo json_encode(['status' => 'error', 'message' => 'Missing username or password']);
-    exit();
-}
-
-$username = $data['username'];
-$password = $data['password'];
-
-// ✅ Fetch user info
-$sql = "SELECT id, password, role FROM users WHERE username = ?";
-$stmt = $conn->prepare($sql);
+// ✅ Fetch user including password_changed
+$stmt = $conn->prepare("SELECT id, password, role, password_changed FROM users WHERE username = ?");
 $stmt->bind_param("s", $username);
 $stmt->execute();
-$stmt->bind_result($user_id, $hashed_password, $role);
+$stmt->bind_result($user_id, $hashed_password, $role, $password_changed);
 
 if ($stmt->fetch() && password_verify($password, $hashed_password)) {
     session_regenerate_id(true);
@@ -59,15 +40,18 @@ if ($stmt->fetch() && password_verify($password, $hashed_password)) {
 
     session_write_close();
 
-    // ✅ Response with username added
+    // ✅ Log the value for debugging
+    error_log("Login success for $username - password_changed = " . var_export($password_changed, true));
+
     echo json_encode([
         'status' => 'success',
+        'username' => $username,
         'role' => $role,
-        'username' => $username, // ✅ This line is added
-        'message' => 'Login successful',
+        'force_change' => (int)$password_changed === 0, // ✅ Reliable comparison
+        'message' => 'Login successful'
     ]);
 } else {
-    echo json_encode(['status' => 'error', 'message' => 'Invalid credentials']);
+    echo json_encode(['status' => 'error', 'message' => 'Invalid username or password']);
 }
 
 $stmt->close();

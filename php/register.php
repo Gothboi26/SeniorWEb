@@ -69,18 +69,17 @@ $civil_status = $input["civil_status"];
 $emergency_person = $input["emergency_contact_person"];
 $emergency_number = $input["emergency_contact_number"];
 $emergency_relation = $input["emergency_contact_relationship"];
-$role = "client"; // ✅ Add this
+$role = "client"; // Default role
 
 $stmt = $conn->prepare("
     INSERT INTO users (
         username, password, number, age, sex, address, lat, lng, health_issue, email_address, 
         barangay_id, group_chapter, first_name, middle_name, last_name, extension, 
         birthday, civil_status, emergency_contact_person, emergency_contact_number, 
-        emergency_contact_relationship, role
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        emergency_contact_relationship, role, password_changed
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)
 ");
 
-// ✅ Now correctly 22 placeholders and 22 values
 $stmt->bind_param(
     "sssissddssssssssssssss",
     $username, $password, $number, $age, $sex, $address, $lat, $lng, $health_issue, $email,
