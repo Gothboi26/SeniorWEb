@@ -3,7 +3,6 @@ import MapSelector from "./MapSelector";
 import "./EmergenciesAdmin.css";
 import alert from "./assets/alert.png";
 
-
 const EmergenciesAdmin = () => {
   const [data, setData] = useState([]);
   const [unacknowledgedEmergencies, setUnacknowledgedEmergencies] = useState([]);
@@ -219,15 +218,15 @@ const EmergenciesAdmin = () => {
           <div className="popup-details">
             <p><b>Name:</b> {item.name}</p>
             <p><b>Type:</b> {item.type}</p>
-            <p><b>Status:</b> <span className={`status-${item.status.toLowerCase().replace(/\s/g, '-')}`}>{item.status}</span></p>
+            <p><b>Status:</b> <span className={`status-badge status-${item.status.toLowerCase().replace(/\s/g, '-')}`}>{item.status}</span></p>
             <p><b>Location:</b> {item.location}</p>
             <p><b>User #:</b> {item.contact_number}</p>
             <button onClick={() => acknowledgeSingle(item.id)} className="acknowledge-btn">Acknowledge</button>
           </div>
-          
         </div>
       ))}
-      <div className="table-wrapper"> 
+
+      <div className="table-wrapper">
         <table className="table">
           <thead>
             <tr>
@@ -246,8 +245,22 @@ const EmergenciesAdmin = () => {
           <tbody>
             {sortedData.length > 0 ? (
               sortedData.map((item, index) => (
-                <tr key={item.id}>
-                  <td>{item.name}</td>
+                <tr key={item.id} className={unacknowledgedEmergencies.some((e) => e.id === item.id) ? "highlight-unread" : ""}>
+                  <td>
+                    {item.name}
+                    {unacknowledgedEmergencies.some((e) => e.id === item.id) && (
+                      <span style={{
+                        marginLeft: '8px',
+                        color: '#b02a37',
+                        fontSize: '0.8rem',
+                        backgroundColor: '#ffe5e5',
+                        padding: '2px 6px',
+                        borderRadius: '10px'
+                      }}>
+                        Unread
+                      </span>
+                    )}
+                  </td>
                   <td>{item.date}</td>
                   <td>{item.time}</td>
                   <td>{item.type}</td>
@@ -263,7 +276,11 @@ const EmergenciesAdmin = () => {
                   <td>{item.contact_number}</td>
                   <td>{item.emergency_contact_name}</td>
                   <td>{item.emergency_contact_number}</td>
-                  <td className={`status-${item.status.toLowerCase().replace(/\s/g, '-')}`}>{item.status}</td>
+                  <td>
+                    <span className={`status-badge status-${item.status.toLowerCase().replace(/\s/g, '-')}`}>
+                      {item.status}
+                    </span>
+                  </td>
                   <td>
                     {item.status === "Resolved" ? (
                       <span style={{ fontStyle: "italic", color: "#666" }}>—</span>
@@ -292,7 +309,6 @@ const EmergenciesAdmin = () => {
           </tbody>
         </table>
       </div>
-      
 
       {mapModalVisible && mapCoords.lat && mapCoords.lng && (
         <MapSelector

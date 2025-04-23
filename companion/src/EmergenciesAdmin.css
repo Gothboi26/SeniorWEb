@@ -311,3 +311,32 @@ body {
     font-size: 13px;
   }
 }
+.status-badge {
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-weight: 500;
+  font-size: 0.85rem;
+  display: inline-block;
+  color: white;
+}
+
+.status-pending {
+  background-color: #d32f2f;
+}
+
+.status-on-the-way {
+  background-color: #f57c00;
+}
+
+.status-arrived {
+  background-color: #388e3c;
+}
+
+.status-resolved {
+  background-color: #9e9e9e;
+}
+
+.highlight-unread {
+  background-color: #fff4f4;
+  font-weight: bold;
+}

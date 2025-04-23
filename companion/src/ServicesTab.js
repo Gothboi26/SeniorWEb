@@ -264,7 +264,7 @@ const ServicesTab = () => {
             <th>Service Name</th>
             <th>Date</th>
             <th>Time</th>
-            <th>Max Slots</th>
+            <th>Available Slots</th>
             <th>Action</th>
           </tr>
         </thead>

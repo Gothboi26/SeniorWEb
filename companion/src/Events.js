@@ -20,7 +20,7 @@ const Events = () => {
 
   useEffect(() => {
     let url = `http://localhost/php/get_events.php?sortOrder=${sortOrder}`;
-    url += showLogs ? `&logs=past` : ``; // fetch all and filter in frontend
+    url += showLogs ? `&logs=past` : ``;
 
     fetch(url)
       .then((response) => response.json())
@@ -32,7 +32,6 @@ const Events = () => {
             if (showLogs) {
               return eventDate < now;
             } else {
-              // Keep events that are today or future
               return (
                 eventDate.toDateString() === now.toDateString() ||
                 eventDate > now
@@ -144,32 +143,6 @@ const Events = () => {
       });
   };
 
-  const deleteEvent = (id) => {
-    if (window.confirm("Are you sure you want to delete this event?")) {
-      setLoading(true);
-      fetch(`http://localhost/php/delete_event.php`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.status === "success") {
-            setEvents((prevEvents) => prevEvents.filter((event) => event.id !== id));
-            showToast("Event deleted successfully!");
-          } else {
-            alert("Failed to delete event: " + data.message);
-          }
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          alert("An error occurred while deleting the event.");
-          setLoading(false);
-        });
-    }
-  };
-
   const formatDate = (date) => {
     return new Intl.DateTimeFormat("en-US", {
       weekday: "long",
@@ -248,9 +221,6 @@ const Events = () => {
                       <div className="action-icons">
                         <button className="edit-button" onClick={() => openModal(event)}>
                           Edit
-                        </button>
-                        <button className="delete-button" onClick={() => deleteEvent(event.id)}>
-                          Delete
                         </button>
                       </div>
                     </td>
