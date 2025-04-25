@@ -33,9 +33,10 @@
 /* ----- Date and Time Container ----- */
 .date-time-container {
   font-size: 20px;
-  color: #1e1e1e;
-  margin-right: 40px; /* Aligns it to the right with padding */
+  color: #fff;
+  justify-content: right;
   font-family: "Roboto", sans-serif;
+  display: flex;
 }
 
 /* Logo Container */

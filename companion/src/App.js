@@ -80,7 +80,9 @@ function App() {
             <main className="App-content">
               {!role ? (
                 <div className="login-page">
-                  <div className="header"></div>
+                  <div className="header">
+                    <div className="date-time-container">{dateTime}</div>
+                  </div>
                   
 
 
@@ -89,7 +91,7 @@ function App() {
                     <div className="app-logo-container">
                       <img src={logo} alt="Logo" className="app-logo" />
                     </div>
-                    <div className="date-time-container">{dateTime}</div>
+                    
                   </div>
 
                   <div className="login-container">
@@ -117,8 +119,9 @@ function App() {
             {role === "client" && <Footer role={role} />}
           </>
         )}
-        <Footer role={role} />
+      
     </div>
+    
   );
 }
 
