@@ -81,6 +81,9 @@ function App() {
               {!role ? (
                 <div className="login-page">
                   <div className="header"></div>
+                  
+
+
                   <div className="logo-container">
                     <h1>Barangay General Tiburcio De Leon</h1>
                     <div className="app-logo-container">
@@ -114,6 +117,7 @@ function App() {
             {role === "client" && <Footer role={role} />}
           </>
         )}
+        <Footer role={role} />
     </div>
   );
 }
