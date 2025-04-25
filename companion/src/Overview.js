@@ -448,12 +448,17 @@ const chartTitles = {
 
 <div className="statistics">
   <h3 style={{ marginBottom: "10px" }}>{chartTitles[selectedChart]}</h3>
-{["accommodatedPerDay", "registeredSeniors", "accommodatedPerService"].includes(selectedChart) && (
+{["registeredSeniors", "accommodatedPerDay", "accommodatedPerService"].includes(selectedChart) && (
   <div className="view-buttons" style={{ marginBottom: "15px" }}>
     {selectedChart === "accommodatedPerDay" && (
       <button
         className={dataView === "day" ? "active" : ""}
-        style={{ backgroundColor: dataView === "day" ? "#c31c1c" : "#fff", color: dataView === "day" ? "#fff" : "#c31c1c", border: "1px solid #c31c1c", marginRight: "5px" }}
+        style={{
+          backgroundColor: dataView === "day" ? "#c31c1c" : "#fff",
+          color: dataView === "day" ? "#fff" : "#c31c1c",
+          border: "1px solid #c31c1c",
+          marginRight: "5px"
+        }}
         onClick={() => setDataView("day")}
       >
         Day
@@ -461,14 +466,23 @@ const chartTitles = {
     )}
     <button
       className={dataView === "week" ? "active" : ""}
-      style={{ backgroundColor: dataView === "week" ? "#c31c1c" : "#fff", color: dataView === "week" ? "#fff" : "#c31c1c", border: "1px solid #c31c1c", marginRight: "5px" }}
+      style={{
+        backgroundColor: dataView === "week" ? "#c31c1c" : "#fff",
+        color: dataView === "week" ? "#fff" : "#c31c1c",
+        border: "1px solid #c31c1c",
+        marginRight: "5px"
+      }}
       onClick={() => setDataView("week")}
     >
       Week
     </button>
     <button
       className={dataView === "month" ? "active" : ""}
-      style={{ backgroundColor: dataView === "month" ? "#c31c1c" : "#fff", color: dataView === "month" ? "#fff" : "#c31c1c", border: "1px solid #c31c1c" }}
+      style={{
+        backgroundColor: dataView === "month" ? "#c31c1c" : "#fff",
+        color: dataView === "month" ? "#fff" : "#c31c1c",
+        border: "1px solid #c31c1c"
+      }}
       onClick={() => setDataView("month")}
     >
       Month

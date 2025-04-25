@@ -277,8 +277,10 @@ const ServicesTab = () => {
                 <td>{formatToAmPm(service.time)}</td>
                 <td>{service.maxSlot}</td>
                 <td>
-                  <button className="edit-btn" onClick={() => handleEdit(i)}>Edit</button>
-                  <button className="remove-btn" onClick={() => handleRemove(i)}>Remove</button>
+                  <div className="action-buttons">
+                    <button className="edit-btn" onClick={() => handleEdit(i)}>Edit</button>
+                    <button className="remove-btn" onClick={() => handleRemove(i)}>Remove</button>
+                  </div>
                 </td>
               </tr>
             ))
