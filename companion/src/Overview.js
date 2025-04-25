@@ -30,6 +30,8 @@ ChartJS.register(
   Legend
 );
 
+ChartJS.defaults.devicePixelRatio = 2;
+
 const Overview = () => {
   const navigate = useNavigate();
   const [appointments, setAppointments] = useState([]);
@@ -39,7 +41,7 @@ const Overview = () => {
   const [currentAppointment, setCurrentAppointment] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
-  const [userRegistrationView, setUserRegistrationView] = useState("month");
+  const [userRegistrationView] = useState("month");
   const [userRegistrationData, setUserRegistrationData] = useState({});
   const [ageDistribution, setAgeDistribution] = useState({});
   const [chapters, setChapters] = useState({});
@@ -48,6 +50,9 @@ const Overview = () => {
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [showNotificationDetails, setShowNotificationDetails] = useState(false);
+  const [accommodatedPerDay, setAccommodatedPerDay] = useState({});
+  const [accommodatedPerServicePerMonth, setAccommodatedPerServicePerMonth] = useState({});
+  const [selectedChart, setSelectedChart] = useState("appointmentsByStatus");
 
   const formatDate = (date) => new Date(date).toISOString().split("T")[0];
 
@@ -168,22 +173,175 @@ const Overview = () => {
 
   useEffect(() => { fetchUsers(); }, [fetchUsers]);
 
-  useEffect(() => {
-    const status = { Approved: 0, Rejected: 0, Pending: 0 };
-    const perService = {};
-    appointments.forEach((a) => {
-      const stat = a.status?.toLowerCase();
-      if (stat === "approved") status.Approved++;
-      else if (stat === "reject") status.Rejected++;
-      else status.Pending++;
-      const service = a.service?.trim() || "Unknown";
-      perService[service] = (perService[service] || 0) + 1;
-    });
-    setAppointmentStatusData(status);
-    setAppointmentsPerService(perService);
-  }, [appointments]);
+useEffect(() => {
+  const status = { Approved: 0, Rejected: 0, Pending: 0 };
+  const perService = {};
+  const dailyAccommodated = {};
+  const monthlyServiceCounts = {};
 
-  const chartConfig = (labels, data, options) => ({ labels, datasets: [{ data, ...options }] });
+  appointments.forEach((a) => {
+    const stat = a.status?.toLowerCase();
+    const dateKey = new Date(a.date).toISOString().split("T")[0];
+    const dateObj = new Date(a.date);
+    const monthKey = dateObj.toLocaleString("default", { month: "long", year: "numeric" });
+    const service = a.service?.trim() || "Unknown";
+
+    if (stat === "approved") {
+      status.Approved++;
+      dailyAccommodated[dateKey] = (dailyAccommodated[dateKey] || 0) + 1;
+
+      if (!monthlyServiceCounts[service]) {
+        monthlyServiceCounts[service] = {};
+      }
+      monthlyServiceCounts[service][monthKey] = (monthlyServiceCounts[service][monthKey] || 0) + 1;
+    } else if (stat === "reject") {
+      status.Rejected++;
+    } else {
+      status.Pending++;
+    }
+
+    perService[service] = (perService[service] || 0) + 1;
+  });
+
+  setAppointmentStatusData(status);
+  setAppointmentsPerService(perService);
+  setAccommodatedPerDay(dailyAccommodated);
+  setAccommodatedPerServicePerMonth(monthlyServiceCounts); // ✅ CORRECTLY placed inside the useEffect
+}, [appointments]);
+
+const generateServiceMonthChartData = (serviceData) => {
+  const allMonths = Array.from(
+    new Set(
+      Object.values(serviceData)
+        .flatMap((monthData) => Object.keys(monthData))
+    )
+  ).sort((a, b) => new Date(a) - new Date(b)); // Sort by actual date
+
+  const datasets = Object.entries(serviceData).map(([service, data]) => ({
+    label: service,
+    data: allMonths.map((month) => data[month] || 0),
+    fill: false,
+    borderWidth: 2,
+    backgroundColor: "#C31C1C",
+  }));
+
+  return {
+    labels: allMonths,
+    datasets,
+  };
+};
+
+const chartConfig = (labels, data, options) => ({
+  labels,
+  datasets: [{ data, ...options }],
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        labels: {
+          font: {
+            weight: "bold",
+            size: 14
+          }
+        }
+      },
+      tooltip: {
+        bodyFont: {
+          size: 16, // 
+          weight: "bold" // 
+        },
+        titleFont: {
+          size: 15,
+          weight: "bold"
+        },
+        padding: 12, // 
+        backgroundColor: "#333", 
+        titleColor: "#fff", 
+        bodyColor: "#fff" 
+      }
+    },
+    scales: {
+      x: {
+        ticks: {
+          font: {
+            weight: "bold",
+            size: 14,
+            family: "Roboto"
+          }
+        }
+      },
+      y: {
+        ticks: {
+          font: {
+            weight: "bold",
+            size: 14,
+            family: "Roboto"
+          }
+        }
+      }
+    }
+  }
+});
+
+const chartViews = {
+  appointmentsByStatus: (
+    <Pie data={chartConfig(
+      Object.keys(appointmentStatusData),
+      Object.values(appointmentStatusData),
+      { backgroundColor: ["#F9ED69", "#6A2C70", "#F08A5D"] }
+    )} />
+  ),
+  appointmentsPerService: (
+    <Line data={chartConfig(
+      Object.keys(appointmentsPerService),
+      Object.values(appointmentsPerService),
+      { label: "Appointments", borderColor: "#3e95cd", fill: false }
+    )} />
+  ),
+  seniorsPerChapter: (
+    <Line data={chartConfig(
+      Object.keys(chapters),
+      Object.values(chapters),
+      { label: "Seniors", borderColor: "#8e44ad", fill: false }
+    )} />
+  ),
+  registeredSeniors: (
+    <Line data={chartConfig(
+      Object.keys(userRegistrationData),
+      Object.values(userRegistrationData),
+      { label: "Registrations", borderColor: "#C31C1C", fill: false }
+    )} />
+  ),
+  ageGroup: (
+    <Bar data={chartConfig(
+      Object.keys(ageDistribution),
+      Object.values(ageDistribution),
+      { backgroundColor: "#C31C1C" }
+    )} />
+  ),
+  accommodatedPerDay: (
+    <Bar data={chartConfig(
+      Object.keys(accommodatedPerDay).sort(),
+      Object.keys(accommodatedPerDay).sort().map(date => accommodatedPerDay[date]),
+      { label: "Approved Seniors", backgroundColor: "#FF7043" }
+    )} />
+  ),
+  accommodatedPerService: (
+    <Line data={generateServiceMonthChartData(accommodatedPerServicePerMonth)} />
+  )
+};
+
+const chartTitles = {
+  appointmentsByStatus: "Appointments by Status",
+  appointmentsPerService: "Appointments per Service",
+  seniorsPerChapter: "Seniors per Chapter",
+  registeredSeniors: "Registered Seniors",
+  ageGroup: "Senior Age Group",
+  accommodatedPerDay: "Seniors Accommodated",
+  accommodatedPerService: "Seniors Accommodated per Service",
+};
+
 
   return (
     <div className="overview-container">
@@ -210,36 +368,33 @@ const Overview = () => {
         )}
       </div>
 
-      <div className="summary-cards">
-        <div className="card card-light">
-          <h3>Appointments by Status</h3>
-          <Pie data={chartConfig(Object.keys(appointmentStatusData), Object.values(appointmentStatusData), { backgroundColor: ["#F9ED69", "#6A2C70", "#F08A5D"] })} />
-        </div>
-        <div className="card card-light">
-          <h3>Appointments per Service</h3>
-          <Line data={chartConfig(Object.keys(appointmentsPerService), Object.values(appointmentsPerService), { label: "Appointments", fontColor: "white",  borderColor: "#3e95cd", fill: false })} />
-        </div>
-        <div className="card card-light">
-          <h3>Seniors per Chapter</h3>
-          <Pie data={chartConfig(Object.keys(chapters), Object.values(chapters), { backgroundColor: ["#3cb44b", "#e6194B", "#4363d8", "#f58231"] })} />
-        </div>
-      </div>
+{/* 🔽 Dropdown Container Styled like Statistics */}
+<div className="statistics">
+  <select
+    value={selectedChart}
+    onChange={(e) => setSelectedChart(e.target.value)}
+  >
+    <option value="appointmentsByStatus">Appointments by Status</option>
+    <option value="appointmentsPerService">Appointments per Service</option>
+    <option value="seniorsPerChapter">Seniors per Chapter</option>
+    <option value="registeredSeniors">Registered Seniors</option>
+    <option value="ageGroup">Senior Age Group</option>
+    <option value="accommodatedPerDay">Seniors Accommodated Per Day</option>
+    <option value="accommodatedPerService">Seniors Accommodated per Service (Monthly)</option>
+  </select>
+</div>
 
-      <div className="statistics-section">
-        <div className="statistics">
-          <h3>Registered Seniors</h3>
-          <div className="statistics-button">
-            <button onClick={() => setUserRegistrationView("month")}>Month</button>
-            <button onClick={() => setUserRegistrationView("year")}>Year</button>
-          </div>
-          
-          <Line data={chartConfig(Object.keys(userRegistrationData), Object.values(userRegistrationData), { label: "Registrations", borderColor: "#C31C1C", fill: false })} />
-        </div>
-        <div className="age-summary">
-          <h3>Senior Age Group</h3>
-          <Bar data={chartConfig(Object.keys(ageDistribution), Object.values(ageDistribution), { backgroundColor: "#C31C1C" })} />
-        </div>
-      </div>
+<div className="statistics">
+  <h3 style={{ marginBottom: "10px" }}>{chartTitles[selectedChart]}</h3>
+  <div className="stats-chart">
+    {selectedChart === "appointmentsByStatus" ? (
+      <div className="pie-chart-container">{chartViews[selectedChart]}</div>
+    ) : (
+      chartViews[selectedChart]
+    )}
+  </div>
+</div>
+
 
       <div className="appointment-summary">
         <h3>Appointments</h3>
