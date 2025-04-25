@@ -41,7 +41,6 @@ const Overview = () => {
   const [currentAppointment, setCurrentAppointment] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
-  const [userRegistrationView] = useState("month");
   const [userRegistrationData, setUserRegistrationData] = useState({});
   const [ageDistribution, setAgeDistribution] = useState({});
   const [chapters, setChapters] = useState({});
@@ -53,6 +52,7 @@ const Overview = () => {
   const [accommodatedPerDay, setAccommodatedPerDay] = useState({});
   const [accommodatedPerServicePerMonth, setAccommodatedPerServicePerMonth] = useState({});
   const [selectedChart, setSelectedChart] = useState("appointmentsByStatus");
+
 
   const formatDate = (date) => new Date(date).toISOString().split("T")[0];
 
@@ -70,6 +70,17 @@ const Overview = () => {
         setLoading(false);
       });
   }, []);
+
+const [dataView, setDataView] = useState("day");
+
+const getWeekKey = (date) => {
+  const monday = new Date(date);
+  monday.setDate(monday.getDate() - ((monday.getDay() + 6) % 7));
+  const sunday = new Date(monday);
+  sunday.setDate(monday.getDate() + 6);
+  return `${monday.toLocaleDateString("en-US", { month: "short", day: "2-digit" })} - ${sunday.toLocaleDateString("en-US", { month: "short", day: "2-digit" })}`;
+};
+
 
   useEffect(() => { fetchAppointmentsData(); }, [fetchAppointmentsData]);
   useEffect(() => { if (appointments.length) filterAppointmentsByDate(selectedDate); }, [appointments, selectedDate, filterAppointmentsByDate]);
@@ -147,29 +158,32 @@ const Overview = () => {
       .finally(() => setIsSaving(false));
   };
 
-  const fetchUsers = useCallback(() => {
-    fetch("http://localhost/php/get_users.php")
-      .then((res) => res.json())
-      .then((data) => {
-        const users = data.data || [];
-        const ageDist = {}, chapterDist = {}, reg = {};
-        users.forEach((u) => {
-          const age = parseInt(u.age, 10);
-          const ageGroup = Math.floor(age / 10) * 10;
-          if (age >= 60) ageDist[`${ageGroup}-${ageGroup + 9}`] = (ageDist[`${ageGroup}-${ageGroup + 9}`] || 0) + 1;
-          if (u.group_chapter) chapterDist[u.group_chapter] = (chapterDist[u.group_chapter] || 0) + 1;
+const fetchUsers = useCallback(() => {
+  fetch("http://localhost/php/get_users.php")
+    .then((res) => res.json())
+    .then((data) => {
+      const users = data.data || [];
+      const ageDist = {}, chapterDist = {}, reg = {};
 
-          if (u.role !== "admin") {
-            const date = new Date(u.created_at);
-            const key = userRegistrationView === "year" ? date.getFullYear() : date.toLocaleString("en-US", { month: "long", year: "numeric" });
-            reg[key] = (reg[key] || 0) + 1;
-          }
-        });
-        setAgeDistribution(ageDist);
-        setChapters(chapterDist);
-        setUserRegistrationData(reg);
+      users.forEach((u) => {
+        const age = parseInt(u.age, 10);
+        const ageGroup = Math.floor(age / 10) * 10;
+        if (age >= 60) ageDist[`${ageGroup}-${ageGroup + 9}`] = (ageDist[`${ageGroup}-${ageGroup + 9}`] || 0) + 1;
+        if (u.group_chapter) chapterDist[u.group_chapter] = (chapterDist[u.group_chapter] || 0) + 1;
+
+        if (u.role !== "admin") {
+          const date = new Date(u.created_at);
+          const key = dataView === "week" ? getWeekKey(date) : date.toLocaleString("en-US", { month: "long", year: "numeric" });
+          reg[key] = (reg[key] || 0) + 1;
+        }
       });
-  }, [userRegistrationView]);
+
+      setAgeDistribution(ageDist);
+      setChapters(chapterDist);
+      setUserRegistrationData(reg);
+    });
+}, [dataView]);
+
 
   useEffect(() => { fetchUsers(); }, [fetchUsers]);
 
@@ -183,17 +197,17 @@ useEffect(() => {
     const stat = a.status?.toLowerCase();
     const dateKey = new Date(a.date).toISOString().split("T")[0];
     const dateObj = new Date(a.date);
-    const monthKey = dateObj.toLocaleString("default", { month: "long", year: "numeric" });
+    const fullDateKey = dateObj.toISOString().split("T")[0]; // e.g. "2024-04-25"
     const service = a.service?.trim() || "Unknown";
 
     if (stat === "approved") {
       status.Approved++;
       dailyAccommodated[dateKey] = (dailyAccommodated[dateKey] || 0) + 1;
 
-      if (!monthlyServiceCounts[service]) {
-        monthlyServiceCounts[service] = {};
-      }
-      monthlyServiceCounts[service][monthKey] = (monthlyServiceCounts[service][monthKey] || 0) + 1;
+    if (!monthlyServiceCounts[service]) {
+      monthlyServiceCounts[service] = {};
+    }
+    monthlyServiceCounts[service][fullDateKey] = (monthlyServiceCounts[service][fullDateKey] || 0) + 1;
     } else if (stat === "reject") {
       status.Rejected++;
     } else {
@@ -206,27 +220,50 @@ useEffect(() => {
   setAppointmentStatusData(status);
   setAppointmentsPerService(perService);
   setAccommodatedPerDay(dailyAccommodated);
-  setAccommodatedPerServicePerMonth(monthlyServiceCounts); // ✅ CORRECTLY placed inside the useEffect
+  setAccommodatedPerServicePerMonth(monthlyServiceCounts);
 }, [appointments]);
 
 const generateServiceMonthChartData = (serviceData) => {
-  const allMonths = Array.from(
-    new Set(
-      Object.values(serviceData)
-        .flatMap((monthData) => Object.keys(monthData))
-    )
-  ).sort((a, b) => new Date(a) - new Date(b)); // Sort by actual date
+  const colors = [
+    "#C31C1C", // red
+    "#3e95cd", // blue
+    "#8e44ad", // purple
+    "#27ae60", // green
+    "#f39c12", // orange
+  ];
 
-  const datasets = Object.entries(serviceData).map(([service, data]) => ({
+  const allKeys = new Set();
+  const grouped = {};
+
+  Object.entries(serviceData).forEach(([service, data]) => {
+    Object.entries(data).forEach(([date, count]) => {
+      const key = dataView === "week"
+        ? getWeekKey(new Date(date))
+        : new Date(date).toLocaleString("default", { month: "long", year: "numeric" });
+      if (!grouped[service]) grouped[service] = {};
+      grouped[service][key] = (grouped[service][key] || 0) + count;
+      allKeys.add(key);
+    });
+  });
+
+  const sortedKeys = Array.from(allKeys).sort((a, b) => {
+    const aDate = new Date(a.split(" - ")[0] || a);
+    const bDate = new Date(b.split(" - ")[0] || b);
+    return aDate - bDate;
+  });
+
+  const datasets = Object.entries(grouped).map(([service, values], index) => ({
     label: service,
-    data: allMonths.map((month) => data[month] || 0),
+    data: sortedKeys.map((k) => values[k] || 0),
     fill: false,
     borderWidth: 2,
-    backgroundColor: "#C31C1C",
+    backgroundColor: colors[index % colors.length],
+    borderColor: colors[index % colors.length],
+    tension: 0.3
   }));
 
   return {
-    labels: allMonths,
+    labels: sortedKeys,
     datasets,
   };
 };
@@ -282,7 +319,36 @@ const chartConfig = (labels, data, options) => ({
       }
     }
   }
-});
+  });
+  
+  const generateAccommodatedPerDayData = () => {
+  const grouped = {};
+
+  Object.entries(accommodatedPerDay).forEach(([date, count]) => {
+    const dateObj = new Date(date);
+    let key = formatDate(dateObj);
+
+    if (dataView === "week") {
+      key = getWeekKey(dateObj);
+    } else if (dataView === "month") {
+      key = dateObj.toLocaleString("default", { month: "long", year: "numeric" });
+    }
+
+    grouped[key] = (grouped[key] || 0) + count;
+  });
+
+  const sortedKeys = Object.keys(grouped).sort((a, b) => {
+    const aDate = new Date(a.split(" - ")[0] || a);
+    const bDate = new Date(b.split(" - ")[0] || b);
+    return aDate - bDate;
+  });
+
+  return chartConfig(
+    sortedKeys,
+    sortedKeys.map(k => grouped[k]),
+    { label: "Approved Seniors", backgroundColor: "#FF7043" }
+  );
+};
 
 const chartViews = {
   appointmentsByStatus: (
@@ -321,11 +387,7 @@ const chartViews = {
     )} />
   ),
   accommodatedPerDay: (
-    <Bar data={chartConfig(
-      Object.keys(accommodatedPerDay).sort(),
-      Object.keys(accommodatedPerDay).sort().map(date => accommodatedPerDay[date]),
-      { label: "Approved Seniors", backgroundColor: "#FF7043" }
-    )} />
+    <Bar data={generateAccommodatedPerDayData()} />
   ),
   accommodatedPerService: (
     <Line data={generateServiceMonthChartData(accommodatedPerServicePerMonth)} />
@@ -379,13 +441,40 @@ const chartTitles = {
     <option value="seniorsPerChapter">Seniors per Chapter</option>
     <option value="registeredSeniors">Registered Seniors</option>
     <option value="ageGroup">Senior Age Group</option>
-    <option value="accommodatedPerDay">Seniors Accommodated Per Day</option>
-    <option value="accommodatedPerService">Seniors Accommodated per Service (Monthly)</option>
+    <option value="accommodatedPerDay">Seniors Accommodated</option>
+    <option value="accommodatedPerService">Seniors Accommodated per Service</option>
   </select>
 </div>
 
 <div className="statistics">
   <h3 style={{ marginBottom: "10px" }}>{chartTitles[selectedChart]}</h3>
+{["accommodatedPerDay", "registeredSeniors", "accommodatedPerService"].includes(selectedChart) && (
+  <div className="view-buttons" style={{ marginBottom: "15px" }}>
+    {selectedChart === "accommodatedPerDay" && (
+      <button
+        className={dataView === "day" ? "active" : ""}
+        style={{ backgroundColor: dataView === "day" ? "#c31c1c" : "#fff", color: dataView === "day" ? "#fff" : "#c31c1c", border: "1px solid #c31c1c", marginRight: "5px" }}
+        onClick={() => setDataView("day")}
+      >
+        Day
+      </button>
+    )}
+    <button
+      className={dataView === "week" ? "active" : ""}
+      style={{ backgroundColor: dataView === "week" ? "#c31c1c" : "#fff", color: dataView === "week" ? "#fff" : "#c31c1c", border: "1px solid #c31c1c", marginRight: "5px" }}
+      onClick={() => setDataView("week")}
+    >
+      Week
+    </button>
+    <button
+      className={dataView === "month" ? "active" : ""}
+      style={{ backgroundColor: dataView === "month" ? "#c31c1c" : "#fff", color: dataView === "month" ? "#fff" : "#c31c1c", border: "1px solid #c31c1c" }}
+      onClick={() => setDataView("month")}
+    >
+      Month
+    </button>
+  </div>
+)}
   <div className="stats-chart">
     {selectedChart === "appointmentsByStatus" ? (
       <div className="pie-chart-container">{chartViews[selectedChart]}</div>
@@ -394,7 +483,6 @@ const chartTitles = {
     )}
   </div>
 </div>
-
 
       <div className="appointment-summary">
         <h3>Appointments</h3>
