@@ -26,8 +26,16 @@
 
 /* ----- Header ----- */
 .header {
-  height: 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-color: #1f1785;
+  color: white;
+  padding: 22px 60px;
+  font-size: 20px;
+  font-weight: 600;
+  width: 100%;
+  font-family: "roboto", "sans-serif";
 }
 
 /* ----- Date and Time Container ----- */

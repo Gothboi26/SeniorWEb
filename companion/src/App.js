@@ -81,6 +81,7 @@ function App() {
               {!role ? (
                 <div className="login-page">
                   <div className="header">
+                    
                     <div className="date-time-container">{dateTime}</div>
                   </div>
                   
@@ -108,6 +109,8 @@ function App() {
                     </p>
                     <Login setRole={handleLogin} />
                   </div>
+
+                  <Footer role={role} />
                 </div>
               ) : (
                 <>
