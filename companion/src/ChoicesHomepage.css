@@ -56,6 +56,7 @@
   flex-direction: row; /* Align h2 and image horizontally */
   align-items: center; /* Vertically align items */
   justify-content: space-between; /* Add spacing between elements */
+  letter-spacing: normal;
   margin: 20px 30px 10px; /* Add spacing around the title section */
 }
 
@@ -78,25 +79,24 @@
 .rectangle23 .senior-care-button,
 .rectangle23 .emergency-services-button,
 .rectangle23 .chat-assistance-button {
-    margin-top: 20px !important;
-    padding: 12px 20px !important;
-    width: 75% !important;
-    background-color: #C31C1C !important;
-    color: #fff !important;
-    border: none;
-    border-radius: 20px !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    cursor: pointer !important;
-    transition: background-color 0.3s ease, transform 0.3s ease !important;
+  margin-top: 20px !important;
+  padding: 12px 20px !important;
+  width: 75% !important;
+  background-color: #c31c1c !important;
+  color: #fff !important;
+  border: none;
+  border-radius: 20px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer !important;
+  transition: background-color 0.3s ease, transform 0.3s ease !important;
 }
 
 .rectangle23 .senior-care-button:hover,
 .rectangle23 .emergency-services-button:hover,
 .rectangle23 .chat-assistance-button:hover {
-    background-color: #b30000 !important;
-    transform: scale(1.05) !important;
+  background-color: #b30000 !important;
+  transform: scale(1.05) !important;
 }
-
 
 /* --- Emergency Services --- */
 .rectangle23.emergencyservices .Emergency-Title {
@@ -152,7 +152,7 @@
   margin-top: 50px;
   padding: 8px 16px;
   width: 70%;
-  background-color: #C31C1C;
+  background-color: #c31c1c;
   color: #fff;
   border-radius: 20px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
@@ -240,7 +240,6 @@
   font-weight: 300;
 }
 
-
 .link-container {
   text-decoration: none; /* Removes underline */
   color: inherit; /* Inherits text color */
@@ -297,5 +296,80 @@
   .emergency-services-button-text,
   .chat-assistance-button-text {
     font-size: 16px;
+  }
+}
+@media (max-width: 480px) {
+  .rectangle21 {
+    flex-direction: row; /* arrange children in a row */
+    flex-wrap: wrap; /* allow wrapping to next line */
+    justify-content: center; /* center items */
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .rectangle23.paalala1,
+  .rectangle23.seniorcare,
+  .rectangle23.emergencyservices,
+  .rectangle23.chatassistance {
+    width: 48%; /* nearly half to fit two in a row */
+    height: auto;
+    padding: 10px;
+  }
+
+  .rectangle23.emergencyservices p,
+  .rectangle23.chatassistance p {
+    font-size: 16px;
+    margin: 21px;
+    text-align: justify;
+  }
+  .rectangle23.paalala1 p,
+  .rectangle23.seniorcare p {
+    font-size: 15px;
+    margin: 10px;
+    text-align: justify;
+  }
+
+  .rectangle23.paalala1 h2,
+  .rectangle23.seniorcare h2,
+  .rectangle23.emergencyservices h2,
+  .rectangle23.chatassistance h2 {
+    font-size: 1.3rem;
+    text-align: center;
+  }
+
+  .senior-care-button,
+  .chat-assistance-button,
+  .emergency-services-button {
+    width: 90%;
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .senior-care-button-text,
+  .emergency-services-button-text,
+  .chat-assistance-button-text {
+    font-size: 16px;
+  }
+  .rectangle23.seniorcare .Emergency-Title,
+  .rectangle23.seniorcare .Chat-Title {
+    flex-direction: column;
+    align-items: center;
+    margin: 0 10px 0;
+    text-align: center;
+  }
+  .rectangle23.seniorcare .SeniorCare-Title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    letter-spacing: normal;
+    margin: 20px 30px 10px;
+  }
+
+  .appoint-logo,
+  .emergency-logo,
+  .chat-logo {
+    width: 40px;
+    margin: 10px 0;
   }
 }

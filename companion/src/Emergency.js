@@ -15,7 +15,7 @@ const Emergency = ({ role, handleLogout }) => {
   const emergencyOptions = [
     { type: "Police", icon: police },
     { type: "Ambulance", icon: ambulance },
-    { type: "Fire Truck", icon: firetruck }
+    { type: "Fire Truck", icon: firetruck },
     /* { type: "Family", icon: family }, */
   ];
 
@@ -57,7 +57,10 @@ const Emergency = ({ role, handleLogout }) => {
       if (data.success) {
         const statusText = data.status || "Pending";
         lastStatus.current = statusText;
-        showToast(`✅ ${type} emergency reported. Status: ${statusText}`, "pending");
+        showToast(
+          `✅ ${type} emergency reported. Status: ${statusText}`,
+          "pending"
+        );
       } else if (data.error === "missing_profile") {
         const goToProfile = window.confirm(
           "❌ Your profile is incomplete. Would you like to complete it now?"
@@ -75,10 +78,13 @@ const Emergency = ({ role, handleLogout }) => {
   useEffect(() => {
     const fetchStatus = async () => {
       try {
-        const res = await fetch("http://localhost/php/get_latest_emergency_status.php", {
-          method: "GET",
-          credentials: "include",
-        });
+        const res = await fetch(
+          "http://localhost/php/get_latest_emergency_status.php",
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
         const data = await res.json();
 
         if (data.success && data.status) {
@@ -136,16 +142,30 @@ const Emergency = ({ role, handleLogout }) => {
           <div className="emergency-description">
             <p className="emergency-desc-title">
               <strong>Paalala: </strong>
-              Ang Emergency Assistance ay idinisenyo upang magbigay ng mabilis at maaasahang tulong sa oras ng pangangailangan. Layunin nitong maghatid ng malinaw, tiyak, at agarang impormasyon upang matiyak ang tamang aksyon at solusyon sa anumang uri ng emergency.
+              Ang Emergency Assistance ay idinisenyo upang magbigay ng mabilis
+              at maaasahang tulong sa oras ng pangangailangan. Layunin nitong
+              maghatid ng malinaw, tiyak, at agarang impormasyon upang matiyak
+              ang tamang aksyon at solusyon sa anumang uri ng emergency.
             </p>
             <ul className="emergency-desc">
-              <li>Sa oras ng emergency, pindutin ang tamang button para sa nais tawagan:</li>
-              <li>Siguraduhing ibigay ang tamang detalye tulad ng lokasyon, uri ng emergency, at contact number.</li>
-              <li><strong>Pangalan</strong></li>
-              <li><strong>Address</strong></li>
-              <li><strong>Contact Number</strong></li>
+              <li>
+                Sa oras ng emergency, pindutin ang tamang button para sa nais
+                tawagan:
+              </li>
+              <li>
+                Siguraduhing ibigay ang tamang detalye tulad ng lokasyon, uri ng
+                emergency, at contact number.
+              </li>
+              <li>
+                <strong>Pangalan</strong>
+              </li>
+              <li>
+                <strong>Address</strong>
+              </li>
+              <li>
+                <strong>Contact Number</strong>
+              </li>
             </ul>
-          
           </div>
 
           <div className="buttons-container">
@@ -166,7 +186,9 @@ const Emergency = ({ role, handleLogout }) => {
               <p>{toast.message}</p>
               <button
                 className="toast-close-btn"
-                onClick={() => setToast({ message: "", visible: false, type: "" })}
+                onClick={() =>
+                  setToast({ message: "", visible: false, type: "" })
+                }
               >
                 OK
               </button>
@@ -178,31 +200,42 @@ const Emergency = ({ role, handleLogout }) => {
               <p className="hotlines-title">Emergency Hotlines</p>
               <table className="contacts-table">
                 <thead>
-                  <tr><th>Service</th><th>Number</th></tr>
+                  <tr>
+                    <th>Service</th>
+                    <th>Number</th>
+                  </tr>
                 </thead>
                 <tbody>
                   {emergencyHotlines.map((h, i) => (
-                    <tr key={i}><td>{h.name}</td><td>{h.number}</td></tr>
+                    <tr key={i}>
+                      <td>{h.name}</td>
+                      <td>{h.number}</td>
+                    </tr>
                   ))}
                 </tbody>
               </table>
             </div>
-            /* 
+
             <div className="contacts">
               <p className="contacts-title">Emergency Contacts</p>
               <table className="contacts-table">
                 <thead>
-                  <tr><th>Contact</th><th>Number</th></tr>
+                  <tr>
+                    <th>Contact</th>
+                    <th>Number</th>
+                  </tr>
                 </thead>
                 <tbody>
                   {emergencyContacts.map((c, i) => (
-                    <tr key={i}><td>{c.name}</td><td>{c.number}</td></tr>
+                    <tr key={i}>
+                      <td>{c.name}</td>
+                      <td>{c.number}</td>
+                    </tr>
                   ))}
                 </tbody>
               </table>
             </div>
           </div>
-         
         </div>
 
         <BackToHome role={role} />

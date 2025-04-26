@@ -2,6 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import logo from "./assets/logo.png";
+import senior from "./assets/senior.png";
+import chats from "./assets/chatinq.png";
+import home from "./assets/home.png";
+import logout from "./assets/logout.png";
+import profile from "./assets/profile.png";
 
 function Navbar({ role }) {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -38,45 +43,83 @@ function Navbar({ role }) {
         <span className="TopHeader-date">{formattedDate}</span>
         <span className="TopHeader-time">{formattedTime}</span>
       </div>
-
-      {/* ✅ Body Slide Container */}
       <div className={`BodySlideContainer ${isSlideOpen ? "open" : ""}`}>
         <button className="close-slide" onClick={() => setIsSlideOpen(false)}>
           ×
         </button>
         <div className="BodySlideContent">
-          <ul className="Sidebar-links">
-            <li>
-              <Link to="/" onClick={() => setIsSlideOpen(false)}>
+          <div className="slide-sidebar-logo">
+            <img src={logo} alt="Logo" className="slide-logo-img" />
+            <span className="slide-logo-text">Brgy. Gen. T. De Leon</span>
+          </div>
+          <hr className="slide-sidebar-divider" />
+          <ul className="slide-sidebar-links">
+            <li
+              className="slide-sidebar-item"
+              onClick={() => setIsSlideOpen(false)}
+            >
+              <Link to="/">
+                <img src={home} alt="Home" className="slide-icon-home" />
                 Home
               </Link>
             </li>
-            <li>
-              <Link to="/senior-care" onClick={() => setIsSlideOpen(false)}>
+            <hr className="slide-sidebar-divider" />
+            <li
+              className="slide-sidebar-item"
+              onClick={() => setIsSlideOpen(false)}
+            >
+              <Link to="/senior-care">
+                <img src={senior} alt="Senior" className="slide-icon-senior" />
                 Senior Care
               </Link>
             </li>
-            <li>
-              <Link to="/emergency" onClick={() => setIsSlideOpen(false)}>
+            <hr className="slide-sidebar-divider" />
+            <li
+              className="slide-sidebar-item"
+              onClick={() => setIsSlideOpen(false)}
+            >
+              <Link to="/emergency">
+                <img
+                  src="/icons/emergency.png"
+                  alt="Emergency"
+                  className="slide-icon-emergency"
+                />
                 Emergency Services
               </Link>
             </li>
-            <li>
-              <Link to="/chat" onClick={() => setIsSlideOpen(false)}>
+            <hr className="slide-sidebar-divider" />
+            <li
+              className="slide-sidebar-item"
+              onClick={() => setIsSlideOpen(false)}
+            >
+              <Link to="/chat">
+                <img src={chats} alt="Chat" className="slide-icon-chat" />
                 Chat Assistance
               </Link>
             </li>
-            <li>
-              <Link to="/profile" onClick={() => setIsSlideOpen(false)}>
+            <hr className="slide-sidebar-divider" />
+            <li
+              className="slide-sidebar-item"
+              onClick={() => setIsSlideOpen(false)}
+            >
+              <Link to="/profile">
+                <img
+                  src={profile}
+                  alt="Profile"
+                  className="slide-icon-profile"
+                />
                 Profile
               </Link>
             </li>
-            <li>
-              <button className="logout-button" onClick={handleLogout}>
+            <hr className="slide-sidebar-divider" />
+            <li className="slide-sidebar-item">
+              <button className="slide-logout-button" onClick={handleLogout}>
+                <img src={logout} alt="Logout" className="slide-icon-logout" />
                 Logout
               </button>
             </li>
           </ul>
+          <hr className="slide-sidebar-divider" />
         </div>
       </div>
 

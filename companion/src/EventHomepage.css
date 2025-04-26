@@ -4,7 +4,7 @@
   flex: 1 1 100%;
   max-width: 600px;
   min-width: 300px;
-  min-height: 500px;
+  min-height: 440px;
   background: white;
   border: none;
   font-family: "Roboto", sans-serif;
@@ -218,7 +218,6 @@
     padding: 15px;
   }
 }
-
 /* Responsive: Mobile */
 @media screen and (max-width: 480px) {
   .react-calendar,
@@ -243,12 +242,12 @@
   }
   .Events-sub {
     font-size: 1.5rem;
-    width: 100%;
+    width: 75%;
     margin: 0;
-    padding: 1px;
+    padding: 5px;
     border-radius: 15px;
+    margin-left: 50px;
   }
-
   .react-calendar__tile {
     padding: 10px;
     font-size: 0.85em;

@@ -30,8 +30,8 @@
 }
 @media (max-width: 768px) {
   .back-home-container {
-    margin-top: 0; /* Reduce top margin for smaller screens */
-    margin-bottom: 0; /* Reduce bottom margin */
+    margin-top: 5px; /* Reduce top margin for smaller screens */
+    margin-bottom: 5px; /* Reduce bottom margin */
   }
 
   .back-link {

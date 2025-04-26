@@ -150,64 +150,118 @@
   background-color: #c31c1c;
   color: white;
 }
-
-/* Sidebar Styling */
-/* Hide sidebar by default on larger screens */
+/* Body Slide Sidebar Container */
 .BodySlideContainer {
   display: none;
 }
-.Sidebar {
+.BodySlideContainer.open {
+  display: block;
   position: fixed;
-  right: 0; /* Keep the sidebar aligned to the right side of the screen */
   top: 0;
+  right: 0;
+  width: 280px;
   height: 100%;
-  width: 250px;
   background-color: #ffffff;
-  padding-top: 60px;
-  transition: transform 0.3s ease-in-out;
-  z-index: 1000;
-  transform: translateX(100%);
+  z-index: 9999; /* ensure it's in front of all elements */
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+  animation: slideIn 0.3s ease-in-out;
 }
 
-.Sidebar.open {
-  transform: translateX(0); /* Slide the sidebar in */
+/* Logo Area */
+.slide-sidebar-logo {
+  display: flex;
+  align-items: center;
+  padding: 20px 20px 0;
+  gap: 10px;
 }
 
-.Sidebar-links {
-  list-style: none;
-  padding: 0;
+.slide-logo-img {
+  width: 70px;
+  height: auto;
 }
 
-.Sidebar-links li {
-  padding: 10px;
-  text-align: center;
-  border: 3px solid #f1f1f1;
-}
-
-.Sidebar-links a {
-  color: #444343;
-  text-decoration: none;
+.slide-logo-text {
+  font-family: "Roboto", sans-serif;
+  font-size: 1.6rem;
   font-weight: bold;
-  padding: 8px;
-  transition: background-color 0.3s;
+  color: #c31c1c;
 }
 
-.Sidebar-links a:hover {
-  background-color: #aaa9a9;
-  border-radius: 4px;
+/* Divider */
+.slide-sidebar-divider {
+  margin: 15px 0;
+  border-top: 1px solid #ccc;
 }
-/* Style for logout button to match sidebar links */
-.logout-button {
+
+/* Sidebar Links */
+.slide-sidebar-links {
+  list-style: none;
+  padding: 0 20px;
+}
+
+.slide-sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin: 12px 0;
+  cursor: pointer;
+  font-size: 1.5rem;
+  padding: 8px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.slide-sidebar-item:hover {
+  background-color: #b4cafa;
+  border-radius: 6px;
+}
+
+.slide-sidebar-item a {
+  text-decoration: none;
+  color: #1e1e1e;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.slide-logout-button {
   background: none;
   border: none;
-  color: #444343;
-  font-weight: 700;
+  color: #1e1e1e;
+  font-size: 1.5rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   width: 100%;
-  text-align: center;
+  text-align: left;
   cursor: pointer;
-  transition: background-color 0.3s;
   font-family: inherit;
-  font-size: 1.2rem;
+}
+
+.slide-logout-button:hover {
+  background-color: #b4cafa;
+  border-radius: 6px;
+}
+
+/* Icons – all styled the same */
+.slide-icon-home,
+.slide-icon-senior,
+.slide-icon-emergency,
+.slide-icon-chat,
+.slide-icon-profile,
+.slide-icon-logout {
+  width: 35px;
+  height: auto;
+}
+
+/* Animation */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0%);
+  }
 }
 
 .logout-button:hover {
@@ -272,6 +326,35 @@
   background-color: #f2f2f2;
   color: #d60000;
   border-radius: 4px;
+}
+@media (max-width: 1024px) {
+  .Navbar {
+    padding: 0;
+    height: 12vh;
+  }
+  .Navbar-right a,
+  .logout-link .Navbar-links a,
+  .dropdown-menu li a {
+    font-size: 1.6rem;
+  }
+  .Navbar-logo-container img {
+    max-width: 75px;
+  }
+  .Navbar-links {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    justify-content: center;
+    gap: 1rem 2rem;
+  }
+  .Navbar-links-container {
+    margin-right: 25vh;
+  }
+  .Navbar-right {
+    margin: -4vh;
+  }
+  .Navbar-links li {
+    justify-self: center;
+  }
 }
 
 @media (max-width: 768px) {
@@ -344,5 +427,15 @@
     font-size: 30px;
     border: none;
     cursor: pointer;
+  }
+}
+@media (max-width: 480px) {
+  .Navbar {
+    padding: 0;
+    height: 8vh;
+  }
+  .Navbar-logo-container img {
+    width: 50px;
+    height: auto;
   }
 }

@@ -126,7 +126,8 @@ const RectangleSection = ({ role }) => {
                 Leon Health Center tuwing LUNES (Monday) hanggang BIYERNES
                 (Friday) simula 8AM-6PM lamang. <br></br>
                 <br></br>
-                Para sa ibang mga detalye, maaaring makipag-unayan sa health center.
+                Para sa ibang mga detalye, maaaring makipag-unayan sa health
+                center.
               </p>
             </div>
           )}
@@ -143,7 +144,11 @@ const RectangleSection = ({ role }) => {
                       className="appoint-logo"
                     />
                   </div>
-                  <p>Maayos na serbisyong medikal para sa regular na check up sa kalusugan ng mga senior citizens upang mapanatili ang kanilang maayos na kondisyon.</p>
+                  <p>
+                    Maayos na serbisyong medikal para sa regular na check up sa
+                    kalusugan ng mga senior citizens upang mapanatili ang
+                    kanilang maayos na kondisyon.
+                  </p>
                   <button className="senior-care-button">
                     <span className="senior-care-button-text">Appointment</span>
                   </button>
@@ -178,7 +183,10 @@ const RectangleSection = ({ role }) => {
                   />
                 </div>
 
-                <p>Madaling humingi ng tulong sa pulis, ambulansya, o bumbero sa oras ng emergency gamit ang isang pindot sa button.</p>
+                <p>
+                  Madaling humingi ng tulong sa pulis, ambulansya, o bumbero sa
+                  oras ng emergency gamit ang isang pindot sa button.
+                </p>
                 <button className="emergency-services-button">
                   <span className="emergency-services-button-text">
                     Contact List
@@ -196,7 +204,10 @@ const RectangleSection = ({ role }) => {
                   <img src={chat} alt="Chat-Logo" className="chat-logo" />
                 </div>
 
-                <p>Direktang pakikipag-usap sa opisyal ng health center para sa suporta, gabay, at pagsagot sa mga katanungan.</p>
+                <p>
+                  Direktang pakikipag-usap sa opisyal ng health center para sa
+                  suporta, gabay, at pagsagot sa mga katanungan.
+                </p>
                 <button className="chat-assistance-button">
                   <span className="chat-assistance-button-text">Chat</span>
                 </button>
@@ -246,7 +257,7 @@ const RectangleSection = ({ role }) => {
           <div className="Events-Subheader">
             <p className="Events-sub">EVENTS</p>
           </div>
-          
+
           <h1 className="Events-Title">Calendar of Activities</h1>
         </div>
 

@@ -93,7 +93,7 @@
 }
 
 .senior-p strong {
-  color: #C31C1C;
+  color: #c31c1c;
   font-weight: bold;
 }
 
@@ -109,11 +109,11 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 40px; 
+  gap: 40px;
 }
 
 /* Buttons */
-.reserve-button, 
+.reserve-button,
 .view-button {
   color: #fff;
   border: none;
@@ -126,7 +126,7 @@
   width: 100%;
   max-width: 400px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
-  margin: 8px; 
+  margin: 8px;
 }
 
 .reserve-button {
@@ -169,7 +169,7 @@
   font-weight: 500;
   font-size: 1.5rem;
   text-align: center;
-  color: #C31C1C;
+  color: #c31c1c;
   margin-bottom: 20px;
 }
 
@@ -194,7 +194,7 @@
 }
 
 .input-field:focus {
-  border-color: #C31C1C;
+  border-color: #c31c1c;
   outline: none;
   box-shadow: 0 0 0 2px rgba(128, 0, 0, 0.1);
 }
@@ -204,7 +204,6 @@
   justify-items: center;
   margin: 15px 0;
 }
-
 
 /* Modal Buttons */
 .modal-buttons {
@@ -227,7 +226,7 @@
   font-size: 1.35rem;
   cursor: pointer;
   transition: background 0.3s ease;
-  flex: 1 1 45%;            /* Responsive width inside flex */
+  flex: 1 1 45%; /* Responsive width inside flex */
   max-width: 150px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
   margin: 8px;
@@ -235,11 +234,11 @@
 }
 
 .confirm-button {
-  background-color: #D60000; /* or your #074799 if you prefer */
+  background-color: #d60000; /* or your #074799 if you prefer */
 }
 
 .confirm-button:disabled {
-  background-color: #C31C1C;
+  background-color: #c31c1c;
   cursor: not-allowed;
 }
 
@@ -271,7 +270,7 @@
 }
 
 .appointments-table th {
-  background-color: #C31C1C;
+  background-color: #c31c1c;
   color: white;
   font-weight: 600;
 }
@@ -287,7 +286,7 @@
 
 .log-item {
   background-color: #fef6f6d6;
-  border-left: 5px solid #C31C1C;
+  border-left: 5px solid #c31c1c;
   padding: 15px 30px;
   margin-bottom: 16px;
   border-radius: 12px;
@@ -309,7 +308,7 @@
 
 /* Calendar Highlight Styling */
 .highlighted {
-  background-color: #C31C1C !important;
+  background-color: #c31c1c !important;
   color: white !important;
   font-weight: bold;
   border-radius: 8px;
@@ -341,20 +340,18 @@
 }
 
 .tab-buttons .active-tab {
-  background-color: #C31C1C;
+  background-color: #c31c1c;
   color: white;
-  border-color: #C31C1C;
+  border-color: #c31c1c;
 }
-
-
 
 /* ✅ Tagalog Toast Notification */
 .paalala-toast {
   position: fixed;
   bottom: 30px;
   right: 30px;
-  background-color: #FFFFFF;
-  color: #1E1E1E;
+  background-color: #ffffff;
+  color: #1e1e1e;
   padding: 10px 20px;
   border-radius: 15px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
@@ -372,7 +369,7 @@
 
 .paalala-toast button {
   background: white;
-  color: #C31C1C;
+  color: #c31c1c;
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -393,6 +390,84 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* 🔄 Responsive: Tablets and small desktops */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .modal {
+    max-width: 85vw;
+    padding: 28px;
+  }
+
+  .modal h2 {
+    font-size: 1.45rem;
+  }
+}
+
+/* 🔄 Responsive: Tablets */
+@media screen and (max-width: 1024px) {
+  .senior-details-container {
+    margin: 30px 3rem;
+    padding: 16px;
+  }
+
+  .senior-title {
+    font-size: 1.8rem;
+  }
+
+  .instruction-desc {
+    padding: 0 20px;
+  }
+
+  .modal {
+    max-width: 90%;
+    padding: 24px;
+  }
+
+  .reserve-button,
+  .view-button {
+    padding: 10px 22px;
+    font-size: 1rem;
+  }
+
+  .appointments-table th,
+  .appointments-table td {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+}
+
+/* 🔄 Responsive: Medium Screens (481px to 768px) */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .modal {
+    max-width: 90vw;
+    padding: 20px;
+    font-size: 1rem;
+  }
+
+  .modal h2 {
+    font-size: 1.35rem;
+  }
+
+  .modal label {
+    font-size: 1.15rem;
+  }
+}
+
+/* 🔄 Responsive Toast Notification Tweaks */
+@media (max-width: 768px) {
+  .toast-notification {
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 18px;
+    font-size: 0.95rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .toast-notification button {
+    margin-top: 8px;
   }
 }
 
@@ -433,7 +508,7 @@
     padding: 16px;
   }
 
-  .reserve-button, 
+  .reserve-button,
   .view-button {
     width: 100%;
     min-width: unset;
@@ -471,100 +546,53 @@
     align-self: flex-end;
   }
 }
-
-/* 🔄 Responsive: Tablets */
-@media screen and (max-width: 1024px) {
+/* 🛠 Responsive Modal for Extra Small Screens */
+@media screen and (max-width: 480px) {
+  .senior-title-p,
+  .senior-p,
+  .instruction-list p,
+  .instruction-list strong,
+  .reserve-button,
+  .view-button {
+    font-size: 1.2rem;
+  }
   .senior-details-container {
-    margin: 30px 3rem;
-    padding: 16px;
-  }
-
-  .senior-title {
-    font-size: 1.8rem;
-  }
-
-  .instruction-desc {
-    padding: 0 20px;
+    margin: 30px;
+    padding: 10px;
+    font-size: 1.2rem;
   }
 
   .modal {
-    max-width: 90%;
-    padding: 24px;
+    max-width: 95vw;
+    min-width: unset;
+    padding: 16px;
+    border-radius: 12px;
+    font-size: 1.2rem;
   }
 
-  .reserve-button, .view-button {
-    padding: 10px 22px;
-    font-size: 1rem;
+  .modal h2 {
+    font-size: 1.2rem;
   }
 
-  .appointments-table th,
-  .appointments-table td {
-    font-size: 0.9rem;
+  .modal label {
+    font-size: 1.2rem;
+  }
+
+  .input-field {
+    font-size: 1.2rem;
     padding: 10px;
   }
-}
-.toast-notification {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  background-color: #fff5f5;
-  color: #b71c1c;
-  border: 1px solid #f5c6cb;
-  padding: 16px 24px;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  font-family: 'Roboto', sans-serif;
-  animation: fadeInUp 0.4s ease-out;
-}
 
-.toast-notification p {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 500;
-}
-
-.toast-notification button {
-  background-color: #b71c1c;
-  color: white;
-  border: none;
-  padding: 6px 12px;
-  font-size: 0.9rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.toast-notification button:hover {
-  background-color: #9a1414;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+  .confirm-button,
+  .secondary-button {
+    font-size: 1.2rem;
+    padding: 8px 12px;
+    max-width: 100%;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
-/* Responsive tweaks */
-@media (max-width: 768px) {
-  .toast-notification {
-    bottom: 20px;
-    right: 20px;
-    padding: 12px 18px;
-    font-size: 0.95rem;
+  .modal-buttons {
     flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .toast-notification button {
-    margin-top: 8px;
+    gap: 10px;
+    font-size: 1.2rem;
   }
 }
