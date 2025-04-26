@@ -24,269 +24,334 @@
   height: auto; /* Maintain aspect ratio */
 }
 
-/* ----- Header ----- */
+/* --- Header Main --- */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #1f1785;
-  color: white;
-  padding: 22px 60px;
+  background-color: #FEFEFE;
+  color: #1E1E1E;
+  padding: 80px;
   font-size: 20px;
   font-weight: 600;
   width: 100%;
-  font-family: "roboto", "sans-serif";
-}
-
-/* ----- Date and Time Container ----- */
-.date-time-container {
-  font-size: 20px;
-  color: #fff;
-  justify-content: right;
   font-family: "Roboto", sans-serif;
-  display: flex;
+  position: relative; /* allow absolute center positioning */
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Logo Container */
+/* --- Left: Barangay Name --- */
 .logo-container {
-  height: 10rem;
+  flex: 1;
   display: flex;
-  align-items: center; /* Vertically aligns items */
-  justify-content: space-between; /* Creates space between h1 and logo */
-  padding: 0 20px; /* Adds padding to the container for spacing */
-  box-shadow: 0px 5px 5px #cccccb;
-  position: relative; /* Ensures precise centering of the logo */
+  align-items: center;
+  justify-content: flex-start;
 }
 
+.logo-container h1 {
+  font-size: 1.8rem;
+  font-family: "Roboto", sans-serif;
+  color: #C31C1C;
+  margin: 0;
+}
+
+/* --- Center: Logo --- */
 .app-logo-container {
-  position: absolute; /* Allows precise placement of the logo */
+  position: absolute;
   left: 50%;
-  transform: translateX(-50%); /* Centers the logo horizontally */
+  transform: translateX(-50%);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .app-logo {
-  width: 130px; /* Adjust the size of the logo */
-  height: auto; /* Maintain aspect ratio */
+  width: 150px;
+  height: auto;
+  object-fit: contain;
 }
 
-.logo-container h1 {
-  font-size: 30px;
-  font-family: "Roboto", sans-serif;
-  color: #d60000;
-  margin: 0; /* Removes default margin */
-  margin-left: 40px;
+/* --- Right: Date and Time --- */
+.date-time-container {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 1.3rem;
+  color: #1E1E1E;
 }
 
-/* Text styling */
-.login-container h1 {
-  font-family: "Roboto", sans-serif;
-}
 
-/* ----- Login-Container ----- */
+/* ---- Login Container ---- */
 .login-container {
-  margin: 45px 20px 40px 20px;
-  padding: 20px;
+  display: flex;
+  width: 100%;
+  min-height: calc(100vh - 150px);
+  background-color: #C31C1C;
 }
 
-/* Login-Container h1 */
-.login-container h1 {
-  margin: 0px;
-  margin-bottom: 20px;
-  font-size: 2.3rem;
-  color: #1e1e1e;
+/* --- Left side (Image) --- */
+.login-container-left {
+  flex: 1;
+  background-color: #fefefe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
 }
 
-/* Login-Container p */
-.login-container p {
-  margin: 0 80px 10px 80px;
-  font-family: "Overpass", sans-serif;
-  font-size: 18px;
-  justify-content: left;
+.login-img {
+  width: min(90%, 750px); /* Responsive smart sizing */
+  height: auto;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2)); /* Softer, modern shadow */
+  transition: transform 0.3s ease, filter 0.3s ease;
 }
 
-.login-container input[type="text"],
-.login-container input[type="password"] {
-  width: 50%;
-  padding: 12px;
-  margin: 5px 0 15px;
-  border: 1px solid #d9d9d9;
-  border-radius: 15px;
-  font-size: 18px;
-  font-family: "Overpass", sans-serif;
-  outline: none;
-  box-sizing: border-box;
-  transition: border-color 0.3s ease;
+.login-img:hover {
+  transform: scale(1.03); /* Slight zoom on hover */
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.25));
 }
 
-.login-container input[type="text"]:focus,
-.login-container input[type="password"]:focus {
-  border-color: #d60000; /* Adds a subtle highlight effect */
-}
-
-/* Button styling */
-.login-container button {
-  width: 40%;
-  padding: 12px;
-  background-color: #d60000;
-  font-family: "Overpass", sans-serif;
-  color: white;
-  border: none;
-  border-radius: 15px;
-  font-size: 18px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.login-container button:hover {
-  background-color: #d60000;
-}
-
-/* Form Container */
-.form-container {
-  margin: 40px 10px 40px 10px;
-  padding: 10px;
+/* --- Right side (Welcome + Form) --- */
+.login-container-right {
+  flex: 1;
+  background: transparent;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 50px 20px;
 }
 
-.form-container label {
-  font-size: 16px;
-  font-family: "Overpass", sans-serif;
+/* --- Welcome Title --- */
+.login-container-right h1 {
+  font-size: 2.2rem;
+  color: #ffffff;
+  margin-bottom: 15px;
+  font-weight: 700;
+  max-width: 700px;
+}
+
+/* --- Description Text --- */
+.login-container-right p {
+  font-size: 1rem;
+  color: #f3f3f3;
+  max-width: 700px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+/* --- Form Container --- */
+.form-container {
+  width: 100%;
+  max-width: 700px;
+  background-color: #ffffff;
+  padding: 40px 40px 30px 40px;
+  border-radius: 11px;
+  box-shadow: 
+    0px 106px 42px rgba(0, 0, 0, 0.01),
+    0px 59px 36px rgba(0, 0, 0, 0.05),
+    0px 26px 26px rgba(0, 0, 0, 0.09),
+    0px 7px 15px rgba(0, 0, 0, 0.1),
+    0px 0px 0px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  text-align: center;
+  margin-top: 50px;
+}
+
+/* --- Login Title --- */
+.login-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #C31C1C;
+  margin-bottom: 20px;
+}
+
+/* --- Labels for Inputs --- */
+.username-label,
+.password-label {
+  font-size: 1.3rem;
   font-weight: 600;
-  color: #000;
-  margin: 5px 0;
-  text-align: left;
-  width: 50%;
+  color: #333;
+  align-self: flex-start;
+  margin-left: 10px;
+  margin-bottom: 5px;
 }
 
-.form-container input {
-  width: 50%;
-  padding: 12px;
-  margin: 5px 0 20px;
-  border: 1px solid #d9d9d9;
-  border-radius: 4px;
-  font-size: 16px;
+/* --- Input Fields --- */
+.form-container input[type="text"],
+.form-container input[type="password"] {
+  width: 100%;
+  height: 45px;
+  border-radius: 7px;
+  border: 1px solid #e5e5e5;
+  background: #f8f8f8;
+  padding: 0 0 0 15px;
   font-family: "Overpass", sans-serif;
-  font-style: italic;
+  font-size: 1.3rem;
+  outline: none;
+  transition: all 0.3s ease;
 }
 
-/* Forgot your Password? */
-.forgot-password {
-  margin-top: 10px;
-  margin-right: 0;
-  width: 50%; /* Matches the width of the input fields */
-  font-style: italic;
-  font-size: 14px;
-  text-align: right;
-  color: #000;
+.form-container input[type="text"]:focus,
+.form-container input[type="password"]:focus {
+  background-color: transparent;
+  border: 1px solid #C31C1C;
+  box-shadow: 0px 0px 0px 2px rgba(195, 28, 28, 0.3);
+}
+
+/* --- Login Button --- */
+.form-container button {
+  width: 100%;
+  height: 45px;
+  background-color: #C31C1C;
+  color: #ffffff;
+  border: none;
+  border-radius: 7px;
+  font-weight: 600;
+  font-size: 1.3rem;
   cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.forgot-password:hover {
-  color: #1f1785;
+.form-container button:hover {
+  background-color: #a31414;
+  transform: translateY(-2px);
 }
-/* Tablet (max-width: 768px) */
+
+/* --- Modal Overlay --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+/* --- Modal Content --- */
+.modal-content {
+  background: #ffffff;
+  padding: 30px 25px;
+  border-radius: 11px;
+  width: 320px;
+  max-width: 90%;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* --- Modal Inputs --- */
+.modal-content input[type="password"] {
+  width: 100%;
+  height: 40px;
+  border-radius: 7px;
+  border: 1px solid #e5e5e5;
+  background: #f8f8f8;
+  padding: 0 0 0 15px;
+  font-family: "Overpass", sans-serif;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.modal-content input[type="password"]:focus {
+  background-color: transparent;
+  border: 1px solid #C31C1C;
+  box-shadow: 0px 0px 0px 2px rgba(195, 28, 28, 0.3);
+}
+
+/* --- Modal Buttons --- */
+.modal-content button {
+  width: 48%;
+  height: 40px;
+  background-color: #C31C1C;
+  color: #ffffff;
+  border: none;
+  border-radius: 7px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.modal-content button:hover {
+  background-color: #a31414;
+  transform: translateY(-2px);
+}
+
+/* --- Special Buttons (Submit and Cancel) --- */
+.modal-content .green-btn {
+  background-color: #2e7d32;
+}
+
+.modal-content .green-btn:hover {
+  background-color: #27692c;
+}
+
+.modal-content .cancel-btn {
+  background-color: #c62828;
+}
+
+.modal-content .cancel-btn:hover {
+  background-color: #ad1f1f;
+}
+
+/* --- Modal Button Layout --- */
+.modal-content .modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+/* --- Responsive Breakpoints --- */
 @media (max-width: 768px) {
-  .date-time-container {
-    font-size: 18px;
-    margin-right: 20px;
-  }
-
-  .logo-container {
-    flex-direction: column;
-    height: auto;
-    padding: 10px;
-    text-align: center;
-  }
-
-  .logo-container h1 {
-    font-size: 24px;
-    margin: 10px 0;
-  }
-
-  .app-logo-container {
-    position: static;
-    transform: none;
-    margin-top: 10px;
-  }
-
-  .app-logo {
-    width: 100px;
-  }
-
   .login-container {
-    margin: 30px 15px;
-    padding: 15px;
+    flex-direction: column;
   }
 
-  .login-container h1 {
-    font-size: 2rem;
+  .login-container-left {
+    height: 250px;
+    padding: 20px;
   }
 
-  .login-container p {
-    margin: 0 40px;
-    font-size: 16px;
+  .login-container-right {
+    padding: 30px 15px;
   }
 
-  .login-container input[type="text"],
-  .login-container input[type="password"],
-  .login-container button {
-    width: 70%;
-    font-size: 16px;
-  }
-  .form-container {
-    margin: 0px 10px 0px 10px;
+  .form_container {
+    width: 90%;
   }
 }
 
-/* Mobile (max-width: 480px) */
 @media (max-width: 480px) {
-  .date-time-container {
-    font-size: 16px;
-    margin-right: 10px;
+  .login-container-left {
+    height: 200px;
   }
 
-  .logo-container h1 {
-    font-size: 20px;
-    text-align: center;
-    margin-left: 0;
+  .login-img {
+    max-width: 250px;
   }
 
-  .app-logo {
-    width: 80px;
-  }
-
-  .login-container {
-    margin: 20px 10px;
-    padding: 10px;
-  }
-
-  .login-container h1 {
+  .login-container-right h1 {
     font-size: 1.8rem;
   }
 
-  .login-container p {
-    margin: 0 20px;
-    font-size: 14px;
-    text-align: center;
-  }
-
-  .login-container input[type="text"],
-  .login-container input[type="password"],
-  .login-container button {
-    width: 90%;
-    font-size: 14px;
-    padding: 10px;
-  }
-
-  .form-container label,
-  .forgot-password {
-    width: 90%;
-    font-size: 14px;
-    text-align: center;
+  .login-container-right p {
+    font-size: 0.95rem;
   }
 }

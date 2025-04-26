@@ -83,7 +83,8 @@ function Login({ setRole }) {
 
   return (
     <div className="form-container">
-      <h2>LOGIN</h2>
+      <h2 className="login-title">Log in to your Account</h2>
+      <h2 className="username-label">Username</h2>
       <input
         type="text"
         placeholder="Username"
@@ -91,6 +92,7 @@ function Login({ setRole }) {
         onChange={(e) => setUsername(e.target.value)}
         onKeyDown={handleKeyDown}
       />
+      <h2 className="password-label">Password</h2>
       <input
         type="password"
         placeholder="Password"
