@@ -9,14 +9,14 @@ import firetruck from "./assets/firetruck.png";
 /* import family from "./assets/family.png"; */
 
 const Emergency = ({ role, handleLogout }) => {
-  const [toast, setToast] = useState({ message: "", visible: false, type: "" });
+  const [toasts, setToasts] = useState([]); // 🔥 Allow multiple toasts
   const lastStatus = useRef(null);
 
   const emergencyOptions = [
     { type: "Police", icon: police },
     { type: "Ambulance", icon: ambulance },
     { type: "Fire Truck", icon: firetruck },
-    /* { type: "Family", icon: family }, */
+    // { type: "Family", icon: family },
   ];
 
   const emergencyHotlines = [
@@ -32,10 +32,11 @@ const Emergency = ({ role, handleLogout }) => {
   ];
 
   const showToast = (message, type = "info") => {
-    setToast({ message, visible: true, type });
+    const id = Date.now(); // Unique id
+    setToasts((prev) => [...prev, { id, message, type }]);
     setTimeout(() => {
-      setToast({ message: "", visible: false, type: "" });
-    }, 7000);
+      setToasts((prev) => prev.filter((toast) => toast.id !== id));
+    }, 7000); // Auto dismiss after 7 seconds
   };
 
   const handleEmergencyClick = async (type) => {
@@ -57,10 +58,7 @@ const Emergency = ({ role, handleLogout }) => {
       if (data.success) {
         const statusText = data.status || "Pending";
         lastStatus.current = statusText;
-        showToast(
-          `✅ ${type} emergency reported. Status: ${statusText}`,
-          "pending"
-        );
+        showToast(`✅ ${type} emergency reported. Status: ${statusText}`, "pending");
       } else if (data.error === "missing_profile") {
         const goToProfile = window.confirm(
           "❌ Your profile is incomplete. Would you like to complete it now?"
@@ -130,6 +128,10 @@ const Emergency = ({ role, handleLogout }) => {
     return () => clearInterval(interval);
   }, []);
 
+  const handleCloseToast = (id) => {
+    setToasts((prev) => prev.filter((toast) => toast.id !== id));
+  };
+
   return (
     <div className="emergency-container">
       <Navbar role={role} handleLogout={handleLogout} />
@@ -141,30 +143,15 @@ const Emergency = ({ role, handleLogout }) => {
         <div className="emergency-details-container">
           <div className="emergency-description">
             <p className="emergency-desc-title">
-              <strong>Paalala: </strong>
-              Ang Emergency Assistance ay idinisenyo upang magbigay ng mabilis
-              at maaasahang tulong sa oras ng pangangailangan. Layunin nitong
-              maghatid ng malinaw, tiyak, at agarang impormasyon upang matiyak
-              ang tamang aksyon at solusyon sa anumang uri ng emergency.
+              <strong>Paalala:</strong> Ang Emergency Assistance ay idinisenyo upang magbigay ng mabilis
+              at maaasahang tulong sa oras ng pangangailangan.
             </p>
             <ul className="emergency-desc">
-              <li>
-                Sa oras ng emergency, pindutin ang tamang button para sa nais
-                tawagan:
-              </li>
-              <li>
-                Siguraduhing ibigay ang tamang detalye tulad ng lokasyon, uri ng
-                emergency, at contact number.
-              </li>
-              <li>
-                <strong>Pangalan</strong>
-              </li>
-              <li>
-                <strong>Address</strong>
-              </li>
-              <li>
-                <strong>Contact Number</strong>
-              </li>
+              <li>Sa oras ng emergency, pindutin ang tamang button para sa nais tawagan.</li>
+              <li>Siguraduhing ibigay ang tamang detalye tulad ng lokasyon, uri ng emergency, at contact number.</li>
+              <li><strong>Pangalan</strong></li>
+              <li><strong>Address</strong></li>
+              <li><strong>Contact Number</strong></li>
             </ul>
           </div>
 
@@ -181,19 +168,20 @@ const Emergency = ({ role, handleLogout }) => {
             ))}
           </div>
 
-          {toast.visible && (
-            <div className={`toast-notification ${toast.type}`}>
-              <p>{toast.message}</p>
-              <button
-                className="toast-close-btn"
-                onClick={() =>
-                  setToast({ message: "", visible: false, type: "" })
-                }
-              >
-                OK
-              </button>
-            </div>
-          )}
+          {/* 🔥 Render multiple toasts */}
+          <div className="toasts-container">
+            {toasts.map((toast) => (
+              <div key={toast.id} className={`toast-notification ${toast.type}`}>
+                <p>{toast.message}</p>
+                <button
+                  className="toast-close-btn"
+                  onClick={() => handleCloseToast(toast.id)}
+                >
+                  OK
+                </button>
+              </div>
+            ))}
+          </div>
 
           <div className="hotlines-container">
             <div className="hotlines">
