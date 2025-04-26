@@ -1,117 +1,91 @@
-/* ----- Footer Section ----- */
-.App-footer {
-  background-color: #1f1785;
-  padding: 40px 20px; /* Keeps padding consistent */
-  width: 100%;
-  display: flex;
-  justify-content: center; /* Centers content */
+/* ===== Footer ===== */
+footer.gov-footer {
+  background: #1f1785;
+  color: white;
+  margin-top: 40px;
+  font-family: system-ui, sans-serif;
 }
 
-/* Footer main container */
-.footer-section {
-  color: #d9d8d8;
-  width: 85%; /* Reduced from 90% for less side margin */
-  max-width: 1100px; /* Prevents stretching on large screens */
+.footer-container {
+  display: flex;
+  justify-content: space-around;
   padding: 20px;
-  font-size: 1.2rem; /* Increased text size */
-  text-align: left;
-  display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
-/* Footer title */
-.App-footer h1 {
-  font-size: 1.3rem; /* Increased size for better visibility */
-  margin: 10px 0 20px;
+.footer-container h4 {
+  margin-bottom: 10px;
+  font-size: 1.1rem;
 }
 
-/* Footer content - Desktop: Row Layout */
-.footer-content {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  gap: 30px; /* Increased gap for better spacing */
-  margin: 0 auto; /* Ensures content stays in center */
-  width: 100%;
-}
-
-/* Left side - Contact Information */
-.footer-text1 {
-  flex: 1;
-  max-width: 450px; /* Prevents text from stretching */
-}
-
-.footer-text1 p {
-  color: #d9d9d9;
-  font-size: 1.2rem; /* Increased text size */
+.footer-container ul {
+  list-style: none;
+  padding: 0;
   margin: 0;
-  line-height: 1.6; /* Slightly increased for better readability */
 }
 
-/* Icons & Links Container */
-.footer-icons-and-links {
-  display: flex;
-  align-items: center;
-  gap: 30px;
+.footer-container li {
+  margin-bottom: 5px;
+  font-size: 0.95rem;
 }
 
-/* Icons - Facebook & Email (Aligned Vertically) */
 .footer-icons {
+  margin-top: 15px;
   display: flex;
-  flex-direction: column; /* Changed to vertical alignment */
-  align-items: center;
   gap: 15px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .footer-icons img {
-  width: 40px; /* Increased size */
+  width: 28px;
   height: auto;
   transition: transform 0.3s ease-in-out;
 }
 
-/* Hover Effect for Icons */
 .footer-icons img:hover {
-  transform: scale(1.2) rotate(5deg); /* Slight rotation for a modern effect */
-  filter: brightness(1.3); /* Makes it brighter */
+  transform: scale(1.2);
 }
 
-/* Vertical Separator Line */
-.vertical-line {
-  width: 2px;
-  height: 60px; /* Made it a bit taller */
-  background-color: #d9d8d8;
-}
-
-/* Footer Links - Terms & Privacy */
-.footer-links {
+.bottom-footer {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px; /* Adjusted spacing */
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  border-top: 1px solid #fff;
+  font-size: 0.95rem;
+  color: #fff;
+  flex-wrap: wrap;
+}
+
+.bottom-footer p {
+  margin: 5px 0;
 }
 
 .footer-link {
+  background: none;
+  border: none;
   color: #d9d8d8;
-  font-size: 1.2rem; /* Increased text size */
-  text-decoration: none;
-  transition: color 0.3s, transform 0.3s ease-in-out;
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.3s ease;
 }
 
-/* Hover Effect for Footer Links */
 .footer-link:hover {
   color: #ffd700;
-  transform: translateX(5px); /* Adds a subtle slide effect */
 }
 
-/* ----- Modal Popup Window ----- */
+/* ===== Modal ===== */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6); /* Dark background */
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -120,136 +94,139 @@
 
 .modal-content {
   background: white;
-  padding: 50px;
-  border-radius: 15px;
-  width: 60%;
+  padding: 30px;
+  border-radius: 10px;
   max-width: 600px;
-  text-align: left;
-  position: relative;
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
-  overflow-y: auto;
+  width: 90%;
   max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  text-align: left;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* Modal Text Styling */
 .modal-content h2,
 .modal-content h3 {
-  color: #333;
   margin-bottom: 10px;
 }
 
-.modal-content h2 {
-  text-align: center;
-}
-
-.modal-content h3 {
-  text-align: left;
-}
-
-.modal-content p {
-  color: #555;
-  margin: 8px 0;
-  line-height: 1.6;
-}
-
 .modal-content ul {
-  margin: 10px 0;
   padding-left: 20px;
 }
 
-.modal-content li {
-  margin: 5px 0;
-  list-style-type: disc;
-}
-
-/* Close Button */
 .close-button {
   position: absolute;
-  top: 10px;
-  right: 15px;
+  top: 12px;
+  right: 16px;
   font-size: 24px;
   cursor: pointer;
-  font-weight: bold;
-  color: #555;
-  transition: color 0.3s ease;
+  color: #333;
 }
 
 .close-button:hover {
-  color: #e63946;
+  color: red;
 }
 
-/* Footer Link (Button) */
-.footer-link {
-  background: none;
-  border: none;
-  color: #d9d8d8;
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: color 0.3s ease, transform 0.2s;
-}
+/* ===== Responsive Styling ===== */
 
-.footer-link:hover {
-  color: #ffd700;
-  transform: scale(1.1);
-}
-
+/* Tablets, Phablets */
 @media (max-width: 768px) {
-  .App-footer {
-    padding: 0px 0px; /* Reduce padding */
-  }
-  .App-footer h1 {
-    font-size: 16px;
-    text-align: center;
-  }
-
-  .footer-section {
-    width: 100%; /* Make it span the full width */
-    font-size: 1rem; /* Reduce text size */
-    padding: 10px; /* Reduce padding */
-  }
-
-  .footer-content {
+  .footer-container {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: 5px; /* Adjust spacing */
+    padding: 20px 15px;
   }
 
-  .footer-text1 {
-    max-width: 100%; /* Allow it to shrink */
-  }
-
-  .footer-text1 p {
-    font-size: 14px;
-    line-height: 1.4;
-    margin-right: 90px;
-  }
-
-  .footer-icons {
-    flex-direction: row; /* Ensure horizontal alignment on mobile */
-    justify-content: center;
+  .bottom-footer {
+    flex-direction: column;
+    text-align: center;
     gap: 10px;
+    padding: 15px 20px;
+    font-size: 0.85rem;
   }
 
   .footer-icons img {
-    width: 30px; /* Make icons smaller */
+    width: 26px;
   }
 
-  .footer-links {
-    flex-direction: row;
-    align-items: center;
+  .modal-content {
+    padding: 20px;
+  }
+}
+
+/* Smaller Phones: Realme, Vivo, Oppo, Tecno */
+@media screen and (max-width: 430px), screen and (max-height: 1920px) {
+  .footer-container {
+    padding: 15px 10px;
+  }
+
+  .footer-container h4 {
+    font-size: 1rem;
+  }
+
+  .footer-container li {
+    font-size: 0.9rem;
+  }
+
+  .footer-icons img {
+    width: 24px;
+  }
+
+  .bottom-footer {
+          font-size: 0.8rem;
+        padding: 10px 100px;
+        gap: 8px;
   }
 
   .footer-link {
-    font-size: 12px;
-    padding: 6px;
-  }
-  .footer-icons-and-links {
-    margin-left: 20px;
-    gap: 25px;
+    font-size: 0.95rem;
   }
 
-  .vertical-line {
-    display: none; /* Hide the vertical line for a cleaner look */
+  .modal-content {
+    width: 95%;
+    padding: 15px;
+  }
+
+  .close-button {
+    top: 8px;
+    right: 12px;
+  }
+}
+
+/* 1080p Full HD Phones: 1920x1080 displays */
+@media screen and (max-width: 480px) and (min-height: 1920px) {
+  .footer-container {
+    padding: 20px 10px;
+  }
+
+  .footer-container h4 {
+    font-size: 1.05rem;
+  }
+
+  .footer-container li {
+    font-size: 1rem;
+  }
+
+  .footer-icons img {
+    width: 26px;
+  }
+
+  .bottom-footer {
+    font-size: 0.9rem;
+    padding: 12px 20px;
+  }
+
+  .footer-link {
+    font-size: 1rem;
+  }
+
+  .modal-content {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .close-button {
+    font-size: 26px;
   }
 }
