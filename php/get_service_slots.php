@@ -1,39 +1,49 @@
 <?php
 session_start();
 
-// ✅ CORS + Headers
+// ✅ Set CORS and Headers
 header("Access-Control-Allow-Origin: http://localhost:3000");
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Methods: GET, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
-header("Content-Type: application/json");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Content-Type: application/json; charset=UTF-8");
 
-// ✅ Handle preflight
+// ✅ Handle Preflight OPTIONS Request
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit();
 }
 
-// ✅ DB connection
-$conn = new mysqli("localhost", "root", "", "account");
-if ($conn->connect_error) {
-    echo json_encode(["error" => "DB connection failed"]);
+// ✅ Connect to Database
+try {
+    $pdo = new PDO("mysql:host=localhost;dbname=account", "root", "");
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    // If connection fails, return an empty array
+    echo json_encode([]);
     exit();
 }
 
-// ✅ Query ALL slots (past, today, and future)
-$stmt = $conn->prepare("SELECT id, service_name, date, time, max_slots 
-                        FROM service_slots 
-                        ORDER BY date ASC, time ASC");
-$stmt->execute();
-$result = $stmt->get_result();
+// ✅ Fetch Service Slots
+try {
+    $stmt = $pdo->query("SELECT id, service_name, date, time, available_slots FROM service_slots ORDER BY date ASC, time ASC");
+    $slots = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// ✅ Format result
-$slots = [];
-while ($row = $result->fetch_assoc()) {
-    $row['max_slots'] = (int)$row['max_slots']; // ensure numeric in JSON
-    $slots[] = $row;
+    // ✅ Format the output properly
+    $formattedSlots = array_map(function($slot) {
+        return [
+            "id" => (int)$slot['id'],
+            "service_name" => $slot['service_name'],
+            "date" => $slot['date'],
+            "time" => $slot['time'],
+            "available_slots" => (int)$slot['available_slots'],
+        ];
+    }, $slots);
+
+    // ✅ Always return a pure array
+    echo json_encode($formattedSlots);
+} catch (PDOException $e) {
+    // If fetching fails, return an empty array
+    echo json_encode([]);
 }
-
-echo json_encode($slots);
 ?>

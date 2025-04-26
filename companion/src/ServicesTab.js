@@ -19,7 +19,7 @@ const ServicesTab = () => {
   };
 
   const [services, setServices] = useState([]);
-  const [newService, setNewService] = useState({ id: null, name: "", date: "", time: "", maxSlot: "" });
+  const [newService, setNewService] = useState({ id: null, name: "", date: "", time: "", availableSlot: "" });
   const [isEditing, setIsEditing] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
   const [filter, setFilter] = useState("All");
@@ -38,7 +38,7 @@ const ServicesTab = () => {
             name: item.service_name,
             date: item.date,
             time: item.time,
-            maxSlot: parseInt(item.max_slots),
+            availableSlot: parseInt(item.available_slots),
           }));
           const sorted = normalized.sort((a, b) =>
             new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`)
@@ -64,10 +64,10 @@ const ServicesTab = () => {
   };
 
   const handleAddOrUpdate = () => {
-    const { name, date, time, id, maxSlot } = newService;
+    const { name, date, time, id, availableSlot } = newService;
     const formattedTime = convertTo24Hour(time);
 
-    if (!name || !date || !time || maxSlot < 1) {
+    if (!name || !date || !time || availableSlot < 1) {
       alert("Please fill out all fields properly.");
       return;
     }
@@ -85,7 +85,7 @@ const ServicesTab = () => {
       return;
     }
 
-    const entry = { id, name, date, time: formattedTime, maxSlot: parseInt(maxSlot) };
+    const entry = { id, name, date, time: formattedTime, availableSlot: parseInt(availableSlot) };
 
     fetch("http://localhost/php/save_service_slot.php", {
       method: "POST",
@@ -96,7 +96,7 @@ const ServicesTab = () => {
       .then((res) => res.json())
       .then((data) => {
         let updated = [...services];
-        if (data.status === "success") {
+        if (data.success) {
           if (isEditing) {
             updated[editingIndex] = entry;
             alert("Service successfully updated!");
@@ -110,7 +110,7 @@ const ServicesTab = () => {
           resetForm();
           window.dispatchEvent(new Event("slotsUpdated"));
         } else {
-          alert(data.message || "Failed to save service.");
+          alert(data.error || "Failed to save service.");
         }
       })
       .catch((err) => {
@@ -121,25 +121,33 @@ const ServicesTab = () => {
 
   const handleRemove = async (index) => {
     const target = services[index];
-    const res = await fetch("http://localhost/php/delete_service_slot.php", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({ id: target.id }),
-    });
-
-    const result = await res.json();
-
-    if (result.status === "success") {
-      const filtered = services.filter((_, i) => i !== index);
-      filtered.sort((a, b) => new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`));
-      setServices(filtered);
-      alert("Service successfully deleted!");
-      window.dispatchEvent(new Event("slotsUpdated"));
-    } else {
-      alert("Failed to delete.");
+  
+    try {
+      const res = await fetch("http://localhost/php/delete_service_slot.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ id: target.id }),
+      });
+  
+      const result = await res.json();
+      console.log("Delete response:", result); // For debugging
+  
+      if (result.status === "success") {
+        const filtered = services.filter((_, i) => i !== index);
+        filtered.sort((a, b) => new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`));
+        setServices(filtered);
+        alert("Service successfully deleted!");
+        window.dispatchEvent(new Event("slotsUpdated"));
+      } else {
+        alert(result.message || "Failed to delete.");
+      }
+    } catch (error) {
+      console.error("Delete failed:", error);
+      alert("Error connecting to backend.");
     }
   };
+  
 
   const handleEdit = (index) => {
     const target = services[index];
@@ -148,14 +156,14 @@ const ServicesTab = () => {
       name: target.name,
       date: target.date,
       time: formatToAmPm(target.time),
-      maxSlot: target.maxSlot,
+      availableSlot: target.availableSlot,
     });
     setIsEditing(true);
     setEditingIndex(index);
   };
 
   const resetForm = () => {
-    setNewService({ id: null, name: "", date: "", time: "", maxSlot: "" });
+    setNewService({ id: null, name: "", date: "", time: "", availableSlot: "" });
     setIsEditing(false);
     setEditingIndex(null);
   };
@@ -164,30 +172,23 @@ const ServicesTab = () => {
     const [hourMin, meridian] = timeStr.split(" ");
     const [hoursStr, minutesStr] = hourMin.split(":");
     let hours = parseInt(hoursStr);
-    const minutes = minutesStr;
     if (meridian === "PM" && hours !== 12) hours += 12;
     if (meridian === "AM" && hours === 12) hours = 0;
-    return `${hours.toString().padStart(2, "0")}:${minutes}:00`;
+    return `${hours.toString().padStart(2, "0")}:${minutesStr}:00`;
   };
 
   const formatToAmPm = (mysqlTime) => {
     const [hourStr, minuteStr] = mysqlTime.split(":");
     let hour = parseInt(hourStr);
-    const minute = minuteStr;
     const ampm = hour >= 12 ? "PM" : "AM";
     hour = hour % 12 || 12;
-    return `${hour}:${minute} ${ampm}`;
+    return `${hour}:${minuteStr} ${ampm}`;
   };
 
-  // Date comparison logic (new)
-  const now = new Date();
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
-  const pastServices = services.filter((s) => {
-    const slotDate = new Date(`${s.date}T00:00:00`);
-    return slotDate < today;
-  });
-
+  const pastServices = services.filter((s) => new Date(`${s.date}T00:00:00`) < today);
   const filteredServices = filter === "All"
     ? services.filter((s) => new Date(`${s.date}T00:00:00`) >= today)
     : services.filter((s) => s.name === filter && new Date(`${s.date}T00:00:00`) >= today);
@@ -219,12 +220,12 @@ const ServicesTab = () => {
           </select>
         </label>
         <label>
-          Max Reservation Slots:
+          Available Slots:
           <input
             type="number"
-            name="maxSlot"
+            name="availableSlot"
             min="1"
-            value={newService.maxSlot}
+            value={newService.availableSlot}
             onChange={handleChange}
             disabled={!newService.name}
           />
@@ -233,7 +234,7 @@ const ServicesTab = () => {
           <button
             onClick={handleAddOrUpdate}
             className="add-btn"
-            disabled={!newService.name || !newService.date || !newService.time || !newService.maxSlot}
+            disabled={!newService.name || !newService.date || !newService.time || !newService.availableSlot}
           >
             {isEditing ? "Save Changes" : "Add"}
           </button>
@@ -275,7 +276,7 @@ const ServicesTab = () => {
                 <td>{service.name}</td>
                 <td>{service.date}</td>
                 <td>{formatToAmPm(service.time)}</td>
-                <td>{service.maxSlot}</td>
+                <td>{service.availableSlot}</td>
                 <td>
                   <div className="action-buttons">
                     <button className="edit-btn" onClick={() => handleEdit(i)}>Edit</button>
@@ -302,7 +303,7 @@ const ServicesTab = () => {
                   <p><strong>Service:</strong> {log.name}</p>
                   <p><strong>Date:</strong> {log.date}</p>
                   <p><strong>Time:</strong> {formatToAmPm(log.time)}</p>
-                  <p><strong>Max Slots:</strong> {log.maxSlot}</p>
+                  <p><strong>Available Slots:</strong> {log.availableSlot}</p>
                   <hr />
                 </div>
               ))}

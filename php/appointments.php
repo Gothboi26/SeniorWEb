@@ -4,31 +4,41 @@ session_start();
 // ✅ CORS + Headers
 header("Access-Control-Allow-Origin: http://localhost:3000");
 header("Access-Control-Allow-Credentials: true");
-header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Content-Type: application/json; charset=UTF-8");
 
-// ✅ Handle preflight
+// ✅ Preflight response
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit();
 }
 
-// ✅ Auth check
+// ✅ Check user authentication
 if (!isset($_SESSION['user_id'])) {
-    echo json_encode(['error' => 'Unauthorized access']);
+    echo json_encode(['success' => false, 'error' => 'Unauthorized access']);
     exit();
 }
 
-// ✅ DB connection
-$pdo = new PDO("mysql:host=localhost;dbname=account", "root", "");
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// ✅ Database connection
+try {
+    $pdo = new PDO("mysql:host=localhost;dbname=account", "root", "");
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo json_encode(['success' => false, 'error' => 'Database connection failed']);
+    exit();
+}
 
-// ✅ Role fallback
+// ✅ Constants
+define('STATUS_PENDING', 'Pending');
+define('STATUS_APPROVED', 'Approved');
+define('STATUS_REJECTED', 'Rejected');
+
+// ✅ Session info
 $user_id = $_SESSION['user_id'];
 $role = $_SESSION['role'] ?? 'client';
 
-// ✅ Fetch appointments
+// ✅ Utility Functions
 function fetchAppointments($pdo, $user_id, $role) {
     if ($role === 'client') {
         $stmt = $pdo->prepare("SELECT * FROM appointments WHERE user_id = ?");
@@ -42,32 +52,35 @@ function fetchAppointments($pdo, $user_id, $role) {
     }
 }
 
-// ✅ Check slot availability (includes both pending and approved)
 function hasAvailableSlot($pdo, $service, $date, $time) {
-    $slotStmt = $pdo->prepare("SELECT max_slots FROM service_slots WHERE service_name = ? AND date = ? AND time = ?");
+    // ✅ Now fetching available_slots not max_slots
+    $slotStmt = $pdo->prepare("SELECT available_slots FROM service_slots WHERE service_name = ? AND date = ? AND time = ?");
     $slotStmt->execute([$service, $date, $time]);
     $slot = $slotStmt->fetch(PDO::FETCH_ASSOC);
 
-    if (!$slot || $slot['max_slots'] <= 0) {
+    if (!$slot || $slot['available_slots'] <= 0) {
         return false;
     }
 
-    $usedStmt = $pdo->prepare("SELECT COUNT(*) as used FROM appointments 
-                               WHERE service = ? AND date = ? AND time = ? AND status != 'Rejected'");
-    $usedStmt->execute([$service, $date, $time]);
-    $used = $usedStmt->fetch(PDO::FETCH_ASSOC)['used'];
-
-    return $used < $slot['max_slots'];
+    return true;
 }
 
-// ✅ Handle POST logic (insert/update)
+function validateDateAndTime($date, $time) {
+    return preg_match('/^\d{4}-\d{2}-\d{2}$/', $date) && preg_match('/^\d{2}:\d{2}:\d{2}$/', $time);
+}
+
 function handleAppointment($pdo, $data, $user_id, $role) {
     if (isset($data['appointment_id'])) {
         // Admin is updating status
         $appointment_id = $data['appointment_id'];
-        $status = strtolower($data['status']);
+        $new_status = ucfirst(strtolower($data['status'] ?? ''));
 
-        // Fetch original appointment details
+        // Validate new status
+        if (!in_array($new_status, [STATUS_APPROVED, STATUS_REJECTED])) {
+            return ['success' => false, 'error' => 'Invalid status update'];
+        }
+
+        // Fetch appointment
         $stmt = $pdo->prepare("SELECT service, date, time FROM appointments WHERE id = ?");
         $stmt->execute([$appointment_id]);
         $appt = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -76,66 +89,72 @@ function handleAppointment($pdo, $data, $user_id, $role) {
             return ['success' => false, 'error' => 'Appointment not found'];
         }
 
-        if ($status === 'approved') {
+        if ($new_status === STATUS_APPROVED) {
             if (!hasAvailableSlot($pdo, $appt['service'], $appt['date'], $appt['time'])) {
-                return ['success' => false, 'error' => 'Slot is already full, cannot approve'];
+                return ['success' => false, 'error' => 'Slot already full, cannot approve'];
             }
 
-            $update = $pdo->prepare("UPDATE appointments SET status = 'Approved', remarks = 'Please arrive 10 minutes early.' WHERE id = ?");
-            $update->execute([$appointment_id]);
-
-        } elseif ($status === 'rejected') {
-            $update = $pdo->prepare("UPDATE appointments SET status = 'Rejected', remarks = 'Your request was not approved.' WHERE id = ?");
-            $update->execute([$appointment_id]);
-
-        } else {
-            $delete = $pdo->prepare("DELETE FROM appointments WHERE id = ?");
-            $delete->execute([$appointment_id]);
+            $remarks = "Pakitiyak na dumating 10 minuto bago ang appointment.";
+            $update = $pdo->prepare("UPDATE appointments SET status = ?, remarks = ? WHERE id = ?");
+            $update->execute([STATUS_APPROVED, $remarks, $appointment_id]);
+        } elseif ($new_status === STATUS_REJECTED) {
+            $remarks = "Paumanhin, hindi naaprubahan ang inyong kahilingan.";
+            $update = $pdo->prepare("UPDATE appointments SET status = ?, remarks = ? WHERE id = ?");
+            $update->execute([STATUS_REJECTED, $remarks, $appointment_id]);
         }
 
         return ['success' => true];
 
     } else {
-        // Client is reserving
-        $service = $data['service'] ?? '';
-        $date = $data['date'] ?? '';
-        $time = $data['time'] ?? '';
-        $status = strtolower($data['status'] ?? 'pending');
+        // Client creating appointment
+        $service = trim($data['service'] ?? '');
+        $date = trim($data['date'] ?? '');
+        $time = trim($data['time'] ?? '');
+        $status = STATUS_PENDING;
 
         if (!$service || !$date || !$time) {
             return ['success' => false, 'error' => 'Missing required fields'];
         }
 
-        // ✅ Prevent duplicate for same user & slot if status is not rejected
-        $checkDup = $pdo->prepare("SELECT COUNT(*) FROM appointments 
-                                   WHERE user_id = ? AND service = ? AND date = ? AND time = ? AND status != 'Rejected'");
-        $checkDup->execute([$user_id, $service, $date, $time]);
-        if ($checkDup->fetchColumn() > 0) {
-            return ['success' => false, 'error' => 'You already have a reservation for this time.'];
+        if (!validateDateAndTime($date, $time)) {
+            return ['success' => false, 'error' => 'Invalid date or time format'];
         }
 
-        // ✅ Check real-time slot availability
+        // Prevent duplicate reservation for same slot
+        $checkDup = $pdo->prepare("SELECT COUNT(*) FROM appointments 
+                                   WHERE user_id = ? AND service = ? AND date = ? AND time = ? 
+                                   AND status != ?");
+        $checkDup->execute([$user_id, $service, $date, $time, STATUS_REJECTED]);
+        if ($checkDup->fetchColumn() > 0) {
+            return ['success' => false, 'error' => 'You already have a reservation for this slot'];
+        }
+
+        // Check availability
         if (!hasAvailableSlot($pdo, $service, $date, $time)) {
             return ['success' => false, 'error' => 'No remaining slots available for this time'];
         }
 
+        // Insert appointment
         $insert = $pdo->prepare("INSERT INTO appointments (service, date, time, status, user_id) 
                                  VALUES (?, ?, ?, ?, ?)");
-        $insert->execute([$service, $date, $time, ucfirst($status), $user_id]);
+        $insert->execute([$service, $date, $time, $status, $user_id]);
+        $appointment_id = $pdo->lastInsertId();
 
-        return ['success' => true];
+        return ['success' => true, 'appointment_id' => $appointment_id];
     }
 }
 
-// ✅ Main request handling
+// ✅ Handle Request
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     echo json_encode(fetchAppointments($pdo, $user_id, $role));
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode(file_get_contents('php://input'), true);
-    if (isset($data['service'], $data['date'], $data['time']) || isset($data['appointment_id'])) {
+    if (is_array($data)) {
         echo json_encode(handleAppointment($pdo, $data, $user_id, $role));
     } else {
-        echo json_encode(['success' => false, 'error' => 'Missing required fields']);
+        echo json_encode(['success' => false, 'error' => 'Invalid request body']);
     }
+} else {
+    echo json_encode(['success' => false, 'error' => 'Unsupported request method']);
 }
 ?>

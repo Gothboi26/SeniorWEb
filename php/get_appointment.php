@@ -1,26 +1,26 @@
 <?php
 session_start();
 
-// CORS and Content-Type Headers
+// ✅ Headers
 header("Access-Control-Allow-Origin: http://localhost:3000");
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Content-Type: application/json; charset=UTF-8");
 
-// Handle preflight
+// ✅ Preflight
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit();
 }
 
-// Check login
+// ✅ Login check
 if (!isset($_SESSION['user_id'])) {
     echo json_encode(['error' => 'Unauthorized']);
     exit();
 }
 
-// Connect to database
+// ✅ DB connection
 try {
     $pdo = new PDO("mysql:host=localhost;dbname=account", "root", "");
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -32,7 +32,7 @@ try {
 $method = $_SERVER['REQUEST_METHOD'];
 $input = json_decode(file_get_contents("php://input"), true);
 
-// GET: Fetch all appointments with full name
+// ✅ GET: Fetch all appointments
 if ($method === 'GET') {
     $stmt = $pdo->query("
         SELECT appointments.*, 
@@ -45,21 +45,22 @@ if ($method === 'GET') {
     exit();
 }
 
-// POST: Update status and optionally remarks
+// ✅ POST: Update status
 if ($method === 'POST' && isset($input['appointment_id'], $input['status'])) {
     $appointmentId = $input['appointment_id'];
 
-    // Prevent duplicate slot adjustment
+    // 🔒 Check current status BEFORE update
     $check = $pdo->prepare("SELECT status FROM appointments WHERE id = :id");
     $check->execute([':id' => $appointmentId]);
     $currentStatus = strtolower($check->fetchColumn());
 
+    // ⛔ Already approved, skip everything
     if ($currentStatus === 'approved') {
-        echo json_encode(['success' => true, 'message' => 'Already approved — no duplicate adjustment.']);
+        echo json_encode(['success' => true, 'message' => 'Already approved — no double adjustment.']);
         exit();
     }
 
-    // Update status and remarks
+    // ✅ Update status + remarks
     $stmt = $pdo->prepare("
         UPDATE appointments 
         SET status = :status, remarks = :remarks 
@@ -71,26 +72,25 @@ if ($method === 'POST' && isset($input['appointment_id'], $input['status'])) {
         ':id' => $appointmentId
     ]);
 
-    // Adjust slot if status approved
+    // ✅ Reduce available_slots if newly approved
     if (
         isset($input['adjust_slot'], $input['service'], $input['date'], $input['time']) &&
         $input['adjust_slot'] === true &&
         strtolower($input['status']) === 'approved'
     ) {
-        $time = date("H:i:s", strtotime($input['time']));
-
-        $slotStmt = $pdo->prepare("
+        $timeFormatted = date("H:i:s", strtotime($input['time']));
+        $reduce = $pdo->prepare("
             UPDATE service_slots 
-            SET max_slots = max_slots - 1 
+            SET available_slots = available_slots - 1 
             WHERE service_name = :service 
               AND date = :date 
               AND time = :time 
-              AND max_slots > 0
+              AND available_slots > 0
         ");
-        $slotStmt->execute([
+        $reduce->execute([
             ':service' => $input['service'],
             ':date' => $input['date'],
-            ':time' => $time
+            ':time' => $timeFormatted
         ]);
     }
 
@@ -98,11 +98,8 @@ if ($method === 'POST' && isset($input['appointment_id'], $input['status'])) {
     exit();
 }
 
-// PUT: Update appointment details
-if (
-    $method === 'PUT' &&
-    isset($input['appointment_id'], $input['service'], $input['date'], $input['time'])
-) {
+// ✅ PUT: Update appointment details
+if ($method === 'PUT' && isset($input['appointment_id'], $input['service'], $input['date'], $input['time'])) {
     $stmt = $pdo->prepare("
         UPDATE appointments 
         SET service = :service, date = :date, time = :time, remarks = :remarks 
@@ -119,7 +116,7 @@ if (
     exit();
 }
 
-// DELETE: Remove appointment
+// ✅ DELETE: Remove appointment
 if ($method === 'DELETE' && isset($input['appointment_id'])) {
     $stmt = $pdo->prepare("DELETE FROM appointments WHERE id = :id");
     $stmt->execute([':id' => $input['appointment_id']]);
@@ -127,5 +124,5 @@ if ($method === 'DELETE' && isset($input['appointment_id'])) {
     exit();
 }
 
-// Fallback error
+// 🔴 Fallback
 echo json_encode(['error' => 'Invalid request']);

@@ -8,8 +8,8 @@ import Footer from "./Footer";
 import BackToHome from "./BackToHome";
 
 const formatDateToReadable = (dateStr) => {
-  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-  return new Date(dateStr).toLocaleDateString('en-US', options);
+  const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
+  return new Date(dateStr).toLocaleDateString("en-US", options);
 };
 
 const formatTimeAMPM = (timeStr) => {
@@ -17,7 +17,7 @@ const formatTimeAMPM = (timeStr) => {
   const date = new Date();
   date.setHours(h);
   date.setMinutes(m);
-  return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+  return date.toLocaleTimeString("en-US", { hour: "numeric", minute: "numeric", hour12: true });
 };
 
 const getDateOnly = (d) => {
@@ -116,7 +116,7 @@ const SeniorCare = ({ role, handleLogout }) => {
           );
         }).length;
 
-        const remaining = slot.max_slots - approvedCount;
+        const remaining = slot.available_slots - approvedCount;
         return { time: slot.time, remaining };
       }).filter(slot => slot.remaining > 0);
   };
@@ -230,7 +230,7 @@ const SeniorCare = ({ role, handleLogout }) => {
                 <p>Tingnan ang confirmation message o text na ipadadala ng app. Tandaan ang petsa at oras ng inyong appointment. </p>
               </li>
               <li><strong>Dumating sa Takdang Oras</strong>
-              <p>Siguraduhing dumating sa tamang oras o 10-15 minuto bago ang schedule upang maayos ang proseso ng inyong pagbisita. </p>
+                <p>Siguraduhing dumating sa tamang oras o 10-15 minuto bago ang schedule upang maayos ang proseso ng inyong pagbisita. </p>
               </li>
             </ol>
           </div>
@@ -243,10 +243,7 @@ const SeniorCare = ({ role, handleLogout }) => {
           <button className="reserve-button" onClick={() => openModal("reserveSlot")}>Itakda ang Oras</button>
           <button className="view-button" onClick={() => openModal("upcoming")}>Tingnan ang Tinakdang Oras</button>
         </div>
-
       </div>
-
-      
 
       <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="modal">
         <h2>{modalContent === "reserveSlot" ? "Magtakda ng Araw at Oras" : "Ang Iyong Schedule"}</h2>
@@ -260,11 +257,11 @@ const SeniorCare = ({ role, handleLogout }) => {
                 <option key={i} value={s}>{s}</option>
               ))}
             </select>
-            
+
             {selectedService && (
               <>
                 <label>Piliin ang Araw:</label>
-                <div className="calendar-styles"> 
+                <div className="calendar-styles">
                   <Calendar
                     onClickDay={handleCalendarSelect}
                     value={selectedDate ? new Date(selectedDate) : null}
@@ -280,7 +277,7 @@ const SeniorCare = ({ role, handleLogout }) => {
                         : null;
                     }}
                   />
-                </div>                
+                </div>
               </>
             )}
 
@@ -318,42 +315,28 @@ const SeniorCare = ({ role, handleLogout }) => {
               <button onClick={() => setModalContent("reject")} className={modalContent === "reject" ? "active-tab" : ""}>Rejected</button>
             </div>
 
-            {modalContent === "pending" && (
-              <>
-                {renderAppointmentsTable(upcomingAppointments.filter((a) => a.status.toLowerCase() === "pending"))}
-              </>
-            )}
-            {modalContent === "upcoming" && (
-              <>
-                {renderAppointmentsTable(upcomingAppointments.filter((a) => a.status.toLowerCase() === "approved"), true)}
-              </>
-            )}
+            {modalContent === "pending" && renderAppointmentsTable(upcomingAppointments.filter((a) => a.status.toLowerCase() === "pending"))}
+            {modalContent === "upcoming" && renderAppointmentsTable(upcomingAppointments.filter((a) => a.status.toLowerCase() === "approved"), true)}
             {modalContent === "past" && (
-              <>
-                <div className="view-log-list">
-                  {pastAppointments.filter((a) => {
-                    const apptDate = new Date(a.date);
-                    const threeDaysAgo = new Date();
-                    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
-                    return apptDate >= threeDaysAgo;
-                  }).map((a, i) => (
-                    <div className="log-item" key={i}>
-                      <p><strong>Service:</strong> {a.service}</p>
-                      <p><strong>Date:</strong> {formatDateToReadable(a.date)}</p>
-                      <p><strong>Time:</strong> {formatTimeAMPM(a.time)}</p>
-                      <p><strong>Status:</strong> {a.status}</p>
-                      <p><strong>Remarks:</strong> {a.remarks || "N/A"}</p>
-                      <hr />
-                    </div>
-                  ))}
-                </div>
-              </>
+              <div className="view-log-list">
+                {pastAppointments.filter((a) => {
+                  const apptDate = new Date(a.date);
+                  const threeDaysAgo = new Date();
+                  threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+                  return apptDate >= threeDaysAgo;
+                }).map((a, i) => (
+                  <div className="log-item" key={i}>
+                    <p><strong>Service:</strong> {a.service}</p>
+                    <p><strong>Date:</strong> {formatDateToReadable(a.date)}</p>
+                    <p><strong>Time:</strong> {formatTimeAMPM(a.time)}</p>
+                    <p><strong>Status:</strong> {a.status}</p>
+                    <p><strong>Remarks:</strong> {a.remarks || "N/A"}</p>
+                    <hr />
+                  </div>
+                ))}
+              </div>
             )}
-            {modalContent === "reject" && (
-              <>
-                {renderAppointmentsTable(upcomingAppointments.filter((a) => a.status.toLowerCase() === "reject"), true)}
-              </>
-            )}
+            {modalContent === "reject" && renderAppointmentsTable(upcomingAppointments.filter((a) => a.status.toLowerCase() === "reject"), true)}
           </>
         )}
       </Modal>
