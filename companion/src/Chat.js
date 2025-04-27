@@ -30,7 +30,7 @@ function Chat({ role, handleLogout }) {
 
   // Step 1: Fetch the username from the PHP session
   useEffect(() => {
-    fetch("http://localhost/php/get_username.php", {
+    fetch("https://websocket-production-b0d9.up.railway.app/get_username.php", {
       method: "GET",
       credentials: "include",
     })

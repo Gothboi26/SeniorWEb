@@ -30,7 +30,7 @@ const Appointments = () => {
 
   const fetchAppointments = async () => {
     try {
-      const response = await fetch("http://localhost/php/get_appointment.php", {
+      const response = await fetch("https://backend-production-4629.up.railway.app/get_appointment.php", {
         credentials: "include",
       });
       const data = await response.json();
@@ -57,7 +57,7 @@ const Appointments = () => {
     if (!window.confirm(confirmMsg)) return;
 
     try {
-      const response = await fetch("http://localhost/php/get_appointment.php", {
+      const response = await fetch("https://backend-production-4629.up.railway.app/get_appointment.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
