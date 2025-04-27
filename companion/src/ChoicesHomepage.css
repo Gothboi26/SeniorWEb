@@ -373,3 +373,65 @@
     margin: 10px 0;
   }
 }
+@media (max-width: 360px) {
+  .rectangle21 {
+    padding: 5px;
+    gap: 8px;
+  }
+
+  .rectangle23.paalala1,
+  .rectangle23.seniorcare,
+  .rectangle23.emergencyservices,
+  .rectangle23.chatassistance {
+    width: 95%; /* Make it almost full width */
+    padding: 5px;
+    height: auto;
+  }
+
+  .rectangle23.paalala1 p,
+  .rectangle23.seniorcare p,
+  .rectangle23.emergencyservices p,
+  .rectangle23.chatassistance p {
+    font-size: 14px;
+    margin: 5px 10px;
+    text-align: justify;
+  }
+
+  .rectangle23.paalala1 h2,
+  .rectangle23.seniorcare h2,
+  .rectangle23.emergencyservices h2,
+  .rectangle23.chatassistance h2 {
+    font-size: 1.1rem;
+    text-align: center;
+  }
+
+  .senior-care-button,
+  .chat-assistance-button,
+  .emergency-services-button {
+    width: 95%;
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  .senior-care-button-text,
+  .emergency-services-button-text,
+  .chat-assistance-button-text {
+    font-size: 14px;
+  }
+
+  .appoint-logo,
+  .emergency-logo,
+  .chat-logo {
+    width: 30px;
+    margin: 5px 0;
+  }
+
+  .rectangle23.seniorcare .SeniorCare-Title,
+  .rectangle23.emergencyservices .Emergency-Title,
+  .rectangle23.chatassistance .Chat-Title {
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    text-align: center;
+  }
+}
