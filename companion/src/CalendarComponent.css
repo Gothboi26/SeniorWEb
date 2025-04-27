@@ -306,12 +306,12 @@ h3 {
   }
 
   .Events {
-    padding: 0;
+    padding: 0px;
   }
   .react-calendar,
   .events-list {
     width: 90%;
-    min-height: 300px;
+    min-height: 315px;
   }
 
   .event-item {
