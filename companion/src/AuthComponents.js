@@ -9,7 +9,7 @@ function Login({ setRole }) {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch("http://localhost/php/login.php", {
+      const response = await fetch("https://seniorcare-flt3.onrender.com/login.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -47,7 +47,7 @@ function Login({ setRole }) {
     }
 
     try {
-      const res = await fetch("http://localhost/php/change_password.php", {
+      const res = await fetch("https://seniorcare-flt3.onrender.com/change_password.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
