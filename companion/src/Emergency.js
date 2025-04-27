@@ -74,7 +74,7 @@ const Emergency = ({ role, handleLogout }) => {
   useEffect(() => {
     const fetchStatus = async () => {
       try {
-        const res = await fetch("https://seniorcare-flt3.onrender.com/php/get_latest_emergency.php", {
+        const res = await fetch("https://seniorcare-flt3.onrender.com/php/get_latest_emergency_status.php", {
           method: "GET",
           credentials: "include",
         });
