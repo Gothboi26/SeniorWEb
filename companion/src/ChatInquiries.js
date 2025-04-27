@@ -77,7 +77,7 @@ const ChatInquiries = () => {
     setSelectedUser(user.username);
 
     try {
-      const res = await fetch(`https://websocket-production-b0d9.up.railway.app/get_messages.php?sender=admin&receiver=${user.username}`);
+      const res = await fetch(`https://backend-production-4629.up.railway.app/get_messages.php?sender=admin&receiver=${user.username}`);
       const result = await res.json();
 
       const history = result.messages || [];
