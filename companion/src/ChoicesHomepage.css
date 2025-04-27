@@ -300,7 +300,7 @@
 }
 @media (max-width: 480px) {
   .rectangle21 {
-    flex-direction: row; /* arrange children in a row */
+    flex-direction: column; /* arrange children in a row */
     flex-wrap: wrap; /* allow wrapping to next line */
     justify-content: center; /* center items */
     padding: 10px;
@@ -311,9 +311,9 @@
   .rectangle23.seniorcare,
   .rectangle23.emergencyservices,
   .rectangle23.chatassistance {
-    width: 48%; /* nearly half to fit two in a row */
+    width: 90%; /* nearly half to fit two in a row */
     height: auto;
-    padding: 10px;
+    padding: 5px;
   }
 
   .rectangle23.emergencyservices p,
