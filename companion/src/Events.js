@@ -19,7 +19,7 @@ const Events = () => {
   const [toast, setToast] = useState({ message: "", visible: false });
 
   useEffect(() => {
-    let url = `https://backend-production-4629.up.railway.app/get_events.php?sortOrder=${sortOrder}`;
+    let url = `http://localhost/php/get_events.php?sortOrder=${sortOrder}`;
     url += showLogs ? `&logs=past` : ``;
 
     fetch(url)
@@ -114,7 +114,7 @@ const Events = () => {
       event_description: eventDescription,
     };
 
-    fetch("https://backend-production-4629.up.railway.app/add_events.php", {
+    fetch("http://localhost/php/add_events.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newEvent),
