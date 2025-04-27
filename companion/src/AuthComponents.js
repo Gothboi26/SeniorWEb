@@ -9,7 +9,7 @@ function Login({ setRole }) {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch("https://backend-production-4629.up.railway.app/login.php", {
+      const response = await fetch("http://localhost/php/login.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -47,7 +47,7 @@ function Login({ setRole }) {
     }
 
     try {
-      const res = await fetch("https://backend-production-4629.up.railway.app/change_password.php", {
+      const res = await fetch("http://localhost/php/change_password.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -83,8 +83,7 @@ function Login({ setRole }) {
 
   return (
     <div className="form-container">
-      <h2 className="login-title">Log in to your Account</h2>
-      <h2 className="username-label">Username</h2>
+      <h2>LOGIN</h2>
       <input
         type="text"
         placeholder="Username"
@@ -92,7 +91,6 @@ function Login({ setRole }) {
         onChange={(e) => setUsername(e.target.value)}
         onKeyDown={handleKeyDown}
       />
-      <h2 className="password-label">Password</h2>
       <input
         type="password"
         placeholder="Password"
@@ -169,3 +167,4 @@ function Login({ setRole }) {
 }
 
 export { Login };
+  
