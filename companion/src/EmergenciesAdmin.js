@@ -25,7 +25,7 @@ const EmergenciesAdmin = () => {
   useEffect(() => {
     const fetchEmergencies = async () => {
       try {
-        const response = await fetch("http://localhost/php/fetch_emergencies.php", {
+        const response = await fetch("https://backend-production-4629.up.railway.app/fetch_emergencies.php", {
           credentials: "include",
         });
         const result = await response.json();
@@ -142,7 +142,7 @@ const EmergenciesAdmin = () => {
     setData(updatedData);
 
     try {
-      await fetch("http://localhost/php/update_emergency_status.php", {
+      await fetch("https://backend-production-4629.up.railway.app/update_emergency_status.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id: updatedItem.id, status: newStatus }),

@@ -103,7 +103,7 @@ const SeniorList = () => {
   const handleAddSenior = async () => {
     if (!validateForm()) return;
     try {
-      const res = await fetch("http://localhost/php/register.php", {
+      const res = await fetch("https://backend-production-4629.up.railway.app/register.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...formData, password: "client123" }),
@@ -125,7 +125,7 @@ const SeniorList = () => {
     if (!validateForm()) return;
     const payload = { ...formData, id: editingId };
     try {
-      const res = await fetch("http://localhost/php/update_user.php", {
+      const res = await fetch("https://backend-production-4629.up.railway.app/update_user.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -154,7 +154,7 @@ const SeniorList = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this user?")) return;
     try {
-      const res = await fetch("http://localhost/php/delete_user.php", {
+      const res = await fetch("https://backend-production-4629.up.railway.app/delete_user.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id })
@@ -197,7 +197,7 @@ const SeniorList = () => {
   useEffect(() => {
     const fetchPatients = async () => {
       try {
-        const res = await fetch("http://localhost/php/get_users.php");
+        const res = await fetch("https://backend-production-4629.up.railway.app/get_users.php");
         const data = await res.json();
         if (data.status === "success") {
           setPatients(data.data.filter(user => user.role === "client"));
