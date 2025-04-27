@@ -6,17 +6,15 @@ import BackToHome from "./BackToHome";
 import police from "./assets/police.png";
 import ambulance from "./assets/ambulance.png";
 import firetruck from "./assets/firetruck.png";
-/* import family from "./assets/family.png"; */
 
 const Emergency = ({ role, handleLogout }) => {
-  const [toasts, setToasts] = useState([]); // 🔥 Allow multiple toasts
+  const [toasts, setToasts] = useState([]);
   const lastStatus = useRef(null);
 
   const emergencyOptions = [
     { type: "Police", icon: police },
     { type: "Ambulance", icon: ambulance },
     { type: "Fire Truck", icon: firetruck },
-    // { type: "Family", icon: family },
   ];
 
   const emergencyHotlines = [
@@ -32,11 +30,11 @@ const Emergency = ({ role, handleLogout }) => {
   ];
 
   const showToast = (message, type = "info") => {
-    const id = Date.now(); // Unique id
+    const id = Date.now();
     setToasts((prev) => [...prev, { id, message, type }]);
     setTimeout(() => {
       setToasts((prev) => prev.filter((toast) => toast.id !== id));
-    }, 7000); // Auto dismiss after 7 seconds
+    }, 7000);
   };
 
   const handleEmergencyClick = async (type) => {
@@ -46,10 +44,10 @@ const Emergency = ({ role, handleLogout }) => {
     if (!confirmSend) return;
 
     try {
-      const res = await fetch("https://backend-production-4629.up.railway.app/submit_emergency.php", {
+      const res = await fetch("https://seniorcare-flt3.onrender.com/php/submit_emergency.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
+        credentials: "include", // ✅ Always include
         body: JSON.stringify({ type }),
       });
 
@@ -76,13 +74,10 @@ const Emergency = ({ role, handleLogout }) => {
   useEffect(() => {
     const fetchStatus = async () => {
       try {
-        const res = await fetch(
-          "https://backend-production-4629.up.railway.app/get_latest_emergency_status.php",
-          {
-            method: "GET",
-            credentials: "include",
-          }
-        );
+        const res = await fetch("https://seniorcare-flt3.onrender.com/php/get_latest_emergency.php", {
+          method: "GET",
+          credentials: "include",
+        });
         const data = await res.json();
 
         if (data.success && data.status) {
@@ -168,7 +163,6 @@ const Emergency = ({ role, handleLogout }) => {
             ))}
           </div>
 
-          {/* 🔥 Render multiple toasts */}
           <div className="toasts-container">
             {toasts.map((toast) => (
               <div key={toast.id} className={`toast-notification ${toast.type}`}>
