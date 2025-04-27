@@ -228,6 +228,13 @@
     border-radius: 12px;
   }
 
+  .events-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 0 10px;
+  }
+
   .Events-Title {
     font-size: 2rem;
     margin-top: 30px;
@@ -240,6 +247,7 @@
     padding: 5px;
     border-radius: 15px;
   }
+
   .Events-sub {
     font-size: 1.5rem;
     width: 75%;
@@ -248,6 +256,7 @@
     border-radius: 15px;
     margin-left: 50px;
   }
+
   .react-calendar__tile {
     padding: 10px;
     font-size: 0.85em;
@@ -273,5 +282,63 @@
 
   .Events-Header {
     margin-bottom: 1rem;
+  }
+}
+@media screen and (max-width: 360px) {
+  .react-calendar,
+  .events-list {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 10px;
+  }
+
+  .events-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 0 5px;
+  }
+
+  .Events-Title {
+    font-size: 1.8rem;
+    margin-top: 20px;
+  }
+
+  .Events-Subheader {
+    font-size: 1.3rem;
+    padding: 5px;
+    width: 100%;
+  }
+
+  .Events-sub {
+    font-size: 1.3rem;
+    width: 80%;
+    padding: 5px;
+    margin: 0 auto;
+    border-radius: 12px;
+  }
+
+  .react-calendar__tile {
+    padding: 8px;
+    font-size: 0.8em;
+  }
+
+  .events-list h3 {
+    font-size: 1.3rem;
+  }
+
+  .events-list p {
+    font-size: 1.1rem;
+    padding: 15px;
+  }
+
+  .event-item {
+    font-size: 0.85rem;
+    padding: 10px;
+  }
+
+  .event-meta {
+    font-size: 0.85rem;
   }
 }
