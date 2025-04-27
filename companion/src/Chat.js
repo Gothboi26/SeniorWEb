@@ -30,7 +30,7 @@ function Chat({ role, handleLogout }) {
 
   // Step 1: Fetch the username from the PHP session
   useEffect(() => {
-    fetch("https://backend-production-4629.up.railway.app/get_username.php", {
+    fetch("https://websocket-production-b0d9.up.railway.app/get_username.php", {
       method: "GET",
       credentials: "include",
     })
@@ -49,7 +49,7 @@ function Chat({ role, handleLogout }) {
   useEffect(() => {
     if (!username) return;
 
-    const socket = new WebSocket("ws:https://websocket-production-b0d9.up.railway.app/");
+    const socket = new WebSocket("ws://localhost:8080");
 
     socket.onopen = () => {
       socket.send(
