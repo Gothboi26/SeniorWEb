@@ -383,7 +383,7 @@ const chartViews = {
     <Bar data={chartConfig(
       Object.keys(ageDistribution),
       Object.values(ageDistribution),
-      { backgroundColor: "#C31C1C" }
+      { label: "Senior", backgroundColor: "#C31C1C" }
     )} />
   ),
   accommodatedPerDay: (
