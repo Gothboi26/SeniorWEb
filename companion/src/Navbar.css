@@ -346,6 +346,7 @@
   }
   .Navbar-links {
     gap: 30px;
+    margin-right: 50px;
   }
   .Navbar-links-container {
     margin-right: 8vh;
@@ -368,6 +369,7 @@
   }
   .Navbar-links {
     gap: 25px;
+    margin-right: 50px;
   }
   .Navbar-links-container {
     margin-right: 15vh;
@@ -419,7 +421,7 @@
   }
   .Navbar-links {
     gap: 22px;
-    margin-right: 100px;
+    margin-right: 50px;
   }
   .Navbar {
     padding: 50px 35px;
