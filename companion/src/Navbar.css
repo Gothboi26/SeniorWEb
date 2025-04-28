@@ -331,6 +331,34 @@
 }
 
 /* --- Media Queries Section --- */
+/* 1440px and below */
+@media (max-width: 1440px) {
+  .Navbar {
+    padding: 50px 55px;
+    height: 75px;
+  }
+  .Navbar-logo-container {
+    left: 55px;
+  }
+  .Navbar-logo-container img {
+    width: 95px;
+    height: auto;
+  }
+  .Navbar-links {
+    gap: 30px;
+  }
+  .Navbar-links-container {
+    margin-right: 8vh;
+  }
+  .Navbar-links a {
+    font-size: 24px;
+    padding: 8px 15px;
+  }
+  .Navbar-right a {
+    font-size: 24px;
+    padding: 10px 25px;
+  }
+}
 
 /* 1370px and below */
 @media (max-width: 1370px) {
