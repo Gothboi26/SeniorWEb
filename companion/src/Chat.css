@@ -350,7 +350,7 @@ input[type="text1"]:focus {
     font-size: 1.2rem;
   }
   .chat-send-button {
-    width: 100%;
+    width: 30%;
     padding: 8px;
   }
   .faq-button {
