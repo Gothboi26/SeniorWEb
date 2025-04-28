@@ -244,8 +244,70 @@
   text-decoration: none; /* Removes underline */
   color: inherit; /* Inherits text color */
 }
+@media (max-width: 1440px) {
+  .rectangle21 {
+    padding: 45px;
+    gap: 28px;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+  }
 
-@media (max-width: 1370px) {
+  .rectangle23.paalala1,
+  .rectangle23.seniorcare,
+  .rectangle23.emergencyservices,
+  .rectangle23.chatassistance {
+    width: 330px;
+    height: 440px;
+    padding: 18px;
+  }
+
+  .rectangle23.paalala1 h2,
+  .rectangle23.seniorcare h2,
+  .rectangle23.emergencyservices h2,
+  .rectangle23.chatassistance h2 {
+    font-size: 30px;
+  }
+
+  .rectangle23.paalala1 p,
+  .rectangle23.seniorcare p,
+  .rectangle23.emergencyservices p,
+  .rectangle23.chatassistance p {
+    font-size: 1.3rem;
+    margin: 18px 22px;
+    text-align: justify;
+  }
+
+  .senior-care-button,
+  .chat-assistance-button,
+  .emergency-services-button {
+    width: 78%;
+    padding: 12px 20px;
+    margin-top: 28px;
+    font-size: 17px;
+  }
+
+  .senior-care-button-text,
+  .emergency-services-button-text,
+  .chat-assistance-button-text {
+    font-size: 22px;
+  }
+
+  .appoint-logo,
+  .emergency-logo,
+  .chat-logo {
+    width: 55px;
+    margin-left: 8px;
+  }
+
+  .rectangle23.seniorcare .SeniorCare-Title,
+  .rectangle23.emergencyservices .Emergency-Title,
+  .rectangle23.chatassistance .Chat-Title {
+    margin: 18px 25px 10px;
+  }
+}
+
+@media (max-width: 1366px) {
   .rectangle21 {
     padding: 40px;
     gap: 25px;
