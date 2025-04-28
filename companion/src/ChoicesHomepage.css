@@ -330,14 +330,14 @@
   .rectangle23.seniorcare h2,
   .rectangle23.emergencyservices h2,
   .rectangle23.chatassistance h2 {
-    font-size: 28px;
+    font-size: 26px;
   }
 
   .rectangle23.paalala1 p,
   .rectangle23.seniorcare p,
   .rectangle23.emergencyservices p,
   .rectangle23.chatassistance p {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     margin: 10px 15px;
     text-align: justify;
   }
@@ -354,7 +354,7 @@
   .senior-care-button-text,
   .emergency-services-button-text,
   .chat-assistance-button-text {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .appoint-logo,
@@ -367,7 +367,7 @@
   .rectangle23.seniorcare .SeniorCare-Title,
   .rectangle23.emergencyservices .Emergency-Title,
   .rectangle23.chatassistance .Chat-Title {
-    margin: 15px 20px 10px;
+    margin: 10px 15px;
   }
 }
 
