@@ -96,14 +96,14 @@ const SeniorCare = ({ role, handleLogout }) => {
   };
 
   const getValidDatesForService = (service) => {
-    return [...new Set(serviceSlots.filter(slot => slot.service_name === service).map(slot => slot.date))];
+    return [...new Set(serviceSlots.filter(slot => slot.serviceName === service).map(slot => slot.date))];
   };
 
   const getTimesForServiceAndDate = (service, date) => {
     const normalizeTime = (t) => t.split(":").slice(0, 2).join(":");
 
     return serviceSlots
-      .filter(slot => slot.service_name === service && slot.date === date)
+      .filter(slot => slot.serviceName === service && slot.date === date)
       .map(slot => {
         const slotTime = normalizeTime(slot.time);
         const approvedCount = appointments.filter(a => {
@@ -116,7 +116,7 @@ const SeniorCare = ({ role, handleLogout }) => {
           );
         }).length;
 
-        const remaining = slot.available_slots - approvedCount;
+        const remaining = slot.availableSlot - approvedCount;
         return { time: slot.time, remaining };
       }).filter(slot => slot.remaining > 0);
   };
@@ -173,6 +173,10 @@ const SeniorCare = ({ role, handleLogout }) => {
     }
   };
 
+  const today = getDateOnly(new Date());
+  const upcomingAppointments = appointments.filter((a) => a.date >= today);
+  const pastAppointments = appointments.filter((a) => a.date < today);
+
   const renderAppointmentsTable = (appointments, showRemarks = false) => (
     <table className="appointments-table">
       <thead>
@@ -198,58 +202,22 @@ const SeniorCare = ({ role, handleLogout }) => {
     </table>
   );
 
-  const today = getDateOnly(new Date());
-  const upcomingAppointments = appointments.filter((a) => a.date >= today);
-  const pastAppointments = appointments.filter((a) => a.date < today);
-
   return (
     <div className="senior-care-container">
       <Navbar role={role} handleLogout={handleLogout} />
-
       <div className="senior-title-container">
         <h1 className="senior-title">Senior Care</h1>
       </div>
 
-      <div className="senior-details-container">
-        <p className="senior-title-p">
-          Mga Hakbang sa Pag-book ng Appointment Gamit ang Aplikasyon para sa Serbisyong Pangkalusugan at Iba Pa para sa mga Nakatatanda
-        </p>
-        <div className="instruction-container">
-          <div className="instruction-desc">
-            <ol className="instruction-list">
-              <li><strong>Piliin ang Serbisyo</strong>
-                <p>Hanapin ang mga serbisyong pangkalusugan tulad ng health check-up, masahe, libreng gamot, dental check-up, o eye check-up. Pindutin ang serbisyong nais n'yo i-book. </p>
-              </li>
-              <li><strong>Pumili ng Araw at Oras</strong>
-                <p>Pagkatapos piliin ang serbisyo, lilitaw ang kalendaryo o listahan ng mga available na oras. Pumili ng petsa at oras na pinakakomportable para sa inyo. </p>
-              </li>
-              <li><strong>Kumpirmahin</strong>
-                <p>Kapag nakapili na ng araw at oras, pindutin ang "Kumpirmahin" o "Book Appointment" na button. Lalabas ang detalye ng inyong appointment, kasama ang petsa, oras, at lokasyon ng serbisyong napili. </p>
-              </li>
-              <li><strong>Tandaan ang Detalye</strong>
-                <p>Tingnan ang confirmation message o text na ipadadala ng app. Tandaan ang petsa at oras ng inyong appointment. </p>
-              </li>
-              <li><strong>Dumating sa Takdang Oras</strong>
-                <p>Siguraduhing dumating sa tamang oras o 10-15 minuto bago ang schedule upang maayos ang proseso ng inyong pagbisita. </p>
-              </li>
-            </ol>
-          </div>
-        </div>
-        <div className="senior-paalala">
-          <p className="senior-p"><strong>Paalala: </strong>Sa pamamagitan ng maingat na pagtatakda ng iskedyul, kayo ay bibigyan ng prayoridad sa klinika o sentrong pangkalusugan. Hindi na ninyo kailangang maghintay nang matagal sapagkat may itinakdang oras para sa inyong konsultasyon.</p>
-        </div>
-
-        <div className="button-wrapper">
-          <button className="reserve-button" onClick={() => openModal("reserveSlot")}>Itakda ang Oras</button>
-          <button className="view-button" onClick={() => openModal("upcoming")}>Tingnan ang Tinakdang Oras</button>
-        </div>
+      <div className="button-wrapper">
+        <button className="reserve-button" onClick={() => openModal("reserveSlot")}>Itakda ang Oras</button>
+        <button className="view-button" onClick={() => openModal("upcoming")}>Tingnan ang Tinakdang Oras</button>
       </div>
 
       <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="modal">
-        <h2>{modalContent === "reserveSlot" ? "Magtakda ng Araw at Oras" : "Ang Iyong Schedule"}</h2>
-
         {modalContent === "reserveSlot" ? (
           <>
+            <h2>Reserve Slot</h2>
             <label>Piliin ang Serbisyo:</label>
             <select value={selectedService} onChange={handleServiceChange} className="input-field">
               <option value="">Select a service</option>
@@ -308,42 +276,15 @@ const SeniorCare = ({ role, handleLogout }) => {
           </>
         ) : (
           <>
-            <div className="tab-buttons">
-              <button onClick={() => setModalContent("pending")} className={modalContent === "pending" ? "active-tab" : ""}>Pending</button>
-              <button onClick={() => setModalContent("upcoming")} className={modalContent === "upcoming" ? "active-tab" : ""}>Upcoming</button>
-              <button onClick={() => setModalContent("past")} className={modalContent === "past" ? "active-tab" : ""}>Past</button>
-              <button onClick={() => setModalContent("reject")} className={modalContent === "reject" ? "active-tab" : ""}>Rejected</button>
-            </div>
-
-            {modalContent === "pending" && renderAppointmentsTable(upcomingAppointments.filter((a) => a.status.toLowerCase() === "pending"))}
-            {modalContent === "upcoming" && renderAppointmentsTable(upcomingAppointments.filter((a) => a.status.toLowerCase() === "approved"), true)}
-            {modalContent === "past" && (
-              <div className="view-log-list">
-                {pastAppointments.filter((a) => {
-                  const apptDate = new Date(a.date);
-                  const threeDaysAgo = new Date();
-                  threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
-                  return apptDate >= threeDaysAgo;
-                }).map((a, i) => (
-                  <div className="log-item" key={i}>
-                    <p><strong>Service:</strong> {a.service}</p>
-                    <p><strong>Date:</strong> {formatDateToReadable(a.date)}</p>
-                    <p><strong>Time:</strong> {formatTimeAMPM(a.time)}</p>
-                    <p><strong>Status:</strong> {a.status}</p>
-                    <p><strong>Remarks:</strong> {a.remarks || "N/A"}</p>
-                    <hr />
-                  </div>
-                ))}
-              </div>
-            )}
-            {modalContent === "reject" && renderAppointmentsTable(upcomingAppointments.filter((a) => a.status.toLowerCase() === "reject"), true)}
+            <h2>My Appointments</h2>
+            {renderAppointmentsTable(upcomingAppointments)}
           </>
         )}
       </Modal>
 
       {showNotification && (
         <div className="paalala-toast">
-          <p>🔔 Naaprubahan na ang iyong appointment! Tingnan ang "View Reserved Slots".</p>
+          <p>🔔 Naaprubahan na ang iyong appointment! Tingnan ang \"View Reserved Slots\".</p>
           <button onClick={() => setShowNotification(false)}>OK</button>
         </div>
       )}
