@@ -238,6 +238,7 @@ const SeniorCare = ({ role, handleLogout }) => {
         <div className="senior-paalala">
           <p className="senior-p"><strong>Paalala: </strong>Sa pamamagitan ng maingat na pagtatakda ng iskedyul, kayo ay bibigyan ng prayoridad sa klinika o sentrong pangkalusugan. Hindi na ninyo kailangang maghintay nang matagal sapagkat may itinakdang oras para sa inyong konsultasyon.</p>
         </div>
+      </div> {/* Closing senior-details-container */}
 
       <div className="button-wrapper">
         <button className="reserve-button" onClick={() => openModal("reserveSlot")}>Itakda ang Oras</button>
