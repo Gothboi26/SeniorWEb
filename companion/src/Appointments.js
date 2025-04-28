@@ -139,7 +139,7 @@ const Appointments = () => {
   const searchedAppointments = filteredAppointments.filter((app) => {
     const searchLower = searchTerm.toLowerCase();
     return (
-      app.fullname?.toLowerCase().includes(searchLower) ||
+      app.full_name?.toLowerCase().includes(searchLower) ||
       app.service?.toLowerCase().includes(searchLower) ||
       app.remarks?.toLowerCase().includes(searchLower)
     );
@@ -200,7 +200,7 @@ const Appointments = () => {
           <tbody>
             {searchedAppointments.map((app) => (
               <tr key={app.id}>
-                <td>{app.fullname}</td>
+                <td>{app.full_name}</td>
                 <td>{app.service}</td>
                 <td>{formatDateReadable(app.date)}</td>
                 <td>{formatTimeAMPM(app.time)}</td>
