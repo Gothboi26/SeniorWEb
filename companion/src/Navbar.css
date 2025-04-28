@@ -1,4 +1,5 @@
 /* Navbar.css */
+
 /* Top Header Styles */
 .TopHeader {
   display: flex;
@@ -37,7 +38,7 @@
 }
 
 .Navbar-logo-container img {
-  width: 95px; /* Adjust as needed */
+  width: 95px;
   height: auto;
   margin-right: 15px;
 }
@@ -110,7 +111,7 @@
 .Navbar-right {
   display: flex;
   align-items: center;
-  gap: 20px; /* Space between buttons */
+  gap: 20px;
   position: absolute;
   right: 50px;
   padding: 10px;
@@ -119,7 +120,7 @@
 .Navbar-right a {
   text-decoration: none;
   padding: 10px 30px;
-  font-size: 23px; /* Set font size to 25px */
+  font-size: 23px;
   font-family: "Roboto", sans-serif;
   font-weight: 700;
   border-radius: 25px;
@@ -134,10 +135,9 @@
 }
 
 .profile-link:hover {
-  background-color: #a71919; /* Darker shade on hover */
+  background-color: #a71919;
 }
 
-/* Logout Button - White with Red Border */
 .logout-link {
   background-color: white;
   color: #c31c1c;
@@ -150,6 +150,7 @@
   background-color: #c31c1c;
   color: white;
 }
+
 /* Body Slide Sidebar Container */
 .BodySlideContainer {
   display: none;
@@ -162,7 +163,7 @@
   width: 280px;
   height: 100%;
   background-color: #ffffff;
-  z-index: 9999; /* ensure it's in front of all elements */
+  z-index: 9999;
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
   animation: slideIn 0.3s ease-in-out;
 }
@@ -243,7 +244,7 @@
   border-radius: 6px;
 }
 
-/* Icons – all styled the same */
+/* Icons */
 .slide-icon-home,
 .slide-icon-senior,
 .slide-icon-emergency,
@@ -277,8 +278,8 @@
   width: 30px;
   height: 20px;
   cursor: pointer;
-  position: absolute; /* Position it on the right side */
-  right: 20px; /* Adjust the distance from the right edge */
+  position: absolute;
+  right: 20px;
 }
 
 .Navbar-hamburger-icon {
@@ -286,6 +287,7 @@
   height: 3px;
   width: 100%;
 }
+
 /* Dropdown Menu Styles */
 .Navbar-links li.dropdown {
   position: relative;
@@ -294,7 +296,7 @@
 .Navbar-links li.dropdown .dropdown-menu {
   display: none;
   position: absolute;
-  top: 100%; /* Position below the parent item */
+  top: 100%;
   left: 0;
   background-color: white;
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
@@ -327,84 +329,105 @@
   color: #d60000;
   border-radius: 4px;
 }
+
+/* --- Media Queries Section --- */
+
+/* 1370px and below */
 @media (max-width: 1370px) {
   .Navbar-links a {
     font-size: 22px;
     padding: 6px 10px;
   }
-
   .Navbar-links {
     gap: 25px;
   }
-
   .Navbar-links-container {
     margin-right: 15vh;
   }
-
   .Navbar {
     padding: 40px 40px;
   }
-
   .Navbar-right a {
     font-size: 20px;
     padding: 8px 20px;
   }
 }
-/* Medium-Large Laptop Screens (1200px and below) */
+
+/* Between 1280px - 1370px */
+@media (min-width: 1280px) and (max-width: 1370px) {
+  .Navbar {
+    padding: 45px 50px;
+    height: 70px;
+  }
+  .Navbar-logo-container {
+    left: 45px;
+  }
+  .Navbar-logo-container img {
+    width: 90px;
+    height: auto;
+  }
+  .Navbar-links {
+    gap: 28px;
+  }
+  .Navbar-links-container {
+    margin-right: 10vh;
+  }
+  .Navbar-links a {
+    font-size: 23px;
+    padding: 7px 12px;
+  }
+  .Navbar-right a {
+    font-size: 22px;
+    padding: 9px 22px;
+  }
+}
+
+/* 1200px and below */
 @media (max-width: 1200px) {
   .Navbar-links a {
     font-size: 20px;
     padding: 5px 8px;
   }
-
   .Navbar-links {
     gap: 22px;
   }
-
   .Navbar {
     padding: 35px 35px;
   }
-
   .Navbar-right a {
     font-size: 18px;
     padding: 8px 18px;
   }
-
   .Navbar-links-container {
     margin-right: 12vh;
   }
 }
 
-/* Smaller Laptop Screens (1100px and below) */
+/* 1100px and below */
 @media (max-width: 1100px) {
   .Navbar-links a {
     font-size: 18px;
     padding: 4px 6px;
   }
-
   .Navbar-links {
     gap: 20px;
   }
-
   .Navbar-logo-container img {
     width: 70px;
   }
-
   .Navbar {
     padding: 30px 30px;
   }
-
   .Navbar-right a {
     font-size: 17px;
     padding: 7px 15px;
   }
-
   .Navbar-links-container {
     margin-right: 10vh;
   }
 }
 
-
+/* 1024px and below */
 @media (max-width: 1024px) {
   .Navbar {
     padding: 0;
@@ -435,32 +458,29 @@
   }
 }
 
+/* 768px and below */
 @media (max-width: 768px) {
   .TopHeader {
     font-size: 12px;
     padding: 15px;
   }
   .Navbar-logo-container img {
-    width: 50px; /* Adjust size as needed */
+    width: 50px;
     height: auto;
   }
-
   .Navbar-right {
     display: none;
   }
-
   .Navbar-links {
     display: none;
   }
   .Navbar-edit-profile {
     display: none;
   }
-
   .Navbar-hamburger {
     display: flex;
     z-index: 2000;
   }
-
   .Navbar {
     padding: 30px 40px;
   }
@@ -470,7 +490,6 @@
   .Navbar-logo {
     font-size: 85%;
   }
-
   .Sidebar-links a {
     width: 100%;
     text-align: left;
@@ -488,15 +507,12 @@
     transition: transform 0.3s ease-in-out;
     z-index: 1500;
   }
-
   .BodySlideContainer.open {
     transform: translateX(0);
   }
-
   .BodySlideContent {
     padding-top: 60px;
   }
-
   .close-slide {
     position: absolute;
     top: 20px;
@@ -507,6 +523,8 @@
     cursor: pointer;
   }
 }
+
+/* 480px and below */
 @media (max-width: 480px) {
   .Navbar {
     padding: 0;
