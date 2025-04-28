@@ -287,7 +287,7 @@ input[type="text1"]:focus {
   }
 
   .faq-button {
-    width: 85%;
+    width: 100%;
     font-size: 1.2rem;
   }
 }
