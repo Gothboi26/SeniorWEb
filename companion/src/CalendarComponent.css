@@ -396,3 +396,30 @@ h3 {
     font-size: 1.5rem;
   }
 }
+@media (max-width: 1366px) {
+  .home-contents {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 100px; /* Slightly smaller padding from 150px */
+  }
+
+  .home-header {
+    padding: 40px;
+    width: 80%;
+  }
+
+  .home-title {
+    font-size: 4.5rem;
+  }
+
+  .home-description {
+    font-size: 1.8rem;
+    margin-top: 25px;
+    margin-bottom: 40px;
+  }
+
+  h3 {
+    font-size: 1.6rem;
+  }
+}
