@@ -139,7 +139,7 @@ const Appointments = () => {
   const searchedAppointments = filteredAppointments.filter((app) => {
     const searchLower = searchTerm.toLowerCase();
     return (
-      app.full_name?.toLowerCase().includes(searchLower) ||
+      app.full_name?.toLowerCase().includes(searchLower) || // ✅ Corrected
       app.service?.toLowerCase().includes(searchLower) ||
       app.remarks?.toLowerCase().includes(searchLower)
     );
@@ -200,7 +200,7 @@ const Appointments = () => {
           <tbody>
             {searchedAppointments.map((app) => (
               <tr key={app.id}>
-                <td>{app.full_name}</td>
+                <td>{app.full_name}</td> {/* ✅ Corrected */}
                 <td>{app.service}</td>
                 <td>{formatDateReadable(app.date)}</td>
                 <td>{formatTimeAMPM(app.time)}</td>
@@ -230,12 +230,14 @@ const Appointments = () => {
                     <button
                       className="approve-button"
                       onClick={() => updateStatus(app.id, "approved")}
+                      title="Approve"
                     >
                       ✔
                     </button>
                     <button
                       className="reject-button"
                       onClick={() => updateStatus(app.id, "reject")}
+                      title="Reject"
                     >
                       ✖
                     </button>
