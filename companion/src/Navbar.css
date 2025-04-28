@@ -327,6 +327,30 @@
   color: #d60000;
   border-radius: 4px;
 }
+@media (min-width: 1280px) and (max-width: 1370px) {
+  .Navbar-links a {
+    font-size: 22px;
+    padding: 6px 10px;
+  }
+
+  .Navbar-links {
+    gap: 25px;
+  }
+
+  .Navbar-links-container {
+    margin-right: 15vh;
+  }
+
+  .Navbar {
+    padding: 40px 40px;
+  }
+
+  .Navbar-right a {
+    font-size: 20px;
+    padding: 8px 20px;
+  }
+}
+
 @media (max-width: 1024px) {
   .Navbar {
     padding: 0;

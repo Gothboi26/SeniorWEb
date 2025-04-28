@@ -245,7 +245,7 @@
   color: inherit; /* Inherits text color */
 }
 
-@media (max-width: 1366px) and (max-height: 768px) {
+@media (max-width: 1370px) and (max-height: 768px) {
   .rectangle21 {
     padding: 40px;
     gap: 25px;

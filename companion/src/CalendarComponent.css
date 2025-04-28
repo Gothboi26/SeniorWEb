@@ -396,7 +396,7 @@ h3 {
     font-size: 1.5rem;
   }
 }
-@media (max-width: 1366px) {
+@media (min-width: 1280px) and (max-width: 1370px) {
   .home-contents {
     flex-direction: row;
     justify-content: space-between;
