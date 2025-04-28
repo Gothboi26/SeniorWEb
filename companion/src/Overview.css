@@ -92,18 +92,19 @@
 
 /* 🖌️ Light Card (For Chart Cards) */
 .card-light {
-  background-color: #FFF; /* Slightly lighter black */
-  color: #1E1E1E;
+  background-color: #fff; /* Slightly lighter black */
+  color: #1e1e1e;
   border: 1px solid #696969;
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
 }
 
 /* 🖍️ Title inside card */
-.card h3, .card-light h3 {
+.card h3,
+.card-light h3 {
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 15px;
-  color: #1E1E1E; /* Maroon theme */
+  color: #1e1e1e; /* Maroon theme */
 }
 
 /* 🧮 Number inside card */
@@ -125,7 +126,6 @@
   max-height: 300px;
   color: #fff;
 }
-
 
 /* Appointment Summary */
 .appointment-summary {
@@ -160,12 +160,14 @@
   transition: background 0.3s ease, transform 0.2s ease;
 }
 
-
-
 /* Statistics Section */
 .statistics-section {
   display: flex;
   gap: 40px;
+}
+
+.statistics select {
+  background-color: #c31c1c;
 }
 
 .statistics {
@@ -186,7 +188,7 @@
 
 .stats-chart {
   width: 100%;
-  max-width: 800px; 
+  max-width: 800px;
   margin: auto;
   padding: 20px;
 }
@@ -217,13 +219,12 @@
 }
 
 .statistics select:hover {
-  border-color: #C31C1C;
+  border-color: #c31c1c;
 }
 
 .statistics select option {
   font-weight: bold;
 }
-
 
 .statistics-button {
   display: flex;
@@ -233,7 +234,7 @@
 }
 
 .statistics button {
-  background-color: #C31C1C;
+  background-color: #c31c1c;
   color: white;
   border: none;
   border-radius: 20px;
