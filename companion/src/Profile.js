@@ -37,7 +37,7 @@ const Profile = () => {
         if (data.success && data.user) {
           const user = data.user;
           const updatedProfile = {
-            firstName: user.first_name || user.username || "", // ✅ fallback to username if missing
+            firstName: user.first_name || user.username || "",
             middleName: user.middle_name || "",
             lastName: user.last_name || "",
             extensionName: user.extension || "",
@@ -68,34 +68,43 @@ const Profile = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = { ...profile };
 
     if (profile.profilePicture && typeof profile.profilePicture !== "string") {
       const reader = new FileReader();
       reader.onloadend = () => {
-        formData.profilePicture = reader.result;
-        sendProfile(formData);
+        let base64Image = reader.result;
+
+        // ✅ Make sure it has data:image/jpeg;base64, or data:image/png;base64,
+        if (!base64Image.startsWith("data:image")) {
+          base64Image = `data:image/jpeg;base64,${base64Image}`;
+        }
+
+        sendProfile(base64Image);
       };
-      reader.readAsDataURL(profile.profilePicture);
+      reader.readAsDataURL(profile.profilePicture); // ✅ Important: always readAsDataURL for images
     }
   };
 
-  const sendProfile = (data) => {
+  const sendProfile = (base64Image) => {
     fetch("https://backend-production-4629.up.railway.app/save_user_profile.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       credentials: "include",
-      body: JSON.stringify({ profilePicture: data.profilePicture }),
+      body: JSON.stringify({ profilePicture: base64Image }),
     })
       .then((res) => res.json())
       .then((resData) => {
-        alert(resData.message || "Profile picture uploaded!");
-        setProfile((prev) => ({
-          ...prev,
-          profilePicture: data.profilePicture,
-        }));
+        if (resData.success) {
+          alert(resData.message || "Profile picture uploaded successfully!");
+          setProfile((prev) => ({
+            ...prev,
+            profilePicture: base64Image, // ✅ Update preview immediately
+          }));
+        } else {
+          alert(resData.message || "Error uploading profile picture.");
+        }
       })
       .catch((err) => console.error("Error saving profile:", err));
   };
@@ -122,11 +131,12 @@ const Profile = () => {
               alt="Profile"
               className="profile-image"
             />
-            {!profile.profilePicture && (
+            {!profile.profilePicture || typeof profile.profilePicture !== "string" ? (
               <>
                 <input
                   type="file"
                   id="upload-image"
+                  accept="image/*"
                   onChange={handleFileChange}
                   className="file-input"
                 />
@@ -134,7 +144,7 @@ const Profile = () => {
                   Upload Image
                 </label>
               </>
-            )}
+            ) : null}
           </div>
 
           <div className="profile-fields">
