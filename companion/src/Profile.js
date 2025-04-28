@@ -37,7 +37,7 @@ const Profile = () => {
         if (data.success && data.user) {
           const user = data.user;
           const updatedProfile = {
-            firstName: user.first_name || "",
+            firstName: user.first_name || user.username || "", // ✅ fallback to username if missing
             middleName: user.middle_name || "",
             lastName: user.last_name || "",
             extensionName: user.extension || "",
