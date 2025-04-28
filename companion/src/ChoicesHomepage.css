@@ -338,7 +338,7 @@
   .rectangle23.emergencyservices p,
   .rectangle23.chatassistance p {
     font-size: 1.2rem;
-    margin: 10px 15px;
+    margin: 15px 20px;
     text-align: justify;
   }
 
@@ -367,7 +367,7 @@
   .rectangle23.seniorcare .SeniorCare-Title,
   .rectangle23.emergencyservices .Emergency-Title,
   .rectangle23.chatassistance .Chat-Title {
-    margin: 15px 20px 10px;
+    margin: 10px 15px;
   }
 }
 
