@@ -338,7 +338,7 @@
   .rectangle23.emergencyservices p,
   .rectangle23.chatassistance p {
     font-size: 1.2rem;
-    margin: 15px 20px;
+    margin: 10px 15px;
     text-align: justify;
   }
 
@@ -370,8 +370,6 @@
     margin: 15px 20px 10px;
   }
 }
-
-
 
 /* Responsive Design for Smaller Screens */
 @media (max-width: 768px) {
