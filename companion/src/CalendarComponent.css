@@ -197,8 +197,105 @@ h3 {
 .event-meta span.datetime::before {
   content: "🕒 Time:";
 }
+/* 1440px and below */
+@media (max-width: 1440px) {
+  .home-contents {
+    padding: 120px;
+  }
 
-/* Responsive Design */
+  .home-title {
+    font-size: 4.5rem;
+  }
+
+  .home-description {
+    font-size: 2rem;
+  }
+}
+
+/* 1370px and below */
+@media (max-width: 1370px) {
+  .home-contents {
+    padding: 100px;
+  }
+
+  .home-header {
+    width: 85%;
+  }
+
+  .home-title {
+    font-size: 4rem;
+  }
+
+  .home-description {
+    font-size: 1.8rem;
+  }
+}
+
+/* Between 1280px - 1370px */
+@media (min-width: 1280px) and (max-width: 1370px) {
+  .home-contents {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 100px;
+  }
+
+  .home-header {
+    padding: 40px;
+    width: 80%;
+  }
+
+  .home-title {
+    font-size: 4.5rem;
+  }
+
+  .home-description {
+    font-size: 1.8rem;
+    margin-top: 25px;
+    margin-bottom: 40px;
+  }
+}
+
+/* 1200px and below */
+@media (max-width: 1200px) {
+  .home-contents {
+    padding: 80px;
+  }
+
+  .home-header {
+    padding: 35px;
+    width: 80%;
+  }
+
+  .home-title {
+    font-size: 3.8rem;
+  }
+
+  .home-description {
+    font-size: 1.6rem;
+  }
+}
+
+/* 1100px and below */
+@media (max-width: 1100px) {
+  .home-contents {
+    padding: 70px;
+  }
+
+  .home-header {
+    width: 90%;
+  }
+
+  .home-title {
+    font-size: 3.5rem;
+  }
+
+  .home-description {
+    font-size: 1.5rem;
+  }
+}
+
+/* 1024px and below */
 @media (max-width: 1024px) {
   .homepage {
     height: auto;
@@ -218,161 +315,98 @@ h3 {
   }
 
   .home-title {
-    font-size: 3.5rem;
-    text-align: center;
+    font-size: 3.2rem;
   }
 
   .home-description {
     font-size: 1.5rem;
-    margin-top: 20px;
-    margin-bottom: 30px;
-    text-align: center;
   }
 
-  h3 {
-    font-size: 1.5rem;
+  .Events {
+    padding: 20px;
   }
 }
-@media (min-width: 1280px) and (max-width: 1370px) {
+
+/* 768px and below */
+@media (max-width: 768px) {
+  .homepage {
+    padding: 20px 0;
+  }
+
   .home-contents {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 100px; /* Slightly smaller padding from 150px */
+    padding: 40px;
   }
 
   .home-header {
-    padding: 40px;
-    width: 80%;
-  }
-
-  .home-title {
-    font-size: 4.5rem;
-  }
-
-  .home-description {
-    font-size: 1.8rem;
-    margin-top: 25px;
-    margin-bottom: 40px;
-  }
-
-  h3 {
-    font-size: 1.6rem;
-  }
-}
-@media (max-width: 768px) {
-  .homepage {
-    height: auto;
-    padding: 20px 0;
+    width: 100%;
+    padding: 30px;
   }
 
   .home-title {
     font-size: 2.5rem;
-    margin-top: 10px;
   }
 
   .home-description {
-    font-size: 1.1rem;
-    margin: 10px;
-  }
-
-  .facebook-box {
-    padding: 15px;
-  }
-
-  .facebook-page {
-    padding: 15px;
-  }
-
-  .home-contents {
-    flex-direction: column;
-    align-items: center;
-    padding: 40px;
-  }
-
-  .home-header {
-    text-align: center;
-    align-items: center;
-    margin: 0;
+    font-size: 1.2rem;
   }
 
   .events-container {
     flex-direction: column;
-    align-items: center;
-    margin: 0;
     padding: 0;
   }
+
   .Events {
     padding: 0;
   }
 
-  .rectangle23 {
-    width: 90%;
-    height: auto;
-    padding: 15px;
-  }
-
-  .choices {
-    flex-direction: column;
-    gap: 15px;
-  }
-
   .event-item {
-    padding: 12px 14px;
+    padding: 12px;
   }
 
   .event-title {
-    font-size: 16px;
+    font-size: 20px;
   }
 
   .event-description {
-    font-size: 13px;
+    font-size: 14px;
   }
 
-  .event-meta {
-    font-size: 13px;
+  .event-meta span {
+    font-size: 1.2rem;
   }
 }
+
+/* 480px and below */
 @media (max-width: 480px) {
   .homepage {
     flex-direction: column;
-    height: auto;
     padding: 20px;
   }
 
   .home-contents {
-    flex-direction: column;
-    align-items: center;
     padding: 20px;
   }
 
   .home-header {
     padding: 20px;
-    width: 100%;
   }
 
   .home-title {
     font-size: 2rem;
-    text-align: center;
   }
 
   .home-description {
     font-size: 1rem;
-    margin: 10px 0;
-    text-align: center;
-  }
-
-  h3 {
-    font-size: 1.2rem;
   }
 
   .Events {
-    padding: 0px;
+    padding: 0;
   }
+
   .react-calendar,
   .events-list {
     width: 90%;
-    min-height: 315px;
+    min-height: 300px;
   }
 
   .event-item {
@@ -390,36 +424,22 @@ h3 {
   .event-meta span {
     font-size: 1rem;
   }
-
-  .event-meta span::before {
-    font-size: 0.9rem;
-  }
-
-  .rectangle23 {
-    width: 100%;
-    padding: 10px;
-  }
-
-  .choices {
-    flex-direction: column;
-    gap: 10px;
-  }
-  .events-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    padding: 0 10px;
-    width: 100%;
-  }
 }
+
+/* 360px and below */
 @media (max-width: 360px) {
   .events-container {
-    display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 15px;
     padding: 0 5px;
+    gap: 15px;
     width: 100%;
+  }
+
+  .home-title {
+    font-size: 1.8rem;
+  }
+
+  .home-description {
+    font-size: 0.9rem;
   }
 }
