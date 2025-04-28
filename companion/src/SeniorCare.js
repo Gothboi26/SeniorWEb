@@ -145,27 +145,13 @@ const SeniorCare = ({ role, handleLogout }) => {
   };
 
   const handleReservation = async () => {
-    if (!selectedService || !selectedDate || !selectedTime) {
-      alert("Please select service, date, and time.");
-      return;
-    }
-  
-    // 🛠 Convert AM/PM to 24-hour format
-    const [time, meridian] = selectedTime.split(" ");
-    let [hours, minutes] = time.split(":").map(Number);
-  
-    if (meridian === "PM" && hours !== 12) hours += 12;
-    if (meridian === "AM" && hours === 12) hours = 0;
-  
-    const finalTime = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:00`;
-  
     const payload = {
       service: selectedService,
       date: selectedDate,
-      time: finalTime, // 🛠 use converted time
+      time: selectedTime,
       status: "pending",
     };
-  
+
     try {
       const res = await fetch("https://backend-production-4629.up.railway.app/appointments.php", {
         method: "POST",
@@ -173,22 +159,19 @@ const SeniorCare = ({ role, handleLogout }) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-  
+
       const result = await res.json();
-  
+
       if (result.success) {
-        alert("✅ Reservation submitted! Pending approval.");
+        alert("Your reservation was submitted and is pending approval.");
         closeModal();
-        fetchAllData(); // reload appointments
       } else {
         alert("Failed: " + (result.error || "Unknown issue"));
       }
     } catch (err) {
-      console.error("Reservation Error:", err);
-      alert("Network error. Please try again.");
+      console.error("Error:", err);
     }
   };
-  
 
   const today = getDateOnly(new Date());
   const upcomingAppointments = appointments.filter((a) => a.date >= today);
@@ -222,40 +205,9 @@ const SeniorCare = ({ role, handleLogout }) => {
   return (
     <div className="senior-care-container">
       <Navbar role={role} handleLogout={handleLogout} />
-
       <div className="senior-title-container">
         <h1 className="senior-title">Senior Care</h1>
       </div>
-
-      <div className="senior-details-container">
-        <p className="senior-title-p">
-          Mga Hakbang sa Pag-book ng Appointment Gamit ang Aplikasyon para sa Serbisyong Pangkalusugan at Iba Pa para sa mga Nakatatanda
-        </p>
-        <div className="instruction-container">
-          <div className="instruction-desc">
-            <ol className="instruction-list">
-              <li><strong>Piliin ang Serbisyo</strong>
-                <p>Hanapin ang mga serbisyong pangkalusugan tulad ng health check-up, masahe, libreng gamot, dental check-up, o eye check-up. Pindutin ang serbisyong nais n'yo i-book. </p>
-              </li>
-              <li><strong>Pumili ng Araw at Oras</strong>
-                <p>Pagkatapos piliin ang serbisyo, lilitaw ang kalendaryo o listahan ng mga available na oras. Pumili ng petsa at oras na pinakakomportable para sa inyo. </p>
-              </li>
-              <li><strong>Kumpirmahin</strong>
-                <p>Kapag nakapili na ng araw at oras, pindutin ang "Kumpirmahin" o "Book Appointment" na button. Lalabas ang detalye ng inyong appointment, kasama ang petsa, oras, at lokasyon ng serbisyong napili. </p>
-              </li>
-              <li><strong>Tandaan ang Detalye</strong>
-                <p>Tingnan ang confirmation message o text na ipadadala ng app. Tandaan ang petsa at oras ng inyong appointment. </p>
-              </li>
-              <li><strong>Dumating sa Takdang Oras</strong>
-                <p>Siguraduhing dumating sa tamang oras o 10-15 minuto bago ang schedule upang maayos ang proseso ng inyong pagbisita. </p>
-              </li>
-            </ol>
-          </div>
-        </div>
-        <div className="senior-paalala">
-          <p className="senior-p"><strong>Paalala: </strong>Sa pamamagitan ng maingat na pagtatakda ng iskedyul, kayo ay bibigyan ng prayoridad sa klinika o sentrong pangkalusugan. Hindi na ninyo kailangang maghintay nang matagal sapagkat may itinakdang oras para sa inyong konsultasyon.</p>
-        </div>
-      </div> {/* Closing senior-details-container */}
 
       <div className="button-wrapper">
         <button className="reserve-button" onClick={() => openModal("reserveSlot")}>Itakda ang Oras</button>
