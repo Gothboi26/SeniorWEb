@@ -350,6 +350,60 @@
     padding: 8px 20px;
   }
 }
+/* Medium-Large Laptop Screens (1200px and below) */
+@media (max-width: 1200px) {
+  .Navbar-links a {
+    font-size: 20px;
+    padding: 5px 8px;
+  }
+
+  .Navbar-links {
+    gap: 22px;
+  }
+
+  .Navbar {
+    padding: 35px 35px;
+  }
+
+  .Navbar-right a {
+    font-size: 18px;
+    padding: 8px 18px;
+  }
+
+  .Navbar-links-container {
+    margin-right: 12vh;
+  }
+}
+
+/* Smaller Laptop Screens (1100px and below) */
+@media (max-width: 1100px) {
+  .Navbar-links a {
+    font-size: 18px;
+    padding: 4px 6px;
+  }
+
+  .Navbar-links {
+    gap: 20px;
+  }
+
+  .Navbar-logo-container img {
+    width: 70px;
+  }
+
+  .Navbar {
+    padding: 30px 30px;
+  }
+
+  .Navbar-right a {
+    font-size: 17px;
+    padding: 7px 15px;
+  }
+
+  .Navbar-links-container {
+    margin-right: 10vh;
+  }
+}
+
 
 @media (max-width: 1024px) {
   .Navbar {
