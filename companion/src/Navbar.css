@@ -327,7 +327,7 @@
   color: #d60000;
   border-radius: 4px;
 }
-@media (min-width: 1280px) and (max-width: 1370px) {
+@media (max-width: 1370px) {
   .Navbar-links a {
     font-size: 22px;
     padding: 6px 10px;

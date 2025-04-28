@@ -245,11 +245,13 @@
   color: inherit; /* Inherits text color */
 }
 
-@media (max-width: 1370px) and (max-height: 768px) {
+@media (max-width: 1370px) {
   .rectangle21 {
-    padding: 40px;
-    gap: 25px;
+    display: flex;
+    flex-direction: column; /* Arrange items in a column */
+    gap: 25px; /* Add space between items */
     justify-content: center;
+    padding: 40px;
     width: 100%;
     height: auto;
   }
@@ -258,16 +260,18 @@
   .rectangle23.seniorcare,
   .rectangle23.emergencyservices,
   .rectangle23.chatassistance {
-    width: 320px;
-    height: 420px;
-    padding: 15px;
+    width: 100%; /* Full width for column layout */
+    height: auto; /* Adjust height automatically */
+    padding: 20px;
+    margin: 10px 0;
   }
 
+  /* Modify text and button sizes */
   .rectangle23.paalala1 h2,
   .rectangle23.seniorcare h2,
   .rectangle23.emergencyservices h2,
   .rectangle23.chatassistance h2 {
-    font-size: 28px;
+    font-size: 24px; /* Adjust title font size */
   }
 
   .rectangle23.paalala1 p,
@@ -275,36 +279,42 @@
   .rectangle23.emergencyservices p,
   .rectangle23.chatassistance p {
     font-size: 1.2rem;
-    margin: 15px 20px;
+    margin: 15px 0;
     text-align: justify;
   }
 
   .senior-care-button,
   .chat-assistance-button,
   .emergency-services-button {
-    width: 80%;
-    padding: 10px 18px;
+    width: 100%; /* Full width buttons for column layout */
     margin-top: 30px;
+    padding: 12px 18px;
     font-size: 16px;
   }
 
   .senior-care-button-text,
   .emergency-services-button-text,
   .chat-assistance-button-text {
-    font-size: 20px;
+    font-size: 18px;
   }
 
+  /* Adjust icon sizes */
   .appoint-logo,
   .emergency-logo,
   .chat-logo {
     width: 50px;
-    margin-left: 5px;
+    margin-left: 10px;
   }
 
+  /* Adjust title layout for column view */
   .rectangle23.seniorcare .SeniorCare-Title,
   .rectangle23.emergencyservices .Emergency-Title,
   .rectangle23.chatassistance .Chat-Title {
-    margin: 15px 20px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 10px 0;
+    text-align: center;
   }
 }
 
