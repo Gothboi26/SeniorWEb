@@ -330,7 +330,7 @@
   .rectangle23.seniorcare h2,
   .rectangle23.emergencyservices h2,
   .rectangle23.chatassistance h2 {
-    font-size: 28px;
+    font-size: 26px;
   }
 
   .rectangle23.paalala1 p,
@@ -345,7 +345,7 @@
   .senior-care-button,
   .chat-assistance-button,
   .emergency-services-button {
-    width: 80%;
+    width: 75%;
     padding: 10px 18px;
     font-size: 16px;
     margin-top: 30px;
