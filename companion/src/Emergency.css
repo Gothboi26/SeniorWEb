@@ -265,6 +265,72 @@ body {
   border: 1px solid #c3e6cb;
 }
 /* Media Queries for Responsiveness */
+/* Max-width 1024px */
+@media (max-width: 1024px) {
+  .emergency-details-container {
+    margin: 30px 10rem;
+    padding: 20px;
+  }
+
+  .emergency-title-container h1 {
+    font-size: 1.9rem;
+  }
+
+  .emergency-description {
+    padding: 35px;
+    font-size: 1.1rem;
+  }
+
+  .emergency-button {
+    width: 180px;
+    height: 180px;
+    font-size: 1.2rem;
+    padding: 15px;
+  }
+
+  .emergency-icon {
+    width: 110px;
+    height: 110px;
+  }
+
+  .buttons-container {
+    gap: 25px;
+  }
+
+  .contacts-table th,
+  .contacts-table td {
+    padding: 10px;
+    font-size: 1.1rem;
+  }
+
+  .contacts-table {
+    font-size: 1.1rem;
+  }
+
+  .emergency-popup-inner {
+    width: 80%;
+  }
+
+  .hotlines-container {
+    margin: 20px auto;
+    padding: 0 10px;
+    max-width: 95%;
+  }
+
+  .emergency-form h3 {
+    font-size: 1.5rem;
+  }
+
+  .emergency-form input,
+  .emergency-form select,
+  .emergency-form textarea {
+    font-size: 1rem;
+  }
+
+  .emergency-form button {
+    font-size: 1rem;
+  }
+}
 
 /* Max-width 768px */
 @media (max-width: 768px) {
