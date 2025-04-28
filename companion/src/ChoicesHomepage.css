@@ -384,7 +384,7 @@
   .rectangle23.emergencyservices,
   .rectangle23.chatassistance {
     width: 95%; /* Make it almost full width */
-    padding: 5px;
+    padding: 20px;
     height: auto;
   }
 
@@ -401,7 +401,7 @@
   .rectangle23.seniorcare h2,
   .rectangle23.emergencyservices h2,
   .rectangle23.chatassistance h2 {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     text-align: center;
   }
 
