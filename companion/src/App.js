@@ -5,7 +5,7 @@ import Footer from "./Footer";
 import { Login } from "./AuthComponents";
 import AdminDashboard from "./AdminDashboard";
 import ClientDashboard from "./ClientDashboard";
-import logo from "./assets/logo.png"; 
+import logo from "./assets/logo.png";
 import login from "./assets/login-img.png"; // For login page
 import Emergency from "./Emergency";
 import Chat from "./Chat";
@@ -82,40 +82,40 @@ function App() {
               {!role ? (
                 <div className="login-page">
                   <div className="header">
+                    <div className="date-time-container">{dateTime}</div>
+
                     <div className="logo-container">
                       <h1>Barangay General Tiburcio De Leon</h1>
                       <div className="app-logo-container">
                         <img src={logo} alt="Logo" className="app-logo" />
                       </div>
                     </div>
-
-                    <div className="date-time-container">{dateTime}</div>
-                  
                   </div>
 
                   <div className="login-container">
                     <div className="login-container-left">
-                      <img src={login} alt="Login-img" className="login-img"></img>
+                      <img
+                        src={login}
+                        alt="Login-img"
+                        className="login-img"
+                      ></img>
                     </div>
 
                     <div className="login-container-right">
-                      
                       <h1>
                         Welcome to Barangay General Tiburcio De Leon Senior Care
                         Portal
                       </h1>
                       <p className="description">
                         This platform is designed to make health services more
-                        accessible and convenient for all resident seniors. Here,
-                        you can manage your records, schedule appointments, and
-                        send inquiries directly to our health center. Your health
-                        and well-being are our priority.
+                        accessible and convenient for all resident seniors.
+                        Here, you can manage your records, schedule
+                        appointments, and send inquiries directly to our health
+                        center. Your health and well-being are our priority.
                       </p>
                       <Login setRole={handleLogin} />
                     </div>
                   </div>
-
-                  
 
                   <Footer role={role} />
                 </div>
@@ -129,9 +129,7 @@ function App() {
             {role === "client" && <Footer role={role} />}
           </>
         )}
-      
     </div>
-    
   );
 }
 

@@ -313,7 +313,7 @@
   .rectangle23.chatassistance {
     width: 90%; /* nearly half to fit two in a row */
     height: auto;
-    padding: 5px;
+    padding: 20px;
   }
 
   .rectangle23.emergencyservices p,
@@ -333,8 +333,8 @@
   .rectangle23.seniorcare h2,
   .rectangle23.emergencyservices h2,
   .rectangle23.chatassistance h2 {
-    font-size: 1.3rem;
-    text-align: center;
+    font-size: 1.5rem;
+    text-align: left;
   }
 
   .senior-care-button,
@@ -348,7 +348,7 @@
   .senior-care-button-text,
   .emergency-services-button-text,
   .chat-assistance-button-text {
-    font-size: 16px;
+    font-size: 1.3rem;
   }
   .rectangle23.seniorcare .Emergency-Title,
   .rectangle23.seniorcare .Chat-Title {
