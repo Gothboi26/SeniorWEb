@@ -40,9 +40,7 @@ const ServicesTab = () => {
             time: item.time,
             availableSlot: parseInt(item.available_slots),
           }));
-          const sorted = normalized.sort((a, b) =>
-            new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`)
-          );
+          const sorted = normalized.sort((a, b) => new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`));
           setServices(sorted);
         })
         .catch((err) => {
@@ -85,7 +83,7 @@ const ServicesTab = () => {
       return;
     }
 
-    const entry = { id, name, date, time: formattedTime, availableSlot: parseInt(availableSlot) };
+    const entry = { id, serviceName: name, date, time: formattedTime, availableSlot: parseInt(availableSlot) };
 
     fetch("https://backend-production-4629.up.railway.app/save_service_slot.php", {
       method: "POST",
@@ -95,14 +93,13 @@ const ServicesTab = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        let updated = [...services];
-        if (data.success) {
+        if (data.status === "success") {
+          let updated = [...services];
           if (isEditing) {
-            updated[editingIndex] = entry;
+            updated[editingIndex] = { ...entry, id: id };
             alert("Service successfully updated!");
           } else {
-            entry.id = data.id;
-            updated.push(entry);
+            updated.push({ ...entry, id: data.id });
             alert("Service successfully added!");
           }
           updated.sort((a, b) => new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`));
@@ -110,7 +107,7 @@ const ServicesTab = () => {
           resetForm();
           window.dispatchEvent(new Event("slotsUpdated"));
         } else {
-          alert(data.error || "Failed to save service.");
+          alert(data.message || "Failed to save service.");
         }
       })
       .catch((err) => {
@@ -121,7 +118,7 @@ const ServicesTab = () => {
 
   const handleRemove = async (index) => {
     const target = services[index];
-  
+
     try {
       const res = await fetch("https://backend-production-4629.up.railway.app/delete_service_slot.php", {
         method: "POST",
@@ -129,10 +126,8 @@ const ServicesTab = () => {
         credentials: "include",
         body: JSON.stringify({ id: target.id }),
       });
-  
+
       const result = await res.json();
-      console.log("Delete response:", result); // For debugging
-  
       if (result.status === "success") {
         const filtered = services.filter((_, i) => i !== index);
         filtered.sort((a, b) => new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`));
@@ -147,7 +142,6 @@ const ServicesTab = () => {
       alert("Error connecting to backend.");
     }
   };
-  
 
   const handleEdit = (index) => {
     const target = services[index];
