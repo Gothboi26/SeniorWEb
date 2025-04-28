@@ -37,7 +37,6 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 20px;
   justify-content: flex-end;
 }
 
@@ -193,12 +192,14 @@
     overflow-x: auto;
   }
 }
-
 .search-bar {
   padding: 8px 14px;
   font-size: 14px;
   border-radius: 20px;
   border: 1px solid #ccc;
   font-family: "Roboto", sans-serif;
-  width: 50%;
+  width: 33%;
+}
+.appoint-controls {
+  gap: 10px;
 }
