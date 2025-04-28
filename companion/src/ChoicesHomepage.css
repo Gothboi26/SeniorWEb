@@ -354,7 +354,7 @@
   .senior-care-button-text,
   .emergency-services-button-text,
   .chat-assistance-button-text {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .appoint-logo,
@@ -367,7 +367,7 @@
   .rectangle23.seniorcare .SeniorCare-Title,
   .rectangle23.emergencyservices .Emergency-Title,
   .rectangle23.chatassistance .Chat-Title {
-    margin: 10px 15px;
+    margin: 15px 20px 10px;
   }
 }
 
