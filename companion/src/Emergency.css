@@ -268,7 +268,7 @@ body {
 /* Max-width 1024px */
 @media (max-width: 1024px) {
   .emergency-details-container {
-    margin: 30px 10rem;
+    margin: 30px 5rem;
     padding: 20px;
   }
 
