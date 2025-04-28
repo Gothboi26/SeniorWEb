@@ -35,10 +35,10 @@ const ServicesTab = () => {
         .then((data) => {
           const normalized = data.map((item) => ({
             id: item.id,
-            name: item.service_name,
-            date: item.date,
-            time: item.time,
-            availableSlot: parseInt(item.available_slots),
+            name: item.serviceName || "",
+            date: item.date || "",
+            time: item.time || "",
+            availableSlot: parseInt(item.availableSlot ?? 0),
           }));
           const sorted = normalized.sort((a, b) => new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`));
           setServices(sorted);
@@ -55,7 +55,7 @@ const ServicesTab = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setNewService({ ...newService, [name]: value });
+    setNewService((prev) => ({ ...prev, [name]: value }));
     if (name === "name") {
       setNewService((prev) => ({ ...prev, time: "" }));
     }
@@ -118,7 +118,6 @@ const ServicesTab = () => {
 
   const handleRemove = async (index) => {
     const target = services[index];
-
     try {
       const res = await fetch("https://backend-production-4629.up.railway.app/delete_service_slot.php", {
         method: "POST",
