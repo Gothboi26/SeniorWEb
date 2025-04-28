@@ -26,20 +26,20 @@
 
 .update-profile-btn {
   padding: 8px 16px;
-  background-color: #C31C1C;
-  color: white;
+  background-color: #c31c1c;
+  color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 20px;
   cursor: pointer;
-  font-size: 0.9rem;
-  margin-left: auto; /* Pushes the button to the far right */
+  font-size: 1.2rem;
+  margin-left: auto;
 }
 
 /* Account Form Styles */
 .tab-content {
   background: #fff;
-  padding: 20px;
-  border-radius: 8px;
+  padding: 40px;
+  border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -78,19 +78,19 @@
 }
 
 .address-input {
-  flex-grow: 1; 
+  flex-grow: 1;
   padding: 8px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 0.9rem;
-  width: 100%; 
+  width: 100%;
   max-width: 100%;
 }
 
 .update-account-btn {
   padding: 10px 20px;
-  background-color: #C31C1C;
+  background-color: #c31c1c;
   color: white;
   border: none;
   border-radius: 5px;
