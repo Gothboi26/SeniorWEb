@@ -173,9 +173,9 @@ footer.gov-footer {
   }
 
   .bottom-footer {
-          font-size: 0.8rem;
-        padding: 10px 100px;
-        gap: 8px;
+    font-size: 0.8rem;
+    padding: 0 60px;
+    gap: 8px;
   }
 
   .footer-link {
