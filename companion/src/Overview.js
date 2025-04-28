@@ -86,7 +86,7 @@ const getWeekKey = (date) => {
   useEffect(() => { if (appointments.length) filterAppointmentsByDate(selectedDate); }, [appointments, selectedDate, filterAppointmentsByDate]);
 
   useEffect(() => {
-    const ws = new WebSocket("ws://localhost:8080");
+    const ws = new WebSocket("wss://websocket-production-b0d9.up.railway.app/");
     ws.onmessage = (event) => {
       const msg = JSON.parse(event.data);
       if (msg.type === "chat" && msg.sender === "client") {

@@ -11,7 +11,7 @@ const ChatInquiries = () => {
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
-    const socket = new WebSocket("ws://localhost:8080");
+    const socket = new WebSocket("wss://websocket-production-b0d9.up.railway.app/");
 
     socket.onopen = () => {
       socket.send(JSON.stringify({
@@ -66,7 +66,7 @@ const ChatInquiries = () => {
   };
 
   const saveMessageToDatabase = (sender, receiver, content) => {
-    fetch("https://websocket-production-b0d9.up.railway.app/save_message.php", {
+    fetch("https://backend-production-4629.up.railway.app/save_message.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ sender, receiver, content }),
@@ -77,7 +77,7 @@ const ChatInquiries = () => {
     setSelectedUser(user.username);
 
     try {
-      const res = await fetch(`https://websocket-production-b0d9.up.railway.app/get_messages.php?sender=admin&receiver=${user.username}`);
+      const res = await fetch(`https://backend-production-4629.up.railway.app/get_messages.php?sender=admin&receiver=${user.username}`);
       const result = await res.json();
 
       const history = result.messages || [];
