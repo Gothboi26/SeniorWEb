@@ -226,6 +226,72 @@ input[type="text1"]:focus {
   background-color: #1f1785;
 }
 
+/* Responsive Design for Tablets and Small Desktops */
+@media screen and (max-width: 1024px) {
+  .chat-header-container {
+    height: 70px;
+  }
+
+  .chat-header-container h1 {
+    font-size: 1.8rem;
+  }
+
+  .chat-details-container {
+    margin: 20px 5rem;
+    padding: 20px;
+  }
+
+  .chat-description {
+    padding: 30px;
+    font-size: 1.1rem;
+  }
+
+  .chat-desc-title {
+    font-size: 1.2rem;
+  }
+
+  .chat-desc {
+    font-size: 1.1rem;
+  }
+
+  .chat-window-box {
+    height: 300px;
+    padding: 10px;
+  }
+
+  .chat-input-container {
+    margin-top: 10px;
+    padding: 8px;
+  }
+
+  .chat-input {
+    gap: 10px;
+  }
+
+  .chat-input-text {
+    font-size: 1.2rem;
+  }
+
+  input[type="text1"] {
+    font-size: 1.3rem;
+    padding: 10px 25px;
+  }
+
+  .chat-send-button {
+    padding: 10px 30px;
+    font-size: 1.2rem;
+  }
+
+  .chat-bubble {
+    max-width: 85%;
+  }
+
+  .faq-button {
+    width: 85%;
+    font-size: 1.2rem;
+  }
+}
+
 /* Responsive Design for Mobile */
 @media screen and (max-width: 768px) {
   .chat-header-container {
