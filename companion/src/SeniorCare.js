@@ -145,13 +145,27 @@ const SeniorCare = ({ role, handleLogout }) => {
   };
 
   const handleReservation = async () => {
+    if (!selectedService || !selectedDate || !selectedTime) {
+      alert("Please select service, date, and time.");
+      return;
+    }
+  
+    // 🛠 Convert AM/PM to 24-hour format
+    const [time, meridian] = selectedTime.split(" ");
+    let [hours, minutes] = time.split(":").map(Number);
+  
+    if (meridian === "PM" && hours !== 12) hours += 12;
+    if (meridian === "AM" && hours === 12) hours = 0;
+  
+    const finalTime = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:00`;
+  
     const payload = {
       service: selectedService,
       date: selectedDate,
-      time: selectedTime,
+      time: finalTime, // 🛠 use converted time
       status: "pending",
     };
-
+  
     try {
       const res = await fetch("https://backend-production-4629.up.railway.app/appointments.php", {
         method: "POST",
@@ -159,19 +173,22 @@ const SeniorCare = ({ role, handleLogout }) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-
+  
       const result = await res.json();
-
+  
       if (result.success) {
-        alert("Your reservation was submitted and is pending approval.");
+        alert("✅ Reservation submitted! Pending approval.");
         closeModal();
+        fetchAllData(); // reload appointments
       } else {
         alert("Failed: " + (result.error || "Unknown issue"));
       }
     } catch (err) {
-      console.error("Error:", err);
+      console.error("Reservation Error:", err);
+      alert("Network error. Please try again.");
     }
   };
+  
 
   const today = getDateOnly(new Date());
   const upcomingAppointments = appointments.filter((a) => a.date >= today);
