@@ -321,9 +321,9 @@
   .rectangle23.seniorcare,
   .rectangle23.emergencyservices,
   .rectangle23.chatassistance {
-    width: 320px;
-    height: 420px;
-    padding: 15px;
+    width: 300px;
+    height: 400px;
+    padding: 10px;
   }
 
   .rectangle23.paalala1 h2,
@@ -370,7 +370,6 @@
     margin: 10px 15px;
   }
 }
-
 
 /* Responsive Design for Smaller Screens */
 @media (max-width: 768px) {
