@@ -19,12 +19,14 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 15px;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .admin-appoint-header h2 {
   font-family: "Roboto", sans-serif;
   font-size: 1.8rem;
-  color: #1E1E1E;
+  color: #1e1e1e;
   margin-bottom: 15px;
 }
 
@@ -43,11 +45,10 @@
   padding: 10px 20px;
   border-radius: 20px;
   border: none;
-  background-color: #C31C1C;
-  color: #FFFFFF;
+  background-color: #c31c1c;
+  color: #ffffff;
   margin-top: 10px;
 }
-
 
 /* Left-align the heading */
 .left-aligned {
@@ -77,7 +78,7 @@
 }
 
 .appointment-table thead th {
-  background-color: #D0CDF6;
+  background-color: #d0cdf6;
   color: #1e1e1e;
   font-size: 1rem;
   text-align: center;
@@ -193,11 +194,11 @@
   }
 }
 
-
 .search-bar {
   padding: 8px 14px;
   font-size: 14px;
   border-radius: 20px;
   border: 1px solid #ccc;
   font-family: "Roboto", sans-serif;
+  width: 50%;
 }

@@ -30,9 +30,12 @@ const Appointments = () => {
 
   const fetchAppointments = async () => {
     try {
-      const response = await fetch("https://backend-production-4629.up.railway.app/get_appointment.php", {
-        credentials: "include",
-      });
+      const response = await fetch(
+        "https://backend-production-4629.up.railway.app/get_appointment.php",
+        {
+          credentials: "include",
+        }
+      );
       const data = await response.json();
       const normalizedData = data.map((a) => ({
         ...a,
@@ -57,20 +60,23 @@ const Appointments = () => {
     if (!window.confirm(confirmMsg)) return;
 
     try {
-      const response = await fetch("https://backend-production-4629.up.railway.app/get_appointment.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({
-          appointment_id: appointmentId,
-          status,
-          remarks: remark,
-          service: appointment?.service,
-          date: appointment?.date,
-          time: appointment?.time,
-          adjust_slot: status === "approved",
-        }),
-      });
+      const response = await fetch(
+        "https://backend-production-4629.up.railway.app/get_appointment.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({
+            appointment_id: appointmentId,
+            status,
+            remarks: remark,
+            service: appointment?.service,
+            date: appointment?.date,
+            time: appointment?.time,
+            adjust_slot: status === "approved",
+          }),
+        }
+      );
 
       const result = await response.json();
       if (result.success) {
@@ -149,19 +155,21 @@ const Appointments = () => {
     <div className="appointment-table-container">
       <div className="admin-appoint-header">
         <h2>Appointment Management</h2>
-        <div className="appoint-controls">
-          <input
-            type="text"
-            placeholder="Search appointments..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="search-bar"
-          />
-          <div className="appoint-tabs">
+        <div className="appoint-tabs">
+          <div className="appoint-controls">
+            <input
+              type="text"
+              placeholder="Search appointments..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="search-bar"
+            />
             {["pending", "approved", "reject"].map((tab) => (
               <button
                 key={tab}
-                className={`tab-button ${activeTab === tab && !showLogs ? "active" : ""}`}
+                className={`tab-button ${
+                  activeTab === tab && !showLogs ? "active" : ""
+                }`}
                 onClick={() => {
                   setActiveTab(tab);
                   setShowLogs(false);
