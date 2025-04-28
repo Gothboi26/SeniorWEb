@@ -19,7 +19,6 @@ const ServicesTab = () => {
   };
 
   const [services, setServices] = useState([]);
-  const [pastServices, setPastServices] = useState([]);
   const [newService, setNewService] = useState({ id: null, name: "", date: "", time: "", availableSlot: "" });
   const [isEditing, setIsEditing] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
@@ -34,24 +33,15 @@ const ServicesTab = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          const upcoming = (data.upcoming || []).map(item => ({
+          const normalized = data.map((item) => ({
             id: item.id,
             name: item.serviceName || "",
             date: item.date || "",
             time: item.time || "",
             availableSlot: parseInt(item.availableSlot ?? 0),
           }));
-
-          const past = (data.past || []).map(item => ({
-            id: item.id,
-            name: item.serviceName || "",
-            date: item.date || "",
-            time: item.time || "",
-            availableSlot: parseInt(item.availableSlot ?? 0),
-          }));
-
-          setServices(upcoming.sort((a, b) => new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`)));
-          setPastServices(past.sort((a, b) => new Date(`${b.date}T${b.time}`) - new Date(`${a.date}T${a.time}`))); // latest first in logs
+          const sorted = normalized.sort((a, b) => new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`));
+          setServices(sorted);
         })
         .catch((err) => {
           console.error("Failed to fetch service slots:", err);
@@ -65,9 +55,9 @@ const ServicesTab = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setNewService(prev => ({ ...prev, [name]: value }));
+    setNewService((prev) => ({ ...prev, [name]: value }));
     if (name === "name") {
-      setNewService(prev => ({ ...prev, time: "" }));
+      setNewService((prev) => ({ ...prev, time: "" }));
     }
   };
 
@@ -101,24 +91,33 @@ const ServicesTab = () => {
       credentials: "include",
       body: JSON.stringify(entry),
     })
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         if (data.status === "success") {
-          window.dispatchEvent(new Event("slotsUpdated"));
+          let updated = [...services];
+          if (isEditing) {
+            updated[editingIndex] = { ...entry, id: id };
+            alert("Service successfully updated!");
+          } else {
+            updated.push({ ...entry, id: data.id });
+            alert("Service successfully added!");
+          }
+          updated.sort((a, b) => new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`));
+          setServices(updated);
           resetForm();
-          alert(isEditing ? "Service successfully updated!" : "Service successfully added!");
+          window.dispatchEvent(new Event("slotsUpdated"));
         } else {
           alert(data.message || "Failed to save service.");
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.error("Error saving service:", err);
         alert("Network error.");
       });
   };
 
   const handleRemove = async (index) => {
-    const target = filteredServices[index];
+    const target = services[index];
     try {
       const res = await fetch("https://backend-production-4629.up.railway.app/delete_service_slot.php", {
         method: "POST",
@@ -129,8 +128,11 @@ const ServicesTab = () => {
 
       const result = await res.json();
       if (result.status === "success") {
-        window.dispatchEvent(new Event("slotsUpdated"));
+        const filtered = services.filter((_, i) => i !== index);
+        filtered.sort((a, b) => new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`));
+        setServices(filtered);
         alert("Service successfully deleted!");
+        window.dispatchEvent(new Event("slotsUpdated"));
       } else {
         alert(result.message || "Failed to delete.");
       }
@@ -141,7 +143,7 @@ const ServicesTab = () => {
   };
 
   const handleEdit = (index) => {
-    const target = filteredServices[index];
+    const target = services[index];
     setNewService({
       id: target.id,
       name: target.name,
@@ -176,14 +178,17 @@ const ServicesTab = () => {
     return `${hour}:${minuteStr} ${ampm}`;
   };
 
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const pastServices = services.filter((s) => new Date(`${s.date}T00:00:00`) < today);
   const filteredServices = filter === "All"
-    ? services
-    : services.filter((s) => s.name === filter);
+    ? services.filter((s) => new Date(`${s.date}T00:00:00`) >= today)
+    : services.filter((s) => s.name === filter && new Date(`${s.date}T00:00:00`) >= today);
 
   return (
     <div className="services-tab">
       <h4>{isEditing ? "Edit Service" : "Add/Remove Services"}</h4>
-
       <div className="service-form">
         <label>
           Choose a Service:
