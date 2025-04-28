@@ -139,7 +139,7 @@ const Appointments = () => {
   const searchedAppointments = filteredAppointments.filter((app) => {
     const searchLower = searchTerm.toLowerCase();
     return (
-      app.full_name?.toLowerCase().includes(searchLower) || // ✅ Corrected
+      app.full_name?.toLowerCase().includes(searchLower) ||
       app.service?.toLowerCase().includes(searchLower) ||
       app.remarks?.toLowerCase().includes(searchLower)
     );
@@ -172,7 +172,9 @@ const Appointments = () => {
             ))}
             <button
               className={`tab-button ${showLogs ? "active" : ""}`}
-              onClick={() => setShowLogs(true)}
+              onClick={() => {
+                setShowLogs(true);
+              }}
             >
               View Logs
             </button>
@@ -189,7 +191,7 @@ const Appointments = () => {
           <thead>
             <tr>
               <th>Full Name</th>
-              <th>Type</th>
+              <th>Service</th>
               <th>Date</th>
               <th>Time</th>
               <th>Status</th>
@@ -198,53 +200,59 @@ const Appointments = () => {
             </tr>
           </thead>
           <tbody>
-            {searchedAppointments.map((app) => (
-              <tr key={app.id}>
-                <td>{app.full_name}</td> {/* ✅ Corrected */}
-                <td>{app.service}</td>
-                <td>{formatDateReadable(app.date)}</td>
-                <td>{formatTimeAMPM(app.time)}</td>
-                <td>
-                  <span className={`status ${app.status}`}>{app.status}</span>
-                </td>
-                <td>
-                  {app.status === "pending" && !showLogs ? (
-                    <input
-                      type="text"
-                      className="remarks-input"
-                      placeholder="Enter remarks..."
-                      value={remarksInput[app.id] || ""}
-                      onChange={(e) =>
-                        setRemarksInput((prev) => ({
-                          ...prev,
-                          [app.id]: e.target.value,
-                        }))
-                      }
-                    />
-                  ) : (
-                    app.remarks || "-"
-                  )}
-                </td>
-                {!showLogs && activeTab === "pending" && (
-                  <td className="action-icons">
-                    <button
-                      className="approve-button"
-                      onClick={() => updateStatus(app.id, "approved")}
-                      title="Approve"
-                    >
-                      ✔
-                    </button>
-                    <button
-                      className="reject-button"
-                      onClick={() => updateStatus(app.id, "reject")}
-                      title="Reject"
-                    >
-                      ✖
-                    </button>
-                  </td>
-                )}
+            {searchedAppointments.length === 0 ? (
+              <tr>
+                <td colSpan="7">No appointments found.</td>
               </tr>
-            ))}
+            ) : (
+              searchedAppointments.map((app) => (
+                <tr key={app.id}>
+                  <td>{app.full_name}</td>
+                  <td>{app.service}</td>
+                  <td>{formatDateReadable(app.date)}</td>
+                  <td>{formatTimeAMPM(app.time)}</td>
+                  <td>
+                    <span className={`status ${app.status}`}>{app.status}</span>
+                  </td>
+                  <td>
+                    {app.status === "pending" && !showLogs ? (
+                      <input
+                        type="text"
+                        className="remarks-input"
+                        placeholder="Enter remarks..."
+                        value={remarksInput[app.id] || ""}
+                        onChange={(e) =>
+                          setRemarksInput((prev) => ({
+                            ...prev,
+                            [app.id]: e.target.value,
+                          }))
+                        }
+                      />
+                    ) : (
+                      app.remarks || "-"
+                    )}
+                  </td>
+                  {!showLogs && activeTab === "pending" && (
+                    <td className="action-icons">
+                      <button
+                        className="approve-button"
+                        onClick={() => updateStatus(app.id, "approved")}
+                        title="Approve"
+                      >
+                        ✔
+                      </button>
+                      <button
+                        className="reject-button"
+                        onClick={() => updateStatus(app.id, "reject")}
+                        title="Reject"
+                      >
+                        ✖
+                      </button>
+                    </td>
+                  )}
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       )}
