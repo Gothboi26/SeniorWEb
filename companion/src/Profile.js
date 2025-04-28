@@ -21,6 +21,7 @@ const Profile = () => {
     contactNumber: "",
     relationship: "",
     address: "",
+    healthIssue: "",
     profilePicture: null,
   });
 
@@ -51,6 +52,7 @@ const Profile = () => {
             contactNumber: user.emergency_contact_number || "",
             relationship: user.emergency_contact_relationship || "",
             address: user.address || "",
+            healthIssue: user.health_issue || "",
             profilePicture: user.profile_picture || null,
           };
           setProfile(updatedProfile);
@@ -73,15 +75,12 @@ const Profile = () => {
       const reader = new FileReader();
       reader.onloadend = () => {
         let base64Image = reader.result;
-
-        // ✅ Make sure it has data:image/jpeg;base64, or data:image/png;base64,
         if (!base64Image.startsWith("data:image")) {
           base64Image = `data:image/jpeg;base64,${base64Image}`;
         }
-
         sendProfile(base64Image);
       };
-      reader.readAsDataURL(profile.profilePicture); // ✅ Important: always readAsDataURL for images
+      reader.readAsDataURL(profile.profilePicture);
     }
   };
 
@@ -100,7 +99,7 @@ const Profile = () => {
           alert(resData.message || "Profile picture uploaded successfully!");
           setProfile((prev) => ({
             ...prev,
-            profilePicture: base64Image, // ✅ Update preview immediately
+            profilePicture: base64Image,
           }));
         } else {
           alert(resData.message || "Error uploading profile picture.");
@@ -180,6 +179,11 @@ const Profile = () => {
         <div className="address-container">
           <label>Address:</label>
           <input type="text" name="address" value={profile.address} readOnly />
+        </div>
+
+        <div className="address-container">
+          <label>Health Issue:</label> {/* ✅ New */}
+          <input type="text" name="healthIssue" value={profile.healthIssue} readOnly />
         </div>
 
         <div className="personal-info-container">
