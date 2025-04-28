@@ -12,32 +12,6 @@ const formatDateToReadable = (dateStr) => {
   return new Date(dateStr).toLocaleDateString("en-US", options);
 };
 
-const getValidDatesForService = (service) => {
-  return [...new Set(serviceSlots.filter(slot => slot.service_name === service).map(slot => slot.date))];
-};
-
-const getTimesForServiceAndDate = (service, date) => {
-  const normalizeTime = (t) => t.split(":").slice(0, 2).join(":");
-
-  return serviceSlots
-    .filter(slot => slot.service_name === service && slot.date === date)
-    .map(slot => {
-      const slotTime = normalizeTime(slot.time);
-      const approvedCount = appointments.filter(a => {
-        const apptTime = normalizeTime(a.time);
-        return (
-          a.service === service &&
-          a.date === date &&
-          apptTime === slotTime &&
-          a.status.toLowerCase() === "approved"
-        );
-      }).length;
-
-      const remaining = slot.available_slots - approvedCount;
-      return { time: slot.time, remaining };
-    }).filter(slot => slot.remaining > 0);
-};
-
 const formatTimeAMPM = (timeStr) => {
   const [h, m] = timeStr.split(":").map(Number);
   const date = new Date();
@@ -119,6 +93,32 @@ const SeniorCare = ({ role, handleLogout }) => {
     setSelectedService("");
     setSelectedDate("");
     setSelectedTime("");
+  };
+
+  const getValidDatesForService = (service) => {
+    return [...new Set(serviceSlots.filter(slot => slot.serviceName === service).map(slot => slot.date))];
+  };
+
+  const getTimesForServiceAndDate = (service, date) => {
+    const normalizeTime = (t) => t.split(":").slice(0, 2).join(":");
+
+    return serviceSlots
+      .filter(slot => slot.serviceName === service && slot.date === date)
+      .map(slot => {
+        const slotTime = normalizeTime(slot.time);
+        const approvedCount = appointments.filter(a => {
+          const apptTime = normalizeTime(a.time);
+          return (
+            a.service === service &&
+            a.date === date &&
+            apptTime === slotTime &&
+            a.status.toLowerCase() === "approved"
+          );
+        }).length;
+
+        const remaining = slot.available_slots - approvedCount;
+        return { time: slot.time, remaining };
+      }).filter(slot => slot.remaining > 0);
   };
 
   const handleServiceChange = (e) => {
