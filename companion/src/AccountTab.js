@@ -22,7 +22,7 @@ const AccountTab = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.status === "success") {
-          const info = data.data; // ✅ corrected: inside 'data.data'
+          const info = data.data;
           setUsername(info.username || "");
           setEmailAddress(info.email_address || "");
           setAddress(info.address || "");
@@ -67,42 +67,39 @@ const AccountTab = () => {
       .catch((err) => console.error("Update failed:", err));
   };
 
-  const handleUploadPhoto = () => {
-    if (!profilePhoto) {
-      fileInputRef.current.click(); // Open file input if no file selected yet
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("profile_photo", profilePhoto);
-
-    fetch("https://backend-production-4629.up.railway.app/upload_admin_photo.php", {
-      method: "POST",
-      credentials: "include",
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.status === "success") {
-          alert("✅ Profile photo uploaded successfully!");
-          setSavedPhoto(data.data.photo_path); // corrected
-          setPhotoPreview("");
-          setProfilePhoto(null);
-          if (fileInputRef.current) fileInputRef.current.value = "";
-        } else {
-          alert("❌ Upload failed: " + (data.message || "Unknown error"));
-        }
-      })
-      .catch((err) => console.error("Upload error:", err));
-  };
-
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setProfilePhoto(file);
       setPhotoPreview(URL.createObjectURL(file));
-      handleUploadPhoto(); // auto-upload after selection
+
+      // ✅ Immediately upload when file selected
+      const formData = new FormData();
+      formData.append("profile_photo", file);
+
+      fetch("https://backend-production-4629.up.railway.app/upload_admin_photo.php", {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.status === "success") {
+            setSavedPhoto(data.data.photo_path);
+            setPhotoPreview(""); // Reset preview since saved already
+            setProfilePhoto(null); // Reset selected file
+            if (fileInputRef.current) fileInputRef.current.value = "";
+            alert("✅ Profile photo uploaded successfully!");
+          } else {
+            alert("❌ Upload failed: " + (data.message || "Unknown error"));
+          }
+        })
+        .catch((err) => console.error("Upload error:", err));
     }
+  };
+
+  const triggerUpload = () => {
+    fileInputRef.current.click();
   };
 
   return (
@@ -114,7 +111,7 @@ const AccountTab = () => {
               photoPreview
                 ? photoPreview
                 : savedPhoto
-                ? `https://backend-production-4629.up.railway.app/${savedPhoto}`
+                ? `https://backend-production-4629.up.railway.app/uploads/${savedPhoto}` // ✅ FIX here (added /uploads/)
                 : "/icons/admin.png"
             }
             alt="Profile"
@@ -130,8 +127,8 @@ const AccountTab = () => {
           style={{ display: "none" }}
           onChange={handleFileChange}
         />
-        <button className="update-profile-btn" onClick={handleUploadPhoto}>
-          {profilePhoto ? "Re-upload Photo" : "Upload Photo"}
+        <button className="update-profile-btn" onClick={triggerUpload}>
+          Upload Photo
         </button>
       </div>
 
