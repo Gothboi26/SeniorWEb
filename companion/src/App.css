@@ -434,12 +434,26 @@
     width: 90%;
   }
 }
-
 /* Extra small phones (max-width: 480px) */
 @media only screen and (max-width: 480px) {
   .header {
     padding: 20px;
     font-size: 14px;
+  }
+
+  /* Hide Barangay Name */
+  .logo-container h1 {
+    display: none;
+  }
+
+  /* Center the logo */
+  .app-logo-container {
+    position: static;
+    transform: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
   }
 
   .app-logo {
@@ -468,5 +482,6 @@
 
   .form-container {
     padding: 30px 20px;
+    margin: 0;
   }
 }
