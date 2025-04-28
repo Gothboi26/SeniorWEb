@@ -18,7 +18,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 try {
     $pdo = new PDO("mysql:host=localhost;dbname=account", "root", "");
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
+} catch (PDOException $e) {// ✅ Query future & today's slots only
+$stmt = $pdo->prepare("
+    SELECT id, service_name, date, time, available_slots 
+    FROM service_slots 
+    WHERE date >= :today 
+    ORDER BY date ASC, time ASC
+");
+$stmt->execute(['today' => $today]);
+
     // If connection fails, return an empty array
     echo json_encode([]);
     exit();

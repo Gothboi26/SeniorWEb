@@ -53,10 +53,17 @@ function App() {
     navigate("/calendar");
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("role");
-    setRole(null);
+  const handleLogin = (role) => {
+    localStorage.setItem("role", role);
+    setRole(role);
+  
+    if (role === "admin") {
+      navigate("/senior-list");
+    } else if (role === "client") {
+      navigate("/senior-care");
+    }
   };
+  
 
   return (
     <div className="App">
