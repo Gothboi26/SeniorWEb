@@ -57,8 +57,11 @@ function App() {
       navigate("/senior-care");
     }
   };
-  
-  
+
+  const handleLogout = () => {
+    localStorage.removeItem("role");
+    setRole(null);
+  };
 
   return (
     <div className="App">
