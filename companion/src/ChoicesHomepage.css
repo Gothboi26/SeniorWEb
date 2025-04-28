@@ -307,7 +307,7 @@
   }
 }
 
-@media (max-width: 1366px) {
+@media (max-width: 1366px) and (min-width: 1200px) {
   .rectangle21 {
     padding: 40px;
     gap: 25px;
