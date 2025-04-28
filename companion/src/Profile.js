@@ -34,25 +34,25 @@ const Profile = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (!data.error) {
+        if (data.success && data.user) {
+          const user = data.user;
           const updatedProfile = {
-            firstName: data.first_name || "",
-            middleName: data.middle_name || "",
-            lastName: data.last_name || "",
-            extensionName: data.extension || "",
-            birthday: data.birthday || "",
-            age: data.age || "",
-            sex: data.sex || "",
-            civilStatus: data.civil_status || "",
-            barangayID: data.barangay_id || "",
-            groupChapter: data.group_chapter || "",
-            emergencyContactPerson: data.emergency_contact_person || "",
-            contactNumber: data.emergency_contact_number || "",
-            relationship: data.emergency_contact_relationship || "",
-            address: data.address || "",
-            profilePicture: data.profile_picture || null,
+            firstName: user.first_name || "",
+            middleName: user.middle_name || "",
+            lastName: user.last_name || "",
+            extensionName: user.extension || "",
+            birthday: user.birthday || "",
+            age: user.age || "",
+            sex: user.sex || "",
+            civilStatus: user.civil_status || "",
+            barangayID: user.barangay_id || "",
+            groupChapter: user.group_chapter || "",
+            emergencyContactPerson: user.emergency_contact_person || "",
+            contactNumber: user.emergency_contact_number || "",
+            relationship: user.emergency_contact_relationship || "",
+            address: user.address || "",
+            profilePicture: user.profile_picture || null,
           };
-
           setProfile(updatedProfile);
         }
       })
@@ -61,7 +61,7 @@ const Profile = () => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    if (file && !profile.profilePicture) {
+    if (file) {
       setProfile({ ...profile, profilePicture: file });
     }
   };
@@ -217,13 +217,12 @@ const Profile = () => {
         </div>
 
         {profile.profilePicture && typeof profile.profilePicture !== "string" && (
-  <div className="save-button-wrapper">
-    <button type="submit" onClick={handleSubmit} className="submit-button">
-      Save
-    </button>
-  </div>
-)}
-
+          <div className="save-button-wrapper">
+            <button type="submit" onClick={handleSubmit} className="submit-button">
+              Save
+            </button>
+          </div>
+        )}
 
         <div className="temp-buttons">
           <BackToHome role={role} />
