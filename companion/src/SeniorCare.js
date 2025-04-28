@@ -58,7 +58,10 @@ const SeniorCare = ({ role, handleLogout }) => {
         credentials: "include",
       });
       const slotData = await slotRes.json();
-      setServiceSlots(slotData);
+
+      // ✅ Merge past and upcoming into one array
+      const mergedSlots = [...(slotData.upcoming || []), ...(slotData.past || [])];
+      setServiceSlots(mergedSlots);
     } catch (err) {
       console.error("Error reloading data:", err);
     }
@@ -116,7 +119,7 @@ const SeniorCare = ({ role, handleLogout }) => {
           );
         }).length;
 
-        const remaining = slot.available_slots - approvedCount;
+        const remaining = slot.availableSlot - approvedCount;
         return { time: slot.time, remaining };
       }).filter(slot => slot.remaining > 0);
   };
