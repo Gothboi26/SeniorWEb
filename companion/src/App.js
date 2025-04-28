@@ -50,12 +50,6 @@ function App() {
   const handleLogin = (role) => {
     localStorage.setItem("role", role);
     setRole(role);
-    navigate("/calendar");
-  };
-
-  const handleLogin = (role) => {
-    localStorage.setItem("role", role);
-    setRole(role);
   
     if (role === "admin") {
       navigate("/senior-list");
@@ -63,6 +57,7 @@ function App() {
       navigate("/senior-care");
     }
   };
+  
   
 
   return (
