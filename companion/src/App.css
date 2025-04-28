@@ -437,7 +437,7 @@
 /* Extra small phones (max-width: 480px) */
 @media only screen and (max-width: 480px) {
   .header {
-    padding: 20px;
+    padding: 10px;
     font-size: 14px;
   }
 
@@ -461,7 +461,7 @@
   }
 
   .date-time-container {
-    font-size: 1rem;
+    display: none;
   }
 
   .login-container-left {

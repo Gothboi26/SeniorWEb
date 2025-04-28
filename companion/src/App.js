@@ -82,14 +82,14 @@ function App() {
               {!role ? (
                 <div className="login-page">
                   <div className="header">
-                    <div className="date-time-container">{dateTime}</div>
-
                     <div className="logo-container">
                       <h1>Barangay General Tiburcio De Leon</h1>
                       <div className="app-logo-container">
                         <img src={logo} alt="Logo" className="app-logo" />
                       </div>
                     </div>
+
+                    <div className="date-time-container">{dateTime}</div>
                   </div>
 
                   <div className="login-container">
