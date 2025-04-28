@@ -29,8 +29,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #FEFEFE;
-  color: #1E1E1E;
+  background-color: #fefefe;
+  color: #1e1e1e;
   padding: 80px;
   font-size: 20px;
   font-weight: 600;
@@ -51,7 +51,7 @@
 .logo-container h1 {
   font-size: 1.8rem;
   font-family: "Roboto", sans-serif;
-  color: #C31C1C;
+  color: #c31c1c;
   margin: 0;
 }
 
@@ -78,16 +78,15 @@
   justify-content: flex-end;
   align-items: center;
   font-size: 1.3rem;
-  color: #1E1E1E;
+  color: #1e1e1e;
 }
-
 
 /* ---- Login Container ---- */
 .login-container {
   display: flex;
   width: 100%;
   min-height: calc(100vh - 150px);
-  background-color: #C31C1C;
+  background-color: #c31c1c;
 }
 
 /* --- Left side (Image) --- */
@@ -106,7 +105,9 @@
   object-fit: contain;
   display: block;
   margin: 0 auto;
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2)); /* Softer, modern shadow */
+  filter: drop-shadow(
+    0 4px 12px rgba(0, 0, 0, 0.2)
+  ); /* Softer, modern shadow */
   transition: transform 0.3s ease, filter 0.3s ease;
 }
 
@@ -152,12 +153,9 @@
   background-color: #ffffff;
   padding: 40px 40px 30px 40px;
   border-radius: 11px;
-  box-shadow: 
-    0px 106px 42px rgba(0, 0, 0, 0.01),
-    0px 59px 36px rgba(0, 0, 0, 0.05),
-    0px 26px 26px rgba(0, 0, 0, 0.09),
-    0px 7px 15px rgba(0, 0, 0, 0.1),
-    0px 0px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 106px 42px rgba(0, 0, 0, 0.01),
+    0px 59px 36px rgba(0, 0, 0, 0.05), 0px 26px 26px rgba(0, 0, 0, 0.09),
+    0px 7px 15px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -170,7 +168,7 @@
 .login-title {
   font-size: 1.8rem;
   font-weight: 700;
-  color: #C31C1C;
+  color: #c31c1c;
   margin-bottom: 20px;
 }
 
@@ -203,7 +201,7 @@
 .form-container input[type="text"]:focus,
 .form-container input[type="password"]:focus {
   background-color: transparent;
-  border: 1px solid #C31C1C;
+  border: 1px solid #c31c1c;
   box-shadow: 0px 0px 0px 2px rgba(195, 28, 28, 0.3);
 }
 
@@ -211,7 +209,7 @@
 .form-container button {
   width: 100%;
   height: 45px;
-  background-color: #C31C1C;
+  background-color: #c31c1c;
   color: #ffffff;
   border: none;
   border-radius: 7px;
@@ -271,7 +269,7 @@
 
 .modal-content input[type="password"]:focus {
   background-color: transparent;
-  border: 1px solid #C31C1C;
+  border: 1px solid #c31c1c;
   box-shadow: 0px 0px 0px 2px rgba(195, 28, 28, 0.3);
 }
 
@@ -279,7 +277,7 @@
 .modal-content button {
   width: 48%;
   height: 40px;
-  background-color: #C31C1C;
+  background-color: #c31c1c;
   color: #ffffff;
   border: none;
   border-radius: 7px;
@@ -319,39 +317,156 @@
 }
 
 /* --- Responsive Breakpoints --- */
-@media (max-width: 768px) {
+/* 1080 x 1920 (Vertical Large Screens) */
+@media only screen and (min-width: 1080px) and (max-height: 1920px) {
+  .header {
+    padding: 60px;
+    font-size: 18px;
+  }
+
+  .login-container-right h1 {
+    font-size: 2.5rem;
+  }
+
+  .form-container {
+    padding: 50px;
+  }
+}
+
+/* Laptops (typical width between 1024px and 1440px) */
+@media only screen and (min-width: 1024px) and (max-width: 1440px) {
+  .header {
+    padding: 50px;
+    font-size: 18px;
+  }
+
+  .app-logo {
+    width: 130px;
+  }
+
+  .login-container {
+    flex-direction: row;
+  }
+
+  .login-container-right h1 {
+    font-size: 2.2rem;
+  }
+
+  .form-container {
+    width: 80%;
+    max-width: 600px;
+  }
+}
+
+/* Tablets (768px - 1023px) */
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  .header {
+    padding: 40px;
+    font-size: 16px;
+  }
+
+  .app-logo {
+    width: 120px;
+  }
+
   .login-container {
     flex-direction: column;
   }
 
   .login-container-left {
-    height: 250px;
-    padding: 20px;
+    height: 300px;
   }
 
   .login-container-right {
-    padding: 30px 15px;
+    padding: 30px 20px;
   }
 
-  .form_container {
+  .form-container {
     width: 90%;
   }
 }
 
-@media (max-width: 480px) {
+/* Phones (max-width: 767px) */
+@media only screen and (max-width: 767px) {
+  .header {
+    padding: 30px;
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+
+  .app-logo-container {
+    position: static;
+    transform: none;
+  }
+
+  .app-logo {
+    width: 100px;
+  }
+
+  .date-time-container {
+    justify-content: center;
+    font-size: 1.1rem;
+  }
+
+  .login-container {
+    flex-direction: column;
+  }
+
   .login-container-left {
-    height: 200px;
+    height: 220px;
+    padding: 15px;
   }
 
   .login-img {
-    max-width: 250px;
+    max-width: 220px;
+  }
+
+  .login-container-right {
+    padding: 25px 15px;
   }
 
   .login-container-right h1 {
     font-size: 1.8rem;
   }
 
+  .form-container {
+    width: 90%;
+  }
+}
+
+/* Extra small phones (max-width: 480px) */
+@media only screen and (max-width: 480px) {
+  .header {
+    padding: 20px;
+    font-size: 14px;
+  }
+
+  .app-logo {
+    width: 80px;
+  }
+
+  .date-time-container {
+    font-size: 1rem;
+  }
+
+  .login-container-left {
+    height: 180px;
+  }
+
+  .login-img {
+    max-width: 180px;
+  }
+
+  .login-container-right h1 {
+    font-size: 1.5rem;
+  }
+
   .login-container-right p {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+  }
+
+  .form-container {
+    padding: 30px 20px;
   }
 }
