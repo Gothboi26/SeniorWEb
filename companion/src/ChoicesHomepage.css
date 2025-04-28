@@ -79,23 +79,23 @@
 .rectangle23 .senior-care-button,
 .rectangle23 .emergency-services-button,
 .rectangle23 .chat-assistance-button {
-  margin-top: 20px !important;
-  padding: 12px 20px !important;
-  width: 75% !important;
-  background-color: #c31c1c !important;
-  color: #fff !important;
+  margin-top: 20px;
+  padding: 12px 20px;
+  width: 75%;
+  background-color: #c31c1c;
+  color: #fff;
   border: none;
-  border-radius: 20px !important;
+  border-radius: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  cursor: pointer !important;
-  transition: background-color 0.3s ease, transform 0.3s ease !important;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .rectangle23 .senior-care-button:hover,
 .rectangle23 .emergency-services-button:hover,
 .rectangle23 .chat-assistance-button:hover {
-  background-color: #b30000 !important;
-  transform: scale(1.05) !important;
+  background-color: #b30000;
+  transform: scale(1.05);
 }
 
 /* --- Emergency Services --- */
