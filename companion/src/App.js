@@ -50,12 +50,7 @@ function App() {
   const handleLogin = (role) => {
     localStorage.setItem("role", role);
     setRole(role);
-  
-    if (role === "admin") {
-      navigate("/senior-list");
-    } else if (role === "client") {
-      navigate("/senior-care");
-    }
+    navigate("/calendar");
   };
 
   const handleLogout = () => {
