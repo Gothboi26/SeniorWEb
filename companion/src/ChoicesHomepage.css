@@ -310,8 +310,8 @@
 /* --- Media Screen for 1366x768 Laptops --- */
 @media (max-width: 1366px) and (min-width: 1200px) {
   .rectangle21 {
-    padding: 30px;
-    gap: 20px;
+    padding: 40px;
+    gap: 25px;
     justify-content: center;
     width: 100%;
     height: auto;
@@ -321,9 +321,9 @@
   .rectangle23.seniorcare,
   .rectangle23.emergencyservices,
   .rectangle23.chatassistance {
-    width: 300px;
-    height: 400px;
-    padding: 10px;
+    width: 320px;
+    height: 420px;
+    padding: 15px;
   }
 
   .rectangle23.paalala1 h2,
