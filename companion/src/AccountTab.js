@@ -21,16 +21,17 @@ const AccountTab = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (!data.error) {
-          setUsername(data.username || "");
-          setEmailAddress(data.email_address || "");
-          setAddress(data.address || "");
-          setNumber(data.number || "");
-          setCity(data.city || "");
-          setState(data.state || "");
-          setSavedPhoto(data.profile_photo || "");
+        if (data.status === "success") {
+          const info = data.data; // ✅ corrected: inside 'data.data'
+          setUsername(info.username || "");
+          setEmailAddress(info.email_address || "");
+          setAddress(info.address || "");
+          setNumber(info.number || "");
+          setCity(info.city || "");
+          setState(info.state || "");
+          setSavedPhoto(info.profile_photo || "");
         } else {
-          console.warn("Fetch error:", data.error);
+          console.warn("Fetch error:", data.message);
         }
       })
       .catch((err) => console.error("Fetch failed:", err));
@@ -57,10 +58,10 @@ const AccountTab = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        if (result.success) {
-          alert("Account information updated successfully!");
+        if (result.status === "success") {
+          alert("✅ Account information updated successfully!");
         } else {
-          alert("Update failed: " + result.error);
+          alert("❌ Update failed: " + result.message);
         }
       })
       .catch((err) => console.error("Update failed:", err));
@@ -82,14 +83,14 @@ const AccountTab = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.success) {
-          alert("Profile photo uploaded successfully!");
-          setSavedPhoto(data.photo_path);
+        if (data.status === "success") {
+          alert("✅ Profile photo uploaded successfully!");
+          setSavedPhoto(data.data.photo_path); // corrected
           setPhotoPreview("");
           setProfilePhoto(null);
           if (fileInputRef.current) fileInputRef.current.value = "";
         } else {
-          alert(data.error || "Upload failed");
+          alert("❌ Upload failed: " + (data.message || "Unknown error"));
         }
       })
       .catch((err) => console.error("Upload error:", err));
