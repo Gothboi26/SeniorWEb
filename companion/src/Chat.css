@@ -73,6 +73,9 @@
   font-size: 1.3rem;
   text-align: justify;
 }
+.talk-to-admin-button {
+  display: none;
+}
 
 /* FAQ Section Styling */
 .faq-section {
