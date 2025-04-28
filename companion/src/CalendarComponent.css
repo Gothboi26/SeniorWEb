@@ -197,16 +197,19 @@ h3 {
 .event-meta span.datetime::before {
   content: "🕒 Time:";
 }
+
 /* 1440px and below */
 @media (max-width: 1440px) {
   .home-contents {
     padding: 120px;
   }
-
+  .home-header {
+    padding: 45px;
+    width: 90%;
+  }
   .home-title {
     font-size: 4.5rem;
   }
-
   .home-description {
     font-size: 2rem;
   }
@@ -216,82 +219,60 @@ h3 {
 @media (max-width: 1370px) {
   .home-contents {
     padding: 100px;
+    gap: 20px;
   }
-
   .home-header {
     width: 85%;
   }
-
   .home-title {
     font-size: 4rem;
   }
-
   .home-description {
     font-size: 1.8rem;
   }
 }
 
-/* Between 1280px - 1370px */
+/* 1280px - 1370px */
 @media (min-width: 1280px) and (max-width: 1370px) {
   .home-contents {
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-    padding: 100px;
+    padding: 90px;
   }
-
   .home-header {
-    padding: 40px;
+    padding: 35px;
     width: 80%;
-  }
-
-  .home-title {
-    font-size: 4.5rem;
-  }
-
-  .home-description {
-    font-size: 1.8rem;
-    margin-top: 25px;
-    margin-bottom: 40px;
   }
 }
 
 /* 1200px and below */
 @media (max-width: 1200px) {
   .home-contents {
-    padding: 80px;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    padding: 70px;
   }
-
   .home-header {
-    padding: 35px;
-    width: 80%;
-  }
-
-  .home-title {
-    font-size: 3.8rem;
-  }
-
-  .home-description {
-    font-size: 1.6rem;
+    width: 90%;
+    padding: 30px;
   }
 }
 
 /* 1100px and below */
 @media (max-width: 1100px) {
   .home-contents {
-    padding: 70px;
+    padding: 60px;
   }
-
   .home-header {
-    width: 90%;
+    width: 95%;
   }
-
   .home-title {
-    font-size: 3.5rem;
+    font-size: 3.2rem;
   }
-
   .home-description {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
   }
 }
 
@@ -299,147 +280,64 @@ h3 {
 @media (max-width: 1024px) {
   .homepage {
     height: auto;
-    padding: 40px 0;
+    padding: 30px 0;
   }
-
   .home-contents {
     flex-direction: column;
     align-items: center;
-    padding: 80px 40px;
+    padding: 60px 30px;
   }
-
   .home-header {
-    padding: 40px;
-    width: 90%;
+    width: 95%;
     text-align: center;
-  }
-
-  .home-title {
-    font-size: 3.2rem;
-  }
-
-  .home-description {
-    font-size: 1.5rem;
-  }
-
-  .Events {
-    padding: 20px;
   }
 }
 
 /* 768px and below */
 @media (max-width: 768px) {
-  .homepage {
-    padding: 20px 0;
-  }
-
   .home-contents {
-    padding: 40px;
+    padding: 40px 20px;
+    gap: 20px;
   }
-
   .home-header {
-    width: 100%;
-    padding: 30px;
+    padding: 25px;
   }
-
   .home-title {
-    font-size: 2.5rem;
+    font-size: 2.4rem;
   }
-
   .home-description {
-    font-size: 1.2rem;
-  }
-
-  .events-container {
-    flex-direction: column;
-    padding: 0;
-  }
-
-  .Events {
-    padding: 0;
-  }
-
-  .event-item {
-    padding: 12px;
-  }
-
-  .event-title {
-    font-size: 20px;
-  }
-
-  .event-description {
-    font-size: 14px;
-  }
-
-  .event-meta span {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
 }
 
 /* 480px and below */
 @media (max-width: 480px) {
-  .homepage {
-    flex-direction: column;
-    padding: 20px;
-  }
-
   .home-contents {
-    padding: 20px;
+    padding: 20px 10px;
+    flex-direction: column;
   }
-
   .home-header {
+    width: 100%;
     padding: 20px;
+    border-radius: 20px;
   }
-
   .home-title {
     font-size: 2rem;
   }
-
   .home-description {
-    font-size: 1rem;
-  }
-
-  .Events {
-    padding: 0;
-  }
-
-  .react-calendar,
-  .events-list {
-    width: 90%;
-    min-height: 300px;
-  }
-
-  .event-item {
-    padding: 10px;
-  }
-
-  .event-title {
-    font-size: 18px;
-  }
-
-  .event-description {
-    font-size: 12px;
-  }
-
-  .event-meta span {
     font-size: 1rem;
   }
 }
 
 /* 360px and below */
 @media (max-width: 360px) {
-  .events-container {
-    flex-direction: column;
-    padding: 0 5px;
-    gap: 15px;
-    width: 100%;
+  .home-header {
+    padding: 15px;
   }
-
   .home-title {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
   }
-
   .home-description {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
 }
