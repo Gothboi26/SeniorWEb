@@ -112,7 +112,7 @@ const AccountTab = () => {
                 ? photoPreview
                 : savedPhoto
                 ? `https://backend-production-4629.up.railway.app/uploads/${savedPhoto}` // ✅ FIX here (added /uploads/)
-                : "/icons/admin.png"
+                : "/icons/logo.png"
             }
             alt="Profile"
             className="profile-img"
