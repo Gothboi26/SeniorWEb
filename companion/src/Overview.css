@@ -440,7 +440,7 @@
 
 .statistics select {
   background-color: white;
-  border: 1px solid #ccc;
+  border: none;
   font-family: "Roboto", sans-serif;
   padding: 8px 12px;
   border-radius: 10px;
