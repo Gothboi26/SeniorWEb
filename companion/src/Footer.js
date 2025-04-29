@@ -24,7 +24,8 @@ function Footer() {
           <div>
             <h4>About</h4>
             <p>
-            Official barangay platform providing secure access to senior care services, emergency assistance, and chat assistance.
+              Official barangay platform providing secure access to senior care
+              services, emergency assistance, and chat assistance.
             </p>
           </div>
           <div>
@@ -43,10 +44,14 @@ function Footer() {
               <li>0967 182 9646 | 0961 434 6735</li>
             </ul>
             <div className="footer-icons">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://www.facebook.com/profile.php?id=61550950657692"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <img src={fb} alt="Facebook" />
               </a>
-              <a href="mailto:support@government.gov">
+              <a href="mailto:gentdeleonbarangay@gmail.com">
                 <img src={email} alt="Email" />
               </a>
             </div>
@@ -54,10 +59,17 @@ function Footer() {
         </div>
         <div className="bottom-footer">
           <p>
-            <button className="footer-link" onClick={() => openModal(termsContent)}>
+            <button
+              className="footer-link"
+              onClick={() => openModal(termsContent)}
+            >
               Terms of Service
-            </button> |{" "}
-            <button className="footer-link" onClick={() => openModal(privacyContent)}>
+            </button>{" "}
+            |{" "}
+            <button
+              className="footer-link"
+              onClick={() => openModal(privacyContent)}
+            >
               Privacy Policy
             </button>
           </p>
