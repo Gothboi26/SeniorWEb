@@ -219,9 +219,6 @@ function Navbar({ role }) {
                 <li>
                   <Link to="/chat">Services Offered</Link>
                 </li>
-                <li>
-                  <Link to="/chat">Talk to Admin</Link>
-                </li>
               </ul>
             </li>
           </ul>
