@@ -259,6 +259,10 @@ const RectangleSection = ({ role }) => {
           </div>
 
           <h1 className="Events-Title">Calendar of Activities</h1>
+          <p class="Note-Description">
+            Paalala: Pumili ng petsa upang makita ang mga nalalapit na kaganapan
+            at mahahalagang paalala.
+          </p>
         </div>
 
         <div className="events-container">
