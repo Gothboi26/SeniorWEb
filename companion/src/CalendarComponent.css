@@ -295,6 +295,10 @@ h3 {
 
 /* 768px and below */
 @media (max-width: 768px) {
+  .homepage {
+    padding: 20px 0;
+  }
+
   .home-contents {
     padding: 40px 20px;
     gap: 20px;
@@ -308,10 +312,38 @@ h3 {
   .home-description {
     font-size: 1.1rem;
   }
+  .events-container {
+    flex-direction: column;
+    padding: 0;
+  }
+
+  .Events {
+    padding: 0;
+  }
+
+  .event-item {
+    padding: 12px;
+  }
+
+  .event-title {
+    font-size: 20px;
+  }
+
+  .event-description {
+    font-size: 14px;
+  }
+
+  .event-meta span {
+    font-size: 1.2rem;
+  }
 }
 
 /* 480px and below */
 @media (max-width: 480px) {
+  .homepage {
+    flex-direction: column;
+    padding: 20px;
+  }
   .home-contents {
     padding: 20px 10px;
     flex-direction: column;
@@ -327,10 +359,41 @@ h3 {
   .home-description {
     font-size: 1rem;
   }
+  .Events {
+    padding: 0;
+  }
+
+  .react-calendar,
+  .events-list {
+    width: 90%;
+    min-height: 300px;
+  }
+
+  .event-item {
+    padding: 10px;
+  }
+
+  .event-title {
+    font-size: 18px;
+  }
+
+  .event-description {
+    font-size: 12px;
+  }
+
+  .event-meta span {
+    font-size: 1rem;
+  }
 }
 
 /* 360px and below */
 @media (max-width: 360px) {
+  .events-container {
+    flex-direction: column;
+    padding: 0 5px;
+    gap: 15px;
+    width: 100%;
+  }
   .home-header {
     padding: 15px;
   }
