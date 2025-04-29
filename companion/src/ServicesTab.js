@@ -10,16 +10,41 @@ const ServicesTab = () => {
     "Eye Check-up",
   ];
 
-  const times = {
-    "Health Check-up": ["9:00 AM", "1:00 PM", "3:00 PM"],
+  const timeSlots = {
+    "Health Check-up": ["8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM"],
+    "Eye Check-up": ["8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM"],
+    "Dental Check-up": ["8:00 AM", "10:00 AM", "1:00 PM", "3:00 PM"],
     "Free Medicine": ["10:00 AM", "2:00 PM", "4:00 PM"],
     "Massage Therapy": ["11:00 AM", "2:30 PM", "5:00 PM"],
-    "Dental Check-up": ["9:30 AM", "12:00 PM", "3:30 PM"],
-    "Eye Check-up": ["10:30 AM", "1:30 PM", "4:30 PM"],
+  };
+
+  const getEndTime = (service, startTime) => {
+    const [hourStr, minuteStr, meridian] = parseTimeParts(startTime);
+    let hour = parseInt(hourStr);
+    let minute = parseInt(minuteStr);
+    if (meridian === "PM" && hour !== 12) hour += 12;
+    if (meridian === "AM" && hour === 12) hour = 0;
+
+    // Determine duration
+    let duration = 1;
+    if (service === "Dental Check-up") duration = 2;
+
+    const endDate = new Date(0, 0, 0, hour + duration, minute);
+    let endHour = endDate.getHours();
+    const endMinutes = endDate.getMinutes();
+    const endMeridian = endHour >= 12 ? "PM" : "AM";
+    endHour = endHour % 12 || 12;
+    return `${endHour}:${endMinutes.toString().padStart(2, "0")} ${endMeridian}`;
+  };
+
+  const parseTimeParts = (timeStr) => {
+    const [time, meridian] = timeStr.split(" ");
+    const [hour, minute] = time.split(":");
+    return [hour, minute, meridian];
   };
 
   const [services, setServices] = useState([]);
-  const [newService, setNewService] = useState({ id: null, name: "", date: "", time: "", endTime: "", availableSlot: "" });
+  const [newService, setNewService] = useState({ id: null, name: "", date: "", time: "", availableSlot: "" });
   const [isEditing, setIsEditing] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
   const [filter, setFilter] = useState("All");
@@ -66,25 +91,18 @@ const ServicesTab = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewService((prev) => ({ ...prev, [name]: value }));
-
-    if (name === "name") {
-      setNewService((prev) => ({ ...prev, time: "", endTime: "" }));
-    }
-
-    if (name === "time") {
-      setNewService((prev) => ({ ...prev, endTime: "" }));
-    }
   };
 
   const handleAddOrUpdate = () => {
-    const { name, date, time, endTime, id, availableSlot } = newService;
-    const formattedTime = convertTo24Hour(time);
-    const formattedEndTime = convertTo24Hour(endTime);
-
-    if (!name || !date || !time || !endTime || availableSlot < 1) {
+    const { name, date, time, id, availableSlot } = newService;
+    if (!name || !date || !time || availableSlot < 1) {
       alert("Please fill out all fields properly.");
       return;
     }
+
+    const endTime = getEndTime(name, time);
+    const formattedTime = convertTo24Hour(time);
+    const formattedEndTime = convertTo24Hour(endTime);
 
     const isDuplicate = services.some(
       (s, i) =>
@@ -141,7 +159,6 @@ const ServicesTab = () => {
 
   const handleRemove = async (index) => {
     const target = services[index];
-
     try {
       const res = await fetch("https://backend-production-4629.up.railway.app/delete_service_slot.php", {
         method: "POST",
@@ -173,7 +190,6 @@ const ServicesTab = () => {
       name: target.name,
       date: target.date,
       time: formatToAmPm(target.time),
-      endTime: formatToAmPm(target.endTime),
       availableSlot: target.availableSlot,
     });
     setIsEditing(true);
@@ -181,7 +197,7 @@ const ServicesTab = () => {
   };
 
   const resetForm = () => {
-    setNewService({ id: null, name: "", date: "", time: "", endTime: "", availableSlot: "" });
+    setNewService({ id: null, name: "", date: "", time: "", availableSlot: "" });
     setIsEditing(false);
     setEditingIndex(null);
   };
@@ -203,17 +219,6 @@ const ServicesTab = () => {
     const ampm = hour >= 12 ? "PM" : "AM";
     hour = hour % 12 || 12;
     return `${hour}:${minuteStr} ${ampm}`;
-  };
-
-  const isOneHourLater = (start, end) => {
-    const convert = (t) => {
-      const [time, meridian] = t.split(" ");
-      let [h, m] = time.split(":").map(Number);
-      if (meridian === "PM" && h !== 12) h += 12;
-      if (meridian === "AM" && h === 12) h = 0;
-      return h * 60 + m;
-    };
-    return convert(end) - convert(start) >= 60;
   };
 
   const today = new Date();
@@ -247,24 +252,20 @@ const ServicesTab = () => {
         <label>
           Choose a start time:
           <select name="time" value={newService.time} onChange={handleChange} disabled={!newService.name}>
-            <option value="" disabled>Select start time</option>
-            {newService.name && times[newService.name]?.map((time, i) => (
+            <option value="" disabled>Select time</option>
+            {newService.name && timeSlots[newService.name]?.map((time, i) => (
               <option key={i} value={time}>{time}</option>
             ))}
           </select>
         </label>
 
         <label>
-          Choose an end time:
-          <select name="endTime" value={newService.endTime} onChange={handleChange} disabled={!newService.name || !newService.time}>
-            <option value="" disabled>Select end time</option>
-            {newService.name && newService.time &&
-              times[newService.name]
-                .filter((endOption) => isOneHourLater(newService.time, endOption))
-                .map((endTime, i) => (
-                  <option key={i} value={endTime}>{endTime}</option>
-                ))}
-          </select>
+          End time (auto):
+          <input
+            type="text"
+            value={newService.name && newService.time ? getEndTime(newService.name, newService.time) : ""}
+            readOnly
+          />
         </label>
 
         <label>
@@ -283,7 +284,7 @@ const ServicesTab = () => {
           <button
             onClick={handleAddOrUpdate}
             className="add-btn"
-            disabled={!newService.name || !newService.date || !newService.time || !newService.endTime || !newService.availableSlot}
+            disabled={!newService.name || !newService.date || !newService.time || !newService.availableSlot}
           >
             {isEditing ? "Save Changes" : "Add"}
           </button>
