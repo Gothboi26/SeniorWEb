@@ -19,7 +19,7 @@ const ServicesTab = () => {
   };
 
   const [services, setServices] = useState([]);
-  const [newService, setNewService] = useState({ id: null, name: "", date: "", time: "", availableSlot: "" });
+  const [newService, setNewService] = useState({ id: null, name: "", date: "", time: "", endTime: "", availableSlot: "" });
   const [isEditing, setIsEditing] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
   const [filter, setFilter] = useState("All");
@@ -41,6 +41,7 @@ const ServicesTab = () => {
               name: item.serviceName,
               date: item.date,
               time: item.time,
+              endTime: item.endTime,
               availableSlot: item.availableSlot,
             }));
 
@@ -67,15 +68,16 @@ const ServicesTab = () => {
     const { name, value } = e.target;
     setNewService((prev) => ({ ...prev, [name]: value }));
     if (name === "name") {
-      setNewService((prev) => ({ ...prev, time: "" }));
+      setNewService((prev) => ({ ...prev, time: "", endTime: "" }));
     }
   };
 
   const handleAddOrUpdate = () => {
-    const { name, date, time, id, availableSlot } = newService;
+    const { name, date, time, endTime, id, availableSlot } = newService;
     const formattedTime = convertTo24Hour(time);
+    const formattedEndTime = convertTo24Hour(endTime);
 
-    if (!name || !date || !time || availableSlot < 1) {
+    if (!name || !date || !time || !endTime || availableSlot < 1) {
       alert("Please fill out all fields properly.");
       return;
     }
@@ -93,7 +95,14 @@ const ServicesTab = () => {
       return;
     }
 
-    const entry = { id, serviceName: name, date, time: formattedTime, availableSlot: parseInt(availableSlot) };
+    const entry = {
+      id,
+      serviceName: name,
+      date,
+      time: formattedTime,
+      endTime: formattedEndTime,
+      availableSlot: parseInt(availableSlot)
+    };
 
     fetch("https://backend-production-4629.up.railway.app/save_service_slot.php", {
       method: "POST",
@@ -160,6 +169,7 @@ const ServicesTab = () => {
       name: target.name,
       date: target.date,
       time: formatToAmPm(target.time),
+      endTime: formatToAmPm(target.endTime),
       availableSlot: target.availableSlot,
     });
     setIsEditing(true);
@@ -167,7 +177,7 @@ const ServicesTab = () => {
   };
 
   const resetForm = () => {
-    setNewService({ id: null, name: "", date: "", time: "", availableSlot: "" });
+    setNewService({ id: null, name: "", date: "", time: "", endTime: "", availableSlot: "" });
     setIsEditing(false);
     setEditingIndex(null);
   };
@@ -218,9 +228,19 @@ const ServicesTab = () => {
         </label>
 
         <label>
-          Choose a time:
+          Choose a start time:
           <select name="time" value={newService.time} onChange={handleChange} disabled={!newService.name}>
-            <option value="" disabled>Select a time</option>
+            <option value="" disabled>Select start time</option>
+            {newService.name && times[newService.name]?.map((time, i) => (
+              <option key={i} value={time}>{time}</option>
+            ))}
+          </select>
+        </label>
+
+        <label>
+          Choose an end time:
+          <select name="endTime" value={newService.endTime} onChange={handleChange} disabled={!newService.name}>
+            <option value="" disabled>Select end time</option>
             {newService.name && times[newService.name]?.map((time, i) => (
               <option key={i} value={time}>{time}</option>
             ))}
@@ -243,7 +263,7 @@ const ServicesTab = () => {
           <button
             onClick={handleAddOrUpdate}
             className="add-btn"
-            disabled={!newService.name || !newService.date || !newService.time || !newService.availableSlot}
+            disabled={!newService.name || !newService.date || !newService.time || !newService.endTime || !newService.availableSlot}
           >
             {isEditing ? "Save Changes" : "Add"}
           </button>
@@ -273,7 +293,8 @@ const ServicesTab = () => {
           <tr>
             <th>Service Name</th>
             <th>Date</th>
-            <th>Time</th>
+            <th>Start Time</th>
+            <th>End Time</th>
             <th>Available Slots</th>
             <th>Action</th>
           </tr>
@@ -285,6 +306,7 @@ const ServicesTab = () => {
                 <td>{service.name}</td>
                 <td>{service.date}</td>
                 <td>{formatToAmPm(service.time)}</td>
+                <td>{formatToAmPm(service.endTime)}</td>
                 <td>{service.availableSlot}</td>
                 <td>
                   <div className="action-buttons">
@@ -296,7 +318,7 @@ const ServicesTab = () => {
             ))
           ) : (
             <tr>
-              <td colSpan="5" style={{ textAlign: "center" }}>No services found.</td>
+              <td colSpan="6" style={{ textAlign: "center" }}>No services found.</td>
             </tr>
           )}
         </tbody>
@@ -311,7 +333,8 @@ const ServicesTab = () => {
                 <div className="log-entry" key={i}>
                   <p><strong>Service:</strong> {log.name}</p>
                   <p><strong>Date:</strong> {log.date}</p>
-                  <p><strong>Time:</strong> {formatToAmPm(log.time)}</p>
+                  <p><strong>Start Time:</strong> {formatToAmPm(log.time)}</p>
+                  <p><strong>End Time:</strong> {formatToAmPm(log.endTime)}</p>
                   <p><strong>Available Slots:</strong> {log.availableSlot}</p>
                   <hr />
                 </div>
