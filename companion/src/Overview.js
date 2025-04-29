@@ -100,7 +100,10 @@ const getWeekKey = (date) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      fetch("https://backend-production-4629.up.railway.app/check_notifications.php")
+      fetch("https://backend-production-4629.up.railway.app/check_notifications.php", {
+        method: "GET",
+        credentials: "include", // ✅ IMPORTANT! include credentials to send cookies
+      })
         .then((res) => res.json())
         .then((data) => {
           const newNotifs = [];
@@ -114,7 +117,7 @@ const getWeekKey = (date) => {
               newNotifs.push({ type: "appointment", ...a, timestamp: a.timestamp || new Date().toISOString() })
             );
           }
-
+  
           if (newNotifs.length > 0) {
             newNotifs.sort((a, b) => b.timestamp.localeCompare(a.timestamp));
             setNotifications((prev) => [...newNotifs, ...prev]);
@@ -123,8 +126,10 @@ const getWeekKey = (date) => {
         })
         .catch((err) => console.error("Notification fetch failed", err));
     }, 10000);
+  
     return () => clearInterval(interval);
   }, []);
+  
 
   const handleNotificationClick = (item) => {
     if (item.type === "emergency") navigate("/emergencies");
