@@ -201,9 +201,6 @@ function Navbar({ role }) {
                 <li>
                   <Link to="/emergency">Firetruck</Link>
                 </li>
-                <li>
-                  <Link to="/emergency">Family</Link>
-                </li>
               </ul>
             </li>
 
