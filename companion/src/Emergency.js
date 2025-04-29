@@ -22,16 +22,16 @@ const Emergency = ({ role, handleLogout }) => {
     { name: "Fire Station", number: "8292-3519" },
     { name: "Emergency Hospital", number: "8352-6000" },
     { name: "Medical Center", number: "8294-6711" },
-    { name: "City Disaster", number: "8292-1405" },
-    { name: "Risk Reduction", number: "0352-5000" },
-    { name: "and Management Office", number: "0919-009-4045" },
+    { name: "City Disaster Risk Reduction and Management Office", number: "8292-1405" },
+    { name: "", number: "0352-5000" },
+    { name: "", number: "0919-009-4045" },
     { name: "", number: "0917-881-1639" },
      
   ];
 
   const emergencyContacts = [
-    { name: "Barangay General", number: "0967-182-9646" },
-    { name: "Tiburcio De Leon", number: "0961-434-6735" },
+    { name: "Barangay General Tiburcio De Leon", number: "0967-182-9646" },
+    { name: "", number: "0961-434-6735" },
     
   ];
 
