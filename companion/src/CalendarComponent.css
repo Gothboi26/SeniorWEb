@@ -295,10 +295,6 @@ h3 {
 
 /* 768px and below */
 @media (max-width: 768px) {
-  .homepage {
-    padding: 20px 0;
-  }
-
   .home-contents {
     padding: 40px 20px;
     gap: 20px;
@@ -312,38 +308,10 @@ h3 {
   .home-description {
     font-size: 1.1rem;
   }
-  .events-container {
-    flex-direction: column;
-    padding: 0;
-  }
-
-  .Events {
-    padding: 0;
-  }
-
-  .event-item {
-    padding: 12px;
-  }
-
-  .event-title {
-    font-size: 20px;
-  }
-
-  .event-description {
-    font-size: 14px;
-  }
-
-  .event-meta span {
-    font-size: 1.2rem;
-  }
 }
 
 /* 480px and below */
 @media (max-width: 480px) {
-  .homepage {
-    flex-direction: column;
-    padding: 20px;
-  }
   .home-contents {
     padding: 20px 10px;
     flex-direction: column;
@@ -359,14 +327,115 @@ h3 {
   .home-description {
     font-size: 1rem;
   }
+}
+
+/* 360px and below */
+@media (max-width: 360px) {
+  .home-header {
+    padding: 15px;
+  }
+  .home-title {
+    font-size: 1.6rem;
+  }
+  .home-description {
+    font-size: 0.85rem;
+  }
+}
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .homepage {
+    height: auto;
+    padding: 40px 0;
+  }
+
+  .home-contents {
+    flex-direction: column;
+    align-items: center;
+    padding: 80px 40px;
+  }
+
+  .home-header {
+    padding: 40px;
+    width: 90%;
+    text-align: center;
+  }
+
+  .home-title {
+    font-size: 3.5rem;
+    text-align: center;
+  }
+
+  .home-description {
+    font-size: 1.5rem;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+}
+@media (min-width: 1280px) and (max-width: 1370px) {
+  h3 {
+    font-size: 1.6rem;
+  }
+}
+@media (max-width: 768px) {
+  .homepage {
+    height: auto;
+    padding: 20px 0;
+  }
+
+  .events-container {
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+  }
   .Events {
     padding: 0;
   }
 
+  .rectangle23 {
+    width: 90%;
+    height: auto;
+    padding: 15px;
+  }
+
+  .choices {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .event-item {
+    padding: 12px 14px;
+  }
+
+  .event-title {
+    font-size: 16px;
+  }
+
+  .event-description {
+    font-size: 13px;
+  }
+
+  .event-meta {
+    font-size: 13px;
+  }
+}
+@media (max-width: 480px) {
+  h3 {
+    font-size: 1.2rem;
+  }
+
+  .Events {
+    padding: 0px;
+  }
   .react-calendar,
   .events-list {
     width: 90%;
-    min-height: 300px;
+    min-height: 315px;
   }
 
   .event-item {
@@ -384,23 +453,36 @@ h3 {
   .event-meta span {
     font-size: 1rem;
   }
-}
 
-/* 360px and below */
-@media (max-width: 360px) {
-  .events-container {
+  .event-meta span::before {
+    font-size: 0.9rem;
+  }
+
+  .rectangle23 {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .choices {
     flex-direction: column;
-    padding: 0 5px;
-    gap: 15px;
+    gap: 10px;
+  }
+  .events-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 0 10px;
     width: 100%;
   }
-  .home-header {
-    padding: 15px;
-  }
-  .home-title {
-    font-size: 1.6rem;
-  }
-  .home-description {
-    font-size: 0.85rem;
-  }
 }
+@media (max-width: 360px) {
+  .events-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 0 5px;
+    width: 100%;
+  }
+} 
