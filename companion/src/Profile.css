@@ -8,12 +8,11 @@ body {
 
 /* Profile Container */
 .profile-container {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
+  max-width: 100%;
+  color: #333;
+  padding: 0;
+  margin: 0;
+  border-radius: 8px;
 }
 
 /* Profile Title Container */
@@ -60,13 +59,8 @@ body {
 
 /* Profile Details Container */
 .profile-details-container {
-  /*
-  align-items: center;
-  display: flex; 
-  gap: 20px; 
-  */
   margin: 4rem 0 4rem 0;
-  padding: 0;
+  padding: 0 200px;
 }
 
 /* Image and Name Container */
@@ -446,6 +440,9 @@ input[name="groupChapter"]:focus {
     justify-content: center;
     margin-bottom: 8px;
   }
+  .profile-details-container {
+    padding: 0 100px;
+  }
 }
 
 /* Max-width 480px */
@@ -563,5 +560,14 @@ input[name="groupChapter"]:focus {
   /* File Input */
   .file-input {
     width: 100%;
+  }
+  .profile-details-container {
+    padding: 0 40px;
+  }
+}
+/* Extra Small Devices (Small Phones, 360px and down) */
+@media screen and (max-width: 360px) {
+  .profile-details-container {
+    padding: 0 20px;
   }
 }
