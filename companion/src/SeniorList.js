@@ -251,7 +251,6 @@ const SeniorList = () => {
         <table className="table">
           <thead>
             <tr>
-              <th>Username</th>
               <th>Full Name</th>
               <th>Barangay ID</th>
               <th>Chapter</th>
@@ -270,8 +269,7 @@ const SeniorList = () => {
           <tbody>
             {filteredPatients().map((p, i) => (
               <tr key={i}>
-                <td>{p.username}</td>
-                <td>{[p.first_name, p.middle_name, p.last_name, p.extension].filter(Boolean).join(" ")}</td>
+                <td>{[p.first_name, p.middle_name, p.last_name, p.extension !== "N/A" ? p.extension : ""].filter(Boolean).join(" ")}</td>
                 <td>{p.barangay_id}</td>
                 <td>{p.group_chapter}</td>
                 <td>{p.email_address}</td>
