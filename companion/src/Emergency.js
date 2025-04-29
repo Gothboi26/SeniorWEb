@@ -18,15 +18,21 @@ const Emergency = ({ role, handleLogout }) => {
   ];
 
   const emergencyHotlines = [
-    { name: "Police Station", number: "911" },
-    { name: "Fire Department", number: "112" },
-    { name: "Ambulance Services", number: "108" },
+    { name: "Police Station", number: "8352-4000" },
+    { name: "Fire Station", number: "8292-3519" },
+    { name: "Emergency Hospital", number: "8352-6000" },
+    { name: "Medical Center", number: "8294-6711" },
+    { name: "City Disaster", number: "8292-1405" },
+    { name: "Risk Reduction", number: "0352-5000" },
+    { name: "and Management Office", number: "0919-009-4045" },
+    { name: "", number: "0917-881-1639" },
+     
   ];
 
   const emergencyContacts = [
-    { name: "Barangay Captain", number: "0917-123-4567" },
-    { name: "Barangay Office", number: "0918-987-6543" },
-    { name: "Neighborhood Watch", number: "0916-456-7890" },
+    { name: "Barangay General", number: "0967-182-9646" },
+    { name: "Tiburcio De Leon", number: "0961-434-6735" },
+    
   ];
 
   const showToast = (message, type = "info") => {
@@ -179,7 +185,7 @@ const Emergency = ({ role, handleLogout }) => {
 
           <div className="hotlines-container">
             <div className="hotlines">
-              <p className="hotlines-title">Emergency Hotlines</p>
+              <p className="hotlines-title">Valenzuela Emergency Hotlines</p>
               <table className="contacts-table">
                 <thead>
                   <tr>
@@ -199,7 +205,7 @@ const Emergency = ({ role, handleLogout }) => {
             </div>
 
             <div className="contacts">
-              <p className="contacts-title">Emergency Contacts</p>
+              <p className="contacts-title">Barangay Emergency Contacts</p>
               <table className="contacts-table">
                 <thead>
                   <tr>
