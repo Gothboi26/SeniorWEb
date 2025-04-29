@@ -232,7 +232,7 @@ const SeniorList = () => {
     <div className="senior-list-container">
       {/* Header and filter */}
       <div className="table-header">
-        <h2>All Clients</h2>
+        <h2>All Users</h2>
         <div className="buttons-right">
           <div className="filter-bar">
             <input className="search-input" type="text" placeholder="Search seniors..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
@@ -241,7 +241,7 @@ const SeniorList = () => {
               {chapterOptions.map((chapter, idx) => <option key={idx} value={chapter}>{chapter}</option>)}
             </select>
           </div>
-          <button className="add-senior-button" onClick={() => { resetForm(); setEditingId(null); setShowModal(true); }}>Add Senior</button>
+          <button className="add-senior-button" onClick={() => { resetForm(); setEditingId(null); setShowModal(true); }}>Register Senior</button>
           <button className="export-excel" onClick={handleExportExcel}>Export Excel</button>
         </div>
       </div>
