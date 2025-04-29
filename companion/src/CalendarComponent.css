@@ -199,7 +199,7 @@ h3 {
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .homepage {
     height: auto;
     padding: 20px 0;
@@ -272,7 +272,7 @@ h3 {
     font-size: 13px;
   }
 }
-@media (max-width: 480px) {
+@media screen and (max-width: 480px) {
   .homepage {
     flex-direction: column;
     height: auto;
@@ -352,7 +352,7 @@ h3 {
     width: 100%;
   }
 }
-@media (max-width: 360px) {
+@media screen and (max-width: 360px) {
   .events-container {
     display: flex;
     flex-direction: column;
@@ -396,7 +396,7 @@ h3 {
     font-size: 1.5rem;
   }
 } */
-@media (min-width: 1280px) and (max-width: 1370px) {
+@media screen and (max-width: 1370px) {
   .home-contents {
     flex-direction: row;
     justify-content: space-between;
