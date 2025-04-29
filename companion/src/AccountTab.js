@@ -73,7 +73,6 @@ const AccountTab = () => {
       setProfilePhoto(file);
       setPhotoPreview(URL.createObjectURL(file));
 
-      // ✅ Immediately upload when file selected
       const formData = new FormData();
       formData.append("profile_photo", file);
 
@@ -86,8 +85,8 @@ const AccountTab = () => {
         .then((data) => {
           if (data.status === "success") {
             setSavedPhoto(data.data.photo_path);
-            setPhotoPreview(""); // Reset preview since saved already
-            setProfilePhoto(null); // Reset selected file
+            setPhotoPreview("");
+            setProfilePhoto(null);
             if (fileInputRef.current) fileInputRef.current.value = "";
             alert("✅ Profile photo uploaded successfully!");
           } else {
@@ -99,24 +98,20 @@ const AccountTab = () => {
   };
 
   const triggerUpload = () => {
-    fileInputRef.current.click();
+    if (fileInputRef.current) fileInputRef.current.click();
+  };
+
+  const getProfileImage = () => {
+    if (photoPreview) return photoPreview;
+    if (savedPhoto) return `https://backend-production-4629.up.railway.app/uploads/${savedPhoto}`;
+    return "/icons/logo.png";
   };
 
   return (
     <div className="tab-content">
       <div className="account-header">
         <div className="account-info">
-          <img
-            src={
-              photoPreview
-                ? photoPreview
-                : savedPhoto
-                ? `https://backend-production-4629.up.railway.app/uploads/${savedPhoto}` // ✅ FIX here (added /uploads/)
-                : "/icons/logo.png"
-            }
-            alt="Profile"
-            className="profile-img"
-          />
+          <img src={getProfileImage()} alt="Profile" className="profile-img" />
           <h3>{username}</h3>
         </div>
 
