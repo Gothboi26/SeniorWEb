@@ -412,28 +412,7 @@ const chartTitles = {
 
   return (
     <div className="overview-container">
-      <div className="notification-bell" onClick={() => {
-        setShowNotificationDetails(!showNotificationDetails);
-        setUnreadCount(0); // Just reset counter
-      }}>
-        <img src={bellIcon} alt="Notifications" />
-        {unreadCount > 0 && <span className="notification-count">{unreadCount}</span>}
-        {showNotificationDetails && (
-          <div className="notification-dropdown">
-            {notifications.length === 0 ? <p>No new notifications</p> :
-              notifications.map((item, idx) => (
-                <div key={idx} onClick={() => handleNotificationClick(item)} className="notification-item">
-                  <strong>{item.type === "emergency" ? "🚨 Emergency" : item.type === "appointment" ? "📅 Appointment" : "💬 Chat"}</strong><br />
-                  {item.date && <span>{item.date}</span>}<br />
-                  {item.type === "emergency" && <span>Type: {item.emergency_type}</span>}
-                  {item.type === "appointment" && <span>Service: {item.service}</span>}
-                  {item.type === "chat" && <span>{item.message}</span>}
-                </div>
-              ))
-            }
-          </div>
-        )}
-      </div>
+      
 
 {/* 🔽 Dropdown Container Styled like Statistics */}
 <div className="statistics">
