@@ -35,7 +35,6 @@ const ServicesTab = () => {
         .then((data) => {
           if (data.past && data.upcoming) {
             const combined = [...data.past, ...data.upcoming];
-
             const normalized = combined.map((item) => ({
               id: item.id,
               name: item.serviceName,
@@ -67,8 +66,13 @@ const ServicesTab = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewService((prev) => ({ ...prev, [name]: value }));
+
     if (name === "name") {
       setNewService((prev) => ({ ...prev, time: "", endTime: "" }));
+    }
+
+    if (name === "time") {
+      setNewService((prev) => ({ ...prev, endTime: "" }));
     }
   };
 
@@ -183,6 +187,7 @@ const ServicesTab = () => {
   };
 
   const convertTo24Hour = (timeStr) => {
+    if (!timeStr) return "";
     const [hourMin, meridian] = timeStr.split(" ");
     const [hoursStr, minutesStr] = hourMin.split(":");
     let hours = parseInt(hoursStr);
@@ -192,11 +197,23 @@ const ServicesTab = () => {
   };
 
   const formatToAmPm = (mysqlTime) => {
+    if (!mysqlTime) return "";
     const [hourStr, minuteStr] = mysqlTime.split(":");
     let hour = parseInt(hourStr);
     const ampm = hour >= 12 ? "PM" : "AM";
     hour = hour % 12 || 12;
     return `${hour}:${minuteStr} ${ampm}`;
+  };
+
+  const isOneHourLater = (start, end) => {
+    const convert = (t) => {
+      const [time, meridian] = t.split(" ");
+      let [h, m] = time.split(":").map(Number);
+      if (meridian === "PM" && h !== 12) h += 12;
+      if (meridian === "AM" && h === 12) h = 0;
+      return h * 60 + m;
+    };
+    return convert(end) - convert(start) >= 60;
   };
 
   const today = new Date();
@@ -239,11 +256,14 @@ const ServicesTab = () => {
 
         <label>
           Choose an end time:
-          <select name="endTime" value={newService.endTime} onChange={handleChange} disabled={!newService.name}>
+          <select name="endTime" value={newService.endTime} onChange={handleChange} disabled={!newService.name || !newService.time}>
             <option value="" disabled>Select end time</option>
-            {newService.name && times[newService.name]?.map((time, i) => (
-              <option key={i} value={time}>{time}</option>
-            ))}
+            {newService.name && newService.time &&
+              times[newService.name]
+                .filter((endOption) => isOneHourLater(newService.time, endOption))
+                .map((endTime, i) => (
+                  <option key={i} value={endTime}>{endTime}</option>
+                ))}
           </select>
         </label>
 
