@@ -99,12 +99,11 @@
   color: #fff;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.5);
 }
 
 .faq-button:hover {
-  background-color: #ffe2cc;
-  border-color: #cd1d1d;
+  background-color: #9c1616;
   transform: scale(1.02);
 }
 
