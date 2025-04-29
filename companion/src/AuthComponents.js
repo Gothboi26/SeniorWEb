@@ -146,6 +146,7 @@ function Login({ setRole }) {
               Change Default Password
             </h3>
             <p
+              className="change-pass-p"
               style={{
                 fontSize: "14px",
                 marginBottom: "5px",
@@ -181,6 +182,7 @@ function Login({ setRole }) {
               }}
             />
             <div
+              className="change-password-buttons"
               style={{
                 display: "flex",
                 justifyContent: "space-between",

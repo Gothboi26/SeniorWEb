@@ -321,6 +321,15 @@
   color: #1e1e1e;
 }
 
+.change-pass-p {
+  color: #1e1e1e;
+}
+
+.change-password-buttons {
+  gap: 15px;
+  border-radius: 20px;
+}
+
 /* --- Responsive Breakpoints --- */
 /* 1080 x 1920 (Vertical Large Screens) */
 @media only screen and (min-width: 1080px) and (max-height: 1920px) {
