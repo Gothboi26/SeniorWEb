@@ -1,3 +1,4 @@
+// ✅ Full Revised ServicesTab.jsx with proper add/edit/delete integration
 import React, { useState, useEffect } from "react";
 import "./ServicesTab.css";
 
@@ -10,54 +11,38 @@ const ServicesTab = () => {
     "Eye Check-up",
   ];
 
-  const times = {
-    "Health Check-up": ["9:00 AM", "1:00 PM", "3:00 PM"],
-    "Free Medicine": ["10:00 AM", "2:00 PM", "4:00 PM"],
-    "Massage Therapy": ["11:00 AM", "2:30 PM", "5:00 PM"],
-    "Dental Check-up": ["9:30 AM", "12:00 PM", "3:30 PM"],
-    "Eye Check-up": ["10:30 AM", "1:30 PM", "4:30 PM"],
-  };
-
   const [services, setServices] = useState([]);
   const [newService, setNewService] = useState({ id: null, name: "", date: "", time: "", availableSlot: "" });
   const [isEditing, setIsEditing] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
   const [filter, setFilter] = useState("All");
   const [showLogs, setShowLogs] = useState(false);
+  const [availableTimes, setAvailableTimes] = useState([]);
+
+  const fetchSlots = () => {
+    fetch("https://backend-production-4629.up.railway.app/get_service_slots.php", {
+      method: "GET",
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.past && data.upcoming) {
+          const combined = [...data.past, ...data.upcoming].map(item => ({
+            id: item.id,
+            name: item.serviceName,
+            date: item.date,
+            time: item.time,
+            availableSlot: item.availableSlot,
+          }));
+
+          combined.sort((a, b) => new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`));
+          setServices(combined);
+        }
+      })
+      .catch((err) => console.error("Failed to fetch service slots:", err));
+  };
 
   useEffect(() => {
-    const fetchSlots = () => {
-      fetch("https://backend-production-4629.up.railway.app/get_service_slots.php", {
-        method: "GET",
-        credentials: "include",
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.past && data.upcoming) {
-            const combined = [...data.past, ...data.upcoming];
-
-            const normalized = combined.map((item) => ({
-              id: item.id,
-              name: item.serviceName,
-              date: item.date,
-              time: item.time,
-              availableSlot: item.availableSlot,
-            }));
-
-            const sorted = normalized.sort(
-              (a, b) => new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`)
-            );
-
-            setServices(sorted);
-          } else {
-            console.error("Unexpected data format:", data);
-          }
-        })
-        .catch((err) => {
-          console.error("Failed to fetch service slots:", err);
-        });
-    };
-
     fetchSlots();
     window.addEventListener("slotsUpdated", fetchSlots);
     return () => window.removeEventListener("slotsUpdated", fetchSlots);
@@ -67,31 +52,25 @@ const ServicesTab = () => {
     const { name, value } = e.target;
     setNewService((prev) => ({ ...prev, [name]: value }));
     if (name === "name") {
+      // Dynamically fetch available times for the selected service
+      fetch("https://backend-production-4629.up.railway.app/get_service_times.php?service=" + encodeURIComponent(value))
+        .then(res => res.json())
+        .then(data => setAvailableTimes(data.times || []))
+        .catch(() => setAvailableTimes([]));
+
       setNewService((prev) => ({ ...prev, time: "" }));
     }
   };
 
   const handleAddOrUpdate = () => {
     const { name, date, time, id, availableSlot } = newService;
-    const formattedTime = convertTo24Hour(time);
 
     if (!name || !date || !time || availableSlot < 1) {
       alert("Please fill out all fields properly.");
       return;
     }
 
-    const isDuplicate = services.some(
-      (s, i) =>
-        s.name === name &&
-        s.date === date &&
-        s.time === formattedTime &&
-        (!isEditing || s.id !== id)
-    );
-
-    if (isDuplicate) {
-      alert("This service already exists for the selected date and time.");
-      return;
-    }
+    const formattedTime = convertTo24Hour(time);
 
     const entry = { id, serviceName: name, date, time: formattedTime, availableSlot: parseInt(availableSlot) };
 
@@ -140,7 +119,6 @@ const ServicesTab = () => {
       const result = await res.json();
       if (result.status === "success") {
         const filtered = services.filter((_, i) => i !== index);
-        filtered.sort((a, b) => new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`));
         setServices(filtered);
         alert("✅ Service successfully deleted!");
         window.dispatchEvent(new Event("slotsUpdated"));
@@ -221,7 +199,7 @@ const ServicesTab = () => {
           Choose a time:
           <select name="time" value={newService.time} onChange={handleChange} disabled={!newService.name}>
             <option value="" disabled>Select a time</option>
-            {newService.name && times[newService.name]?.map((time, i) => (
+            {availableTimes.map((time, i) => (
               <option key={i} value={time}>{time}</option>
             ))}
           </select>
@@ -235,7 +213,6 @@ const ServicesTab = () => {
             min="1"
             value={newService.availableSlot}
             onChange={handleChange}
-            disabled={!newService.name}
           />
         </label>
 
@@ -295,9 +272,7 @@ const ServicesTab = () => {
               </tr>
             ))
           ) : (
-            <tr>
-              <td colSpan="5" style={{ textAlign: "center" }}>No services found.</td>
-            </tr>
+            <tr><td colSpan="5" style={{ textAlign: "center" }}>No services found.</td></tr>
           )}
         </tbody>
       </table>
