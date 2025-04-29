@@ -245,8 +245,7 @@
   color: inherit; /* Inherits text color */
 }
 
-/* --- For screens 1370px and below --- */
-@media screen and (max-width: 1370px) {
+@media (max-width: 1370px) {
   .rectangle21 {
     padding: 40px;
     gap: 25px;
@@ -261,7 +260,7 @@
   .rectangle23.chatassistance {
     width: 320px;
     height: 420px;
-    padding: 20px;
+    padding: 15px;
   }
 
   .rectangle23.paalala1 h2,
@@ -277,6 +276,7 @@
   .rectangle23.chatassistance p {
     font-size: 1.2rem;
     margin: 15px 20px;
+    text-align: justify;
   }
 
   .senior-care-button,
@@ -309,7 +309,7 @@
 }
 
 /* Responsive Design for Smaller Screens */
-@media screen and (max-width: 768px) {
+@media (max-width: 768px) {
   .rectangle21 {
     margin-top: 35px;
     margin-left: 0;
@@ -362,7 +362,7 @@
     font-size: 16px;
   }
 }
-@media screen and (max-width: 480px) {
+@media (max-width: 480px) {
   .rectangle21 {
     flex-direction: column; /* arrange children in a row */
     flex-wrap: wrap; /* allow wrapping to next line */
@@ -437,7 +437,7 @@
     margin: 10px 0;
   }
 }
-@media screen and (max-width: 360px) {
+@media (max-width: 360px) {
   .rectangle21 {
     padding: 5px;
     gap: 8px;
