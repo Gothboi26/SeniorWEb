@@ -90,6 +90,7 @@
 .faq-button {
   width: 100%;
   background-color: #c31c1c;
+  border: none;
   border-radius: 20px;
   padding: 12px 20px;
   margin: 10px 0;
@@ -99,7 +100,7 @@
   color: #fff;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0px 3px rgba(0, 0, 0, 0.5);
 }
 
 .faq-button:hover {
