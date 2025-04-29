@@ -414,12 +414,11 @@
   }
 
   .login-container-left {
-    height: 220px;
-    padding: 15px;
+    display: none;
   }
 
   .login-img {
-    max-width: 220px;
+    display: none;
   }
 
   .login-container-right {
@@ -465,12 +464,11 @@
   }
 
   .login-container-left {
-    height: 180px;
-    padding: 0;
+    display: none;
   }
 
   .login-img {
-    max-width: 230px;
+    display: none;
   }
 
   .login-container-right h1 {
