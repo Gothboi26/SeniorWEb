@@ -377,6 +377,28 @@ h3 {
   }
 }
 @media (min-width: 1280px) and (max-width: 1370px) {
+  .home-contents {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 100px; /* Slightly smaller padding from 150px */
+  }
+
+  .home-header {
+    padding: 40px;
+    width: 80%;
+  }
+
+  .home-title {
+    font-size: 4.5rem;
+  }
+
+  .home-description {
+    font-size: 1.8rem;
+    margin-top: 25px;
+    margin-bottom: 40px;
+  }
+
   h3 {
     font-size: 1.6rem;
   }
@@ -385,6 +407,36 @@ h3 {
   .homepage {
     height: auto;
     padding: 20px 0;
+  }
+
+  .home-title {
+    font-size: 2.5rem;
+    margin-top: 10px;
+  }
+
+  .home-description {
+    font-size: 1.1rem;
+    margin: 10px;
+  }
+
+  .facebook-box {
+    padding: 15px;
+  }
+
+  .facebook-page {
+    padding: 15px;
+  }
+
+  .home-contents {
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+  }
+
+  .home-header {
+    text-align: center;
+    align-items: center;
+    margin: 0;
   }
 
   .events-container {
@@ -425,6 +477,34 @@ h3 {
   }
 }
 @media (max-width: 480px) {
+  .homepage {
+    flex-direction: column;
+    height: auto;
+    padding: 20px;
+  }
+
+  .home-contents {
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .home-header {
+    padding: 20px;
+    width: 100%;
+  }
+
+  .home-title {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .home-description {
+    font-size: 1rem;
+    margin: 10px 0;
+    text-align: center;
+  }
+
   h3 {
     font-size: 1.2rem;
   }
