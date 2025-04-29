@@ -100,7 +100,7 @@ h3 {
   font-weight: 500;
   font-size: 1.4rem;
   color: #c31c1c;
-  margin: 1rem 0;
+  margin: 0;
 }
 
 /* ----- Events Section Layout ----- */
@@ -478,6 +478,9 @@ h3 {
   .Note-Description {
     font-size: 1.3rem;
     align-items: center;
+    align-items: center;
+    padding: 0 50px;
+    margin: 0;
   }
 }
 @media (max-width: 480px) {
@@ -563,6 +566,7 @@ h3 {
     font-size: 1.2rem;
     align-items: center;
     padding: 0 50px;
+    margin: 0;
   }
 }
 @media (max-width: 360px) {
@@ -578,5 +582,6 @@ h3 {
     font-size: 1rem;
     align-items: center;
     padding: 0 30px;
+    margin: 0;
   }
 }
