@@ -568,6 +568,6 @@ input[name="groupChapter"]:focus {
 /* Extra Small Devices (Small Phones, 360px and down) */
 @media screen and (max-width: 360px) {
   .profile-details-container {
-    padding: 0 20px;
+    padding: 0;
   }
 }
