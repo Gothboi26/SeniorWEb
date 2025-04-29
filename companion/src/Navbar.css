@@ -135,9 +135,11 @@
   border: none;
 }
 
+/* 
 .profile-link:hover {
   background-color: #a71919;
 }
+  */
 
 .logout-link {
   background-color: white;
