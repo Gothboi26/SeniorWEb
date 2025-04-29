@@ -9,18 +9,23 @@ function Login({ setRole }) {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch("https://backend-production-4629.up.railway.app/login.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ username, password }),
-      });
+      const response = await fetch(
+        "https://backend-production-4629.up.railway.app/login.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ username, password }),
+        }
+      );
 
       const result = await response.json();
 
       if (result.status === "success") {
         if (result.force_change) {
-          alert("⚠️ You are still using the default password. Please change it before proceeding.");
+          alert(
+            "⚠️ You are still using the default password. Please change it before proceeding."
+          );
           setShowModal(true);
         } else {
           alert(`✅ Logged in as ${result.role}`);
@@ -47,12 +52,15 @@ function Login({ setRole }) {
     }
 
     try {
-      const res = await fetch("https://backend-production-4629.up.railway.app/change_password.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ username, newPassword }),
-      });
+      const res = await fetch(
+        "https://backend-production-4629.up.railway.app/change_password.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ username, newPassword }),
+        }
+      );
 
       const result = await res.json();
       if (result.status === "success") {
@@ -101,19 +109,49 @@ function Login({ setRole }) {
       <button onClick={handleLogin}>Login</button>
 
       {showModal && (
-        <div style={{
-          position: "fixed", top: 0, left: 0, width: "100%", height: "100%",
-          backgroundColor: "rgba(0,0,0,0.5)",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          zIndex: 999
-        }}>
-          <div style={{
-            background: "#fff", padding: "25px", borderRadius: "12px",
-            width: "320px", boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
-            display: "flex", flexDirection: "column", gap: "12px"
-          }}>
-            <h3 style={{ marginBottom: "5px", textAlign: "center" }}>Change Default Password</h3>
-            <p style={{ fontSize: "14px", marginBottom: "5px", textAlign: "center" }}>
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0,0,0,0.5)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 999,
+          }}
+        >
+          <div
+            style={{
+              background: "#fff",
+              padding: "25px",
+              borderRadius: "12px",
+              width: "320px",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
+              display: "flex",
+              flexDirection: "column",
+              gap: "12px",
+            }}
+          >
+            <h3
+              className="change-pass-h3"
+              style={{
+                marginBottom: "5px",
+                textAlign: "center",
+                color: "#1E1E1E",
+              }}
+            >
+              Change Default Password
+            </h3>
+            <p
+              style={{
+                fontSize: "14px",
+                marginBottom: "5px",
+                textAlign: "center",
+              }}
+            >
               Change your default password to continue.
             </p>
             <input
@@ -123,7 +161,10 @@ function Login({ setRole }) {
               onChange={(e) => setNewPassword(e.target.value)}
               onKeyDown={handleKeyDown}
               style={{
-                padding: "8px", borderRadius: "6px", border: "1px solid #ccc", width: "100%"
+                padding: "8px",
+                borderRadius: "6px",
+                border: "1px solid #ccc",
+                width: "100%",
               }}
             />
             <input
@@ -133,14 +174,26 @@ function Login({ setRole }) {
               onChange={(e) => setConfirmPassword(e.target.value)}
               onKeyDown={handleKeyDown}
               style={{
-                padding: "8px", borderRadius: "6px", border: "1px solid #ccc", width: "100%"
+                padding: "8px",
+                borderRadius: "6px",
+                border: "1px solid #ccc",
+                width: "100%",
               }}
             />
-            <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginTop: "10px",
+              }}
+            >
               <button
                 style={{
-                  background: "#2e7d32", color: "white", padding: "8px 16px",
-                  borderRadius: "6px", border: "none"
+                  background: "#2e7d32",
+                  color: "white",
+                  padding: "8px 16px",
+                  borderRadius: "6px",
+                  border: "none",
                 }}
                 onClick={handleChangePassword}
               >
@@ -148,8 +201,11 @@ function Login({ setRole }) {
               </button>
               <button
                 style={{
-                  background: "#c62828", color: "white", padding: "8px 16px",
-                  borderRadius: "6px", border: "none"
+                  background: "#c62828",
+                  color: "white",
+                  padding: "8px 16px",
+                  borderRadius: "6px",
+                  border: "none",
                 }}
                 onClick={() => {
                   setShowModal(false);
@@ -167,4 +223,3 @@ function Login({ setRole }) {
 }
 
 export { Login };
-  
