@@ -151,7 +151,7 @@ function Login({ setRole }) {
                 fontSize: "14px",
                 marginBottom: "5px",
                 textAlign: "center",
-                color: rgb(17, 17, 17),
+                
               }}
             >
               Change your default password to continue.
