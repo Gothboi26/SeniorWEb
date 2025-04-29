@@ -562,7 +562,7 @@ input[name="groupChapter"]:focus {
     width: 100%;
   }
   .profile-details-container {
-    padding: 0 40px;
+    padding: 0;
   }
 }
 /* Extra Small Devices (Small Phones, 360px and down) */
