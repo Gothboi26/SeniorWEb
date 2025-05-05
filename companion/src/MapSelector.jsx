@@ -38,7 +38,6 @@ const Routing = ({ destination }) => {
   useEffect(() => {
     if (!destination) return;
 
-    // ✅ Remove existing route
     if (routingRef.current) {
       try {
         if (routingRef.current.getPlan) {
@@ -53,10 +52,8 @@ const Routing = ({ destination }) => {
       routingRef.current = null;
     }
 
-    // ✅ Remove stray routing panels from DOM
     document.querySelectorAll(".leaflet-routing-container").forEach(el => el.remove());
 
-    // ✅ Add new route
     const control = L.Routing.control({
       waypoints: [L.latLng(barangayHallCoords), L.latLng(destination)],
       lineOptions: {
@@ -72,7 +69,6 @@ const Routing = ({ destination }) => {
 
     routingRef.current = control;
 
-    // ✅ Cleanup
     return () => {
       try {
         if (routingRef.current && map.hasLayer(routingRef.current)) {
@@ -93,7 +89,7 @@ const MapSelector = ({ onClose, onSelect, initialPosition = null }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [markerPosition, setMarkerPosition] = useState(null);
   const [pendingSelection, setPendingSelection] = useState(null);
-  const [selectedAddress, setSelectedAddress] = useState(""); // ✅ always store latest address
+  const [selectedAddress, setSelectedAddress] = useState("");
   const mapRef = useRef(null);
 
   useEffect(() => {
@@ -151,7 +147,7 @@ const MapSelector = ({ onClose, onSelect, initialPosition = null }) => {
     setSuggestions([]);
     mapRef.current?.flyTo(pos, 17);
     setPendingSelection({ lat, lng, address });
-    setSelectedAddress(address); // ✅ store it for popup
+    setSelectedAddress(address);
   };
 
   const handleSuggestionClick = (place) => {
@@ -255,6 +251,7 @@ const MapSelector = ({ onClose, onSelect, initialPosition = null }) => {
 
             {!initialPosition && <MapClickHandler />}
 
+            {/* Barangay Hall Marker */}
             <Marker position={barangayHallCoords}>
               <Popup>
                 <div style={{ textAlign: "center" }}>
@@ -270,6 +267,30 @@ const MapSelector = ({ onClose, onSelect, initialPosition = null }) => {
                   />
                 </div>
               </Popup>
+            </Marker>
+
+            {/* 🚓 Police Stations */}
+            <Marker position={[14.7012, 120.9815]}>
+              <Popup><strong>Valenzuela Police Station</strong><br />MacArthur Highway</Popup>
+            </Marker>
+            <Marker position={[14.7161, 121.0134]}>
+              <Popup><strong>Police Substation – Gen. T. De Leon</strong><br />Paso de Blas</Popup>
+            </Marker>
+
+            {/* 🚑 Health Centers */}
+            <Marker position={[14.6890, 120.9950]}>
+              <Popup><strong>Barangay Health Center</strong><br />Gen. T. De Leon</Popup>
+            </Marker>
+            <Marker position={[14.7055, 120.9875]}>
+              <Popup><strong>Valenzuela City Health Office</strong><br />Karuhatan</Popup>
+            </Marker>
+
+            {/* 🚒 Fire Stations */}
+            <Marker position={[14.6885, 120.9928]}>
+              <Popup><strong>Valenzuela Fire Station</strong><br />Maysan Road</Popup>
+            </Marker>
+            <Marker position={[14.7173, 121.0001]}>
+              <Popup><strong>Fire Substation – Malinta</strong><br />MacArthur Highway</Popup>
             </Marker>
 
             {markerPosition && (
