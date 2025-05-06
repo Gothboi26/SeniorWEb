@@ -1,3 +1,4 @@
+// ✅ Full revised MapSelector.jsx with dynamic nearest station by emergency type
 import React, { useState, useEffect, useRef } from "react";
 import {
   MapContainer,
@@ -14,7 +15,6 @@ import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import "./MapSelector.css";
 import logo from "./assets/logo.png";
 
-// 📍 Custom icon
 const customIcon = new L.Icon({
   iconUrl: "/icons/marker.png",
   iconSize: [38, 38],
@@ -23,7 +23,6 @@ const customIcon = new L.Icon({
   shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png"
 });
 
-// 📍 Bounds for Valenzuela
 const valenzuelaBounds = [
   [14.6500, 120.9000],
   [14.7700, 121.0300]
@@ -31,21 +30,49 @@ const valenzuelaBounds = [
 
 const barangayHallCoords = [14.6861, 120.9955];
 
-const Routing = ({ destination }) => {
+const STATIONS = {
+  fire: [
+    { name: "Valenzuela Fire Station", coords: [14.6885, 120.9928] },
+    { name: "Fire Substation – Malinta", coords: [14.7173, 121.0001] }
+  ],
+  police: [
+    { name: "Valenzuela Police Station", coords: [14.7012, 120.9815] },
+    { name: "Police Substation – Gen. T. De Leon", coords: [14.7161, 121.0134] }
+  ],
+  health: [
+    { name: "Barangay Health Center", coords: [14.6890, 120.9950] },
+    { name: "Valenzuela City Health Office", coords: [14.7055, 120.9875] }
+  ]
+};
+
+const getNearestStation = (type, targetCoords) => {
+  const stations = STATIONS[type] || [];
+  let minDist = Infinity;
+  let nearest = null;
+  for (const station of stations) {
+    const dist = Math.sqrt(
+      Math.pow(station.coords[0] - targetCoords[0], 2) +
+      Math.pow(station.coords[1] - targetCoords[1], 2)
+    );
+    if (dist < minDist) {
+      minDist = dist;
+      nearest = station;
+    }
+  }
+  return nearest;
+};
+
+const Routing = ({ origin, destination }) => {
   const map = useMap();
   const routingRef = useRef(null);
 
   useEffect(() => {
-    if (!destination) return;
+    if (!origin || !destination) return;
 
     if (routingRef.current) {
       try {
-        if (routingRef.current.getPlan) {
-          routingRef.current.getPlan().setWaypoints([]);
-        }
-        if (map.hasLayer(routingRef.current)) {
-          map.removeControl(routingRef.current);
-        }
+        routingRef.current.getPlan()?.setWaypoints([]);
+        map.removeControl(routingRef.current);
       } catch (err) {
         console.warn("Error removing old route:", err);
       }
@@ -55,10 +82,8 @@ const Routing = ({ destination }) => {
     document.querySelectorAll(".leaflet-routing-container").forEach(el => el.remove());
 
     const control = L.Routing.control({
-      waypoints: [L.latLng(barangayHallCoords), L.latLng(destination)],
-      lineOptions: {
-        styles: [{ color: "maroon", weight: 6 }]
-      },
+      waypoints: [L.latLng(origin), L.latLng(destination)],
+      lineOptions: { styles: [{ color: "maroon", weight: 6 }] },
       showAlternatives: false,
       addWaypoints: false,
       draggableWaypoints: false,
@@ -79,15 +104,16 @@ const Routing = ({ destination }) => {
       }
       routingRef.current = null;
     };
-  }, [destination, map]);
+  }, [origin, destination, map]);
 
   return null;
 };
 
-const MapSelector = ({ onClose, onSelect, initialPosition = null }) => {
+const MapSelector = ({ onClose, onSelect, initialPosition = null, emergencyType = "fire" }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [markerPosition, setMarkerPosition] = useState(null);
+  const [routeOrigin, setRouteOrigin] = useState(barangayHallCoords);
   const [pendingSelection, setPendingSelection] = useState(null);
   const [selectedAddress, setSelectedAddress] = useState("");
   const mapRef = useRef(null);
@@ -132,10 +158,8 @@ const MapSelector = ({ onClose, onSelect, initialPosition = null }) => {
       let result = await tryGeocode(fullQuery);
       if (!result.length) result = await tryGeocode(fallbackQuery);
       if (!result.length) result = await tryGeocode("Barangay General Tiburcio De Leon, Valenzuela City");
-
       setSuggestions(result);
     } catch (err) {
-      console.error("Geocode error:", err);
       alert("Search failed. Please check internet.");
     }
   };
@@ -148,6 +172,11 @@ const MapSelector = ({ onClose, onSelect, initialPosition = null }) => {
     mapRef.current?.flyTo(pos, 17);
     setPendingSelection({ lat, lng, address });
     setSelectedAddress(address);
+
+    const nearestStation = getNearestStation(emergencyType, pos);
+    if (nearestStation) {
+      setRouteOrigin(nearestStation.coords);
+    }
   };
 
   const handleSuggestionClick = (place) => {
@@ -162,8 +191,7 @@ const MapSelector = ({ onClose, onSelect, initialPosition = null }) => {
       .then(res => res.json())
       .then(data => {
         if (data?.address?.city === "Valenzuela") {
-          setPendingSelection({ lat, lng, address: data.display_name });
-          setSelectedAddress(data.display_name);
+          selectLocation(lat, lng, data.display_name);
         } else {
           alert("Only Valenzuela locations allowed.");
         }
@@ -182,10 +210,6 @@ const MapSelector = ({ onClose, onSelect, initialPosition = null }) => {
             } else {
               alert("Only Valenzuela locations allowed.");
             }
-          })
-          .catch(err => {
-            console.error("Map click failed:", err);
-            alert("Click error.");
           });
       }
     });
@@ -240,9 +264,7 @@ const MapSelector = ({ onClose, onSelect, initialPosition = null }) => {
             style={{ height: "100%", width: "100%" }}
             maxBounds={valenzuelaBounds}
             maxBoundsViscosity={1.0}
-            whenCreated={(mapInstance) => {
-              mapRef.current = mapInstance;
-            }}
+            whenCreated={(mapInstance) => { mapRef.current = mapInstance; }}
           >
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -251,46 +273,10 @@ const MapSelector = ({ onClose, onSelect, initialPosition = null }) => {
 
             {!initialPosition && <MapClickHandler />}
 
-            {/* Barangay Hall Marker */}
             <Marker position={barangayHallCoords}>
               <Popup>
-                <div style={{ textAlign: "center" }}>
-                  <h4>Barangay Tiburcio De Leon Hall</h4>
-                  <img
-                    src={logo}
-                    alt="Barangay Hall"
-                    style={{
-                      width: "100%",
-                      maxWidth: "200px",
-                      borderRadius: "8px"
-                    }}
-                  />
-                </div>
+                <strong>Barangay Tiburcio De Leon Hall</strong>
               </Popup>
-            </Marker>
-
-            {/* 🚓 Police Stations */}
-            <Marker position={[14.7012, 120.9815]}>
-              <Popup><strong>Valenzuela Police Station</strong><br />MacArthur Highway</Popup>
-            </Marker>
-            <Marker position={[14.7161, 121.0134]}>
-              <Popup><strong>Police Substation – Gen. T. De Leon</strong><br />Paso de Blas</Popup>
-            </Marker>
-
-            {/* 🚑 Health Centers */}
-            <Marker position={[14.6890, 120.9950]}>
-              <Popup><strong>Barangay Health Center</strong><br />Gen. T. De Leon</Popup>
-            </Marker>
-            <Marker position={[14.7055, 120.9875]}>
-              <Popup><strong>Valenzuela City Health Office</strong><br />Karuhatan</Popup>
-            </Marker>
-
-            {/* 🚒 Fire Stations */}
-            <Marker position={[14.6885, 120.9928]}>
-              <Popup><strong>Valenzuela Fire Station</strong><br />Maysan Road</Popup>
-            </Marker>
-            <Marker position={[14.7173, 121.0001]}>
-              <Popup><strong>Fire Substation – Malinta</strong><br />MacArthur Highway</Popup>
             </Marker>
 
             {markerPosition && (
@@ -303,7 +289,7 @@ const MapSelector = ({ onClose, onSelect, initialPosition = null }) => {
                 >
                   <Popup>{pendingSelection?.address || selectedAddress || "Selected Location"}</Popup>
                 </Marker>
-                <Routing destination={markerPosition} />
+                <Routing origin={routeOrigin} destination={markerPosition} />
               </>
             )}
           </MapContainer>
