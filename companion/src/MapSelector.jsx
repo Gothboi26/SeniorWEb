@@ -1,4 +1,3 @@
-// ✅ Full revised MapSelector.jsx with dynamic nearest station by emergency type
 import React, { useState, useEffect, useRef } from "react";
 import {
   MapContainer,
@@ -13,7 +12,6 @@ import L from "leaflet";
 import "leaflet-routing-machine";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import "./MapSelector.css";
-import logo from "./assets/logo.png";
 
 const customIcon = new L.Icon({
   iconUrl: "/icons/marker.png",
@@ -51,21 +49,34 @@ const STATIONS = {
   ]
 };
 
-const getNearestStation = (type, targetCoords) => {
+const getNearestStation = (type, targetCoords, proximityThreshold = 500) => {
   const stations = STATIONS[type] || [];
-  let minDist = Infinity;
   let nearest = null;
+  let minDist = Infinity;
+
+  const toRad = deg => (deg * Math.PI) / 180;
+  const haversine = ([lat1, lon1], [lat2, lon2]) => {
+    const R = 6371000; // meters
+    const dLat = toRad(lat2 - lat1);
+    const dLon = toRad(lon2 - lon1);
+    const a =
+      Math.sin(dLat / 2) ** 2 +
+      Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+      Math.sin(dLon / 2) ** 2;
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+  };
+
   for (const station of stations) {
-    const dist = Math.sqrt(
-      Math.pow(station.coords[0] - targetCoords[0], 2) +
-      Math.pow(station.coords[1] - targetCoords[1], 2)
-    );
+    const dist = haversine(targetCoords, station.coords);
     if (dist < minDist) {
       minDist = dist;
       nearest = station;
     }
   }
-  return nearest;
+
+  // Use station if within radius, else null (to fallback)
+  return minDist <= proximityThreshold ? nearest : null;
 };
 
 const Routing = ({ origin, destination }) => {
@@ -130,20 +141,15 @@ const MapSelector = ({ onClose, onSelect, initialPosition = null, emergencyType 
       setMarkerPosition(pos);
       setSelectedAddress(initialPosition.address || "Selected Location");
 
-      const nearestStation = getNearestStation(emergencyType, pos);
-      if (nearestStation) {
-        setRouteOrigin(nearestStation.coords);
-      }
+      const nearbyStation = getNearestStation(emergencyType, pos);
+      const fallback = getNearestStation(emergencyType, pos, Infinity);
+      setRouteOrigin(nearbyStation ? nearbyStation.coords : fallback?.coords || barangayHallCoords);
     }
   }, [initialPosition, emergencyType]);
 
   useEffect(() => {
     if (mapRef.current) {
-      if (markerPosition) {
-        mapRef.current.setView(markerPosition, 17);
-      } else {
-        mapRef.current.setView(barangayHallCoords, 17);
-      }
+      mapRef.current.setView(markerPosition || barangayHallCoords, 17);
     }
   }, [markerPosition]);
 
@@ -185,10 +191,9 @@ const MapSelector = ({ onClose, onSelect, initialPosition = null, emergencyType 
     setPendingSelection({ lat, lng, address });
     setSelectedAddress(address);
 
-    const nearestStation = getNearestStation(emergencyType, pos);
-    if (nearestStation) {
-      setRouteOrigin(nearestStation.coords);
-    }
+    const nearbyStation = getNearestStation(emergencyType, pos);
+    const fallback = getNearestStation(emergencyType, pos, Infinity);
+    setRouteOrigin(nearbyStation ? nearbyStation.coords : fallback?.coords || barangayHallCoords);
   };
 
   const handleSuggestionClick = (place) => {
