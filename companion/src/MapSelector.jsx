@@ -33,15 +33,21 @@ const barangayHallCoords = [14.6861, 120.9955];
 const STATIONS = {
   fire: [
     { name: "Valenzuela Fire Station", coords: [14.6885, 120.9928] },
-    { name: "Fire Substation – Malinta", coords: [14.7173, 121.0001] }
+    { name: "Fire Substation – Malinta", coords: [14.7173, 121.0001] },
+    { name: "Fire Substation – Arkong Bato", coords: [14.7018, 120.9674] },
+    { name: "Fire Substation – Karuhatan", coords: [14.7019, 120.9809] }
   ],
   police: [
     { name: "Valenzuela Police Station", coords: [14.7012, 120.9815] },
-    { name: "Police Substation – Gen. T. De Leon", coords: [14.7161, 121.0134] }
+    { name: "Police Substation – Gen. T. De Leon", coords: [14.7161, 121.0134] },
+    { name: "Police Community Precinct – Malinta", coords: [14.7110, 121.0002] },
+    { name: "Police Substation – Karuhatan", coords: [14.7016, 120.9799] }
   ],
   health: [
     { name: "Barangay Health Center", coords: [14.6890, 120.9950] },
-    { name: "Valenzuela City Health Office", coords: [14.7055, 120.9875] }
+    { name: "Valenzuela City Health Office", coords: [14.7055, 120.9875] },
+    { name: "Dr. Pio Valenzuela Center for Medicine", coords: [14.7035, 120.9793] },
+    { name: "Valenzuela Emergency Hospital", coords: [14.7002, 120.9840] }
   ]
 };
 
@@ -120,10 +126,16 @@ const MapSelector = ({ onClose, onSelect, initialPosition = null, emergencyType 
 
   useEffect(() => {
     if (initialPosition) {
-      setMarkerPosition([initialPosition.lat, initialPosition.lng]);
+      const pos = [initialPosition.lat, initialPosition.lng];
+      setMarkerPosition(pos);
       setSelectedAddress(initialPosition.address || "Selected Location");
+
+      const nearestStation = getNearestStation(emergencyType, pos);
+      if (nearestStation) {
+        setRouteOrigin(nearestStation.coords);
+      }
     }
-  }, [initialPosition]);
+  }, [initialPosition, emergencyType]);
 
   useEffect(() => {
     if (mapRef.current) {
