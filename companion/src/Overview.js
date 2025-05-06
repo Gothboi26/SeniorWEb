@@ -52,9 +52,7 @@ const Overview = () => {
   const [accommodatedPerDay, setAccommodatedPerDay] = useState({});
   const [accommodatedPerServicePerMonth, setAccommodatedPerServicePerMonth] = useState({});
   const [selectedChart, setSelectedChart] = useState("appointmentsByStatus");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [genderDistribution, setGenderDistribution] = useState({ male: 0, female: 0 });
+
 
   const formatDate = (date) => new Date(date).toISOString().split("T")[0];
 
@@ -64,7 +62,7 @@ const Overview = () => {
   }, [appointments]);
 
   const fetchAppointmentsData = useCallback(() => {
-    fetch("http://localhost/php/appointments.php")
+    fetch("https://backend-production-4629.up.railway.app/appointments.php", { credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
         const apps = Array.isArray(data) ? data : data.data || [];
@@ -86,12 +84,9 @@ const getWeekKey = (date) => {
 
   useEffect(() => { fetchAppointmentsData(); }, [fetchAppointmentsData]);
   useEffect(() => { if (appointments.length) filterAppointmentsByDate(selectedDate); }, [appointments, selectedDate, filterAppointmentsByDate]);
-  useEffect(() => { console.log(genderDistribution);}, [genderDistribution]);
-  
-
 
   useEffect(() => {
-    const ws = new WebSocket("ws://localhost:8080");
+    const ws = new WebSocket("wss://websocket-production-b0d9.up.railway.app/");
     ws.onmessage = (event) => {
       const msg = JSON.parse(event.data);
       if (msg.type === "chat" && msg.sender === "client") {
@@ -105,7 +100,7 @@ const getWeekKey = (date) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      fetch("http://localhost/php/check_notifications.php", {
+      fetch("https://backend-production-4629.up.railway.app/check_notifications.php", {
         method: "GET",
         credentials: "include", // ✅ IMPORTANT! include credentials to send cookies
       })
@@ -145,7 +140,7 @@ const getWeekKey = (date) => {
   const handleEdit = (a) => { setEditMode(true); setCurrentAppointment(a); };
   const handleDelete = (id) => {
     if (window.confirm("Delete this appointment?")) {
-      fetch(`http://localhost/php/appointments.php?id=${id}`, { method: "DELETE" })
+      fetch(`https://backend-production-4629.up.railway.app/appointments.php?id=${id}`, { method: "DELETE" })
         .then((res) => res.json())
         .then(() => setAppointments((prev) => prev.filter((a) => a.id !== id)));
     }
@@ -154,7 +149,7 @@ const getWeekKey = (date) => {
   const handleSaveEdit = (updated) => {
     if (isSaving) return;
     setIsSaving(true);
-    fetch("http://localhost/php/appointments.php", {
+    fetch("https://backend-production-4629.up.railway.app/appointments.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updated),
@@ -168,112 +163,70 @@ const getWeekKey = (date) => {
       .finally(() => setIsSaving(false));
   };
 
-  const fetchUsers = useCallback(() => {
-    fetch("http://localhost/php/get_users.php")
-      .then((res) => res.json())
-      .then((data) => {
-        const users = data.data || [];
-        const ageDist = {}, chapterDist = {}, reg = {}, genderDist = { male: 0, female: 0 };
-  
-        users
-          .filter((u) => {
-            if (!startDate || !endDate) return true;
-  
-            const createdDate = new Date(u.created_at);
-            const start = new Date(startDate);
-            const end = new Date(endDate);
-  
-            // Normalize all dates to avoid partial-day issues
-            createdDate.setHours(0, 0, 0, 0);
-            start.setHours(0, 0, 0, 0);
-            end.setHours(23, 59, 59, 999);
-  
-            return createdDate >= start && createdDate <= end;
-          })
-          .forEach((u) => {
-            // Age distribution
-            const age = parseInt(u.age, 10);
-            const ageGroup = Math.floor(age / 10) * 10;
-            if (age >= 60) {
-              const label = `${ageGroup}-${ageGroup + 9}`;
-              ageDist[label] = (ageDist[label] || 0) + 1;
-            }
-  
-            // Chapter distribution
-            if (u.group_chapter) {
-              chapterDist[u.group_chapter] = (chapterDist[u.group_chapter] || 0) + 1;
-            }
-  
-            // Registration over time
-            if (u.role !== "admin") {
-              const date = new Date(u.created_at);
-              const key =
-                dataView === "week"
-                  ? getWeekKey(date)
-                  : date.toLocaleString("en-US", { month: "long", year: "numeric" });
-              reg[key] = (reg[key] || 0) + 1;
-            }
-  
-            if (u.gender) {
-              if (u.gender.toLowerCase() === "male") {
-                genderDist.male++;
-              } else if (u.gender.toLowerCase() === "female") {
-                genderDist.female++;
-              }
-            }
-          });
-  
-        setAgeDistribution(ageDist);
-        setChapters(chapterDist);
-        setUserRegistrationData(reg);
-        setGenderDistribution(genderDist);
+const fetchUsers = useCallback(() => {
+  fetch("https://backend-production-4629.up.railway.app/get_users.php")
+    .then((res) => res.json())
+    .then((data) => {
+      const users = data.data || [];
+      const ageDist = {}, chapterDist = {}, reg = {};
+
+      users.forEach((u) => {
+        const age = parseInt(u.age, 10);
+        const ageGroup = Math.floor(age / 10) * 10;
+        if (age >= 60) ageDist[`${ageGroup}-${ageGroup + 9}`] = (ageDist[`${ageGroup}-${ageGroup + 9}`] || 0) + 1;
+        if (u.group_chapter) chapterDist[u.group_chapter] = (chapterDist[u.group_chapter] || 0) + 1;
+
+        if (u.role !== "admin") {
+          const date = new Date(u.created_at);
+          const key = dataView === "week" ? getWeekKey(date) : date.toLocaleString("en-US", { month: "long", year: "numeric" });
+          reg[key] = (reg[key] || 0) + 1;
+        }
       });
-  }, [dataView, startDate, endDate]);
-  
+
+      setAgeDistribution(ageDist);
+      setChapters(chapterDist);
+      setUserRegistrationData(reg);
+    });
+}, [dataView]);
+
 
   useEffect(() => { fetchUsers(); }, [fetchUsers]);
 
-  useEffect(() => {
-    const status = { Approved: 0, Rejected: 0, Pending: 0 };
-    const perService = {};
-    const dailyAccommodated = {};
-    const monthlyServiceCounts = {};
-  
-    const filtered = appointments.filter((a) => {
-      if (!startDate || !endDate) return true;
-      return (!startDate || a.date >= startDate) && (!endDate || a.date <= endDate);
-    });
-  
-    filtered.forEach((a) => {
-      const stat = a.status?.toLowerCase();
-      const dateKey = new Date(a.date).toISOString().split("T")[0];
-      const dateObj = new Date(a.date);
-      const fullDateKey = dateObj.toISOString().split("T")[0];
-      const service = a.service?.trim() || "Unknown";
-  
-      if (stat === "approved") {
-        status.Approved++;
-        dailyAccommodated[dateKey] = (dailyAccommodated[dateKey] || 0) + 1;
-  
-        if (!monthlyServiceCounts[service]) {
-          monthlyServiceCounts[service] = {};
-        }
-        monthlyServiceCounts[service][fullDateKey] = (monthlyServiceCounts[service][fullDateKey] || 0) + 1;
-      } else if (stat === "reject") {
-        status.Rejected++;
-      } else {
-        status.Pending++;
-      }
-  
-      perService[service] = (perService[service] || 0) + 1;
-    });
-  
-    setAppointmentStatusData(status);
-    setAppointmentsPerService(perService);
-    setAccommodatedPerDay(dailyAccommodated);
-    setAccommodatedPerServicePerMonth(monthlyServiceCounts);
-  }, [appointments, startDate, endDate]);
-  
+useEffect(() => {
+  const status = { Approved: 0, Rejected: 0, Pending: 0 };
+  const perService = {};
+  const dailyAccommodated = {};
+  const monthlyServiceCounts = {};
+
+  appointments.forEach((a) => {
+    const stat = a.status?.toLowerCase();
+    const dateKey = new Date(a.date).toISOString().split("T")[0];
+    const dateObj = new Date(a.date);
+    const fullDateKey = dateObj.toISOString().split("T")[0]; // e.g. "2024-04-25"
+    const service = a.service?.trim() || "Unknown";
+
+    if (stat === "approved") {
+      status.Approved++;
+      dailyAccommodated[dateKey] = (dailyAccommodated[dateKey] || 0) + 1;
+
+    if (!monthlyServiceCounts[service]) {
+      monthlyServiceCounts[service] = {};
+    }
+    monthlyServiceCounts[service][fullDateKey] = (monthlyServiceCounts[service][fullDateKey] || 0) + 1;
+    } else if (stat === "reject") {
+      status.Rejected++;
+    } else {
+      status.Pending++;
+    }
+
+    perService[service] = (perService[service] || 0) + 1;
+  });
+
+  setAppointmentStatusData(status);
+  setAppointmentsPerService(perService);
+  setAccommodatedPerDay(dailyAccommodated);
+  setAccommodatedPerServicePerMonth(monthlyServiceCounts);
+}, [appointments]);
 
 const generateServiceMonthChartData = (serviceData) => {
   const colors = [
@@ -372,16 +325,6 @@ const chartConfig = (labels, data, options) => ({
     }
   }
   });
-
-  const genderChartData = {
-    labels: ["Male", "Female"],
-    datasets: [
-      {
-        data: [genderDistribution.male, genderDistribution.female],
-        backgroundColor: ["#3498db", "#e74c3c"], // Custom colors
-      }
-    ]
-  }; 
   
   const generateAccommodatedPerDayData = () => {
   const grouped = {};
@@ -453,19 +396,6 @@ const chartViews = {
   ),
   accommodatedPerService: (
     <Line data={generateServiceMonthChartData(accommodatedPerServicePerMonth)} />
-  ),
-  genderDistribution: (
-    <Pie
-      data={genderChartData}
-      options={{
-        responsive: true,
-        plugins: {
-          legend: {
-            position: "top",
-          },
-        },
-      }}
-    />
   )
 };
 
@@ -477,7 +407,6 @@ const chartTitles = {
   ageGroup: "Senior Age Group",
   accommodatedPerDay: "Seniors Accommodated",
   accommodatedPerService: "Seniors Accommodated per Service",
-  genderDistribution: "Gender Distribution",
 };
 
 
@@ -519,25 +448,8 @@ const chartTitles = {
     <option value="ageGroup">Senior Age Group</option>
     <option value="accommodatedPerDay">Seniors Accommodated</option>
     <option value="accommodatedPerService">Seniors Accommodated per Service</option>
-    <option value="genderDistribution">Senior Gender Group</option>
   </select>
 </div>
-
-<div className="date-filter">
-  <label>Start Date:</label>
-  <input
-    type="date"
-    value={startDate}
-    onChange={(e) => setStartDate(e.target.value)}
-  />
-  <label>End Date:</label>
-  <input
-    type="date"
-    value={endDate}
-    onChange={(e) => setEndDate(e.target.value)}
-  />
-</div>
-
 
 <div className="statistics">
   <h3 style={{ marginBottom: "10px" }}>{chartTitles[selectedChart]}</h3>
@@ -582,14 +494,13 @@ const chartTitles = {
     </button>
   </div>
 )}
-<div className="stats-chart">
-  {selectedChart === "appointmentsByStatus" || selectedChart === "genderDistribution" ? (
-    <div className="pie-chart-container">{chartViews[selectedChart]}</div>
-  ) : (
-    chartViews[selectedChart]
-  )}
-</div>
-
+  <div className="stats-chart">
+    {selectedChart === "appointmentsByStatus" ? (
+      <div className="pie-chart-container">{chartViews[selectedChart]}</div>
+    ) : (
+      chartViews[selectedChart]
+    )}
+  </div>
 </div>
 
       <div className="appointment-summary">

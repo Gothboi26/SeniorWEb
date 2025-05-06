@@ -445,10 +445,3 @@
   padding: 8px 12px;
   border-radius: 10px;
 }
-
-.date-filter {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-  align-items: center;
-}
