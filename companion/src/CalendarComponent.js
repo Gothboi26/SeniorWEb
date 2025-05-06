@@ -526,12 +526,6 @@ function CalendarComponent() {
       <div className="homepage">
         <div className="home-contents">
           <div className="home-header">
-            <h1 className="home-title">Barangay General Tiburcio De Leon</h1>
-            <p className="home-description">
-              Maalaga at angkop na serbisyo upang matulungan ang nakatatanda na
-              mamuhay nang komportable, ligtas, at walang pag-aalinlangan.
-            </p>
-
             <div className="healthy-tip-box">
               <h3 className="tipheader">Daily Senior Tips</h3>
               <div className="tip-slide" key={currentSlide}>
