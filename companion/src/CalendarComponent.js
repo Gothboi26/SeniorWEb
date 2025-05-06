@@ -330,25 +330,79 @@ const RectangleSection = ({ role }) => {
 };
 
 function CalendarComponent() {
-  const [role, setRole] = useState(null); // Declare state for role
-  const location = useLocation(); // Hook to get the current path
-  const navigate = useNavigate(); // To navigate programmatically
+  const [role, setRole] = useState(null);
+  const location = useLocation();
+  const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState("overview");
 
+  const [tips, setTips] = useState({
+    healthy: "Loading...",
+    mental: "Loading...",
+    safety: "Loading...",
+  });
+
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Fetch role from localStorage
   useEffect(() => {
     const storedRole = localStorage.getItem("role");
     if (storedRole) {
-      setRole(storedRole); // Set role if it exists in localStorage
+      setRole(storedRole);
     } else if (location.pathname === "/") {
-      setRole(null); // Reset role if on login page
+      setRole(null);
     }
   }, [location]);
 
+  // Handle logout
   const handleLogout = () => {
-    localStorage.removeItem("role"); // Remove role from localStorage
-    setRole(null); // Reset role in the app state
-    navigate("/"); // Redirect to login page after logout
+    localStorage.removeItem("role");
+    setRole(null);
+    navigate("/");
   };
+
+  // Fetch tips from the API
+  useEffect(() => {
+    const today = new Date().toISOString().split("T")[0];
+
+    fetch(
+      "https://api.sheetbest.com/sheets/c71cba80-b2d3-4cbd-90b0-7edb1a85959d"
+    )
+      .then((res) => res.json())
+      .then((fetchedData) => {
+        const todayTip = fetchedData.find((entry) => entry.date === today);
+
+        if (todayTip) {
+          setTips({
+            healthy: todayTip.healthy_tip || "No healthy tip today.",
+            mental: todayTip.mental_tip || "No mental wellness tip today.",
+            safety: todayTip.safety_tip || "No safety tip today.",
+          });
+        } else {
+          setTips({
+            healthy: "No healthy tip available.",
+            mental: "No mental wellness tip available.",
+            safety: "No safety tip available.",
+          });
+        }
+      })
+      .catch((err) => {
+        console.error("Failed to fetch tips:", err);
+        setTips({
+          healthy: "Error loading healthy tip.",
+          mental: "Error loading mental wellness tip.",
+          safety: "Error loading safety tip.",
+        });
+      });
+  }, []);
+
+  // Auto-slide functionality
+  useEffect(() => {
+    const slideInterval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % 3);
+    }, 5000);
+
+    return () => clearInterval(slideInterval);
+  }, []);
 
   if (role === "admin") {
     return (
@@ -443,9 +497,6 @@ function CalendarComponent() {
 
         <div className="main-content">
           <div className="header1">
-
-            
-
             <button className="logout-link-admin" onClick={handleLogout}>
               Logout
             </button>
@@ -480,6 +531,30 @@ function CalendarComponent() {
               Maalaga at angkop na serbisyo upang matulungan ang nakatatanda na
               mamuhay nang komportable, ligtas, at walang pag-aalinlangan.
             </p>
+
+            <div className="healthy-tip-box">
+              <h3 className="tipheader">Daily Senior Tips</h3>
+              <div className="tip-slide" key={currentSlide}>
+                {currentSlide === 0 && (
+                  <>
+                    <h4 className="dailyheader">Healthy Tip</h4>
+                    <p className="dailytip">{tips.healthy}</p>
+                  </>
+                )}
+                {currentSlide === 1 && (
+                  <>
+                    <h4 className="dailyheader">Mental Wellness Tip</h4>
+                    <p className="dailytip">{tips.mental}</p>
+                  </>
+                )}
+                {currentSlide === 2 && (
+                  <>
+                    <h4 className="dailyheader">Safety & Mobility Tip</h4>
+                    <p className="dailytip">{tips.safety}</p>
+                  </>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>

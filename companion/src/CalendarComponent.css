@@ -206,6 +206,157 @@ h3 {
   content: "🕒 Time:";
 }
 
+/* HEALTHY TIP */
+.healthy-box {
+  background-color: #f1f1f1;
+  padding: 20px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 520px; /* Set a max width for the box */
+}
+
+.tipheader {
+  font-size: 4rem;
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-top: 0;
+  margin-bottom: 5px;
+  color: #fcfcfc;
+  text-shadow: 0px 0px 55px #000;
+}
+.dailyheader {
+  font-size: 3rem;
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-top: 0;
+  margin-bottom: 5px;
+  color: #fcfcfc;
+  text-shadow: 0px 0px 55px #000;
+}
+.tip-carousel-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.healthy-tip-box {
+  background-color: transparent;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 520px;
+  font-size: 1.2rem;
+  color: #333;
+}
+.dailytip {
+  font-size: 2rem;
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-top: 0;
+  margin-bottom: 5px;
+  color: #fcfcfc;
+  text-shadow: 0px 0px 55px #000;
+  text-align: center;
+}
+.tip-slide {
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+}
+
+.healthy-tip-box {
+  min-height: 150px; /* optional: to prevent jumpy layout */
+  transition: all 1s ease-in-out;
+}
+
+/* 768px - Tablets */
+@media (max-width: 768px) {
+  .tipheader {
+    font-size: 3rem;
+  }
+
+  .dailyheader {
+    font-size: 2rem;
+  }
+
+  .dailytip {
+    font-size: 1.5rem;
+  }
+
+  .carousel-btn {
+    font-size: 1.5rem;
+    width: 40px;
+    height: 40px;
+  }
+
+  .healthy-tip-box {
+    padding: 20px;
+  }
+}
+
+/* 480px - Small phones */
+@media (max-width: 480px) {
+  .tipheader {
+    font-size: 2rem;
+  }
+
+  .dailyheader {
+    font-size: 1.8rem;
+  }
+
+  .dailytip {
+    font-size: 1.3rem;
+  }
+
+  .carousel-btn {
+    font-size: 1.2rem;
+    width: 35px;
+    height: 35px;
+  }
+
+  .tip-carousel-wrapper {
+    gap: 10px;
+  }
+
+  .healthy-tip-box {
+    padding: 15px;
+  }
+}
+
+/* 360px - Very small phones */
+@media (max-width: 360px) {
+  .tipheader {
+    font-size: 1.6rem;
+  }
+
+  .dailyheader {
+    font-size: 1.5rem;
+  }
+
+  .dailytip {
+    font-size: 1.2rem;
+  }
+
+  .carousel-btn {
+    font-size: 1rem;
+    width: 30px;
+    height: 30px;
+  }
+
+  .tip-carousel-wrapper {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .healthy-tip-box {
+    padding: 10px;
+  }
+}
+
 /* 1440px and below */
 @media (max-width: 1440px) {
   .home-contents {
