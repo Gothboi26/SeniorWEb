@@ -1,3 +1,4 @@
+// Import statements unchanged
 import React, { useState, useEffect } from "react";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
@@ -111,7 +112,7 @@ const SeniorList = () => {
       const result = await res.json();
       if (result.status === "success") {
         alert("Senior added successfully.");
-        setPatients([...patients, { ...formData, role: "client" }]);
+        setPatients([...patients, { ...formData, role: "client", isDeceased: false }]);
         resetForm();
         setShowModal(false);
         setStep(1);
@@ -133,7 +134,9 @@ const SeniorList = () => {
       const result = await res.json();
       if (result.status === "success") {
         alert("Senior updated successfully.");
-        setPatients(prev => prev.map(p => p.id === editingId ? { ...payload, role: "client" } : p));
+        setPatients(prev =>
+          prev.map(p => p.id === editingId ? { ...payload, role: "client", isDeceased: p.isDeceased } : p)
+        );
         setShowModal(false);
         resetForm();
         setEditingId(null);
@@ -169,28 +172,18 @@ const SeniorList = () => {
     }
   };
 
+  const handleMarkDeceased = (id) => {
+    if (window.confirm("Mark this senior as deceased?")) {
+      setPatients(prev => prev.map(p => p.id === id ? { ...p, isDeceased: true } : p));
+    }
+  };
+
   const resetForm = () => {
     setFormData({
-      username: "",
-      barangay_id: "",
-      group_chapter: "",
-      email_address: "",
-      number: "",
-      age: "",
-      sex: "",
-      address: "",
-      lat: "",
-      lng: "",
-      health_issue: "",
-      first_name: "",
-      middle_name: "",
-      last_name: "",
-      extension: "N/A",
-      birthday: "",
-      civil_status: "",
-      emergency_contact_person: "",
-      emergency_contact_number: "",
-      emergency_contact_relationship: "",
+      username: "", barangay_id: "", group_chapter: "", email_address: "", number: "",
+      age: "", sex: "", address: "", lat: "", lng: "", health_issue: "", first_name: "",
+      middle_name: "", last_name: "", extension: "N/A", birthday: "", civil_status: "",
+      emergency_contact_person: "", emergency_contact_number: "", emergency_contact_relationship: ""
     });
   };
 
@@ -200,7 +193,10 @@ const SeniorList = () => {
         const res = await fetch("https://backend-production-4629.up.railway.app/get_users.php");
         const data = await res.json();
         if (data.status === "success") {
-          setPatients(data.data.filter(user => user.role === "client"));
+          const withDeceasedFlag = data.data
+            .filter(user => user.role === "client")
+            .map(user => ({ ...user, isDeceased: false }));
+          setPatients(withDeceasedFlag);
         } else {
           alert(data.message);
         }
@@ -230,7 +226,7 @@ const SeniorList = () => {
 
   return (
     <div className="senior-list-container">
-      {/* Header and filter */}
+      {/* Header and Filter UI */}
       <div className="table-header">
         <h2>All Users</h2>
         <div className="buttons-right">
@@ -246,7 +242,7 @@ const SeniorList = () => {
         </div>
       </div>
 
-      {/* Table */}
+      {/* Table UI */}
       <div className="table-wrapper">
         <table className="table">
           <thead>
@@ -268,7 +264,7 @@ const SeniorList = () => {
           </thead>
           <tbody>
             {filteredPatients().map((p, i) => (
-              <tr key={i}>
+              <tr key={i} className={p.isDeceased ? "deceased-row" : ""}>
                 <td>{[p.first_name, p.middle_name, p.last_name, p.extension !== "N/A" ? p.extension : ""].filter(Boolean).join(" ")}</td>
                 <td>{p.barangay_id}</td>
                 <td>{p.group_chapter}</td>
@@ -282,15 +278,15 @@ const SeniorList = () => {
                 <td>{p.health_issue}</td>
                 <td>{p.emergency_contact_person} ({p.emergency_contact_relationship}) - {p.emergency_contact_number}</td>
                 <td>
-                  <button onClick={() => handleEdit(p)} className="edit-button">Edit</button>
+                  <button onClick={() => handleEdit(p)} className="edit-button" disabled={p.isDeceased}>Edit</button>
                   <button onClick={() => handleDelete(p.id)} className="delete-button">Delete</button>
+                  {!p.isDeceased && <button onClick={() => handleMarkDeceased(p.id)} className="deceased-button">Mark Deceased</button>}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-
       {/* Modal for Registration Steps */}
       {showModal && (
         <div className="senior-modal-overlay">

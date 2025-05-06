@@ -352,3 +352,19 @@
 .senior-modal label:hover {
   border-color: #b71c1c;
 }
+.deceased-row {
+  background-color: #f8d7da !important;
+  opacity: 0.7;
+}
+.deceased-button {
+  background-color: darkred;
+  color: white;
+  padding: 4px 8px;
+  margin-left: 5px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+.deceased-button:hover {
+  background-color: red;
+}
