@@ -452,3 +452,10 @@
   margin-bottom: 20px;
   align-items: center;
 }
+
+.date-filter input[type="date"] {
+  padding: 0.5rem 1rem;
+  width: 100%;
+  display: flex;
+  flex: 1;
+}
