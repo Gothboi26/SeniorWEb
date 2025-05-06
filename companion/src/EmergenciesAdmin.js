@@ -14,12 +14,18 @@ const EmergenciesAdmin = () => {
   const [mapCoords, setMapCoords] = useState({ lat: null, lng: null, address: "" });
   const [showLogs, setShowLogs] = useState(false);
 
-  const audioRef = useRef(null);
   const audioTimeoutRef = useRef(null);
+  const soundMap = useRef({
+    police: new Audio("/sos-police.mp3"),
+    ambulance: new Audio("/sos-ambulance.mp3"),
+    fire: new Audio("/sos-fire.mp3"),
+    default: new Audio("/sos.mp3")
+  });
 
   useEffect(() => {
-    audioRef.current = new Audio("/sos.mp3");
-    audioRef.current.loop = false;
+    Object.values(soundMap.current).forEach(audio => {
+      audio.loop = false;
+    });
   }, []);
 
   useEffect(() => {
@@ -51,12 +57,22 @@ const EmergenciesAdmin = () => {
         setUnacknowledgedEmergencies(newAlerts);
 
         if (newAlerts.length > 0) {
-          if (audioRef.current && audioRef.current.paused) {
-            audioRef.current.play().catch((err) => console.error("Audio play error", err));
+          const rawType = newAlerts[0]?.type?.toLowerCase() || "";
+          const normalizedType = rawType.includes("police")
+            ? "police"
+            : rawType.includes("ambulance")
+            ? "ambulance"
+            : rawType.includes("fire")
+            ? "fire"
+            : "default";
+
+          const audio = soundMap.current[normalizedType] || soundMap.current["default"];
+          if (audio.paused) {
+            audio.play().catch((err) => console.error("Audio play error", err));
             audioTimeoutRef.current = setTimeout(() => {
-              if (audioRef.current && !audioRef.current.paused) {
-                audioRef.current.pause();
-                audioRef.current.currentTime = 0;
+              if (!audio.paused) {
+                audio.pause();
+                audio.currentTime = 0;
               }
             }, 5000);
           }
@@ -74,10 +90,12 @@ const EmergenciesAdmin = () => {
   }, [acknowledgedIds]);
 
   const stopSound = () => {
-    if (audioRef.current && !audioRef.current.paused) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
-    }
+    Object.values(soundMap.current).forEach(audio => {
+      if (!audio.paused) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    });
     if (audioTimeoutRef.current) {
       clearTimeout(audioTimeoutRef.current);
     }
