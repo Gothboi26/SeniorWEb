@@ -13,12 +13,34 @@ import "leaflet-routing-machine";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import "./MapSelector.css";
 
+// Icons
 const customIcon = new L.Icon({
   iconUrl: "/icons/marker.png",
   iconSize: [38, 38],
   iconAnchor: [19, 38],
   popupAnchor: [0, -38],
   shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png"
+});
+
+const fireIcon = new L.Icon({
+  iconUrl: "/icons/fire-station.png",
+  iconSize: [30, 30],
+  iconAnchor: [15, 30],
+  popupAnchor: [0, -30],
+});
+
+const policeIcon = new L.Icon({
+  iconUrl: "/icons/police-station.png",
+  iconSize: [30, 30],
+  iconAnchor: [15, 30],
+  popupAnchor: [0, -30],
+});
+
+const healthIcon = new L.Icon({
+  iconUrl: "/icons/health-station.png",
+  iconSize: [30, 30],
+  iconAnchor: [15, 30],
+  popupAnchor: [0, -30],
 });
 
 const valenzuelaBounds = [
@@ -75,7 +97,6 @@ const getNearestStation = (type, targetCoords, proximityThreshold = 500) => {
     }
   }
 
-  // Use station if within radius, else null (to fallback)
   return minDist <= proximityThreshold ? nearest : null;
 };
 
@@ -291,10 +312,23 @@ const MapSelector = ({ onClose, onSelect, initialPosition = null, emergencyType 
             {!initialPosition && <MapClickHandler />}
 
             <Marker position={barangayHallCoords}>
-              <Popup>
-                <strong>Barangay Tiburcio De Leon Hall</strong>
-              </Popup>
+              <Popup><strong>Barangay Tiburcio De Leon Hall</strong></Popup>
             </Marker>
+
+            {/* Render emergency stations with appropriate icons */}
+            {Object.entries(STATIONS).map(([type, stations]) =>
+              stations.map((station, idx) => {
+                const icon = type === "fire" ? fireIcon : type === "police" ? policeIcon : healthIcon;
+                return (
+                  <Marker key={`${type}-${idx}`} position={station.coords} icon={icon}>
+                    <Popup>
+                      <strong>{station.name}</strong><br />
+                      Type: {type}
+                    </Popup>
+                  </Marker>
+                );
+              })
+            )}
 
             {markerPosition && (
               <>
