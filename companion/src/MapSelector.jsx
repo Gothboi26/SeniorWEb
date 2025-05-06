@@ -37,7 +37,7 @@ const policeIcon = new L.Icon({
 });
 
 const healthIcon = new L.Icon({
-  iconUrl: "/icons/health-station.png",
+  iconUrl: "/icons/hospital-station.png",
   iconSize: [30, 30],
   iconAnchor: [15, 30],
   popupAnchor: [0, -30],
