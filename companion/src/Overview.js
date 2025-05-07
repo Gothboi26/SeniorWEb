@@ -54,7 +54,7 @@ const Overview = () => {
   const [selectedChart, setSelectedChart] = useState("appointmentsByStatus");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [genderDistribution, setGenderDistribution] = useState({ male: 0, female: 0 });
+
 
   const formatDate = (date) => new Date(date).toISOString().split("T")[0];
 
@@ -86,7 +86,6 @@ const getWeekKey = (date) => {
 
   useEffect(() => { fetchAppointmentsData(); }, [fetchAppointmentsData]);
   useEffect(() => { if (appointments.length) filterAppointmentsByDate(selectedDate); }, [appointments, selectedDate, filterAppointmentsByDate]);
-  useEffect(() => { console.log(genderDistribution);}, [genderDistribution]);
   
 
 
@@ -174,7 +173,7 @@ const getWeekKey = (date) => {
       .then((res) => res.json())
       .then((data) => {
         const users = data.data || [];
-        const ageDist = {}, chapterDist = {}, reg = {}, genderDist = { male: 0, female: 0 };
+        const ageDist = {}, chapterDist = {}, reg = {};
   
         users
           .filter((u) => {
@@ -204,14 +203,6 @@ const getWeekKey = (date) => {
             if (u.group_chapter) {
               chapterDist[u.group_chapter] = (chapterDist[u.group_chapter] || 0) + 1;
             }
-
-            if (u.gender) {
-              if (u.gender.toLowerCase() === "male") {
-                genderDist.male++;
-              } else if (u.gender.toLowerCase() === "female") {
-                genderDist.female++;
-              }
-            }
   
             // Registration over time
             if (u.role !== "admin") {
@@ -227,7 +218,6 @@ const getWeekKey = (date) => {
         setAgeDistribution(ageDist);
         setChapters(chapterDist);
         setUserRegistrationData(reg);
-        setGenderDistribution(genderDist);
       });
   }, [dataView, startDate, endDate]);
   
@@ -373,16 +363,6 @@ const chartConfig = (labels, data, options) => ({
     }
   }
   });
-
-  const genderChartData = {
-    labels: ["Male", "Female"],
-    datasets: [
-      {
-        data: [genderDistribution.male, genderDistribution.female],
-        backgroundColor: ["#ff6384", "#36a2eb"], // Example colors for male and female
-      },
-    ],
-  };
   
   const generateAccommodatedPerDayData = () => {
   const grouped = {};
@@ -455,19 +435,6 @@ const chartViews = {
   accommodatedPerService: (
     <Line data={generateServiceMonthChartData(accommodatedPerServicePerMonth)} />
   ),
-  genderDistribution: (
-    <Pie
-      data={genderChartData}
-      options={{
-        responsive: true,
-        plugins: {
-          legend: {
-            position: "top",
-          },
-        },
-      }}
-    />
-  )
 };
 
 const chartTitles = {
@@ -478,7 +445,6 @@ const chartTitles = {
   ageGroup: "Senior Age Group",
   accommodatedPerDay: "Seniors Accommodated",
   accommodatedPerService: "Seniors Accommodated per Service",
-  genderDistribution: "Gender Distribution",
 };
 
 
@@ -520,7 +486,6 @@ const chartTitles = {
     <option value="ageGroup">Senior Age Group</option>
     <option value="accommodatedPerDay">Seniors Accommodated</option>
     <option value="accommodatedPerService">Seniors Accommodated per Service</option>
-    <option value="genderDistribution">Senior Gender Group</option>
   </select>
 </div>
 
@@ -584,7 +549,7 @@ const chartTitles = {
   </div>
 )}
 <div className="stats-chart">
-  {selectedChart === "appointmentsByStatus" || selectedChart === "genderDistribution" ? (
+  {selectedChart === "appointmentsByStatus" ? (
     <div className="pie-chart-container">{chartViews[selectedChart]}</div>
   ) : (
     chartViews[selectedChart]
